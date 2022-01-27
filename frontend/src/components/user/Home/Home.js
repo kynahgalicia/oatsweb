@@ -4,14 +4,15 @@ import { useState } from "react";
 import { FaSearch } from 'react-icons/fa';
 import Cards from './home-components/Cards';
 import Department from './home-components/Department';
+import {Link} from 'react-router-dom'
 
 
 
 const Home = () => {
     const [cards, setCards] = useState([
-        { title: 'Thesis 1', body: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 1', id: 1 },
-        { title: 'Thesis 2', body: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 2', id: 2 },
-        { title: 'Thesis 3', body: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 3', id: 3 }
+        { title: 'Integer consequat sed quam sit amet scelerisque.', author: 'Author 1', id: 1 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
+        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 2', id: 2 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
+        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 3', id: 3 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
     ])
     return (  
         <Fragment>
@@ -26,7 +27,8 @@ const Home = () => {
 
                 <div className="searchbar">
                     <input type="text" />
-                    <button><i><FaSearch/></i></button>
+
+                    <Link to="/user/search"> <button><i><FaSearch/></i> </button></Link>
                 </div>
                     
                 </div>

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 import { Link } from 'react-router-dom' 
 import { Nav, Navbar, Container,Dropdown } from 'react-bootstrap';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -8,7 +8,9 @@ import { BsPersonFill } from 'react-icons/bs';
 
 const Header = () => {
 
-    let user = false
+    const [user, setUser] = useState([
+    {id: 1, role: 'admin'}
+    ])
     const setProfile = () => {
 
         return (
@@ -18,8 +20,9 @@ const Header = () => {
             <BsPersonFill size={20}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item>Profile</Dropdown.Item>
-                <Dropdown.Item>Logout</Dropdown.Item>
+                <Dropdown.Item><Link> Profile</Link></Dropdown.Item>
+                { user[0].id && user[0].role === 'admin' ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:<Dropdown.Item><Link to="/user/dashboard"> Dashboard</Link></Dropdown.Item>}
+                <Dropdown.Item><Link onClick={() => setUser(false)}> Logout</Link></Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
         </>
@@ -27,23 +30,34 @@ const Header = () => {
         
     }
     
+    const setUserLink = () =>{
+
+        console.log(user);
+        return(
+            <>
+            <Link to="/About" className='white'>About</Link> 
+            <Link to="/Category" className='white'>Category</Link> 
+            <Link to="/Contact" className='white'>Contact</Link> 
+            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
+            </>
+        )
+    }
 
     return ( 
         <Fragment>
         <div className="header">
         <Navbar collapseOnSelect expand="lg">
         <Container>
-        <Navbar.Brand ><Link to="/" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>
+        {user[0].id && user[0].role === 'admin' ? <Navbar.Brand ><Link to="/none" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>}
+        
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto">
             </Nav>
             <Nav>
-            <Link to="/About" className='white'>About</Link> 
-            <Link to="/Category" className='white'>Category</Link> 
-            <Link to="/Contact" className='white'>Contact</Link> 
-            {user? <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link> : <Link to="/Login" className='white'><FaShoppingCart size={20} /></Link>  }
-            {user? setProfile() : <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>  }
+            
+            {user[0].id && user[0].role === 'admin' ? null  : setUserLink()}
+            {user[0]?.id ? setProfile() : <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>  }
             </Nav>
         </Navbar.Collapse>
         </Container>

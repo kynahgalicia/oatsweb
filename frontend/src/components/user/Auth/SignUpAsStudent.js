@@ -41,6 +41,10 @@ const SignUpAsStudent = () => {
                 <Form.Control type="text" placeholder="" value=""/>
             </Form.Group>
             <Form.Group className="mb-3">
+            <Form.Label>Contact Number</Form.Label>
+                <Form.Control type="text" placeholder="" value=""/>
+            </Form.Group>
+            <Form.Group className="mb-3">
             <Form.Label>Department</Form.Label>
                 <Form.Select id="department_field" placeholder="">
                                     <option value="Action">Basic Art & Sciences</option>

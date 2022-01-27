@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@500&display=swap');
+
 :root{
   --black: #211E1E;
   --darkRed: #6B2025;
@@ -6,6 +7,7 @@
   --white: #F4F6F6;
   --grey: #414141;
 }
+
 
 h1{
   font-family: 'Montserrat', sans-serif;
@@ -15,10 +17,136 @@ li, p {
   font-family: 'Poppins', sans-serif;
 }
 
-.App {
-  text-align: center;
+.row{
+  --bs-gutter-x: 0 !important;
 }
 
+.App {
+  text-align: center;
+  margin: 0;
+}
+
+/* -----------------------Admin----------------------------- */
+.admin-wrapper{
+  color: var(--black);
+  min-height: 90vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+.admin-header nav{
+  background-color: var(--grey);
+}
+.admin-header a{
+  font-family: 'Montserrat', sans-serif !important;
+  text-decoration:none;
+  font-size: 2.5vh;
+  color: var(--white);
+}
+
+.admin-header a:hover{
+  color: var(--red);
+}
+
+.footer{
+  text-align: left;
+  background-color: #211E1E;
+  color: #F4F6F6;
+  font-family: 'Poppins', sans-serif;
+  min-height: 230px;
+  font-size: 1.8vh;
+  padding: 20px;
+}
+
+.footer .left{
+  float: left;
+}
+.footer .right{
+  float:right;
+}
+
+.admin-sidebar .nav {
+  background-color: var(--grey) !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 100vh !important;
+  z-index: 100;
+  padding: 20px 15px;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+
+.row>* {
+  padding-right: 0 !important;
+}
+
+hr{
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  height: 3px !important;
+
+}
+.admin-sidebar .nav-item a {
+  padding: 10px 25px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+}
+.admin-sidebar .nav-item a:hover {
+  color: #232f3e;
+  background: #fff;
+}
+
+.admin-accordion .card{
+  border: 0;
+}
+
+.admin-accordion button{
+  text-decoration: none !important;
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  border: 0;
+}
+
+.admin-accordion .card-header{
+  background-color: var(--grey) !important;
+}
+
+.admin-accordion .accordion button:focus{
+  box-shadow: 0 0 0 0.25rem rgba(112, 15, 12, 0.25) !important;
+}
+
+.admin-accordion .accordion .btn-link:hover{
+  color: var(--grey) !important;
+}
+
+.admin-accordion .accordion .card-header button:after {
+  color:var(--white);
+  content: '\f077'; 
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size:20px;
+  float: right;
+}
+.admin-accordion .accordion .card-header .collapsed:after {
+  content: "\f078"; 
+} 
+
+.nav-item .list-group{
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+}
+.nav-item .list-group-item-action{
+  color: black!important;
+}
+.nav-item .list-group-item-action:hover{
+  background-color: rgb(223, 221, 221)!important;
+}
+
+/* ----------------------------User---------------------- */
 .header{
   background-color: var(--darkRed);
   font-family: 'Montserrat', sans-serif;
@@ -38,8 +166,13 @@ li, p {
   min-height: 90vh;
   margin: 0;
   padding: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
+.img-404{
+  width: 700px;
+  padding: 10px;
+}
 .body{
   margin: 0;
   min-height: 700px;
@@ -137,32 +270,41 @@ box-shadow: 0 0 10px #211E1E;
   padding: 2%;
   height: inherit;
 }
-.cards{
+.home-cards{
   padding: 10px;
   text-align: left;
   background-color: #B12A33;
+
 }
-.card{
+.home-card{
+  min-height: 250px;
   background-color: #F4F6F6;
   color: #211E1E;
   width:350px;
   padding: 5%;
-  border-radius: 30px;
+  border-radius: 15px;
   box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
   transition: all ease 200ms;
 }
-
-.card p{
+.home-card h5{
+  font-family: 'Montserrat', sans-serif;
+  color: var(--black);
+}
+.home-card label{
   font-family: 'Poppins', sans-serif;
   margin-top: 4px;
+  display: block;
 }
 
-.card a{
+.home-card a{
   text-decoration: none;
-  color: #B12A33;
+  color: var(--red);
+}
+.home-card a:hover{
+  color: var(--darkRed);
 }
 
-.card:hover {
+.home-card:hover {
   transform: scale(1.03);
   box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
 }
@@ -208,15 +350,19 @@ box-shadow: 0 0 10px #211E1E;
 }
 
 .dropdown{
- margin: 15px;
+  margin: 15px;
 }
+
 .header .btn-primary{
   color: var(--white) !important;
   background-color: transparent !important ;
   border-color: transparent !important;
 }
+.header .btn-primary:focus{
+  box-shadow:0 0 0 0.25rem rgba(255, 255, 255, 0.61) !important;
+}
 
-.dropdown-menu-show a{
+.dropdown-item a{
   color: var(--black);
 }
 
@@ -289,4 +435,105 @@ form h5{
 .signup a:hover{
   color: var(--black);
   background-color: var(--white);
+}
+
+.react-datepicker__day--in-range{
+  background-color: var(--darkRed) !important;
+}
+
+.react-datepicker-wrapper input{
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.user-accordion .accordion button{
+  text-decoration: none !important;
+  color: var(--darkRed);
+}
+
+.user-accordion .accordion .card-header{
+  background-color: transparent !important;
+}
+
+.user-accordion .accordion button:focus{
+  box-shadow: 0 0 0 0.25rem rgba(112, 15, 12, 0.25);
+}
+
+.user-accordion .accordion .btn-link:hover{
+  color: var(--red);
+}
+
+.year{
+  min-height: 450px !important;
+}
+.searchbar-result{
+  background-color: var(--darkRed);;
+}
+
+.searchbar-result form{
+  padding: 20px;
+
+}
+.searchbar-result button{
+  background-color: var(--darkRed);
+  border: 1px solid var(--white);
+}
+
+.thesis-result h5{
+  font-family: 'Montserrat' , sans-serif;
+}
+.thesis-result a{
+  text-decoration: none;
+  color: var(--black);
+}
+.thesis-result a:hover{
+  color: var(--darkRed);
+}
+.thesis-result i{
+  text-decoration: none;
+  color: var(--grey);
+}
+.thesis-result label{
+  text-decoration: none;
+  color: var(--grey);
+}
+.thesis-result{
+  padding: 20px;
+  border-bottom: 1px solid #41414194;
+}
+
+.form-check-input:checked{
+  background-color: var(--darkRed) !important; 
+  border-color: var(--darkRed) !important;
+}
+
+.details-title{
+  border-bottom: 2px solid var(--grey);
+}
+
+.details-nav{
+  padding: 20px;
+}
+
+.list-group a{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.list-group a:hover{
+  color: var(--darkRed)
+}
+
+.user-accordion .accordion .card-header button:after {
+  color:#6B2025;
+  content: '\f077'; 
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size:20px;
+  float: right;
+}
+.user-accordion .accordion .card-header .collapsed:after {
+  content: "\f078"; 
 }

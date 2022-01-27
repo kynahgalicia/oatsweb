@@ -5,8 +5,8 @@ const SignUp = () => {
         <div className="wrapper">
             <div className="signup text-center">
             <h1>Sign Up as?</h1>
-            <Link to="/student" >Student</Link>
-           <Link to="/organization">Organization</Link>
+            <Link to="/user/student" >Student</Link>
+            <Link to="/user/organization">Organization</Link>
             
             
             </div>

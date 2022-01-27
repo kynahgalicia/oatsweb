@@ -47,6 +47,10 @@ const SignUpAsOrg = () => {
             <Form.Label>Company Address</Form.Label>
                 <Form.Control type="text" placeholder="" value=""/>
             </Form.Group>
+            <Form.Group className="mb-3">
+            <Form.Label>Contact Number</Form.Label>
+                <Form.Control type="text" placeholder="" value=""/>
+            </Form.Group>
 
 
             <h5>Account Setup</h5>
