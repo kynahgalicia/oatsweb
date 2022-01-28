@@ -1,15 +1,15 @@
 const router = require('express').Router()
-const userCtrl = require('../controllers/userCtrl')
+const userController = require('../controllers/userController')
 // const auth = require('../middleware/auth')
 // const authAdmin = require('../middleware/authAdmin')
 
-router.post('/register', userCtrl.register)
+router.post('/register', userController.register)
 
-router.post('/activation', userCtrl.activateEmail)
+router.post('/activation', userController.activateEmail)
 
-router.post('/login', userCtrl.login)
+router.post('/login', userController.login)
 
-router.post('/refresh_token', userCtrl.getAccessToken)
+router.post('/refresh_token', userController.getAccessToken)
 
 // router.post('/forgot', userCtrl.forgotPassword)
 
