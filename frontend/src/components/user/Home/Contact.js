@@ -1,5 +1,9 @@
 import Banner from './home-components/Banner'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Card} from 'react-bootstrap'
+import shek from '../../img/Strawberry-20.png';
+import li from '../../img/leslie.jpg';
+import vince from '../../img/vince.jpg';
+import rods from '../../img/rods.jpg';
 
 const Contact = () => {
     return (
@@ -8,17 +12,84 @@ const Contact = () => {
             <Banner title="Contact"/>
 
             <Container className="m-7">
-            <Row className='text-body'> 
-                <Col sm={9}> 
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu quam porta, vehicula elit et,
-                cursus dui. Nunc malesuada turpis diam, id porta justo sodales eget. In hac habitasse platea 
-                dictumst. Quisque enim arcu, vulputate a neque a, placerat rhoncus risus. Etiam semper ex ut 
-                consequat commodo. Praesent in elit dolor. Ut egestas consequat sem a elementum. 
-                Curabitur dapibus tellus a imperdiet euismod.
-                </p>
+            
+
+            <Row className='text-body'>
+                <Col sm={2}>
+                    <Row xs={1} md={1} className="g-4">
+                        <Card>
+                            <Card.Img variant="top" src={shek} />
+
+                            <Card.Body>
+                                <Card.Title>Shekinah Bless O. Galicia</Card.Title>
+
+                                <Card.Text>
+                                    <p>Bachelor of Science in Information Technology</p>
+                                    <p>Technological University of the Philippines Taguig</p>
+                                    <p>shekinahbless.galicia@tup.edu.ph</p>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Row>
                 </Col>
-                <Col sm={3} className='border-left'>
+
+                <Col sm={2}>
+                    <Row xs={1} md={1} className="g-4">
+                        <Card>
+                                <Card.Img variant="top" src={vince} />
+
+                                <Card.Body>
+                                    <Card.Title>Vince Michael M. Lingon</Card.Title>
+
+                                    <Card.Text>
+                                        <p>Bachelor of Science in Information Technology</p>
+                                        <p>Technological University of the Philippines Taguig</p>
+                                        <p>vincemichael.lingon@tup.edu.ph</p>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                    </Row>
+                </Col>
+                
+                <Col sm={2}>
+                    <Row xs={1} md={1} className="g-4">
+                        <Card>
+                            <Card.Img variant="top" src={li} />
+
+                            <Card.Body>
+                                <Card.Title>Leslie Jayne Ayacocho</Card.Title>
+
+                                <Card.Text>
+                                    <p>Bachelor of Science in Information Technology</p>
+                                    <p>Technological University of the Philippines Taguig</p>
+                                    <p>lesliejayne.ayacocho@tup.edu.ph</p>
+                                </Card.Text>
+                            </Card.Body>
+
+                        </Card>
+                    </Row>
+                </Col>
+
+                <Col sm={2}>
+                    <Row xs={1} md={1} className="g-4">
+                        <Card>
+                            <Card.Img variant="top" src={rods} />
+
+                            <Card.Body>
+                                <Card.Title>Rodralyn D. Lopez</Card.Title>
+
+                                <Card.Text>
+                                    <p>Bachelor of Science in Information Technology</p>
+                                    <p>Technological University of the Philippines Taguig</p>
+                                    <p>rodralyn.lopez@tup.edu.ph</p>
+                                </Card.Text>
+                            </Card.Body>
+
+                        </Card>
+                    </Row>
+                </Col>
+
+                <Col sm={4} className='border-left'>
 
                 </Col>
             </Row>

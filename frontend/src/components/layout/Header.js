@@ -9,7 +9,7 @@ import { BsPersonFill } from 'react-icons/bs';
 const Header = () => {
 
     const [user, setUser] = useState([
-    {id: 1, role: 'admin'}
+    {id: 1, role: 'user'}
     ])
     const setProfile = () => {
 
