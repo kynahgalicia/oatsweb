@@ -1,51 +1,60 @@
-const express = require("express");
-const cors = require("cors");
+require('dotenv').config({ path: '.env' });
+
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-// const path = require('path');
-const fileUpload = require("express-fileupload");
-const connectDB = require('./config/database');
-const cloudinary = require('cloudinary')
+const fileUpload = require('express-fileupload')
 
-const app = express();
 
-app.use(cors({
-    origin: true,
-    credentials: true,
-}));
+//middleware
+const app = express()
+app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
+app.use(fileUpload({
+    useTempFiles: true
+}))
 
-//load config
-dotenv.config({path: 'backend/config/config.env'});
-const PORT = process.env.PORT || 8080
+// app.use('/', (req, res, next) => {
+//     res.json({msg: "Hello Everyone!"})
+// })
 
-//mongodb connection
-connectDB();
 
-// Setting up cloudinary configuration
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+app.use(cors());
+app.use(express.json());
+
+
+//Routes
+app.use('/user',require('./routes/userRouter'))
+// app.use('/api', require('./routes/upload'))
+
+//mongodb connection 
+const uri = process.env.DB_LOCAL_URI;
+mongoose.connect(uri);
+
+const connection = mongoose.connection;
+connection.once('open', ()=> {
+    console.log("MongoDB connection is OK");
+});
+
+
+
+//port
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+    console.log('SERVER IS RUNNING ON PORT', PORT)
 })
 
 
-// Bodyparser <middleware></middleware>
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(fileUpload({
-    createParentPath: true
-}))
 
 
-app.listen(
-    PORT,
-    console.log(
-        `Server running on port https://localhost:${PORT}`
-    )
-)
 
+
+//Routes by Vince:
+app.use('/user', require('./routes/userRouter'))
+app.use('/api', require('./routes/thesisRouter'))
+//---------------------END-----------------------//
 // app.use('/', require('./routes/router'));
 
 

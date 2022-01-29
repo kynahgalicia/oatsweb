@@ -106,6 +106,56 @@ const userController = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
+    },
+    forgotPassword: async (req, res) => {
+        try {
+            const {user_tupmail} = req.body
+            const user = await Users.findOne({user_tupmail})
+            if(!user) return res.status(400).json({msg: "This email does not exist."})
+
+            const access_token = createAccessToken({id: user._id})
+            const url = `${FRONTEND_URL}/user/reset/${access_token}`
+
+            sendMail(user_tupmail, url, "Reset your password")
+            res.json({msg: "Re-send the password, please check your email."})
+  
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    resetPassword: async (req, res) => {
+        try {
+            const {user_password} = req.body
+           
+            const passwordHash = await bcrypt.hash(user_password, 12)
+
+            await Users.findOneAndUpdate({_id: req.user.id}, {
+                user_password: passwordHash
+            })
+
+            res.json({msg: "Password successfully changed!"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    }, 
+    getUserInfor: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select('-user_password')
+
+            res.json(user)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //pwedeng alisin to dito kase pang admin lang to 
+    getUsersAllInfor: async (req, res) => {
+        try {
+            const users = await Users.find().select('-user_password')
+
+            res.json(users)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
     }
 
 }

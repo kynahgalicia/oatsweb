@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const userController = require('../controllers/userController')
-// const auth = require('../middleware/auth')
-// const authAdmin = require('../middleware/authAdmin')
+const auth = require('../middleware/auth')
+const authAdmin = require('../middleware/authAdmin')
 
 router.post('/register', userController.register)
 
@@ -11,21 +11,21 @@ router.post('/login', userController.login)
 
 router.post('/refresh_token', userController.getAccessToken)
 
-// router.post('/forgot', userCtrl.forgotPassword)
+router.post('/forgot', userController.forgotPassword)
 
-// router.post('/reset', auth, userCtrl.resetPassword)
+router.post('/reset', auth, userController.resetPassword)
 
-// router.get('/infor', auth, userCtrl.getUserInfor)
+router.get('/infor', auth, userController.getUserInfor)
 
-// router.get('/all_infor', auth, authAdmin, userCtrl.getUsersAllInfor)
+router.get('/all_infor', auth, authAdmin, userController.getUsersAllInfor)
 
-// router.get('/logout', userCtrl.logout)
+// router.get('/logout', userController.logout)
 
-// router.patch('/update', auth, userCtrl.updateUser)
+// router.patch('/update', auth, userController.updateUser)
 
-// router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
+// router.patch('/update_role/:id', auth, authAdmin, userController.updateUsersRole)
 
-// router.delete('/delete/:id', auth, authAdmin, userCtrl.deleteUser)
+// router.delete('/delete/:id', auth, authAdmin, userController.deleteUser)
 
 
 // // Social Login
