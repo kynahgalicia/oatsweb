@@ -1,47 +1,102 @@
-import React, {Fragment, useState} from 'react';
-import {Link} from 'react-router-dom'
+import React, {Fragment, useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {Link, useParams,useHistory} from 'react-router-dom'
+
 import { FaSearch } from 'react-icons/fa';
 import { Row, Col} from 'react-bootstrap'
 import {Form, FormControl,Button} from 'react-bootstrap'
 import ISODate from 'isodate'
 import DatePicker from 'react-datepicker'
+import { useAlert } from 'react-alert'
+
+
+// Redux Action
+import {getThesis} from '../../../redux/actions/thesisActions'
 
 const Search = () => {
-    const [thesis, setThesis] = useState([
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 1', id: 1 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 2', id: 2 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 3', id: 3 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 4', id: 4 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 5', id: 5 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 6', id: 6 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 7', id: 7 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'}
-    ])
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    let userDept = 'Civil and Allied' // Test Data for User
+
+    const history = useHistory()
+    const [thisKeyword, setKeyword] = useState('');
+    const [currentPage, setCurrentPage] = useState(1)
+    const [department, setDepartment] = useState('')
+    const [startDate, setStartDate] = useState(ISODate(new Date("1999/12/31").toISOString()));
+    const [endDate, setEndDate] = useState(ISODate(new Date("2023/01/02").toISOString()));
+
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+
+    const { loading, thesis, error} = useSelector(state => state.thesis)
+
+    const {keyword} = useParams()
+
+    useEffect(() => {
+        if (error) {
+            return alert.error(error)
+        }
+        
+        
+
+        dispatch(getThesis(keyword, department, startDate.toISOString(), endDate.toISOString()));
+    }, [dispatch, alert, error, keyword, currentPage,userDept, department,startDate,endDate])
+
+    // function setCurrentPageNo(pageNumber) {
+    //     setCurrentPage(pageNumber)
+    // }
+
+    // let count = thesisCount;
+    // if (keyword) {
+    //     count = filteredthesisCount
+    // }
+
+
+    const searchHandler = (e) => {
+        if(thisKeyword){
+            console.log('no key')
+        }
+        e.preventDefault()
+        if (thisKeyword) {
+                    history.replace(`/user/search/${thisKeyword}`)
+
+        } else {
+            history.push('/')
+        }
+    }
+
+
     const departments = [ 
-                        'Basic Arts & Science',
-                        'Civil & Allied', 
-                        'Electrical & Allied', 
-                        'Mechanical & Allied', 
-                        'Bachelor of Engineering'
+                        'Basic Arts and Science',
+                        'Civil and Allied', 
+                        'Electrical and Allied', 
+                        'Mechanical and Allied', 
+                        'Bachelor and Engineering'
                     ]
+
+    
     return ( 
         <div className="wrapper">
             <Fragment>
                 <Row className="searchbar-result">
                     <Col sm={3}></Col>
                     <Col sm={6}>
-                    
-                        <Form className="d-flex">
-                            <FormControl
-                                type="search"
-                                placeholder="Search"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button><FaSearch/></Button>
-                        </Form>
-
+                    <div className="">
+                    <form onSubmit={searchHandler}>
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    id="search_field"
+                                    className="form-control "
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                />
+                                <div className="input-group-append">
+                                    <button id="search_btn" className="btn">
+                                        <i className="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     </Col>
                     <Col sm={3}></Col>
                 </Row>
@@ -49,7 +104,7 @@ const Search = () => {
 
                 <Col sm={3} border="dark">
                 <div className='p-3'>
-                    <div class="accordion" id="accordionExample">
+                    <div class="user-accordion accordion" id="accordionExample">
                     <div class="card">
                         <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
@@ -69,14 +124,17 @@ const Search = () => {
                                     type="radio"
                                     id="inline-radio-1"
                                     checked
-                                />
-                                <Form.Check
-                                    inline
-                                    label="Open Access Only"
-                                    name="group1"
-                                    type="radio"
-                                    id="inline-radio-2"
-                                />
+                                    onClick={() => setDepartment('')}
+                            />
+
+                            <Form.Check
+                                inline
+                                label="Open Access Only"
+                                name="group1"
+                                type="radio"
+                                id="inline-radio-2"
+                                onClick={() => setDepartment(userDept)}
+                            />
                         </div>
                         </div>
                         </div>
@@ -122,9 +180,17 @@ const Search = () => {
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                         <div class="card-body">
                         <ul class="list-group text-start">
+
+                            
                             { departments && departments.map((department) => (
                                 
-                                <li class="list-group-item"><Link>{department}</Link></li>
+                                <li
+                                    class="list-group-item"
+                                    key={department}
+                                    onClick={() => setDepartment(department)}
+                                >
+                                    {department}
+                                </li>
                                 
                             ))}
                             </ul>
@@ -137,8 +203,9 @@ const Search = () => {
             </div>
                 </Col>
                 <Col sm={7} className='text-start'>
-                    
-                { thesis && thesis.map((theses) => (
+                    {keyword ? (
+                    <Fragment>
+                        { thesis && thesis.map((theses) => (
                         <div className='thesis-result'>
                             <h5> <Link to="/user/search/details"> {theses.title}</Link> </h5>
                             <Link> <p><i> {theses.author} </i></p></Link>
@@ -149,6 +216,9 @@ const Search = () => {
                         </div>
                         
                     ))}
+                    </Fragment>
+                    ): null}
+                
                 
                 </Col>
                 <Col sm={2}>

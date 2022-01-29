@@ -50,6 +50,7 @@ function App() {
         <Route path="/user/student" component={SignUpAsStudent} exact/>
         <Route path="/user/organization" component={SignUpAsOrg} exact/>
         <Route path="/user/search" component={Search} exact/>
+        <Route path="/user/search/:keyword" component={Search} exact/>
         <Route path="/user/search/details" component={ThesisDetails} exact/>
         <Route path="/user/dashboard" component={DashboardUser} exact/>
 

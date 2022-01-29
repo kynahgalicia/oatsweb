@@ -46,6 +46,6 @@ app.listen(
     )
 )
 
-// app.use('/', require('./routes/router'));
+app.use('/', require('./routes/router'));
 
 
