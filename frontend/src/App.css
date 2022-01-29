@@ -233,13 +233,13 @@ hr{
 .search {
   position: relative;
   color: #6B2025;
-  padding: 15%;
+  padding: 20%;
 }
 
-.searchbar input{
+.searchbar .input-group input{
 font-family: 'Poppins', sans-serif;
 min-height: 45px;
-width: 60%;
+max-width: 700px;
 font-size: 20px;
 background-color: #F4F6F6;
 color: #211E1E;
@@ -447,9 +447,9 @@ form h5{
   text-align: center;
 }
 
-.user-accordion .accordion button{
+.user-accordion .btn-link{
   text-decoration: none !important;
-  color: var(--darkRed);
+  color: var(--darkRed) !important;
 }
 
 .user-accordion .accordion .card-header{
@@ -478,6 +478,7 @@ form h5{
 .searchbar-result button{
   background-color: var(--darkRed);
   border: 1px solid var(--white);
+  color: var(--white) !important;
 }
 
 .thesis-result h5{
@@ -516,17 +517,17 @@ form h5{
   padding: 20px;
 }
 
-.list-group a{
+.list-group-item{
   cursor: pointer;
   text-decoration: none;
   color: var(--black);
 }
 
-.list-group a:hover{
-  color: var(--darkRed)
+.list-group-item a:hover{
+  color: var(--darkRed) !important ;
 }
 
-.user-accordion .accordion .card-header button:after {
+.user-accordion button:after {
   color:#6B2025;
   content: '\f077'; 
   font-family: "Font Awesome 5 Free";
@@ -534,6 +535,6 @@ form h5{
   font-size:20px;
   float: right;
 }
-.user-accordion .accordion .card-header .collapsed:after {
+.user-accordion .collapsed:after {
   content: "\f078"; 
 }
