@@ -8,7 +8,7 @@ const thesisSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    publishAt:{
+    publishedAt:{
         type: String,
         trim: true,
         required: true
@@ -34,7 +34,7 @@ const thesisSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    file:{
+    upload:{
         type: Object,
         required: true
     }
