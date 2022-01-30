@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
     },
     user_password: {
         type: String,
-        required: [true, "Please enter your password!"]
+        required: [true, "Please enter your password!"],
+        
     },
     user_section: {
         type: String,
