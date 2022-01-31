@@ -1,0 +1,28 @@
+[
+    {
+        "deptname": "Basic Arts and Science",
+        "deptcode": "BASD"
+    },
+    {
+    
+        "deptname": "Civil and Allied",
+        "deptcode": "CA"
+        
+    },
+    {
+    
+        "deptname": "Electrical and Allied",
+        "deptcode": "EA"
+        
+    },
+    {
+    
+        "deptname": "Mechanical and Allied",
+        "deptcode": "MA"
+        
+    },
+    {
+        "deptname": "Bachelor of Engineering",
+        "deptcode": "BENG"
+    }
+]

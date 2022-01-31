@@ -46,6 +46,8 @@ app.listen(
     )
 )
 
-app.use('/', require('./routes/router'));
+app.use('/api', require('./routes/thesisRouter'))
+app.use('/api', require('./routes/departmentRouter'))
+app.use('/api', require('./routes/courseRouter'))
 
 
