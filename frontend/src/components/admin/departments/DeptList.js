@@ -15,8 +15,6 @@ const DeptList = () => {
         {'id': 5 , 'name' :'Bachelor of Engineering'}
     ])
 
-
-  
     const setData = () => { 
         const data = {
         columns: [
@@ -64,6 +62,7 @@ const DeptList = () => {
         <Fragment>
             <div className="admin-wrapper">
             <h1>Departments</h1>
+            
 
             <MDBDataTableV5 
                 hover 

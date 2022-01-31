@@ -84,7 +84,6 @@ const Contact = () => {
                                     <p>rodralyn.lopez@tup.edu.ph</p>
                                 </Card.Text>
                             </Card.Body>
-
                         </Card>
                     </Row>
                 </Col>
