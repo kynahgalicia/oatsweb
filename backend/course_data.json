@@ -1,0 +1,188 @@
+[
+    {
+        "coursename" : "Bachelor in Technical-Vocational Teacher Education - Electrical Technology",
+        "coursecode" : "BTVTEd-ET",
+        "department": {"department":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"}
+    },
+    {
+        "coursename" : "Bachelor in Technical-Vocational Teacher Education - Electronics Technology",
+        "coursecode" : "BTVTEd-ELEXT",
+        "department": {"department":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"}
+
+    },
+    {
+        "coursename" : "Bachelor in Technical-Vocational Teacher Education - Information and Communication Technology - Computer Programming",
+        "coursecode" : "BTVTEd-ICT-CP",
+        "department": {"department":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"}
+
+    },
+    {
+        "coursename" : "Bachelor in Technical-Vocational Teacher Education - Information and Communication Technology - Computer Hardware",
+        "coursecode" : "BTVTEd-ICT-CH",
+        "department": {"department":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"}
+
+    },
+    {
+        "coursename" : "Bachelor of Technical Teacher Education - Ladderized Degree Program",
+        "coursecode" : "BTTE-LDP",
+        "department": {"department":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Civil Technology",
+        "coursecode" : "BET-CT",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Civil Engineering - Straight Degree Program",
+        "coursecode" : "BSCE-SDP",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Civil Engineering - Ladderized Degree Program",
+        "coursecode" : "BSCE-LDP",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Chemical Technology",
+        "coursecode" : "BET-CHT",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Environmental Science - Straight Degree Program",
+        "coursecode" : "BSES-SDP",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Environmental Science - Ladderized Degree Program",
+        "coursecode" : "BSES-LDP",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor in Graphics Technology - Architecture Technology",
+        "coursecode" : "BGT-AT",
+        "department": {"department":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Electrical Technology",
+        "coursecode" : "BET-ET",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Electrical Engineering - Straight Degree Program",
+        "coursecode" : "BSEE-SDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Electrical Engineering - Ladderized Degree Program",
+        "coursecode" : "BSEE-LDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Electronics Technology",
+        "coursecode" : "BET-ELEXT",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Electronics Engineering - Straight Degree Program",
+        "coursecode" : "BSECE-SDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Electronics Engineering - Ladderized Degree Program",
+        "coursecode" : "BSECE-LDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Information Technology - Straight Degree Program",
+        "coursecode" : "BSIT-SDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Technology in Information Technology - Ladderized Degree Program",
+        "coursecode" : "BTIT-LDP",
+        "department": {"department":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Mechanical Technology",
+        "coursecode" : "BET-MT",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Mechanical Engineering - Straight Degree Program",
+        "coursecode" : "BSME-SDP",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Science in Mechanical Engineering - Ladderized Degree Program",
+        "coursecode" : "BSME-LDP",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "BET-NDT",
+        "coursecode" : "Bachelor of Engineering Technology - Non-Destructive Testing Technology",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Automotive Technology",
+        "coursecode" : "BET-AT",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Dies and Moulds Technology",
+        "coursecode" : "BET-DMT",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Heating Ventilation and Airconditioning Refrigeration Technology",
+        "coursecode" : "BET-HVACRT",
+        "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Mechatronics Technology",
+        "coursecode" : "BET-MECT",
+        "department": {"department":"61f6578c0ef8ef785164a837", "deptname": "Bachelor of Engineering"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Information and Communication Technology",
+        "coursecode" : "BET-ICT",
+        "department": {"department":"61f6578c0ef8ef785164a837", "deptname": "Bachelor of Engineering"}
+
+    },
+    {
+        "coursename" : "Bachelor of Engineering Technology - Electromechanical Technology",
+        "coursecode" : "BET-EMT",
+        "department": {"department":"61f6578c0ef8ef785164a837", "deptname": "Bachelor of Engineering"}
+
+    },
+    {
+        "coursename" : "BEng-LDP",
+        "coursecode" : "Bachelor of Engineering - Ladderized Degree Program",
+        "department": {"department":"61f6578c0ef8ef785164a837", "deptname": "Bachelor of Engineering"}
+
+    }
+    
+]
