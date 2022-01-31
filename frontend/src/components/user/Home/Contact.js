@@ -94,8 +94,6 @@ const Contact = () => {
                 </Col>
             </Row>
             </Container>
-
-
         </div>
     );
 }
