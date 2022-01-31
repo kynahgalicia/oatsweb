@@ -137,8 +137,8 @@
 
     },
     {
-        "coursename" : "BET-NDT",
-        "coursecode" : "Bachelor of Engineering Technology - Non-Destructive Testing Technology",
+        "coursename" : "Bachelor of Engineering Technology - Non-Destructive Testing Technology",
+        "coursecode" : "BET-NDT",
         "department": {"department":"61f657780ef8ef785164a835", "deptname": "Mechanical and Allied"}
 
     },
@@ -179,8 +179,8 @@
 
     },
     {
-        "coursename" : "BEng-LDP",
-        "coursecode" : "Bachelor of Engineering - Ladderized Degree Program",
+        "coursename" : "Bachelor of Engineering - Ladderized Degree Program",
+        "coursecode" : "BEng-LDP",
         "department": {"department":"61f6578c0ef8ef785164a837", "deptname": "Bachelor of Engineering"}
 
     }

@@ -1,19 +1,25 @@
 [{
     "title": "Test Thesis",
-    "author":[ "Alexandro Henke", "Another Author"],
-    "keywords": ["platea", "random"],
-    "department": "Basic Arts and Science",
-    "abstract": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum."
+    "authors":[ {"author":"Alexandro Henke"},  {"author": "Another Author"}],
+    "keywords": [{"keyword":"platea"},{"keyword": "random"}],
+    "department": {"departments":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"},
+    "course":{"courses": "61f694e88ba43db4e20fd92d","coursecode":"BTVTEd-ET"},
+    "abstract": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+    "publishedAt": "10-10-2019"
 }, {
     "title": "Another Thesis",
-    "author": "Roberta Longthorn",
-    "keywords": "eu",
-    "department": "Civil and Allied",
-    "abstract": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus."
-}, {
+    "authors":[ {"author":"Roberta Longthorn"},  {"author": "Another Author 2"} , {"author": "Alexandro Henke"}],
+    "keywords": [{"keyword":"lorem"},{"keyword": "random"}],
+    "department": {"departments":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"},
+    "course":{"courses": "61f694e88ba43db4e20fd935","coursecode":"BET-CHT"},
+    "abstract": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+    "publishedAt": "10-10-2021"
+    }, {
     "title": "Another Thesis 2",
-    "author": "Emery Pitcaithly",
-    "keywords": "sollicitudin",
-    "department": "Electrical and Allied",
-    "abstract": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque."
+    "authors":[ {"author":"Roberta Longthorn"},  {"author": "Emery Pitcaithly"} , {"author": "Alexandro Henke"}],
+    "keywords": [{"keyword":"lorem"},{"keyword": "random"},{"keyword": "sollicitudin"}],
+    "department": {"departments":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"},
+    "course":{"courses": "61f694e88ba43db4e20fd93f","coursecode":"BSIT-SDP"},
+    "abstract": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
+    "publishedAt": "10-10-2022"
 }]

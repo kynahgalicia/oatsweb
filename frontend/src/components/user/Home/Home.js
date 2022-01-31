@@ -32,6 +32,7 @@ const Home = () => {
     ])
     return (  
         <Fragment>
+            
             <div className="content">
             <div className="landingpage">
                 <img src={back} alt="logo" className="img-bg" />

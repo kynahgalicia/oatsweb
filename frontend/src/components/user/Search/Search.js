@@ -1,17 +1,18 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {Link, useParams,useHistory} from 'react-router-dom'
+import {useParams,useHistory} from 'react-router-dom'
 
-import { FaSearch } from 'react-icons/fa';
 import { Row, Col} from 'react-bootstrap'
-import {Form, FormControl,Button} from 'react-bootstrap'
+import {Form} from 'react-bootstrap'
 import ISODate from 'isodate'
 import DatePicker from 'react-datepicker'
 import { useAlert } from 'react-alert'
+import SearchResults from './SearchResults'
 
-
+import Loader from '../../layout/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
+import {getDepartment} from '../../../redux/actions/departmentActions1'
 
 const Search = () => {
     let userDept = 'Civil and Allied' // Test Data for User
@@ -19,7 +20,7 @@ const Search = () => {
     const history = useHistory()
     const [thisKeyword, setKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState(1)
-    const [department, setDepartment] = useState('')
+    const [thisDepartment, setDepartment] = useState('')
     const [startDate, setStartDate] = useState(ISODate(new Date("1999/12/31").toISOString()));
     const [endDate, setEndDate] = useState(ISODate(new Date("2023/01/02").toISOString()));
 
@@ -28,6 +29,7 @@ const Search = () => {
 
 
     const { loading, thesis, error} = useSelector(state => state.thesis)
+    const { department} = useSelector(state => state.department)
 
     const {keyword} = useParams()
 
@@ -38,8 +40,9 @@ const Search = () => {
         
         
 
-        dispatch(getThesis(keyword, department, startDate.toISOString(), endDate.toISOString()));
-    }, [dispatch, alert, error, keyword, currentPage,userDept, department,startDate,endDate])
+        dispatch(getThesis(keyword, thisDepartment, startDate.toISOString(), endDate.toISOString()));
+        dispatch(getDepartment())
+    }, [dispatch, alert, error, keyword, currentPage,userDept, thisDepartment,startDate,endDate])
 
     // function setCurrentPageNo(pageNumber) {
     //     setCurrentPage(pageNumber)
@@ -63,15 +66,6 @@ const Search = () => {
             history.push('/')
         }
     }
-
-
-    const departments = [ 
-                        'Basic Arts and Science',
-                        'Civil and Allied', 
-                        'Electrical and Allied', 
-                        'Mechanical and Allied', 
-                        'Bachelor and Engineering'
-                    ]
 
     
     return ( 
@@ -182,14 +176,14 @@ const Search = () => {
                         <ul class="list-group text-start">
 
                             
-                            { departments && departments.map((department) => (
+                            { department && department.map((departments) => (
                                 
                                 <li
                                     class="list-group-item"
-                                    key={department}
-                                    onClick={() => setDepartment(department)}
+                                    key={departments._id}
+                                    onClick={() => setDepartment(departments.deptname)}
                                 >
-                                    {department}
+                                    {departments.deptname}
                                 </li>
                                 
                             ))}
@@ -203,21 +197,11 @@ const Search = () => {
             </div>
                 </Col>
                 <Col sm={7} className='text-start'>
-                    {keyword ? (
-                    <Fragment>
-                        { thesis && thesis.map((theses) => (
-                        <div className='thesis-result'>
-                            <h5> <Link to="/user/search/details"> {theses.title}</Link> </h5>
-                            <Link> <p><i> {theses.author} </i></p></Link>
-
-                            <div>
-                                <label> Year: <Link>{theses.year}</Link> | Department: <Link>{theses.department}</Link> | Course: <Link>{theses.course}</Link></label>
-                            </div>
-                        </div>
-                        
-                    ))}
-                    </Fragment>
-                    ): null}
+                {loading ? <Loader /> : (
+                    keyword ? (
+                    <SearchResults thesis={thesis}></SearchResults>
+                    ): null
+                )}
                 
                 
                 </Col>
