@@ -208,10 +208,10 @@ const Search = () => {
                         { thesis && thesis.map((theses) => (
                         <div className='thesis-result'>
                             <h5> <Link to="/user/search/details"> {theses.title}</Link> </h5>
-                            <Link> <p><i> {theses.author} </i></p></Link>
+                            <Link to="/"> <p><i> {theses.author} </i></p></Link>
 
                             <div>
-                                <label> Year: <Link>{theses.year}</Link> | Department: <Link>{theses.department}</Link> | Course: <Link>{theses.course}</Link></label>
+                                <label> Year: <Link to="/">{theses.year}</Link> | Department: <Link to="/">{theses.department}</Link> | Course: <Link to="/">{theses.course}</Link></label>
                             </div>
                         </div>
                         

@@ -7,7 +7,7 @@ const Department = require('../models/departmentModel.js')
 
 // /api/admin/department/new
 exports.create = catchAsyncErrors(async(req,res,next) => {
-    
+    console.log(req.body);
     const department = await Department.create(req.body);
 
     res.status(201).json({

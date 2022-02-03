@@ -20,9 +20,9 @@ const Header = () => {
             <BsPersonFill size={20}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item><Link> Profile</Link></Dropdown.Item>
+                <Dropdown.Item><Link to="/"> Profile</Link></Dropdown.Item>
                 { user[0].id && user[0].role === 'admin' ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:<Dropdown.Item><Link to="/user/dashboard"> Dashboard</Link></Dropdown.Item>}
-                <Dropdown.Item><Link onClick={() => setUser(false)}> Logout</Link></Dropdown.Item>
+                <Dropdown.Item><Link to="/" onClick={() => setUser(false)}> Logout</Link></Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
         </>

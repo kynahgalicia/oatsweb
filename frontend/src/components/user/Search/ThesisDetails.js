@@ -8,9 +8,9 @@ const ThesisDetails = () => {
                 <Col sm={9}>
                 <div className="details-title text-start mx-5">
                 <h5 className="m-3">Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor</h5>
-                <Link1> <label className="m-3">  Author</label></Link1>
+                <Link1 to="/"> <label className="m-3">  Author</label></Link1>
                 <div className="m-3">
-                    <label> Year: <Link1>2022</Link1> | Department: <Link1>Electrical & Allied </Link1> | Course: <Link1>BSIT</Link1></label>
+                    <label> Year: <Link1 to="/">2022</Link1> | Department: <Link1 to="/">Electrical & Allied </Link1> | Course: <Link1 to="/">BSIT</Link1></label>
                 </div>
             </div>
             
