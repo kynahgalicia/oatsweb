@@ -28,14 +28,15 @@ import ThesisDetails from './components/user/Search/ThesisDetails'
 import DashboardUser from './components/user/Dashboard/DashboardUser'
 
 import NotFound from './components/img/404.png'
+import Loader from './components/layout/Loader'
 function App() {
 
   const [user, setUser] = useState([
     {id: 1, role: 'admin'}
     ])
-    
   return (
     <Router>
+      {/* {loading ? <Loader /> : (  */}
       <div className="App">
       <Header/>
 
@@ -51,7 +52,7 @@ function App() {
         <Route path="/user/organization" component={SignUpAsOrg} exact/>
         <Route path="/user/search" component={Search} exact/>
         <Route path="/user/search/:keyword" component={Search} exact/>
-        <Route path="/user/search/details" component={ThesisDetails} exact/>
+        <Route path="/user/search/details/:thesisId" component={ThesisDetails} exact/>
         <Route path="/user/dashboard" component={DashboardUser} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
@@ -62,6 +63,8 @@ function App() {
 
       <Footer/>
     </div>
+    {/* )} */}
+    
     </Router>
     
   );

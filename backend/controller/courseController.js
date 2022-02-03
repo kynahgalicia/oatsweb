@@ -32,14 +32,14 @@ exports.getAdminCourse = catchAsyncErrors(async (req, res, next) => {
 // /api/course
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
-    const departmentCount = await Course.countDocuments();
+    const courseCount = await Course.countDocuments();
     const apiFeatures = new APIFeatures(Course.find(), req.query).search().filter()
     
     let Course_query = await apiFeatures.query;
 
     res.status(200).json({
         success: true,
-        departmentCount,
+        courseCount,
         course:Course_query,
         filteredCourseCount: Course_query.length,
     })

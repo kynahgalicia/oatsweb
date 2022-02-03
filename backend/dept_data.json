@@ -1,0 +1,27 @@
+[
+    {
+        "_id": "61f656c60ef8ef785164a82d",
+        "deptname": "Basic Arts and Science",
+        "deptcode": "BASD"
+    },
+    {
+        "_id": "61f657390ef8ef785164a82f",
+        "deptname": "Civil and Allied",
+        "deptcode": "CA"
+    },
+    {
+        "_id": "61f657480ef8ef785164a831",
+        "deptname": "Electrical and Allied",
+        "deptcode": "EA"
+    },
+    {
+        "_id": "61f657780ef8ef785164a835",
+        "deptname": "Mechanical and Allied",
+        "deptcode": "MA"
+    },
+    {
+        "_id": "61f6578c0ef8ef785164a837",
+        "deptname": "Bachelor of Engineering",
+        "deptcode": "BENG"
+    }
+]

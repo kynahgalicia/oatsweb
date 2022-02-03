@@ -3,7 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 
 const APIFeatures = require('../utils/apiFeatures')
 
-const Thesis = require('../models/Thesis')
+const Thesis = require('../models/thesisModel')
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
@@ -46,7 +46,6 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
 // /api/thesis/:id
 exports.find = catchAsyncErrors(async(req,res,next) => {
     const thesis = await Thesis.findById(req.params.id);
-    console.log(thesis);
 
     if(!thesis) {
         return next(new ErrorHandler('Not Found',404));
