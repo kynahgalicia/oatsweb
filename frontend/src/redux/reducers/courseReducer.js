@@ -1,32 +1,32 @@
 import {
-    ALL_DEPT_REQUEST,
-    ALL_DEPT_SUCCESS,
-    ALL_DEPT_FAIL,
-    NEW_DEPT_REQUEST,
-    NEW_DEPT_SUCCESS,
-    NEW_DEPT_RESET,
-    NEW_DEPT_FAIL,
+    ALL_COURSE_REQUEST,
+    ALL_COURSE_SUCCESS,
+    ALL_COURSE_FAIL,
+    NEW_COURSE_REQUEST,
+    NEW_COURSE_SUCCESS,
+    NEW_COURSE_RESET,
+    NEW_COURSE_FAIL,
     CLEAR_ERRORS
-} from '../constants/deptConstants'
+} from '../constants/courseConstants'
 
-export const deptReducer = (state = { dept: [] }, action) => {
+export const coursesReducer = (state = { course: [] }, action) => {
     switch (action.type) {
-        case  ALL_DEPT_REQUEST:
+        case  ALL_COURSE_REQUEST:
             return {
                 loading: true,
-                dept: []
+                course: []
             }
 
-        case  ALL_DEPT_SUCCESS:
+        case  ALL_COURSE_SUCCESS:
             return {
                 loading: false,
-                dept: action.payload.dept,
-                deptCount: action.payload.deptCount,
+                course: action.payload.course,
+                courseCount: action.payload.courseCount,
                 resPerPage: action.payload.resPerPage,
-                filteredDeptCount: action.payload.filteredDeptCount
+                filteredCourseCount: action.payload.filteredCourseCount
             }
 
-        case ALL_DEPT_FAIL:
+        case ALL_COURSE_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -43,29 +43,29 @@ export const deptReducer = (state = { dept: [] }, action) => {
     }
 }
 
-export const newDeptReducer = (state = { dept: {} }, action) => {
+export const newCourseReducer = (state = { course: {} }, action) => {
     switch (action.type) {
 
-        case NEW_DEPT_REQUEST:
+        case NEW_COURSE_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case NEW_DEPT_SUCCESS:
+        case NEW_COURSE_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.success,
-                dept: action.payload.dept
+                course: action.payload.course
             }
 
-        case NEW_DEPT_FAIL:
+        case NEW_COURSE_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
-        case NEW_DEPT_RESET:
+        case NEW_COURSE_RESET:
             return {
                 ...state,
                 success: false

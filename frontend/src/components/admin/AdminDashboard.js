@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import AdminSidebar from '../layout/AdminSidebar'
 import ThesisList from './thesis/ThesisList'
-import DeptList from './departments/DeptList'
+import DepartmentList from './departments/DepartmentList'
+import CourseList from './courses/CourseList'
 import UserList from './users/UserList'
 import PaymentList from './payment/PaymentList'
-import CreateDept from './departments/CreateDept'
+import CreateDepartment from './departments/CreateDepartment'
+import Updatedepartment from './departments/EditDepartment'
 
 const AdminDashboard = () => {
     return(
@@ -22,8 +24,10 @@ const AdminDashboard = () => {
                 <div className="admin-wrapper">
                     <Switch>
                     <Route path="/admin/thesis" component={ThesisList} exact/>
-                    <Route path="/admin/dept" component={DeptList} exact/>
-                    <Route path="/admin/dept/new" component={CreateDept} exact/>
+                    <Route path="/admin/department" component={DepartmentList} exact/>
+                    <Route path="/admin/department/new" component={CreateDepartment} exact/>
+                    <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
+                    <Route path="/admin/course" component={CourseList} exact/>
                     <Route path="/admin/users" component={UserList} exact/>
                     <Route path="/admin/payment" component={PaymentList} exact/>
                 

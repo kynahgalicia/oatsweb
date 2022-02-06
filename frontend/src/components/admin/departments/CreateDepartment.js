@@ -1,21 +1,21 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-// import {Row, Col, Button} from 'react-bootstrap';
+import {Row, Col, Button} from 'react-bootstrap';
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { newDept, clearErrors } from '../../../redux/actions/deptActions'
-import { NEW_DEPT_RESET } from '../../../redux/constants/deptConstants'
+import { newDepartment, clearErrors } from '../../../redux/actions/departmentActions'
+import { NEW_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
 
-const CreateDept = ({history}) => {
-    const [deptname, setDeptname] = useState('');
-    const [deptcode, setDeptcode] = useState('');
+const CreateDepartment = ({history}) => {
+    const [deptname, setDepartmentname] = useState('');
+    const [deptcode, setDepartmentcode] = useState('');
 
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, success } = useSelector(state => state.newDept);
+    const { loading, error, success } = useSelector(state => state.newDepartment);
 
     useEffect(() => {
 
@@ -25,9 +25,9 @@ const CreateDept = ({history}) => {
         }
 
         if (success) {
-            history.push('/admin/dept');
+            history.push('/admin/department');
             alert.success('department created successfully');
-            dispatch({ type: NEW_DEPT_RESET })
+            dispatch({ type: NEW_DEPARTMENT_RESET })
         }
 
     }, [dispatch, alert, error, success, history])
@@ -41,7 +41,7 @@ const CreateDept = ({history}) => {
         formData.set('deptname', deptname);
         formData.set('deptcode', deptcode);
 
-        dispatch(newDept(formData))
+        dispatch(newDepartment(formData))
     }
 
     return (
@@ -60,23 +60,24 @@ const CreateDept = ({history}) => {
                                         id="deptname_field"
                                         className="form-control"
                                         value={deptname}
-                                        onChange={(e) => setDeptname(e.target.value)}
+                                        onChange={(e) => setDepartmentname(e.target.value)}
                                     />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="deptcode_field">Code</label>
-                                    <textarea className="form-control" id="deptcode_field" value={deptcode} onChange={(e) => setDeptcode(e.target.value)}></textarea>
+                                    <label htmlFor="deptcode_field">Department Code</label>
+                                    <input
+                                        type="text"
+                                        id="deptcode_field"
+                                        className="form-control"
+                                        value={deptcode}
+                                        onChange={(e) => setDepartmentcode(e.target.value)}
+                                    />
                                 </div>
 
-                                <button
-                                    id="login_button"
-                                    type="submit"
-                                    className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
-                                >
+                                <Button id="login_button" type="submit" disabled={loading ? true : false}>
                                     Save
-                                </button>
+                                </Button>
 
                             </form>
                         </div>
@@ -87,4 +88,4 @@ const CreateDept = ({history}) => {
     )
 }
 
-export default CreateDept
+export default CreateDepartment

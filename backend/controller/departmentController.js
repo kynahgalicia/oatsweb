@@ -14,7 +14,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         success: true,
         department
     })
-    })
+})
 
 
 // /api/admin/department
@@ -59,18 +59,51 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
     })
 })
 
-// /api/department/delete/:id 
-exports.delete = catchAsyncErrors(async(req,res,next) =>{
-    const department = await Department.findById(req.params.id);
+// api/admin/department/edit
+exports.editDepartment = catchAsyncErrors(async(req,res,next) => {
+    let department = await Department.findById(req.params.id);
 
-    if(!department) {
-    return next(new ErrorHandler('Not Found',404));
+    if(!Department) {
+        return next(new ErrorHandler('Department not found',404));
     }
 
-    await Department.deleteOne();
-    res.status(200).json({
-    success: true,
-    message: 'Deleted'
-    })
+    try{
+        department = await Department.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            success:true,
+            department
+        })
+    }catch(error){
+        res.status(500).send(error.message);
+        console.log(error.message);
+    }
+
+    
+})
+
+// /api/department/delete/:id 
+exports.delete = catchAsyncErrors(async(req,res,next) =>{
+    // const department = await Department.findByIdAndDelete(req.params.id);
+
+    // if(!department) {
+    //     return next(new ErrorHandler('Not Found',404));
+    // }
+
+    // await Department.deleteOne();
+    // res.status(200).json({
+    //     success: true,
+    //     message: 'Deleted'
+    // })
+    try {
+        await Department.findByIdAndDelete(req.params.id)
+        res.json({msg: "Department has been deleted!"})
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
 })
 

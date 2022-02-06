@@ -4,9 +4,17 @@ const ErrorHandler = require('../utils/errorHandler');
 const APIFeatures = require('../utils/apiFeatures')
 
 const Course = require('../models/courseModel.js')
+const Department = require('../models/departmentModel.js')
 
 // /api/admin/course/new
 exports.create = catchAsyncErrors(async(req,res,next) => {
+
+    const cdept = await Department.findById(req.body.departments);
+
+    req.body.department = [{
+        id: cdept._id,
+        deptname: cdept.deptname
+    }]
     
     const course = await Course.create(req.body);
 

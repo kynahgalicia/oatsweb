@@ -5,6 +5,7 @@ const departmentController = require('../controller/departmentController')
 router.get('/department',departmentController.get)
 router.get('/department/:id',departmentController.find)
 router.post('/department/new', departmentController.create)
+router.put('/department/edit/:id', departmentController.editDepartment)
 router.delete('/department/delete/:id', departmentController.delete)
 
 module.exports = router
