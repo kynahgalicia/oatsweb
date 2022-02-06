@@ -1,53 +1,55 @@
-const express = require("express");
-const cors = require("cors");
+require('dotenv').config({ path: '.env' });
+
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-// const path = require('path');
-const fileUpload = require("express-fileupload");
-const connectDB = require('./config/database');
-const cloudinary = require('cloudinary')
-
-const app = express();
-
-app.use(cors({
-    origin: true,
-    credentials: true,
-}));
-
-//load config
-dotenv.config({path: 'backend/config/config.env'});
-const PORT = process.env.PORT || 8080
-
-//mongodb connection
-connectDB();
-
-// Setting up cloudinary configuration
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-})
+const fileUpload = require('express-fileupload')
 
 
-// Bodyparser <middleware></middleware>
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+//middleware
+const app = express()
+app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
 app.use(fileUpload({
-    createParentPath: true
+    useTempFiles: true
 }))
 
 
-app.listen(
-    PORT,
-    console.log(
-        `Server running on port https://localhost:${PORT}`
-    )
-)
+app.use(cors());
+app.use(express.json());
 
+
+
+//mongodb connection 
+const uri = process.env.DB_LOCAL_URI;
+mongoose.connect(uri);
+
+const connection = mongoose.connection;
+connection.once('open', ()=> {
+    console.log("MongoDB connection is OK");
+});
+
+
+
+//port
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+    console.log('SERVER IS RUNNING ON PORT', PORT)
+})
+
+
+
+
+<<<<<<< HEAD
+// Routes
+app.use('/api', require('./routes/thesisRouter'))
+=======
 // app.use('/api', require('./routes/thesisRouter'))
+>>>>>>> 1076506d15eb34b91e9c483651d86c0de019396d
 app.use('/api', require('./routes/departmentRouter'))
 app.use('/api', require('./routes/courseRouter'))
+app.use('/user', require('./routes/userRouter'))
 
 

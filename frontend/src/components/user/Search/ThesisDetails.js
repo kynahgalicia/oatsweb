@@ -5,7 +5,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col} from 'react-bootstrap'
 import moment from 'moment'
-import Loader from '../../layout/Loader'
+import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 const ThesisDetails = () => {
     

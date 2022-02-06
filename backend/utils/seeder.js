@@ -1,23 +1,30 @@
 const Thesis = require('../models/thesisModel')
 const Course = require('../models/courseModel')
 const Department = require('../models/departmentModel')
-const dotenv = require('dotenv');
-const connectDatabase = require('../config/database');
-dotenv.config({ path: 'backend/config/config.env' })
+require('dotenv').config({ path: '.env' });
+const mongoose = require('mongoose')
+// const connectDatabase = require('../config/database');
 const thesis = require('../thesis_data1');
 const course = require('../course_data');
 const department = require('../department_data');
-connectDatabase();
+const uri = process.env.DB_LOCAL_URI;
+mongoose.connect(uri);
+
+const connection = mongoose.connection;
+connection.once('open', ()=> {
+    console.log("MongoDB connection is OK");
+});
+
 
 const seedThesis = async () => {
     try {
-        await Thesis.deleteMany();
+        // await Thesis.deleteMany();
         await Course.deleteMany();
-        await Department.deleteMany();
+        // await Department.deleteMany();
         console.log('Thesis / Course Are Deleted');
         // await Thesis.insertMany(thesis)
         await Course.insertMany(course)
-        await Department.insertMany(department)
+        // await Department.insertMany(department)
         console.log('Data Added.')
         process.exit();
     } catch (error) {

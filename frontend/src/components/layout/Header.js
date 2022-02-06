@@ -9,8 +9,9 @@ import { BsPersonFill } from 'react-icons/bs';
 const Header = () => {
 
     const [user, setUser] = useState([
-    {id: 1, role: 'admin'}
+    {id: 1, role: 'user'}
     ])
+
     const setProfile = () => {
 
         return (
@@ -57,7 +58,8 @@ const Header = () => {
             <Nav>
             
             {user[0].id && user[0].role === 'admin' ? null  : setUserLink()}
-            {user[0]?.id ? setProfile() : <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>  }
+            {/* {user[0]?.id ? setProfile() : <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>  } */}
+            <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>
             </Nav>
         </Navbar.Collapse>
         </Container>

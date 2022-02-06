@@ -21,6 +21,8 @@ import Login from './components/user/Auth/Login'
 import SignUp from './components/user/Auth/SignUp'
 import SignUpAsStudent from './components/user/Auth/SignUpAsStudent'
 import SignUpAsOrg from './components/user/Auth/SignUpAsOrg'
+import ActivationEmail from './components/user/Auth/ActivationEmail';
+import Redirect from './components/user/Auth/Redirect'
 
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
@@ -28,12 +30,12 @@ import ThesisDetails from './components/user/Search/ThesisDetails'
 import DashboardUser from './components/user/Dashboard/DashboardUser'
 
 import NotFound from './components/img/404.png'
-import Loader from './components/layout/Loader'
+// import Loader from './components/layout/Loader'
 function App() {
 
-  const [user, setUser] = useState([
-    {id: 1, role: 'admin'}
-    ])
+  // const [user, setUser] = useState([
+  //   {id: 1, role: 'admin'}
+  //   ])
   return (
     <Router>
       {/* {loading ? <Loader /> : (  */}
@@ -50,6 +52,8 @@ function App() {
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>
         <Route path="/user/organization" component={SignUpAsOrg} exact/>
+        <Route path="/user/activate/:activation_token" component={ActivationEmail} exact/>
+        <Route path="/Redirect" component={Redirect} exact/>
         <Route path="/user/search" component={Search} exact/>
         <Route path="/user/search/:keyword" component={Search} exact/>
         <Route path="/user/search/details/:thesisId" component={ThesisDetails} exact/>

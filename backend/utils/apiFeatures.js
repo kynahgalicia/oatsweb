@@ -15,6 +15,16 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+    searchCourse() {
+        const department = this.queryStr.department ? {
+            department: {
+                $regex: this.queryStr.department,
+                $options: 'i'
+            }
+        } : {}
+        this.query = this.query.find({ ...department });
+        return this;
+    }
 
     filter() {
 

@@ -27,7 +27,7 @@ const AdminDashboard = () => {
                     <Route path="/admin/department" component={DepartmentList} exact/>
                     <Route path="/admin/department/new" component={CreateDepartment} exact/>
                     <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
-                    <Route path="/admin/course" component={CourseList} exact/>
+                    {/* <Route path="/admin/course" component={CourseList} exact/> */}
                     <Route path="/admin/users" component={UserList} exact/>
                     <Route path="/admin/payment" component={PaymentList} exact/>
                 
