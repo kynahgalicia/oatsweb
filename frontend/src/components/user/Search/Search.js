@@ -9,10 +9,10 @@ import DatePicker from 'react-datepicker'
 import { useAlert } from 'react-alert'
 import SearchResults from './SearchResults'
 
-import Loader from '../../layout/Loader'
+import Loader from '../../utils/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
-import {getDepartment} from '../../../redux/actions/departmentActions1'
+import {getDepartment} from '../../../redux/actions/departmentActions'
 
 const Search = () => {
     let userDept = 'Civil and Allied' // Test Data for User
@@ -38,8 +38,7 @@ const Search = () => {
             return alert.error(error)
         }
         
-        
-
+    
         dispatch(getThesis(keyword, thisDepartment, startDate.toISOString(), endDate.toISOString()));
         dispatch(getDepartment())
     }, [dispatch, alert, error, keyword, currentPage,userDept, thisDepartment,startDate,endDate])
