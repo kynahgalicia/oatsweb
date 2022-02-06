@@ -12,11 +12,11 @@ const Cards = ({ cards, title}) => {
             {cards.map(card => ( 
                 <Col className="my-2"> 
                 <div className="home-card" key={card.id}>
-                    <Link><h5>{ card.title }</h5></Link>
+                    <Link to="/"><h5>{ card.title }</h5></Link>
                     <label>
                         {card.author}
                     </label>
-                    <Link >Read More <BsFillArrowRightCircleFill size={20}/></Link>
+                    <Link to="/">Read More <BsFillArrowRightCircleFill size={20}/></Link>
                 </div> 
                 </Col> 
                 ))}

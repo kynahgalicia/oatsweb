@@ -33,12 +33,10 @@ const ThesisDetails = () => {
                 <Row>
                 <Col sm={9}>
                 <div className="details-title text-start mx-5">
-                <h5 className="m-3">{thesis.title}</h5>
-                { thesis.authors.map((x) => (
-                    <Link1> <label className="m-3"> {x.author}</label></Link1>
-                ))}
+                <h5 className="m-3">Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor</h5>
+                <Link1 to="/"> <label className="m-3">  Author</label></Link1>
                 <div className="m-3">
-                    <label> Year: <Link1>{moment(thesis.publishedAt).format('MMMM D YYYY')} </Link1> | Department: <Link1>{thesis.department.deptname} </Link1> | Course: <Link1>{thesis.course.coursecode}</Link1></label>
+                    <label> Year: <Link1 to="/">2022</Link1> | Department: <Link1 to="/">Electrical & Allied </Link1> | Course: <Link1 to="/">BSIT</Link1></label>
                 </div>
             </div>
             

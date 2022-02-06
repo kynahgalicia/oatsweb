@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
-
+import { useDispatch, useSelector } from 'react-redux'
 
 const DeptList = () => {
-
-    const [departments, setDepartments] = useState([
-        {'id': 1 , 'name' :'Basic Arts & Sciences'},
-        {'id': 2 , 'name' :'Civil & Allied'},
-        {'id': 3 , 'name' :'Electrical & Allied'},
-        {'id': 4 , 'name' :'Mechanical & Allied'},
-        {'id': 5 , 'name' :'Bachelor of Engineering'}
-    ])
+    // const [departments, setDepartments] = useState([
+    //     {'id': 1 , 'name' :'Basic Arts & Sciences'},
+    //     {'id': 2 , 'name' :'Civil & Allied'},
+    //     {'id': 3 , 'name' :'Electrical & Allied'},
+    //     {'id': 4 , 'name' :'Mechanical & Allied'},
+    //     {'id': 5 , 'name' :'Bachelor of Engineering'}
+    // ])
+    const { loading, error, dept } = useSelector(state => state.dept);
 
     const setData = () => { 
         const data = {
@@ -24,8 +24,13 @@ const DeptList = () => {
                 sort: 'asc'
             },
             {
-                label: 'Name',
-                field: 'name',
+                label: 'Department Name',
+                field: 'deptname',
+                sort: 'asc'
+            },
+            {
+                label: 'Code',
+                field: 'deptcode',
                 sort: 'asc'
             },
             {
@@ -37,16 +42,16 @@ const DeptList = () => {
         
     }
 
-    departments.forEach(department => {
+    dept.forEach(dept => {
         data.rows.push({
-            id: department.id,
-            name: department.name,
+            id: dept.id,
+            name: dept.name,
             actions: 
             <Fragment>
                 <Button variant="danger">
                     <FaTrash/>
                 </Button>
-                <Link className="decor-none block">
+                <Link to="/" className="decor-none block">
                     <Button variant="info">
                     <FaPencilAlt/>
                     </Button>
@@ -62,7 +67,7 @@ const DeptList = () => {
         <Fragment>
             <div className="admin-wrapper">
             <h1>Departments</h1>
-            
+            <button><Link to="/admin/dept/new">Add Department</Link></button>
 
             <MDBDataTableV5 
                 hover 

@@ -42,8 +42,12 @@ app.listen(PORT, () => {
 
 
 
+<<<<<<< HEAD
 // Routes
 app.use('/api', require('./routes/thesisRouter'))
+=======
+// app.use('/api', require('./routes/thesisRouter'))
+>>>>>>> 1076506d15eb34b91e9c483651d86c0de019396d
 app.use('/api', require('./routes/departmentRouter'))
 app.use('/api', require('./routes/courseRouter'))
 app.use('/user', require('./routes/userRouter'))

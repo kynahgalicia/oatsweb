@@ -196,11 +196,21 @@ const Search = () => {
             </div>
                 </Col>
                 <Col sm={7} className='text-start'>
-                {loading ? <Loader /> : (
-                    keyword ? (
-                    <SearchResults thesis={thesis}></SearchResults>
-                    ): null
-                )}
+                    {keyword ? (
+                    <Fragment>
+                        { thesis && thesis.map((theses) => (
+                        <div className='thesis-result'>
+                            <h5> <Link to="/user/search/details"> {theses.title}</Link> </h5>
+                            <Link to="/"> <p><i> {theses.author} </i></p></Link>
+
+                            <div>
+                                <label> Year: <Link to="/">{theses.year}</Link> | Department: <Link to="/">{theses.department}</Link> | Course: <Link to="/">{theses.course}</Link></label>
+                            </div>
+                        </div>
+                        
+                    ))}
+                    </Fragment>
+                    ): null}
                 
                 
                 </Col>
