@@ -19,8 +19,13 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
-            <Nav.Item>
-                <Link to="/admin/dept">Departments</Link>
+            <Nav.Item>  
+                <Link to="/admin/department">Departments</Link>
+            </Nav.Item>
+            <hr/>
+
+            <Nav.Item>  
+                <Link to="/admin/course">Courses</Link>
             </Nav.Item>
             <hr/>
 

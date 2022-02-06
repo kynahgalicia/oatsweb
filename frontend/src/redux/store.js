@@ -1,8 +1,9 @@
 import { combineReducers , createStore, applyMiddleware, compose} from "redux";
 
 import { thesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
-import { departmentReducer } from "./reducers/departmentReducer1";
+import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer";
 import { courseReducer } from "./reducers/courseReducer1";
+import {authReducer} from './reducers/authReducer'
 
 import thunk from 'redux-thunk'
 
@@ -13,9 +14,14 @@ const reducer = combineReducers({
     thesis: thesisReducer,
     thesisDetails: thesisDetailsReducer,
     // Department
-    department: departmentReducer,
+    department: departmentsReducer, 
+    newDepartment: newDepartmentReducer,
+    departments: departmentReducer,
+    departmentDetails: DepartmentDetailsReducer,
     //Course
-    course: courseReducer
+    course: courseReducer,
+    // Authentication
+    auth: authReducer
 })
 
 const store = createStore(
