@@ -410,12 +410,14 @@ form h5{
   color: var(--white) !important;
   background-color: var(--darkRed) !important ;
   border-color: transparent !important;
+  margin: 5px;
 }
 
 .btn-grey{
   color: var(--white) !important;
   background-color: var(--grey) !important ;
   border-color: transparent !important;
+  margin: 5px;
 }
 .signup{
   margin: 10vw 35vw;

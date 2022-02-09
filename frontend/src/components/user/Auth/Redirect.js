@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import {useSelector } from 'react-redux';
 const Redirect = () => {
-    const {msg} = useSelector(state => state.auth)
+    const {msg} = useSelector(state => state.authUserRegister)
 
 
     return ( 

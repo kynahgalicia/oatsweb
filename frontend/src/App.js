@@ -2,8 +2,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "react-datepicker/dist/react-datepicker.css"
 
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import store from './redux/store'
 
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -17,7 +19,8 @@ import Category from './components/user/Home/Category'
 import Contact from './components/user/Home/Contact'
 
 //Auth
-import Login from './components/user/Auth/Login'
+import LoginasUser from './components/user/Auth/LoginasUser'
+import LoginasGuest from './components/user/Auth/LoginasGuest'
 import SignUp from './components/user/Auth/SignUp'
 import SignUpAsStudent from './components/user/Auth/SignUpAsStudent'
 import SignUpAsOrg from './components/user/Auth/SignUpAsOrg'
@@ -30,12 +33,16 @@ import ThesisDetails from './components/user/Search/ThesisDetails'
 import DashboardUser from './components/user/Dashboard/DashboardUser'
 
 import NotFound from './components/img/404.png'
-// import Loader from './components/layout/Loader'
+
+import { getToken } from './redux/actions/authActions'
 function App() {
 
-  // const [user, setUser] = useState([
-  //   {id: 1, role: 'admin'}
-  //   ])
+
+  useEffect(() => {
+    store.dispatch(getToken())
+  }, [])
+  
+
   return (
     <Router>
       {/* {loading ? <Loader /> : (  */}
@@ -48,7 +55,8 @@ function App() {
         <Route path="/About" component={About} exact/>
         <Route path="/Category" component={Category} exact/>
         <Route path="/Contact" component={Contact} exact/>
-        <Route path="/Login" component={Login} exact/>
+        <Route path="/user/login" component={LoginasUser} exact/>
+        <Route path="/guest/login" component={LoginasGuest} exact/>
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>
         <Route path="/user/organization" component={SignUpAsOrg} exact/>

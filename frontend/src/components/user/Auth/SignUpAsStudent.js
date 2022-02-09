@@ -5,7 +5,6 @@ import {BsGoogle} from 'react-icons/bs'
 import { Row, Col} from 'react-bootstrap'
 import { useAlert } from 'react-alert'
 import study from '../../img/study.png'
-import Loader from '../../utils/Loader'
 import { showErrMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import {getDepartment} from '../../../redux/actions/departmentActions'
@@ -28,12 +27,12 @@ const SignUpAsStudent = () => {
     const [thisCourse, setCourse] = useState('')
     const [agree, setAgree] = useState(false);
 
-    const {department , loading} = useSelector(state => state.department)
-    const {course} = useSelector(state => state.course)
-    const {isAuthenticated, error,  success} = useSelector(state => state.auth)
+    const {department} = useSelector(state => state.department)
+    const {courses} = useSelector(state => state.courses)
+    const { msg, error} = useSelector(state => state.authUserRegister)
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (msg) {
             history.push('/Redirect')
         }
 
@@ -48,7 +47,7 @@ const SignUpAsStudent = () => {
 
         
 
-    }, [dispatch, alert, error, history, thisDepartment, isAuthenticated,agree])
+    }, [dispatch, alert, error, history, thisDepartment, msg,agree])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -140,9 +139,9 @@ const SignUpAsStudent = () => {
             <Form.Group className="mb-3">
             <Form.Label>Course</Form.Label>
                 <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
-                {thisDepartment && course && course.map((courses) => (
+                {thisDepartment && courses && courses.map((course) => (
                                 
-                                <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>
+                                <option value={course._id}>{course.coursecode} ({course.coursename})</option>
                                     
                 ))}
                 </Form.Select>

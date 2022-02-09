@@ -9,7 +9,9 @@ router.post('/activation', userController.activateEmail)
 
 router.post('/login', userController.login)
 
-router.post('/refresh_token', userController.getAccessToken)
+router.get('/logout', userController.logout)
+
+router.post('/access', userController.getAccessToken)
 
 router.post('/forgot', userController.forgotPassword)
 
@@ -18,7 +20,7 @@ router.post('/reset', auth, userController.resetPassword)
 router.get('/infor', auth, userController.getUserInfor)
 
 router.get('/all_infor', auth, authAdmin, userController.getUsersAllInfor)
-router.get('/test', userController.test)
+
 
 // router.get('/logout', userController.logout)
 

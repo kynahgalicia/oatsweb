@@ -11,7 +11,19 @@ import{
     ACTIVATE_USER_REQUEST,
     ACTIVATE_USER_SUCCESS,
     ACTIVATE_USER_FAIL,
-    CLEAR_ERRORS
+
+    LOAD_USER_REQUEST,
+    LOAD_USER_SUCCESS,
+    LOAD_USER_FAIL,
+
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAIL,
+
+    GET_TOKEN_REQUEST,
+    GET_TOKEN_SUCCESS,
+    GET_TOKEN_FAIL,
+    CLEAR_ERRORS,
 } from '../constants/authConstants'
 
 export const register = (userData) => async (dispatch) => {
@@ -91,6 +103,71 @@ export const activateEmail = (activation_token) => async (dispatch) => {
         })
     }
 }
+
+// Load user
+export const loadUser = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: LOAD_USER_REQUEST })
+
+        const { data } = await axios.get('/user/infor')
+
+        dispatch({
+            type: LOAD_USER_SUCCESS,
+            payload: data.user
+        })
+
+    } catch (error) {
+        dispatch({
+            type: LOAD_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+
+export const getToken = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: GET_TOKEN_REQUEST })
+
+
+        const { data } = await axios.post('/user/access')
+
+        dispatch({
+            type: GET_TOKEN_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: GET_TOKEN_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
+// Logout user
+export const logout = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: LOGOUT_REQUEST
+         })
+
+        await axios.get('/user/logout')
+
+        dispatch({
+            type: LOGOUT_SUCCESS,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: LOGOUT_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 
 // Clear Errors
