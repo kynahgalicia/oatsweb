@@ -9,7 +9,7 @@ const ActivationEmail = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const { msg, error} = useSelector(state => state.authUserRegister)
+    const { success, error} = useSelector(state => state.authUserRegister)
     const {activation_token} = useParams()
 
     useEffect(() => {
@@ -20,11 +20,11 @@ const ActivationEmail = () => {
     }, [ dispatch, history]);
     
 
-    function successMsg(msg) {
+    function successMsg(success) {
         return (
             <div className="activationMsg">
-            <h4>{msg} <i className="fas fa-check-circle"></i></h4>
-            <Button className="btn btn-dark"><Link to="/Login">Login Now</Link></Button>
+            <h4>{success} <i className="fas fa-check-circle"></i></h4>
+            <Button className="btn btn-dark"><Link to="/user/login">Login Now</Link></Button>
             </div>
         );
     }
@@ -33,7 +33,7 @@ const ActivationEmail = () => {
         return (
             <div className="activationMsg">
             <h4>{error}</h4>
-            <Button className="btn btn-dark"><Link to="/Login">Redirect</Link></Button>
+            <Button className="btn btn-dark"><Link to="/user/login">Redirect</Link></Button>
             </div>
         );
     }
@@ -42,7 +42,7 @@ const ActivationEmail = () => {
         <Fragment>
 
             <div className="wrapper">
-                {msg && successMsg(msg) }
+                {success && successMsg(success) }
                 {error && errorMsg(error) }
             </div>
         </Fragment>
