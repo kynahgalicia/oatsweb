@@ -2,16 +2,14 @@ import React, {Fragment, useState, useEffect} from 'react'
 import { Link, useHistory, useParams} from 'react-router-dom' 
 import { useAlert } from 'react-alert'
 import { Button } from 'react-bootstrap'
-import { showErrMsg, showSuccessMsg } from '../../utils/Notification';
 import {activateEmail, clearErrors} from '../../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const ActivationEmail = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const alert = useAlert()
 
-    const { isAuthenticated, error, success} = useSelector(state    => state.auth);
+    const { msg, error} = useSelector(state => state.authUserRegister)
     const {activation_token} = useParams()
 
     useEffect(() => {
@@ -22,12 +20,10 @@ const ActivationEmail = () => {
     }, [ dispatch, history]);
     
 
-    console.log(activation_token)
-
-    function successMsg(success) {
+    function successMsg(msg) {
         return (
             <div className="activationMsg">
-            <h4>{success} <i class="fas fa-check-circle"></i></h4>
+            <h4>{msg} <i className="fas fa-check-circle"></i></h4>
             <Button className="btn btn-dark"><Link to="/Login">Login Now</Link></Button>
             </div>
         );
@@ -46,7 +42,7 @@ const ActivationEmail = () => {
         <Fragment>
 
             <div className="wrapper">
-                {success && successMsg(success) }
+                {msg && successMsg(msg) }
                 {error && errorMsg(error) }
             </div>
         </Fragment>

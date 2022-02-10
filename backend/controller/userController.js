@@ -4,7 +4,7 @@ const Course = require('../models/courseModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
-
+const sendToken = require('../utils/jwtToken');
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
 // const fetch = require('node-fetch')
@@ -14,12 +14,6 @@ const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 const {FRONTEND_URL} = process.env
 
 const userController = {
-    // /user/test
-    test: async (req, res) => {
-        const uDept = await Course.find({"department.id": req.body.user_department});
-        res.json({msg: uDept, test: req.body.user_department})
-    },
-
 
     // /user/register
     register: async (req, res) => {
@@ -114,35 +108,30 @@ const userController = {
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
             
             console.log(user)   
-            const refresh_token = createRefreshToken({id: user._id})
-            res.cookie('refreshtoken', refresh_token, {
-                httpOnly: true,
-                path: '/user/refresh_token',
-                maxAge: 7*24*60*60*1000 // 7 days
-            })
+            // const refresh_token = createRefreshToken({id: user._id})
+            // res.cookie('refreshtoken', refresh_token, {
+            //     httpOnly: true,
+            //     path: '/user/refresh_token',
+            //     maxAge: 7*24*60*60*1000 // 7 days
+            // })
             
-            res.json({msg: "Login success!"})
+            sendToken(user, 200, res)
+            // res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
-
-    // /user/refresh_token
+    // /user/cookie 
     getAccessToken: (req, res) => {
-        try {
-            const rf_token = req.cookies.refreshtoken
-            if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-
-            jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-                if(err) return res.status(400).json({msg: "Please login now!"})
-
-                const access_token = createAccessToken({id: user.id})
-                res.json({access_token})
-            })
+        try{
+        const rf_token = req.cookies.token
+        if(!rf_token) return res.status(400).json({msg: "Please login now!"})
+        res.json({msg: "Cookie Found"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
+
 
     // /user/forgot
     forgotPassword: async (req, res) => {
@@ -156,7 +145,6 @@ const userController = {
 
             sendMail(user_tupmail, url, "Reset your password")
             res.json({msg: "Re-send the password, please check your email."})
-  
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -188,6 +176,8 @@ const userController = {
             return res.status(500).json({msg: err.message})
         }
     },
+
+
     //pwedeng alisin to dito kase pang admin lang to 
     // /user/all_infor
     getUsersAllInfor: async (req, res) => {
@@ -198,7 +188,24 @@ const userController = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-    }
+    },
+
+    // /user/logout
+    logout: async (req, res) => {
+        try {
+            res.cookie('token', null, {
+                expires: new Date(Date.now()),
+                httpOnly: true
+            })
+            res.status(200).json({
+                success: true,
+                msg: 'Logged out'
+            })
+            
+        } catch (error) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
 
 }
 

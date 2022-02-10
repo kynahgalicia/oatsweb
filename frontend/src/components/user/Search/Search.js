@@ -15,7 +15,9 @@ import {getThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 
 const Search = () => {
-    let userDept = 'Civil and Allied' // Test Data for User
+    // Test Data for User
+    let userDept = null 
+    // let userDept = 'Basic Arts and Science' 
 
     const history = useHistory()
     const [thisKeyword, setKeyword] = useState('');
@@ -59,7 +61,7 @@ const Search = () => {
         }
         e.preventDefault()
         if (thisKeyword) {
-                    history.replace(`/user/search/${thisKeyword}`)
+                    history.replace(`/search/${thisKeyword}`)
 
         } else {
             history.push('/')
@@ -97,18 +99,18 @@ const Search = () => {
 
                 <Col sm={3} border="dark">
                 <div className='p-3'>
-                    <div class="user-accordion accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <div className="user-accordion accordion" id="accordionExample">
+                    <div className="card">
+                        <div className="card-header" id="headingOne">
+                        <h2 className="mb-0">
+                            <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Show
                             </button>
                         </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
+                        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div className="card-body">
                         <div key="default-radio" className="mb-3 text-start">
                             <Form.Check
                                     inline
@@ -120,28 +122,32 @@ const Search = () => {
                                     onClick={() => setDepartment('')}
                             />
 
-                            <Form.Check
-                                inline
-                                label="Open Access Only"
-                                name="group1"
-                                type="radio"
-                                id="inline-radio-2"
-                                onClick={() => setDepartment(userDept)}
-                            />
+        {
+            userDept ? <Form.Check
+            inline
+            label="Open Access Only"
+            name="group1"
+            type="radio"
+            id="inline-radio-2"
+            onClick={() => setDepartment(userDept)}
+            />
+            : null
+        }
+                            
                         </div>
                         </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <div className="card">
+                        <div className="card-header" id="headingTwo">
+                        <h2 className="mb-0">
+                            <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             Year
                             </button>
                         </h2>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body year">
+                        <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div className="card-body year">
                         <label> Start Date:</label>
                                 <DatePicker
                                 selected={startDate}
@@ -162,23 +168,23 @@ const Search = () => {
                         </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <div className="card">
+                        <div className="card-header" id="headingThree">
+                        <h2 className="mb-0">
+                            <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             Department
                             </button>
                         </h2>
                         </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                        <div class="card-body">
-                        <ul class="list-group text-start">
+                        <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div className="card-body">
+                        <ul className="list-group text-start">
 
                             
                             { department && department.map((departments) => (
                                 
                                 <li
-                                    class="list-group-item"
+                                    className="list-group-item"
                                     key={departments._id}
                                     onClick={() => setDepartment(departments.deptname)}
                                 >
@@ -196,23 +202,11 @@ const Search = () => {
             </div>
                 </Col>
                 <Col sm={7} className='text-start'>
-                    {keyword ? (
-                    <Fragment>
-                        { thesis && thesis.map((theses) => (
-                        <div className='thesis-result'>
-                            <h5> <Link to="/user/search/details"> {theses.title}</Link> </h5>
-                            <Link to="/"> <p><i> {theses.author} </i></p></Link>
-
-                            <div>
-                                <label> Year: <Link to="/">{theses.year}</Link> | Department: <Link to="/">{theses.department}</Link> | Course: <Link to="/">{theses.course}</Link></label>
-                            </div>
-                        </div>
-                        
-                    ))}
-                    </Fragment>
-                    ): null}
-                
-                
+                {loading ? <Loader /> : (
+                    keyword ? (
+                    <SearchResults userDept={userDept} thesis={thesis}></SearchResults>
+                    ): null
+                )}
                 </Col>
                 <Col sm={2}>
                     

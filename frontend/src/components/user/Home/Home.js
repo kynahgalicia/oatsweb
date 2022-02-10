@@ -1,24 +1,34 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import back from '../../img/back-red.png';
 import { FaSearch } from 'react-icons/fa';
 import Cards from './home-components/Cards';
 import Department from './home-components/Department';
 import {Link, useHistory } from 'react-router-dom'
 import {Row, Col} from 'react-bootstrap'
-
+import { getThesisCount } from '../../../redux/actions/thesisActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Home = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [keyword, setKeyword] = useState('');
+    const { thesisCount } = useSelector(state => state.thesis);
+
+    useEffect(() => {
+        dispatch(getThesisCount())
+        console.log(thesisCount)
+    }, [dispatch, history])
+    
     const searchHandler = (e) => {
+        
         if(keyword){
             console.log('no key')
         }
         e.preventDefault()
         if (keyword) {
             if (window.location.pathname === '/') {
-                    history.push(`/user/search/${keyword}`)
+                    history.push(`/search/${keyword}`)
             }
 
         } else {
@@ -42,8 +52,8 @@ const Home = () => {
                     <Col sm={10}>
                     <div className="search">
                 
-                        <h1>Lorem ipsum dolor sit amet</h1>
-                        <h4>consectetur adipiscing elit</h4>
+                        <h1>Preserving the past, opening the future.</h1>
+                        <h4>Search {thesisCount} items</h4>
 
                         <form onSubmit={searchHandler} className='searchbar ' >
                             <div className="input-group">
@@ -55,7 +65,7 @@ const Home = () => {
                                 />
                                 <div className="input-group-append">
                                     <button id="search_btn" className="btn">
-                                        <i className="fa fa-search" aria-hidden="true"></i>
+                                    <FaSearch></FaSearch>
                                     </button>
                                 </div>
                             </div>

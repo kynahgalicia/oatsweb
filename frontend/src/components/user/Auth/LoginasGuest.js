@@ -7,21 +7,20 @@ import { showErrMsg } from '../../utils/Notification';
 import {login, clearErrors} from '../../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux';
 
-const Login = () => {
+const LoginasGuest = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const alert = useAlert()
 
-    // const [user, setUser] = useState()
     const [user_tupmail, setEmail] = useState('');
     const [user_password, setPassword] = useState('');
 
-    const { isAuthenticated, error,  msg} = useSelector(state => state.auth);
+    const {error, msg, isLogged} = useSelector(state => state.authUser);
 
     const redirect = window.location.search ? window.location.search.split('=')[1] : '/'
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isLogged) {
             if(msg){
                 history.push('/')
                 alert.success(msg)
@@ -34,11 +33,13 @@ const Login = () => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, error, history, redirect,msg])
+    }, [dispatch, alert, isLogged, error, history, redirect,msg])
 
     const submitHandler = async e => {
         e.preventDefault()
+        localStorage.setItem('firstLogin', true)
         dispatch(login(user_tupmail,user_password));
+
     }
 
     return (
@@ -48,12 +49,12 @@ const Login = () => {
             
 
             <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
-            <h1 className='text-center'>Sign In</h1>
+            <h1 className='text-center'>Sign In as Guest</h1>
 
             {error && showErrMsg(error)}
-            <Button className="w-100 btn-grey my-4" type="submit">
+            {/* <Button className="w-100 btn-grey my-4" type="submit">
                 <label><BsGoogle size={15} className='m-2'/> Sign with Google</label>
-            </Button>
+            </Button> */}
             <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="" name="user_tupmail" id="user_tupmail" value={user_tupmail}
@@ -76,6 +77,11 @@ const Login = () => {
             <Button className="w-100 btn-login" type="submit">
                 Sign In
             </Button>
+            <Link to ="/user/login">
+            <Button className="w-100 btn-grey">
+                Sign In as Student
+            </Button>
+            </Link>
             <div className='text-center my-3'>
             <label>Don't have an account?   <Link to="/SignUp"> Sign Up
             </Link></label>
@@ -88,4 +94,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default LoginasGuest;

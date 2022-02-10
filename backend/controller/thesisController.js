@@ -43,6 +43,17 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
     })
 })
 
+// /api/thesisCount
+exports.thesisCount = catchAsyncErrors(async (req,res,next) => {
+    
+    const thesisCount = await Thesis.countDocuments();
+
+    res.status(200).json({
+        thesisCount: thesisCount
+    })
+})
+
+
 // /api/thesis/:id
 exports.find = catchAsyncErrors(async(req,res,next) => {
     const thesis = await Thesis.findById(req.params.id);
@@ -52,7 +63,6 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
     }
     
     res.status(200).json({
-        success: true,
         thesis
     })
 })

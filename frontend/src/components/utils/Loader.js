@@ -8,7 +8,7 @@ const Loader = () => {
                 <div className="dot1"></div>
                 <div className="dot2"></div>
                 </div> */}
-                <div class="dot-bricks"></div>
+                <div className="dot-bricks"></div>
             </div>
         </div>
     ) 

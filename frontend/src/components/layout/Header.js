@@ -1,16 +1,38 @@
-import React, {Fragment, useState} from 'react'
-import { Link } from 'react-router-dom' 
+import React, {Fragment, useState, useEffect} from 'react'
+import { Link, useHistory } from 'react-router-dom' 
+import { useAlert } from 'react-alert'
 import { Nav, Navbar, Container,Dropdown } from 'react-bootstrap';
 import { FaShoppingCart } from 'react-icons/fa';
 import { BsPersonFill } from 'react-icons/bs';
-
-// import {Link} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {logout} from '../../redux/actions/authActions'
 
 const Header = () => {
+    const dispatch = useDispatch()
+    // const history = useHistory()
+    const alert = useAlert()
 
-    const [user, setUser] = useState([
-    {id: 1, role: 'admin'}
-    ])
+    const {isLoggedIn} = useSelector(state => state.authUser)
+    const {token, isLogged, isUser} = useSelector(state => state.authToken)
+
+    const isAdmin = false
+
+    useEffect(() => {
+
+            // const firstLogin = localStorage.getItem('firstLogin')
+            if(isLoggedIn){
+                // dispatch(getToken())   
+                console.log('token')
+            }
+        
+    }, [ dispatch,isLoggedIn, isUser]);
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        window.location.reload();
+        alert.success('Logged out successfully.')
+        
+    }
 
     const setProfile = () => {
 
@@ -22,8 +44,8 @@ const Header = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 <Dropdown.Item><Link to="/"> Profile</Link></Dropdown.Item>
-                { user[0].id && user[0].role === 'admin' ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:<Dropdown.Item><Link to="/user/dashboard"> Dashboard</Link></Dropdown.Item>}
-                <Dropdown.Item><Link to="/" onClick={() => setUser(false)}> Logout</Link></Dropdown.Item>
+                { isAdmin ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:<Dropdown.Item><Link to="/user/dashboard"> Dashboard</Link></Dropdown.Item>}
+                <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
         </>
@@ -33,7 +55,6 @@ const Header = () => {
     
     const setUserLink = () =>{
 
-        console.log(user);
         return(
             <>
             <Link to="/About" className='white'>About</Link> 
@@ -49,7 +70,7 @@ const Header = () => {
         <div className="header">
         <Navbar collapseOnSelect expand="lg">
         <Container>
-        {user[0].id && user[0].role === 'admin' ? <Navbar.Brand ><Link to="/none" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>}
+        {isAdmin? <Navbar.Brand ><Link to="/admin/dashboard" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>}
         
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -57,9 +78,8 @@ const Header = () => {
             </Nav>
             <Nav>
             
-            {user[0].id && user[0].role === 'admin' ? null  : setUserLink()}
-            {/* {user[0]?.id ? setProfile() : <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>  } */}
-            <Link to="/Login" className='white'><BsPersonFill size={20}/></Link>
+            {isAdmin ? null  : setUserLink()}
+            {isLoggedIn || isLogged ? setProfile() : <Link to="/user/login" className='white'><BsPersonFill size={20}/></Link>  }
             </Nav>
         </Navbar.Collapse>
         </Container>
