@@ -2,6 +2,9 @@ import {
     ALL_THESIS_REQUEST,
     ALL_THESIS_SUCCESS,
     ALL_THESIS_FAIL,  
+    THESIS_COUNT_REQUEST,
+    THESIS_COUNT_SUCCESS,
+    THESIS_COUNT_FAIL,  
     THESIS_DETAILS_REQUEST,
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
@@ -11,12 +14,14 @@ import {
 export const thesisReducer = (state = { thesis: [] }, action) => {
     switch (action.type) {
         case  ALL_THESIS_REQUEST:
+        case  THESIS_COUNT_REQUEST:
             return {
                 loading: true,
                 thesis: []
             }
 
         case  ALL_THESIS_SUCCESS:
+        case  THESIS_COUNT_SUCCESS:
             return {
                 loading: false,
                 thesis: action.payload.thesis,
@@ -26,6 +31,7 @@ export const thesisReducer = (state = { thesis: [] }, action) => {
             }
 
         case ALL_THESIS_FAIL:
+        case THESIS_COUNT_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -54,7 +60,7 @@ export const thesisDetailsReducer = (state = { thesis: {} }, action) => {
         case THESIS_DETAILS_SUCCESS:
             return {
                 loading: false,
-                thesis: action.payload
+                thesis: action.payload.thesis
             }
 
         case THESIS_DETAILS_FAIL:

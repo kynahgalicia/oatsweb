@@ -4,6 +4,10 @@ import {
     ALL_THESIS_SUCCESS,
     ALL_THESIS_FAIL,
 
+    THESIS_COUNT_REQUEST,
+    THESIS_COUNT_SUCCESS,
+    THESIS_COUNT_FAIL,
+
     THESIS_DETAILS_REQUEST,
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
@@ -37,18 +41,37 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         })
     }
 }
+export const getThesisCount = () => async (dispatch) => {
+    try {
+        dispatch({ type: THESIS_COUNT_REQUEST })
 
-export const getThesisDetails = (id) => async (dispatch) => {
+        let link = `/api/thesisCount`
+        
+        const { data } = await axios.get(link)
+        dispatch({
+            type: THESIS_COUNT_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: THESIS_COUNT_FAIL,
+            payload: error
+        })
+    }
+}
+
+export const getThesisDetails = (thesisId) => async (dispatch) => {
 
     try {
 
         dispatch({ type: THESIS_DETAILS_REQUEST })
 
-        const {data}= await axios.get(`/api/thesis/${id}`)
+        const {data}= await axios.get(`/api/thesis/${thesisId}`)
 
         dispatch({
             type: THESIS_DETAILS_SUCCESS,
-            payload: data.thesis
+            payload: data
         })
 
     } catch (error) {

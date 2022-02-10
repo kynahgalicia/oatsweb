@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ActivationEmail = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const { msg, error} = useSelector(state => state.authUserRegister)
     const {activation_token} = useParams()
@@ -19,10 +20,10 @@ const ActivationEmail = () => {
     }, [ dispatch, history]);
     
 
-    function successMsg(success) {
+    function successMsg(msg) {
         return (
             <div className="activationMsg">
-            <h4>{success} <i class="fas fa-check-circle"></i></h4>
+            <h4>{msg} <i className="fas fa-check-circle"></i></h4>
             <Button className="btn btn-dark"><Link to="/Login">Login Now</Link></Button>
             </div>
         );
@@ -41,7 +42,7 @@ const ActivationEmail = () => {
         <Fragment>
 
             <div className="wrapper">
-                {success && successMsg(success) }
+                {msg && successMsg(msg) }
                 {error && errorMsg(error) }
             </div>
         </Fragment>

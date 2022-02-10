@@ -1,12 +1,20 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom'
 import moment from 'moment'
-const SearchResults = ({thesis}) => {
+const SearchResults = ({userDept,thesis}) => {
     return ( 
         <Fragment>
             { thesis && thesis.map((theses) => (
             <div className='thesis-result'>
-                <h5> <Link to={`/user/search/details/${theses._id}`}> {theses.title}</Link> </h5>
+
+                <div className="row">
+                    <div className="col">
+                    <h5> <Link to={`/thesis/${theses._id}`}> {theses.title}</Link> </h5>
+                    </div>
+                    <div className="col">
+            { userDept !== theses.department.deptname ? <i className="fas fa-lock"></i> :  null  }
+                    </div>
+                </div>
                 
         
                 { theses.authors.map((x) => (
@@ -17,6 +25,8 @@ const SearchResults = ({thesis}) => {
                 <div>
                     <label> Published: <Link>{moment(theses.publishedAt).format('MMMM D YYYY')}</Link> | Department: <Link>{theses.department.deptname}</Link> | Course: <Link>{theses.course.coursecode}</Link></label>
                 </div>
+
+                
             </div>
             
         ))}

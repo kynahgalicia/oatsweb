@@ -153,7 +153,7 @@ hr{
 }
 .header a{
   text-decoration:none;
-  padding:20px 15px;
+  padding:15px 15px;
   font-size: 2.5vh;
 }
 
@@ -234,6 +234,11 @@ hr{
   position: relative;
   color: #6B2025;
   padding: 20%;
+}
+
+.search h1{
+  font-size: 33px;
+  padding: 5px;
 }
 
 .searchbar .input-group input{
@@ -510,6 +515,11 @@ form h5{
   padding: 20px;
   border-bottom: 1px solid #41414194;
 }
+.thesis-result .fas{
+  color: var(--red);
+  float: right;
+  font-size: 20px;
+}
 
 .form-check-input:checked{
   background-color: var(--darkRed) !important; 
@@ -524,9 +534,23 @@ form h5{
 text-decoration: none;
 color: var(--grey);
 font-family: 'Poppins' , sans-serif;
-margin: 5px;
+/* margin: 5px; */
 }
 
+.details-button{
+  margin: 15px
+}
+
+.details-button button{
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+}
+.details-button button:hover{
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+}
 .details-nav{
   padding: 20px;
 }

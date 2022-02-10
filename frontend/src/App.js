@@ -62,9 +62,9 @@ function App() {
         <Route path="/user/organization" component={SignUpAsOrg} exact/>
         <Route path="/user/activate/:activation_token" component={ActivationEmail} exact/>
         <Route path="/Redirect" component={Redirect} exact/>
-        <Route path="/user/search" component={Search} exact/>
-        <Route path="/user/search/:keyword" component={Search} exact/>
-        <Route path="/user/search/details/:thesisId" component={ThesisDetails} exact/>
+        <Route path="/search" component={Search} exact/>
+        <Route path="/search/:keyword" component={Search} exact/>
+        <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
         <Route path="/user/dashboard" component={DashboardUser} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>

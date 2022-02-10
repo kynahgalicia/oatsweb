@@ -1,25 +1,25 @@
 [{
-    "title": "Test Thesis",
-    "authors":[ {"author":"Alexandro Henke"},  {"author": "Another Author"}],
-    "keywords": [{"keyword":"platea"},{"keyword": "random"}],
-    "department": {"departments":"61f656c60ef8ef785164a82d", "deptname": "Basic Arts and Science"},
-    "course":{"courses": "61f694e88ba43db4e20fd92d","coursecode":"BTVTEd-ET"},
-    "abstract": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
-    "publishedAt": "10-10-2019"
+    "title": "Thesis/Project Archiving Management System (TPAMS)",
+    "authors":[ {"author":"Jasper M. Alcular"},  {"author": "Shara Mae A. Ureta"}],
+    "keywords": [{"keyword":"documents"},{"keyword": "Archiving"}],
+    "department": {"departments":"61ffadc79723278fa2cdadad", "deptname": "Electrical and Allied"},
+    "course":{"courses": "61ffaf1879e060f5e49b934b","coursecode":"BTIT-LDP"},
+    "abstract": "The Thesis/Project Archiving Management System (TPAMS) is responsible to improve the consistency of the document process electronic based system. It can also minimize the accuracy of time in scanning the documents. This project is professional practice or discipline of controlling and governing what are considered the most important records of an organization throughout the records life cycle, which includes from the time such records are conceived through to their eventual disposal. This work includes identifying, classifying, prioritizing, storing, securing, archiving of records. This study proved that our algorithm is more relevant than the default MySQL method by 11.61% and has an average speed of 2.406 sec. (our search engine algorithm) versus 2.722 sec. (MySQL) when searching",
+    "publishedAt": "04-01-2018"
 }, {
-    "title": "Another Thesis",
-    "authors":[ {"author":"Roberta Longthorn"},  {"author": "Another Author 2"} , {"author": "Alexandro Henke"}],
-    "keywords": [{"keyword":"lorem"},{"keyword": "random"}],
-    "department": {"departments":"61f657390ef8ef785164a82f", "deptname": "Civil and Allied"},
-    "course":{"courses": "61f694e88ba43db4e20fd935","coursecode":"BET-CHT"},
-    "abstract": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
-    "publishedAt": "10-10-2021"
+    "title": "Dr. Arcadio Santos National High School - School Resource Manangement System (SRMS)",
+    "authors":[ {"author":"Dave P. Duncab"},  {"author": "Daniel Allen M. Del Rosario"} , {"author": "Candice Joy T. Ballarta"},{"author": "Allayanah G. Loyola"}],
+    "keywords": [{"keyword":"Resource"},{"keyword": "Management"}],
+    "department": {"departments":"61ffadc79723278fa2cdadac", "deptname": "Civil and Allied"},
+    "course":{"courses": "61ffaf1879e060f5e49b9340","coursecode":"BET-CHT"},
+    "abstract": "The study aims to aid the school with manual processes which are highly limited due to the health protocols implemented in the time of the pandemic. The projects covers an Online Enrollment, An Inventory System, and a Clearance System that will cover most of the processes online before going to school for inevitable physical activities such as submission of requirements, pick up of books and devices, and return and retrieval of the said resources. The system will also help the people who deal with records since the system will provide tabulated results depending on the format requested for their reports.",
+    "publishedAt": "2-10-2022"
     }, {
-    "title": "Another Thesis 2",
-    "authors":[ {"author":"Roberta Longthorn"},  {"author": "Emery Pitcaithly"} , {"author": "Alexandro Henke"}],
-    "keywords": [{"keyword":"lorem"},{"keyword": "random"},{"keyword": "sollicitudin"}],
-    "department": {"departments":"61f657480ef8ef785164a831", "deptname": "Electrical and Allied"},
-    "course":{"courses": "61f694e88ba43db4e20fd93f","coursecode":"BSIT-SDP"},
-    "abstract": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
-    "publishedAt": "10-10-2022"
+    "title": "Online Archiving Thesis System (OATS)",
+    "authors":[ {"author":"Leslie Jayne Ayacocho"},  {"author": "Shekinah Bless Galicia"} , {"author": "Rodralyn Lopez"}, {"author": "Vince Michael Lingon"}],
+    "keywords": [{"keyword":"thesis"},{"keyword": "archiving"}],
+    "department": {"departments":"61ffadc79723278fa2cdadab", "deptname": "Basic Arts and Science"},
+    "course":{"courses": "61ffaf1879e060f5e49b933b","coursecode":"BTVTEd-ICT-CH"},
+    "abstract": "The Online Archiving Thesis System (OATS) is a website that has a catalog of all the theses of graduated students from the Technological University of the Philippines Taguig (TUP-Taguig). The website will provide the title and the abstract of the study for guest users. If guest users want to access the full copy of the research, they will have to register on the website and make a payment for the thesis they want to access through a GCash API that is integrated in the website. If you are a TUP-Taguig student, you only have to register and you will be able to access the full text of the research that is created by similar or related courses and you can view it on the website or by downloading a PDF copy of the research. Only students of similar or related courses can view the full copy. The system will also have a copy-paste citation feature for users to conveniently use to cite in the study. It will be available in APA, IEEE, and MLA. Additionally, the website is going to oversee the borrowing and returning logs of the physical copy of the theses in their respective technology.",
+    "publishedAt": "10-10-2021"
 }]
