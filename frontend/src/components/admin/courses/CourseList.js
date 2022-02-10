@@ -7,12 +7,12 @@ import {MDBDataTableV5 } from 'mdbreact'
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 
 import { useDispatch, useSelector } from 'react-redux'
-import {getCourse, clearErrors} from '../../../redux/actions/courseActions'
+import {getCourse, deleteCourse, clearErrors} from '../../../redux/actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
 const CourseList = () => {
-    const { loading, error, course } = useSelector(state => state.course);
-    // const { error: deleteError, isDeleted } = useSelector(state => state.courses)
+    const { loading, error, course } = useSelector(state => state.courses);
+    const {  error: deleteError, isDeleted } = useSelector(state => state.course);
 
     const dispatch = useDispatch();
 
@@ -22,42 +22,47 @@ const CourseList = () => {
     useEffect(() => {
         dispatch(getCourse());
 
-        // if (error) {
-        //     alert.error(error);
-        //     dispatch(clearErrors())
-        // }
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
 
-        // if (deleteError) {
-        //     alert.error(deleteError);
-        //     dispatch(clearErrors())
-        // }
+        if (deleteError) {
+            alert.error(deleteError);
+            dispatch(clearErrors())
+        }
 
-        // if (isDeleted) {
-        //     history.push('/admin/course');
-        //     alert.success('Course deleted successfully');
-        //     dispatch({ type: DELETE_COURSE_RESET })
-        // }
+        if (isDeleted) {
+            history.push('/admin/course');
+            alert.success('Course deleted successfully');
+            dispatch({ type: DELETE_COURSE_RESET })
+        }
         
-    },[ dispatch]);
+    },[ dispatch, alert, error, deleteError, isDeleted, history,]);
 
 
     const setData = () => { 
         const data = {
             columns: [
+                // {
+                //     label: 'ID',
+                //     field: 'id',
+                //     sort: 'desc'
+                // },
                 {
-                    label: 'ID',
-                    field: 'id',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Department Name',
-                    field: 'deptname',
+                    label: 'Course',
+                    field: 'coursename',
                     sort: 'asc'
                 },
                 {
                     label: 'Code',
-                    field: 'deptcode',
-                    sort: 'asc'
+                    field: 'coursecode',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
+                    sort: 'desc'
                 },
                 {
                     label: 'Actions',
@@ -69,9 +74,10 @@ const CourseList = () => {
 
         course.forEach(course => {
             data.rows.push({
-                id: course._id,
-                deptname: course.deptname,
-                deptcode: course.deptcode,
+                // id: course._id,
+                coursename: course.coursename,
+                coursecode: course.coursecode,
+                department: course.department.deptname,
                 actions: 
                 <Fragment>
                     <Link to={`/admin/course/edit/${course._id}`} className="decor-none block">
@@ -80,7 +86,7 @@ const CourseList = () => {
                         </Button>
                     </Link>
 
-                    <Button variant="danger">
+                    <Button variant="danger" onClick={() => deleteCourseHandler(course._id)}>
                         <FaTrash/>
                     </Button>
                 </Fragment>
@@ -90,9 +96,9 @@ const CourseList = () => {
         return data;
     }
 
-    // const deleteCourseHandler = (id) => {
-    //     dispatch(deleteCourse(id))
-    // }
+    const deleteCourseHandler = (id) => {
+        dispatch(deleteCourse(id))
+    }
 
     return(
         <Fragment>

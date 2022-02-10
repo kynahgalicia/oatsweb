@@ -106,27 +106,27 @@ const SignUpAsStudent = () => {
 
             <h5>Personal Information</h5>
             <Form.Group className="mb-3">
-            <Form.Label>TUP ID</Form.Label>
+                <Form.Label>TUP ID</Form.Label>
                 <Form.Control type="text" placeholder="TUPT-XX-XXXX" value={user_tupid} onChange={(e) => setID(e.target.value)}/>
             </Form.Group>
+
             <Form.Group className="mb-3">
-            <Form.Label>First Name</Form.Label>
+                <Form.Label>First Name</Form.Label>
                 <Form.Control type="text" placeholder="" value={user_fname} onChange={(e) => setFname(e.target.value)}/>
             </Form.Group>
+
             <Form.Group className="mb-3">
-            <Form.Label>Last Name</Form.Label>
+                <Form.Label>Last Name</Form.Label>
                 <Form.Control type="text" placeholder="" value={user_lname} onChange={(e) => setLname(e.target.value)}/>
             </Form.Group>
-            {/* <Form.Group className="mb-3">
-            <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="" value=""/>
-            </Form.Group> */}
+    
             <Form.Group className="mb-3">
-            <Form.Label>Contact Number</Form.Label>
+                <Form.Label>Contact Number</Form.Label>
                 <Form.Control type="text" placeholder="" value={user_contact} onChange={(e) => setContact(e.target.value)}/>
             </Form.Group>
+
             <Form.Group className="mb-3">
-            <Form.Label>Department</Form.Label>
+                <Form.Label>Department</Form.Label>
                 <Form.Select id="department_field" placeholder="" value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} >
                 <option> -- SELECT DEPARTMENT --</option>
 
@@ -137,8 +137,9 @@ const SignUpAsStudent = () => {
                         ))}
                 </Form.Select>
             </Form.Group>
+
             <Form.Group className="mb-3">
-            <Form.Label>Course</Form.Label>
+                <Form.Label>Course</Form.Label>
                 <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
                 {thisDepartment && course && course.map((courses) => (
                                 

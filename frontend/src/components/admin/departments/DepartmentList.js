@@ -12,7 +12,7 @@ import { DELETE_DEPARTMENT_RESET } from '../../../redux/constants/departmentCons
 
 const DepartmentList = () => {
     const { loading, error, department } = useSelector(state => state.department);
-    const { error: deleteError, isDeleted } = useSelector(state => state.departments)
+    const {  error: deleteError, isDeleted } = useSelector(state => state.departments);
 
     const dispatch = useDispatch();
 
@@ -44,11 +44,11 @@ const DepartmentList = () => {
     const setData = () => { 
         const data = {
             columns: [
-                {
-                    label: 'ID',
-                    field: 'id',
-                    sort: 'asc'
-                },
+                // {
+                //     label: 'ID',
+                //     field: 'id',
+                //     sort: 'asc'
+                // },
                 {
                     label: 'Department Name',
                     field: 'deptname',
@@ -69,7 +69,7 @@ const DepartmentList = () => {
 
         department.forEach(department => {
             data.rows.push({
-                id: department._id,
+                // id: department._id,
                 deptname: department.deptname,
                 deptcode: department.deptcode,
                 actions: 

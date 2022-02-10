@@ -11,10 +11,11 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
     const cdept = await Department.findById(req.body.departments);
 
-    req.body.department = [{
+
+    req.body.department = {
         id: cdept._id,
         deptname: cdept.deptname
-    }]
+    }
     
     const course = await Course.create(req.body);
 
@@ -22,7 +23,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         success: true,
         course
     })
-    })
+})
 
 
 // /api/admin/course
@@ -68,18 +69,38 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
     })
 })
 
-// /api/course/delete/:id 
-exports.delete = catchAsyncErrors(async(req,res,next) =>{
-    const course = await Course.findById(req.params.id);
+// api/admin/department/edit
+exports.editCourse = catchAsyncErrors(async(req,res,next) => {
+    let course = await Course.findById(req.params.id);
 
-    if(!course) {
-    return next(new ErrorHandler('Not Found',404));
+    if(!Course) {
+        return next(new ErrorHandler('Course not found',404));
     }
 
-    await Course.deleteOne();
-    res.status(200).json({
-    success: true,
-    message: 'Deleted'
-    })
+    try{
+        course = await Course.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            success:true,
+            course
+        })
+    }catch(error){
+        res.status(500).send(error.message);
+        console.log(error.message);
+    }
+})
+
+// /api/course/delete/:id 
+exports.delete = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        await Course.findByIdAndDelete(req.params.id)
+        res.json({msg: "Course has been deleted!", success: true})
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
 })
 

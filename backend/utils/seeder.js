@@ -20,11 +20,11 @@ const seedThesis = async () => {
     try {
         // await Thesis.deleteMany();
         await Course.deleteMany();
-        // await Department.deleteMany();
+        await Department.deleteMany();
         console.log('Thesis / Course Are Deleted');
         // await Thesis.insertMany(thesis)
         await Course.insertMany(course)
-        // await Department.insertMany(department)
+        await Department.insertMany(department)
         console.log('Data Added.')
         process.exit();
     } catch (error) {

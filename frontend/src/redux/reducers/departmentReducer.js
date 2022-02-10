@@ -107,7 +107,8 @@ export const departmentReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                isDeleted: action.payload
+                isDeleted: action.payload.success, 
+                msg: action.payload.msg
             }
 
         case UPDATE_DEPARTMENT_SUCCESS:

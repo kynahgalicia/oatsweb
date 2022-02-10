@@ -124,7 +124,7 @@ export const deleteDepartment = (id) => async (dispatch) => {
 
         dispatch({
             type: DELETE_DEPARTMENT_SUCCESS,
-            payload: data.success
+            payload: data
         })
 
     } catch (error) {

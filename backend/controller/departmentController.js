@@ -82,15 +82,13 @@ exports.editDepartment = catchAsyncErrors(async(req,res,next) => {
         res.status(500).send(error.message);
         console.log(error.message);
     }
-
-    
 })
 
 // /api/department/delete/:id 
 exports.delete = catchAsyncErrors(async(req,res,next) =>{
     try {
         await Department.findByIdAndDelete(req.params.id)
-        res.json({msg: "Department has been deleted!"})
+        res.json({msg: "Department has been deleted!", success: true})
     } catch (error) {
         return res.status(500).json({msg: err.message})
     }

@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import {useParams} from 'react-router-dom'
+import {Button} from 'react-bootstrap';
 
 import { updateDepartment, getDepartmentDetails, clearErrors } from '../../../redux/actions/departmentActions'
 import { UPDATE_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
@@ -14,7 +15,7 @@ const Updatedepartment = ({ match, history }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { error, department } = useSelector(state => state.departmentDetails)
+    const { loading, error, department } = useSelector(state => state.departmentDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.departments);
 
     const {departmentId} = useParams();
@@ -74,17 +75,19 @@ const Updatedepartment = ({ match, history }) => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="deptcode_field">Code</label>
-                        <textarea className="form-control" id="deptcode_field" rows="8" value={deptcode} onChange={(e) => setDepartmentcode(e.target.value)}></textarea>
+                        <label htmlFor="deptcode_field">Department Code</label>
+                        <input
+                            type="text"
+                            id="deptcode_field"
+                            className="form-control"
+                            value={deptcode}
+                            onChange={(e) => setDepartmentcode(e.target.value)}
+                        />
                     </div>
 
-                    <button
-                        id="login_button"
-                        type="submit"
-                        className="btn btn-block py-3"
-                    >
-                        UPDATE
-                </button>
+                    <Button id="login_button" type="submit" disabled={loading ? true : false}>
+                        Update
+                    </Button>
 
                 </form>
             </div>
