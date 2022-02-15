@@ -28,7 +28,7 @@ const SignUpAsStudent = () => {
     const [agree, setAgree] = useState(false);
 
     const {department} = useSelector(state => state.department)
-    const {courses} = useSelector(state => state.courses)
+    const {course} = useSelector(state => state.courses)
     const { msg, error} = useSelector(state => state.authUserRegister)
 
     useEffect(() => {
@@ -140,9 +140,9 @@ const SignUpAsStudent = () => {
             <Form.Group className="mb-3">
                 <Form.Label>Course</Form.Label>
                 <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
-                {thisDepartment && courses && courses.map((course) => (
+                {thisDepartment && course && course.map((courses) => (
                                 
-                                <option value={course._id}>{course.coursecode} ({course.coursename})</option>
+                                <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>
                                     
                 ))}
                 </Form.Select>
