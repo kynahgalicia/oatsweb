@@ -9,23 +9,22 @@ import {logout} from '../../redux/actions/authActions'
 
 const Header = () => {
     const dispatch = useDispatch()
-    // const history = useHistory()
     const alert = useAlert()
 
-    const {isLoggedIn} = useSelector(state => state.authUser)
+    const [thisUser, setThisUser] = useState('')
+    const {isLoggedIn, user} = useSelector(state => state.authUser)
     const {token, isLogged, isUser} = useSelector(state => state.authToken)
 
     const isAdmin = false
 
     useEffect(() => {
 
-            // const firstLogin = localStorage.getItem('firstLogin')
             if(isLoggedIn){
-                // dispatch(getToken())   
-                console.log('token')
+
+                setThisUser(user.user_tupid)
             }
         
-    }, [ dispatch,isLoggedIn, isUser]);
+    }, [ dispatch,isLoggedIn, isUser, user]);
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -38,13 +37,14 @@ const Header = () => {
 
         return (
             <>
+            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
             <Dropdown>
             <Dropdown.Toggle id="dropdown-basic">
-            <BsPersonFill size={20}/>
+            {thisUser}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item><Link to="/"> Profile</Link></Dropdown.Item>
-                { isAdmin ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:<Dropdown.Item><Link to="/user/dashboard"> Dashboard</Link></Dropdown.Item>}
+                <Dropdown.Item><Link to="/user/profile"> Account</Link></Dropdown.Item>
+                { isAdmin ? <Dropdown.Item><Link to="/admin/dashboard"> Dashboard</Link></Dropdown.Item>:null}
                 <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
@@ -60,7 +60,6 @@ const Header = () => {
             <Link to="/About" className='white'>About</Link> 
             <Link to="/Category" className='white'>Category</Link> 
             <Link to="/Contact" className='white'>Contact</Link> 
-            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
             </>
         )
     }
@@ -77,9 +76,8 @@ const Header = () => {
         <Nav className="me-auto">
             </Nav>
             <Nav>
-            
             {isAdmin ? null  : setUserLink()}
-            {isLoggedIn || isLogged ? setProfile() : <Link to="/user/login" className='white'><BsPersonFill size={20}/></Link>  }
+            {isLoggedIn || isLogged ? setProfile() : <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>  }
             </Nav>
         </Navbar.Collapse>
         </Container>

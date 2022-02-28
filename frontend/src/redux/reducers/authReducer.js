@@ -19,6 +19,14 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
 
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
+
     GET_TOKEN_REQUEST,
     GET_TOKEN_SUCCESS,
     GET_TOKEN_FAIL,
@@ -132,6 +140,7 @@ export const authTokenReducer = (state = {token: {}}, action) => {
             return {
                 loading: true,
                 isLogged: false,
+                token: false
             }
 
         case GET_TOKEN_SUCCESS:
@@ -139,13 +148,49 @@ export const authTokenReducer = (state = {token: {}}, action) => {
                 ...state,
                 isLogged: true,
                 isUser: true,
-                token: action.payload
+                token: action.payload.token,
+                msg: action.payload.msg
             }
 
         case GET_TOKEN_FAIL:
             return {
                 ...state,
                 error: action.payload.msg
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+            
+        default:
+            return state
+    }
+}
+export const authForgotPassReducer = (state = {msg: {}}, action) => {
+    switch(action.type){
+        case FORGOT_PASSWORD_REQUEST:
+        case RESET_PASSWORD_REQUEST:
+            return {
+                loading: true,
+                message:null
+            }
+
+        case FORGOT_PASSWORD_SUCCESS:
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload.msg
+            }
+
+        case FORGOT_PASSWORD_FAIL:
+        case RESET_PASSWORD_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
             }
 
         case CLEAR_ERRORS:

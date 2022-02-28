@@ -6,7 +6,7 @@ import { departmentsReducer, newDepartmentReducer, departmentReducer, Department
 
 import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer";
 
-import {authUserReducer,authUserRegisterReducer,authTokenReducer} from './reducers/authReducer'
+import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
 
 
 import thunk from 'redux-thunk'
@@ -30,7 +30,8 @@ const reducer = combineReducers({
     // Authentication
     authUser: authUserReducer,
     authUserRegister: authUserRegisterReducer,
-    authToken:authTokenReducer
+    authToken:authTokenReducer,
+    authForgot:authForgotPassReducer
 
 })
 

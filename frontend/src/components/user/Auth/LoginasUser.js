@@ -14,7 +14,6 @@ const LoginasUser = () => {
 
     const [user_tupmail, setEmail] = useState('');
     const [user_password, setPassword] = useState('');
-    const [thisTupMail, setThisTupMail] = useState('');
 
     const {error, msg, isLoggedIn} = useSelector(state => state.authUser);
 
@@ -30,13 +29,11 @@ const LoginasUser = () => {
             }
         }
 
-        if(error){
-            dispatch(clearErrors())
-        }
+        // if(error){
+        //     dispatch(clearErrors())
+        // }
 
-        setEmail(thisTupMail + '@tup.edu.ph')
-
-    }, [dispatch, alert, isLoggedIn, error, history, redirect,msg,thisTupMail])
+    }, [dispatch, alert, isLoggedIn, error, history, redirect,msg])
 
     const submitHandler = async e => {
         e.preventDefault()
@@ -61,8 +58,8 @@ const LoginasUser = () => {
             </Button> */}
             <Form.Group className="mb-3">
             <Form.Label className="d-block">Email</Form.Label>
-                <Form.Control className="w-75 d-inline" type="text" placeholder="" name="user_tupmail" id="user_tupmail" value={thisTupMail}
-                    onChange={(e) => setThisTupMail(e.target.value)}/> <p className="d-inline">@tup.edu.ph</p>
+                <Form.Control  type="text" placeholder="" name="user_tupmail" id="user_tupmail" value={user_tupmail}
+                    onChange={(e) => setEmail(e.target.value)}/>
             </Form.Group>
             <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
@@ -71,7 +68,7 @@ const LoginasUser = () => {
             </Form.Group>
 
             <div className='text-center my-3'>
-            <label> <Link to="/forgotpassword"> Forgot your password?
+            <label> <Link to="/user/forgot"> Forgot your password?
             </Link></label>
             </div>
 
