@@ -1,6 +1,5 @@
-const Users = require('../models/userModel')
+const Admins = require('../models/adminModel')
 const Department = require('../models/departmentModel')
-const Course = require('../models/courseModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
@@ -13,82 +12,77 @@ const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 
 const {FRONTEND_URL} = process.env
 
-const userController = {
+const adminController = {
 
-    // /user/register
+    // /admin/register
     register: async (req, res) => {
         try {
-            const {user_fname, user_lname,user_tupid, user_contact, departments, courses,  user_tupmail, passwords } = req.body
+            const {admin_fname, admin_lname,admin_tupid, admin_contact, departments, admin_tupmail, passwords } = req.body
 
             console.log(req.body)
             
-            if(!user_fname || !user_lname || !user_tupid || !user_tupmail || !user_contact || !departments || !courses  || !passwords )
+            if(!admin_fname || !admin_lname || !admin_tupid || !admin_tupmail || !admin_contact || !departments || !passwords )
                 return res.status(400).json({msg: "Please fill in all fields."})
 
-            if(!validateEmail(user_tupmail))
+            if(!validateEmail(admin_tupmail))
                 return res.status(400).json({msg: "Invalid emails."})
 
-            const user = await Users.findOne({user_tupmail})
-            if(user) return res.status(400).json({msg: "This email already exists."})
+            const admin = await Admins.findOne({admin_tupmail})
+            if(admin) return res.status(400).json({msg: "This email already exists."})
 
-            if(user_contact.length < 11)
+            if(admin_contact.length < 11)
                 return res.status(400).json({msg: "contact must be at least 11 numbers."})
 
             if(passwords.length < 6)
                 return res.status(400).json({msg: "Password must be at least 6 characters."})
 
-            const user_password = await bcrypt.hash(passwords, 12)
+            const admin_password = await bcrypt.hash(passwords, 12)
             
             const uDept = await Department.findById(req.body.departments);
-            const uCourse = await Course.findById(req.body.courses);
 
-            const user_department ={ 
+            const admin_department ={ 
                 departments: uDept._id,
                 deptname: uDept.deptname
             }
-            const user_course = {
-                courses: uCourse._id,
-                coursecode: uCourse.coursecode,
-                coursename: uCourse.coursename
+
+            const newAdmin = {
+                admin_fname, admin_lname,admin_tupid, admin_contact, admin_department, admin_tupmail,admin_password
             }
 
-            const newUser = {
-                user_fname, user_lname,user_tupid, user_contact, user_department, user_course,  user_tupmail,user_password
-            }
+            const activation_token = createActivationToken(newAdmin)
 
-            const activation_token = createActivationToken(newUser)
-
-            console.log(newUser)
+            console.log(newAdmin)
         
-            const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            sendMail(user_tupmail, url, "Verify your email address")
+            const url = `${FRONTEND_URL}/admin/activate/${activation_token}`
+            // sendMail(admin_tupmail, url, "Verify your email address")
 
 
             res.json({
             msg: "Register Success! Please activate your email to start.", 
-            activation: activation_token})
+            activation: activation_token,
+            url: url})
             
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
-    // /user/activation
+    // /admin/activation
     activateEmail: async (req, res) => {
         try {
             const {activation_token} = req.body
-            const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRET)
+            const admin = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRET)
 
-            const {user_fname, user_lname,user_tupid, user_contact, user_department, user_course,  user_tupmail, user_password} = user
+            const {admin_fname, admin_lname,admin_tupid, admin_contact, admin_department, admin_tupmail, admin_password} = admin
 
-            const check = await Users.findOne({user_tupmail})
+            const check = await Admins.findOne({admin_tupmail})
             if(check) return res.status(400).json({msg:"This email already exists."})
 
-            const newUser = new Users({
-                user_fname, user_lname,user_tupid, user_contact, user_department, user_course, user_tupmail, user_password
+            const newAdmin = new Admins({
+                admin_fname, admin_lname,admin_tupid, admin_contact, admin_department, admin_tupmail, admin_password
             })
 
-            await newUser.save()
+            await newAdmin.save()
 
             res.json({msg: "Account has been activated!"})
 
@@ -97,19 +91,19 @@ const userController = {
         }
     },
 
-    // /user/login
+    // /admin/login
     login: async (req, res) => {
         try {
-            const {user_tupmail, user_password} = req.body
-            const user = await Users.findOne({user_tupmail})
-            if(!user) return res.status(400).json({msg: "This email does not exist."})
+            const {admin_tupmail, admin_password} = req.body
+            const admin = await Admins.findOne({admin_tupmail})
+            if(!admin) return res.status(400).json({msg: "This email does not exist."})
 
-            const isMatch = await bcrypt.compare(user_password, user.user_password)
+            const isMatch = await bcrypt.compare(admin_password, admin.admin_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
             
-            console.log(user)   
+            console.log(admin)   
 
-            const refresh_token = createRefreshToken({id: user._id})
+            const refresh_token = createRefreshToken({id: admin._id})
 
             const options = {
                 expires: new Date(
@@ -118,10 +112,10 @@ const userController = {
                 httpOnly: true
             }
         
-            res.status(200).cookie('refreshtoken', refresh_token, options).json({
+            res.status(200).cookie('refreshtokenadmin', refresh_token, options).json({
                 success: true,
                 refresh_token,
-                user,
+                admin,
                 msg: "Login success!"
             })
 
@@ -129,17 +123,17 @@ const userController = {
             
             // res.cookie('refreshtoken', refresh_token, {
             //     httpOnly: true,
-            //     path: '/user/refresh_token',
+            //     path: '/admin/refresh_token',
             //     maxAge: 7*24*60*60*1000 // 7 days
             // })
             
-            // sendToken(user, 200, res)
+            // sendToken(admin, 200, res)
             // res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
-    // /user/cookie 
+    // /admin/cookie 
     getAccessToken: (req, res) => {
         // try{
         // const rf_token = req.cookies.token
@@ -151,14 +145,14 @@ const userController = {
         // }
 
         try {
-            const rf_token = req.cookies.refreshtoken
+            const rf_token = req.cookies.refreshtokenadmin
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
-            jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+            jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, admin) => {
                 if(err) return res.status(400).json({msg: "Please login now jwt!"})
 
-                const access_token = createAccessToken({id: user.id})
-                res.json({token: access_token})
+                const access_token = createAccessToken({id: admin.id})
+                res.json({adminToken: access_token})
             })
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -166,34 +160,35 @@ const userController = {
     },
 
 
-    // /user/forgot
+    // /admin/forgot
     forgotPassword: async (req, res) => {
         try {
-            const {user_tupmail} = req.body
-            const user = await Users.findOne({user_tupmail})
-            if(!user) return res.status(400).json({msg: "This email does not exist."})
+            const {admin_tupmail} = req.body
+            const admin = await Admins.findOne({admin_tupmail})
+            if(!admin) return res.status(400).json({msg: "This email does not exist."})
 
-            const access_token = createAccessToken({id: user._id})
-            const url = `${FRONTEND_URL}/user/reset/${access_token}`
+            const access_token = createAccessToken({id: admin._id})
+            const url = `${FRONTEND_URL}/admin/reset/${access_token}`
 
-            sendMail(user_tupmail, url, "Reset your password")
-            res.json({msg: "Reset requeset sent! Please check your email."})
+            // sendMail(admin_tupmail, url, "Reset your password")
+            res.json({msg: "Reset requeset sent! Please check your email.",
+                    url: url})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
-    // /user/reset
+    // /admin/reset
     resetPassword: async (req, res) => {
         try {
-            const {user_password} = req.body
-            const passwordHash = await bcrypt.hash(user_password, 12)
+            const {admin_password} = req.body
+            const passwordHash = await bcrypt.hash(admin_password, 12)
 
-            if(user_password.length < 6)
+            if(admin_password.length < 6)
                 return res.status(400).json({msg: "Password must be at least 6 characters."})
 
-            await Users.findOneAndUpdate({_id: req.user.id}, {
-                user_password: passwordHash
+            await Admins.findOneAndUpdate({_id: req.admin.id}, {
+                admin_password: passwordHash
             })
 
             res.json({msg: "Password successfully changed!"})
@@ -202,13 +197,13 @@ const userController = {
         }
     }, 
 
-    // /user/infor
-    getUserInfor: async (req, res) => {
+    // /admin/infor
+    getAdminInfor: async (req, res) => {
         try {
-            const user = await Users.findById(req.user.id).select('-user_password')
+            const admin = await Admins.findById(req.admin.id).select('-admin_password')
 
-            res.json({user: user,
-                    msg: "Success User"})
+            res.json({admin: admin,
+                    msg: "Success Admin"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -216,21 +211,21 @@ const userController = {
 
 
     //pwedeng alisin to dito kase pang admin lang to 
-    // /user/all_infor
-    getUsersAllInfor: async (req, res) => {
+    // /admin/all_infor
+    getAdminsAllInfor: async (req, res) => {
         try {
-            const users = await Users.find().select('-user_password')
+            const admins = await Admins.find().select('-admin_password')
 
-            res.json(users)
+            res.json(admins)
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
-    // /user/logout
+    // /admin/logout
     logout: async (req, res) => {
         try {
-            res.cookie('refreshtoken', null, {
+            res.cookie('refreshtokenadmin', null, {
                 expires: new Date(Date.now()),
                 httpOnly: true
             })
@@ -263,4 +258,4 @@ const userController = {
         return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
     }
     
-    module.exports = userController
+    module.exports = adminController

@@ -9,7 +9,7 @@ import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import {getDepartment, deleteDepartment, clearErrors} from '../../../redux/actions/departmentActions'
 import { DELETE_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
-
+import AdminSidebar from '../../layout/AdminSidebar'
 const DepartmentList = () => {
     const { loading, error, department } = useSelector(state => state.department);
     const {  error: deleteError, isDeleted } = useSelector(state => state.departments);
@@ -96,7 +96,12 @@ const DepartmentList = () => {
 
     return(
         <Fragment>
-            <div className="admin-wrapper">
+        <Row>
+        <Col sm= {2}>
+            <AdminSidebar/>
+        </Col>
+            <Col sm={10}>
+                <div className="admin-wrapper">
                 <h1>Departments</h1>
                 <button><Link to="/admin/department/new">Add Department</Link></button>
 
@@ -109,6 +114,8 @@ const DepartmentList = () => {
                     className='table'
                     container-sm="true"/>
             </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

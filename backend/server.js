@@ -47,5 +47,6 @@ app.use('/api', require('./routes/thesisRouter'))
 app.use('/api', require('./routes/departmentRouter'))
 app.use('/api', require('./routes/courseRouter'))
 app.use('/user', require('./routes/userRouter'))
+app.use('/admin', require('./routes/adminRouter'))
 
 

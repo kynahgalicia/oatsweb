@@ -3,11 +3,11 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import {useParams} from 'react-router-dom'
-import {Button} from 'react-bootstrap';
+import {Button,Row,Col} from 'react-bootstrap';
 
 import { updateDepartment, getDepartmentDetails, clearErrors } from '../../../redux/actions/departmentActions'
 import { UPDATE_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
-
+import AdminSidebar from '../../layout/AdminSidebar'
 const Updatedepartment = ({ match, history }) => {
     const [deptname, setDepartmentname] = useState('');
     const [deptcode, setDepartmentcode] = useState('');
@@ -59,6 +59,12 @@ const Updatedepartment = ({ match, history }) => {
 
     return (
         <Fragment>
+        <Row>
+        <Col sm= {2}>
+            <AdminSidebar/>
+        </Col>
+            <Col sm={10}>
+                <div className="admin-wrapper">
             <div className="wrapper my-5">
                 <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
                     <h1 className="mb-4">Update Department</h1>
@@ -91,6 +97,9 @@ const Updatedepartment = ({ match, history }) => {
 
                 </form>
             </div>
+            </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

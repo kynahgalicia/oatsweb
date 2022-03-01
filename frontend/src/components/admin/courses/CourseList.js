@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {getCourse, deleteCourse, clearErrors} from '../../../redux/actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
+import AdminSidebar from '../../layout/AdminSidebar'
+
 const CourseList = () => {
     const { loading, error, course } = useSelector(state => state.courses);
     const {  error: deleteError, isDeleted } = useSelector(state => state.course);
@@ -102,19 +104,27 @@ const CourseList = () => {
 
     return(
         <Fragment>
-            <div className="admin-wrapper">
-                <h1>Courses</h1>
-                <button><Link to="/admin/course/new">Add Course</Link></button>
+        <Row>
+            <Col sm= {2}>
+                <AdminSidebar/>
+            </Col>
 
-                <MDBDataTableV5 
-                    hover 
-                    entriesOptions={[5, 10, 15, 25]} 
-                    entries={10} 
-                    pagesAmount={4}
-                    data={setData()} 
-                    className='table'
-                    container-sm="true"/>
-            </div>
+            <Col sm={10}>
+                <div className="admin-wrapper">
+                    <h1>Courses</h1>
+                    <button><Link to="/admin/course/new">Add Course</Link></button>
+
+                    <MDBDataTableV5 
+                        hover 
+                        entriesOptions={[5, 10, 15, 25]} 
+                        entries={10} 
+                        pagesAmount={4}
+                        data={setData()} 
+                        className='table'
+                        container-sm="true"/>
+                </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

@@ -10,7 +10,7 @@ const AdminSidebar = () => {
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
         >
             <Nav.Item>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/admin/dashboard">Dashboard</Link>
             </Nav.Item>
             <hr/>
             

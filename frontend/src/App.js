@@ -11,7 +11,8 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 
 //Admin
-import AdminDashboard from './components/admin/AdminDashboard'
+import LoginasAdmin from './components/admin/auth/LoginasAdmin'
+import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 import ThesisList from './components/admin/thesis/ThesisList'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CourseList from './components/admin/courses/CourseList'
@@ -51,12 +52,15 @@ import UserBookmark from './components/user/Account/UserBookmark';
 import NotFound from './components/img/404.png'
 
 import { getToken, loadUser } from './redux/actions/authActions'
+import { getAdminToken, loadAdmin} from './redux/actions/authAdminActions'
 function App() {
 
   const dispatch = useDispatch()
   const [thisToken, setThisToken] = useState('')
+  const [thisAdminToken, setThisAdminToken] = useState('')
 
   const {token} = useSelector(state => state.authToken)
+  const {adminToken} = useSelector(state => state.authAdminToken)
   useEffect(() => {
     console.log(token)
 
@@ -65,8 +69,14 @@ function App() {
       setThisToken(token)
     }
 
+    if(!thisAdminToken){
+      dispatch(getAdminToken())
+      setThisAdminToken(adminToken)
+    }
+
     dispatch(loadUser(token))
-  }, [dispatch, token])
+    dispatch(loadAdmin(adminToken))
+  }, [dispatch, token,adminToken])
   
 
   return (
@@ -100,6 +110,16 @@ function App() {
         <Route path="/user/bookmark" component={UserBookmark} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
+        <Route path="/admin/login" component={LoginasAdmin} exact/>
+        <Route path="/admin/thesis" component={ThesisList} exact/>
+        <Route path="/admin/department" component={DepartmentList} exact/>
+        <Route path="/admin/department/new" component={CreateDepartment} exact/>
+        <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
+        <Route path="/admin/course" component={CourseList} exact/>
+        <Route path="/admin/course/new" component={CreateCourse} exact/>
+        <Route path="/admin/course/edit/:courseId" component={Updatecourse} exact/>
+        <Route path="/admin/users" component={UserList} exact/>
+        <Route path="/admin/payment" component={PaymentList} exact/>
         <Route path="*">
           {NoMatch}
         </Route>
