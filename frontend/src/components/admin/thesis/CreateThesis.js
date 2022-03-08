@@ -66,7 +66,28 @@ const CreateThesis = () => {
                             <h1>Create Thesis</h1>
 
                             <Col>
-                                <p>pepe</p>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label>Title</Form.Label>
+                                        <Form.Control
+                                            type="title"
+                                            id="inputTitle"
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group>
+                                        <Form.Label>Year Published</Form.Label>
+                                        <Form.Control
+                                            type="year"
+                                            id="inputYear"
+                                            aria-describedby="year"
+                                        />
+                                        <Form.Text id="year" muted>
+                                            Only input the year that the thesis is published.
+                                        </Form.Text>
+                                    </Form.Group>
+
+                                </Form>
                             </Col>
 
                             <Col>
