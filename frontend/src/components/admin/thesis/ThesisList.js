@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import AdminSidebar from '../../layout/AdminSidebar'
 
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
@@ -61,6 +62,16 @@ const ThesisList = () => {
 
     return(
         <Fragment>
+        <Row>
+        <Col sm= {2}>
+            <AdminSidebar/>
+        </Col>
+            <Col sm={10}>
+                <div className="admin-wrapper">
+            <h1>Thesis</h1>
+            </div>
+            </Col>
+        </Row>
             <div className="admin-wrapper">
                 <h1>Thesis</h1>
                 <button><Link to="/admin/thesis/new">Add Thesis</Link></button>

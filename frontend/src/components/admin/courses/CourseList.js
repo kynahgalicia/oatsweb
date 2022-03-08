@@ -10,9 +10,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import {getCourse, deleteCourse, clearErrors} from '../../../redux/actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
+import AdminSidebar from '../../layout/AdminSidebar'
+
 const CourseList = () => {
-    const { loading, error, course } = useSelector(state => state.courses);
-    const {  error: deleteError, isDeleted } = useSelector(state => state.course);
+    const { loading, error, course } = useSelector(state => state.courses)
+    const {  error: deleteError, isDeleted } = useSelector(state => state.course)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
+
 
     const dispatch = useDispatch();
 
@@ -38,7 +43,10 @@ const CourseList = () => {
             dispatch({ type: DELETE_COURSE_RESET })
         }
         
-    },[ dispatch, alert, error, deleteError, isDeleted, history,]);
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    },[ dispatch, alert, error, deleteError, isDeleted, history, isLoggedInAdmin,adminToken]);
 
 
     const setData = () => { 
@@ -97,24 +105,32 @@ const CourseList = () => {
     }
 
     const deleteCourseHandler = (id) => {
-        dispatch(deleteCourse(id))
+        dispatch(deleteCourse(id,adminToken))
     }
 
     return(
         <Fragment>
-            <div className="admin-wrapper">
-                <h1>Courses</h1>
-                <button><Link to="/admin/course/new">Add Course</Link></button>
+        <Row>
+            <Col sm= {2}>
+                <AdminSidebar/>
+            </Col>
 
-                <MDBDataTableV5 
-                    hover 
-                    entriesOptions={[5, 10, 15, 25]} 
-                    entries={10} 
-                    pagesAmount={4}
-                    data={setData()} 
-                    className='table'
-                    container-sm="true"/>
-            </div>
+            <Col sm={10}>
+                <div className="admin-wrapper">
+                    <h1>Courses</h1>
+                    <button><Link to="/admin/course/new">Add Course</Link></button>
+
+                    <MDBDataTableV5 
+                        hover 
+                        entriesOptions={[5, 10, 15, 25]} 
+                        entries={10} 
+                        pagesAmount={4}
+                        data={setData()} 
+                        className='table'
+                        container-sm="true"/>
+                </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

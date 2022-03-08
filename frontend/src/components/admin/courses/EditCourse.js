@@ -3,11 +3,12 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import {useParams} from 'react-router-dom'
-import {Button} from 'react-bootstrap';
+import {Button,Row,Col} from 'react-bootstrap';
 
 import { updateCourse, getCourseDetails, clearErrors } from '../../../redux/actions/courseActions'
 import { UPDATE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
+import AdminSidebar from '../../layout/AdminSidebar'
 const Updatecourse = ({ match, history }) => {
     const [coursename, setCoursename] = useState('');
     const [coursecode, setCoursecode] = useState('');
@@ -19,6 +20,8 @@ const Updatecourse = ({ match, history }) => {
     const { loading, error, course } = useSelector(state => state.courseDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.course);
     // const { departments, loading } = useSelector(state => state.departments)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     const {courseId} = useParams();
 
@@ -47,7 +50,11 @@ const Updatecourse = ({ match, history }) => {
             alert.success('Course updated successfully!');
             dispatch({ type: UPDATE_COURSE_RESET })
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId])
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId,isLoggedInAdmin,adminToken])
 
 
     const submitHandler = (e) => {
@@ -58,11 +65,17 @@ const Updatecourse = ({ match, history }) => {
         formData.set('coursecode', coursecode);
         formData.set('departments', thisDepartment);
 
-        dispatch(updateCourse(course._id, formData))
+        dispatch(updateCourse(course._id, formData,adminToken))
     }
 
     return (
         <Fragment>
+        <Row>
+        <Col sm= {2}>
+            <AdminSidebar/>
+        </Col>
+            <Col sm={10}>
+                <div className="admin-wrapper">
             <div className="wrapper my-5">
                 <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
                     <h1 className="mb-4">Update Course</h1>
@@ -107,7 +120,10 @@ const Updatecourse = ({ match, history }) => {
                     </Button>
 
                 </form>
+            </div> 
             </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

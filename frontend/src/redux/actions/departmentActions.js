@@ -62,13 +62,14 @@ export const getDepartmentDetails = (id) => async (dispatch) => {
 }
 
 //Create Department
-export const newDepartment = (departmentData) => async (dispatch) => {
+export const newDepartment = (departmentData, adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: NEW_DEPARTMENT_REQUEST })
 
         const config = {
             headers: {
+                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -89,13 +90,14 @@ export const newDepartment = (departmentData) => async (dispatch) => {
 }
 
 // Update Department (ADMIN)
-export const updateDepartment = (id, departmentData) => async (dispatch) => {
+export const updateDepartment = (id, departmentData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_DEPARTMENT_REQUEST })
 
         const config = {
             headers: {
+                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -115,12 +117,17 @@ export const updateDepartment = (id, departmentData) => async (dispatch) => {
 }
 
 // Delete department (Admin)
-export const deleteDepartment = (id) => async (dispatch) => {
+export const deleteDepartment = (id,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_DEPARTMENT_REQUEST })
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+            }
+        }
 
-        const { data } = await axios.delete(`/api/department/delete/${id}`)
+        const { data } = await axios.delete(`/api/department/delete/${id}`, config)
 
         dispatch({
             type: DELETE_DEPARTMENT_SUCCESS,

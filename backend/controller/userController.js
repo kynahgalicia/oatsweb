@@ -108,14 +108,32 @@ const userController = {
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
             
             console.log(user)   
-            // const refresh_token = createRefreshToken({id: user._id})
+
+            const refresh_token = createRefreshToken({id: user._id})
+
+            const options = {
+                expires: new Date(
+                    Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
+                ),
+                httpOnly: true
+            }
+        
+            res.status(200).cookie('refreshtoken', refresh_token, options).json({
+                success: true,
+                refresh_token,
+                user,
+                msg: "Login success!"
+            })
+
+            
+            
             // res.cookie('refreshtoken', refresh_token, {
             //     httpOnly: true,
             //     path: '/user/refresh_token',
             //     maxAge: 7*24*60*60*1000 // 7 days
             // })
             
-            sendToken(user, 200, res)
+            // sendToken(user, 200, res)
             // res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -123,10 +141,25 @@ const userController = {
     },
     // /user/cookie 
     getAccessToken: (req, res) => {
-        try{
-        const rf_token = req.cookies.token
-        if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-        res.json({msg: "Cookie Found"})
+        // try{
+        // const rf_token = req.cookies.token
+        // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
+        // res.json({msg: "Cookie Found",
+        //         token: rf_token})
+        // } catch (err) {
+        //     return res.status(500).json({msg: err.message})
+        // }
+
+        try {
+            const rf_token = req.cookies.refreshtoken
+            if(!rf_token) return res.status(400).json({msg: "Please login now!"})
+
+            jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                if(err) return res.status(400).json({msg: "Please login now jwt!"})
+
+                const access_token = createAccessToken({id: user.id})
+                res.json({token: access_token})
+            })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -144,7 +177,7 @@ const userController = {
             const url = `${FRONTEND_URL}/user/reset/${access_token}`
 
             sendMail(user_tupmail, url, "Reset your password")
-            res.json({msg: "Re-send the password, please check your email."})
+            res.json({msg: "Reset requeset sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -155,6 +188,9 @@ const userController = {
         try {
             const {user_password} = req.body
             const passwordHash = await bcrypt.hash(user_password, 12)
+
+            if(user_password.length < 6)
+                return res.status(400).json({msg: "Password must be at least 6 characters."})
 
             await Users.findOneAndUpdate({_id: req.user.id}, {
                 user_password: passwordHash
@@ -171,7 +207,8 @@ const userController = {
         try {
             const user = await Users.findById(req.user.id).select('-user_password')
 
-            res.json(user)
+            res.json({user: user,
+                    msg: "Success User"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -182,18 +219,67 @@ const userController = {
     // /user/all_infor
     getUsersAllInfor: async (req, res) => {
         try {
-            const users = await Users.find().select('-user_password')
+            const users = await Users.find()
 
-            res.json(users)
+            res.json({users: users,
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //user/inforAdmin
+    getUserInforAdmin : async(req,res) => {
+        try {
+            let user = await Users.findById(req.params.id);
+
+            if(!user)
+            return res.status(400).json({msg: "User not found"})
+            
+            res.status(200).json({
+                success: true,
+                user:user
+            })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
+    updateAdmin: async (req,res) => {
+        let user = await Users.findById(req.params.id);
+
+        if(!user)
+        return res.status(400).json({msg: "User not found"})
+
+        try {
+
+            user = await Users.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    // updateProfile : async (req,res) => {
+
+    //     let user = await Users.findById(req.params.id);
+
+    //     if(user)
+    //     return res.status(400).json({msg: "User not found"})
+
+    // },
+
     // /user/logout
     logout: async (req, res) => {
         try {
-            res.cookie('token', null, {
+            res.cookie('refreshtoken', null, {
                 expires: new Date(Date.now()),
                 httpOnly: true
             })

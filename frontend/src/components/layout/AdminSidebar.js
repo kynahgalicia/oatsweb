@@ -10,12 +10,22 @@ const AdminSidebar = () => {
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
         >
             <Nav.Item>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/admin/dashboard">Dashboard</Link>
+            </Nav.Item>
+            <hr/>
+
+            <Nav.Item>
+                <Link to="/admin/thesis">Thesis</Link>
             </Nav.Item>
             <hr/>
             
             <Nav.Item>
-                <Link to="/admin/thesis">Thesis</Link>
+                <Link to="/admin/users">Users</Link>
+            </Nav.Item>
+            <hr/>
+
+            <Nav.Item>
+                <Link to="/admin/admins">Administrators</Link>
             </Nav.Item>
             <hr/>
 
@@ -29,11 +39,7 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
-            <Nav.Item>
-                <Link to="/admin/users">Users</Link>
-            </Nav.Item>
-            <hr/>
-
+            
             <Nav.Item>
                 <div className=" admin-accordion accordion" id="accordionExample">
                     <div className="card">

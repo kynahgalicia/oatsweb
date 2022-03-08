@@ -20,6 +20,14 @@ import{
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
 
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
+
     GET_TOKEN_REQUEST,
     GET_TOKEN_SUCCESS,
     GET_TOKEN_FAIL,
@@ -105,17 +113,20 @@ export const activateEmail = (activation_token) => async (dispatch) => {
 }
 
 // Load user
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (token) => async (dispatch) => {
     try {
 
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const { data } = await axios.get('/user/infor')
+        const {data} = await axios.get('/user/infor', {
+            headers: {Authorization: token}
+        })
 
         dispatch({
             type: LOAD_USER_SUCCESS,
-            payload: data.user
+            payload: data
         })
+
 
     } catch (error) {
         dispatch({
@@ -152,7 +163,7 @@ export const logout = () => async (dispatch) => {
     try {
 
         dispatch({ type: LOGOUT_REQUEST
-         })
+        })
 
         await axios.get('/user/logout')
 
@@ -164,6 +175,65 @@ export const logout = () => async (dispatch) => {
         dispatch({
             type: LOGOUT_FAIL,
             payload: error.response.data.message
+        })
+    }
+}
+
+// Forgot Password
+export const forgotPassword = (user_tupmail) => async (dispatch) => {
+    try {
+
+        dispatch({ type: FORGOT_PASSWORD_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post('/user/forgot' , {user_tupmail}, config)
+
+
+        dispatch({
+            type: FORGOT_PASSWORD_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: FORGOT_PASSWORD_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
+// Reset Password
+export const resetPassword = (user_password,token) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESET_PASSWORD_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }
+
+        const { data } = await axios.post('/user/reset' , {user_password}, config)
+
+
+        dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESET_PASSWORD_FAIL,
+            payload: error.response.data.msg
         })
     }
 }

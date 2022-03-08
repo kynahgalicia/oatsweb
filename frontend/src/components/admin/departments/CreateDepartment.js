@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { newDepartment, clearErrors } from '../../../redux/actions/departmentActions'
 import { NEW_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
-
+import AdminSidebar from '../../layout/AdminSidebar'
 const CreateDepartment = ({history}) => {
     const [deptname, setDepartmentname] = useState('');
     const [deptcode, setDepartmentcode] = useState('');
@@ -16,6 +16,8 @@ const CreateDepartment = ({history}) => {
     const dispatch = useDispatch();
 
     const { loading, error, success } = useSelector(state => state.newDepartment);
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
 
@@ -30,7 +32,10 @@ const CreateDepartment = ({history}) => {
             dispatch({ type: NEW_DEPARTMENT_RESET })
         }
 
-    }, [dispatch, alert, error, success, history])
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, success, history,isLoggedInAdmin, adminToken])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -41,14 +46,17 @@ const CreateDepartment = ({history}) => {
         formData.set('deptname', deptname);
         formData.set('deptcode', deptcode);
 
-        dispatch(newDepartment(formData))
+        dispatch(newDepartment(formData,adminToken))
     }
 
     return (
         <Fragment>
-            <div className="row">
-                <div className="col-12 col-md-10">
-                    <Fragment>
+        <Row>
+        <Col sm= {2}>
+            <AdminSidebar/>
+        </Col>
+            <Col sm={10}>
+                <div className="admin-wrapper">
                         <div className="wrapper my-5">
                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
                                 <h1 className="mb-4">New Department</h1>
@@ -80,10 +88,9 @@ const CreateDepartment = ({history}) => {
                                 </Button>
 
                             </form>
-                        </div>
-                    </Fragment>
-                </div>
-            </div>
+                        </div> </div>
+            </Col>
+        </Row>
         </Fragment>
     )
 }

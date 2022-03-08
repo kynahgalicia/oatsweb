@@ -1,44 +1,44 @@
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 
-const userSchema = new mongoose.Schema({
-    user_tupid: {
+const adminSchema = new mongoose.Schema({
+    admin_tupid: {
         type: String,
-        required: [true, "Please enter your TUP ID!"],
+        required: [true, "Please enter your ID!"],
         trim: true,
         unique: true
     },
-    user_fname: {
+    admin_fname: {
         type: String,
         required: [true, "Please enter your First name!"],
         trim: true
         
     },
-    user_lname: {
+    admin_lname: {
         type: String,
         required: [true, "Please enter your Last name!"],
         trim: true
         
     },
-    user_contact: {
+    admin_contact: {
         type: Number,
         required: [true, "Please enter your Contact Number!"],
         trim: true,
         unique: true
         
     },
-    user_tupmail: {
+    admin_tupmail: {
         type: String,
-        required: [true, "Please enter your TUP Email!"],
+        required: [true, "Please enter your Email!"],
         trim: true,
         unique: true
     },
-    user_password: {
+    admin_password: {
         type: String,
         required: [true, "Please enter your password!"],
         
     },
-    user_department:{ 
+    admin_department:{ 
         departments: {
             type: mongoose.Schema.ObjectId,
             ref: 'Department',
@@ -49,21 +49,7 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     },
-    user_course:{ 
-        courses: {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Course',
-            required: true
-        },
-        coursecode: {
-            type: String,
-            required: true
-        },
-        coursename:{
-            type:String
-        }
-    },
-    user_status:{
+    admin_status:{
         type: String,
         default: "Active"
     },
@@ -76,9 +62,9 @@ const userSchema = new mongoose.Schema({
 })
 
 // Return JWT token
-userSchema.methods.getJwtToken = function () {
+adminSchema.methods.getJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_TIME
     });
 }
-module.exports = mongoose.model("Users", userSchema)
+module.exports = mongoose.model("Admins", adminSchema)
