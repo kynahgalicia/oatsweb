@@ -37,6 +37,7 @@ const Header = () => {
         if(isLoggedInAdmin){
             dispatch(logoutAdmin());
             history.push('/admin/login')
+            window.location.reload();
             alert.success('Logged out successfully.')
         }
         if(isLoggedIn){
@@ -110,7 +111,9 @@ const Header = () => {
             <Nav>
             {isLoggedInAdmin ? null  : setUserLink()}
             {isLoggedIn || isLogged ? setProfile() :null}
-            {isLoggedInAdmin || isLoggedAdmin ? setProfileAdmin() : <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>  }
+            {isLoggedInAdmin || isLoggedAdmin ? setProfileAdmin() : null  }
+            {isLoggedInAdmin || isLoggedIn ? null :  <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>   }
+
             </Nav>
         </Navbar.Collapse>
         </Container>

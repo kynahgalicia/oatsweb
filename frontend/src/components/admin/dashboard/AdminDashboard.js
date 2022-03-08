@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState} from 'react'
 import { useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Card} from 'react-bootstrap'
 import { useSelector } from 'react-redux'
@@ -9,15 +9,19 @@ const AdminDashboard = () => {
 
     const history = useHistory()
 
+    const [thisDepartment, setThisDepartment] = useState('')
     const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
 
     useEffect(() => {
-
+        if(admin){
+            setThisDepartment(admin.admin_department.deptname)
+            // console.log(thisAdmin)
+        }
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    },[ history, isLoggedInAdmin]);
+    },[ history, isLoggedInAdmin,thisDepartment]);
     return (
 
         <Fragment>
@@ -43,7 +47,7 @@ const AdminDashboard = () => {
                         <label><i>{admin.admin_tupmail}</i></label>
                         <br />
                         <label> {admin.admin_contact}</label> <br />
-                        <label> {admin.admin_department.deptname}</label><br />
+                        <label> {thisDepartment}</label><br />
                         <Button className="btn-user">Edit Profile</Button>
                         </Col>
                     </Row>

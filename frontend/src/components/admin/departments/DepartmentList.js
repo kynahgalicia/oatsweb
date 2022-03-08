@@ -13,6 +13,8 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const DepartmentList = () => {
     const { loading, error, department } = useSelector(state => state.department);
     const {  error: deleteError, isDeleted } = useSelector(state => state.departments);
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
 
@@ -37,8 +39,12 @@ const DepartmentList = () => {
             alert.success('Department deleted successfully');
             dispatch({ type: DELETE_DEPARTMENT_RESET })
         }
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
         
-    },[ dispatch, alert, error, deleteError, isDeleted, history,]);
+    },[ dispatch, alert, error, deleteError, isDeleted, history,isLoggedInAdmin,adminToken]);
 
 
     const setData = () => { 
@@ -91,7 +97,7 @@ const DepartmentList = () => {
     }
 
     const deleteDepartmentHandler = (id) => {
-        dispatch(deleteDepartment(id))
+        dispatch(deleteDepartment(id,adminToken))
     }
 
     return(
@@ -102,10 +108,11 @@ const DepartmentList = () => {
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
+                
+                <div className="table-admin">
                 <h1>Departments</h1>
-                <button><Link to="/admin/department/new">Add Department</Link></button>
-
-                <MDBDataTableV5 
+                <button><Link to="/admin/department/new"><i class="fas fa-plus"></i>Add</Link></button>
+                    <MDBDataTableV5 
                     hover 
                     entriesOptions={[5, 10, 15, 25]} 
                     entries={10} 
@@ -113,6 +120,8 @@ const DepartmentList = () => {
                     data={setData()} 
                     className='table'
                     container-sm="true"/>
+                </div>
+                
             </div>
             </Col>
         </Row>

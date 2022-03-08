@@ -22,7 +22,7 @@ exports.authAdmin = (req, res, next) => {
         if(!token) return res.status(400).json({msg: "Invalid Authentication."})
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, admin) => {
-            if(err) return res.status(400).json({msg: "Invalid Authentication jwt."})
+            if(err) return res.status(400).json({msg: "Invalid Authentication test."})
 
             req.admin = admin
             next()

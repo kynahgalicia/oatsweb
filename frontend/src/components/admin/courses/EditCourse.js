@@ -20,6 +20,8 @@ const Updatecourse = ({ match, history }) => {
     const { loading, error, course } = useSelector(state => state.courseDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.course);
     // const { departments, loading } = useSelector(state => state.departments)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     const {courseId} = useParams();
 
@@ -48,7 +50,11 @@ const Updatecourse = ({ match, history }) => {
             alert.success('Course updated successfully!');
             dispatch({ type: UPDATE_COURSE_RESET })
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId])
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId,isLoggedInAdmin,adminToken])
 
 
     const submitHandler = (e) => {
@@ -59,7 +65,7 @@ const Updatecourse = ({ match, history }) => {
         formData.set('coursecode', coursecode);
         formData.set('departments', thisDepartment);
 
-        dispatch(updateCourse(course._id, formData))
+        dispatch(updateCourse(course._id, formData,adminToken))
     }
 
     return (

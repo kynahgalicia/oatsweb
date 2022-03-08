@@ -216,7 +216,7 @@ const adminController = {
         try {
             const admins = await Admins.find().select('-admin_password')
 
-            res.json(admins)
+            res.json({admins:admins})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

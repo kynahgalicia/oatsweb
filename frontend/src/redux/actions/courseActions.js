@@ -62,13 +62,14 @@ export const getCourseDetails = (id) => async (dispatch) => {
 }
 
 //Create Course
-export const newCourse = (courseData) => async (dispatch) => {
+export const newCourse = (courseData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: NEW_COURSE_REQUEST })
 
         const config = {
             headers: {
+                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -89,13 +90,14 @@ export const newCourse = (courseData) => async (dispatch) => {
 }
 
 // Update Course (ADMIN)
-export const updateCourse = (id, courseData) => async (dispatch) => {
+export const updateCourse = (id, courseData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_COURSE_REQUEST })
 
         const config = {
             headers: {
+                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -115,12 +117,17 @@ export const updateCourse = (id, courseData) => async (dispatch) => {
 }
 
 // Delete course (Admin)
-export const deleteCourse = (id) => async (dispatch) => {
+export const deleteCourse = (id,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_COURSE_REQUEST })
 
-        const { data } = await axios.delete(`/api/course/delete/${id}`)
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+            }
+        }
+        const { data } = await axios.delete(`/api/course/delete/${id}`, config)
 
         dispatch({
             type: DELETE_COURSE_SUCCESS,

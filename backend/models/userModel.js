@@ -63,6 +63,10 @@ const userSchema = new mongoose.Schema({
             type:String
         }
     },
+    user_status:{
+        type: String,
+        default: "Active"
+    },
     avatar: {
         type: String,
         default: ""

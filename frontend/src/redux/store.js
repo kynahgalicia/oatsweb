@@ -2,14 +2,17 @@ import { combineReducers , createStore, applyMiddleware, compose} from "redux";
 
 import { thesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
 
-import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer";
+import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
-import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer";
+import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
 
-import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer";
+import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
 
+import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
+
+import { adminsReducer } from './reducers/adminReducer'
 
 import thunk from 'redux-thunk'
 
@@ -29,6 +32,12 @@ const reducer = combineReducers({
     newCourse: newCourseReducer,
     course: courseReducer,
     courseDetails: CourseDetailsReducer,
+    //Users
+    users:usersReducer,
+    user:userReducer,
+    userDetails: userDetailsReducer,
+    //Admin
+    admins:adminsReducer,
     // Authentication
     authUser: authUserReducer,
     authUserRegister: authUserRegisterReducer,

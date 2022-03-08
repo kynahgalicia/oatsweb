@@ -1,12 +1,10 @@
-const Users = require('../models/userModel')
+const Admins = require('../models/adminModel')
 
-const authAdmin = async (req, res, next) => {
+const authAdminRole = async (req, res, next) => {
     try {
-        const user = await Users.findOne({_id: req.user.id})
-
-        //pwede ilagay dito yung role ng admin 
+        const admin = await Admins.findOne({_id: req.admin.id})
         
-        if(user.role !== 1) 
+        if(!admin.admin_tupid) 
             return res.status(500).json({msg: "Admin resources access denied."})
 
         next()
@@ -15,4 +13,4 @@ const authAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = authAdmin
+module.exports = authAdminRole

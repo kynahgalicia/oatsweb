@@ -219,13 +219,62 @@ const userController = {
     // /user/all_infor
     getUsersAllInfor: async (req, res) => {
         try {
-            const users = await Users.find().select('-user_password')
+            const users = await Users.find()
 
-            res.json(users)
+            res.json({users: users,
+            })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
+    //user/inforAdmin
+    getUserInforAdmin : async(req,res) => {
+        try {
+            let user = await Users.findById(req.params.id);
+
+            if(!user)
+            return res.status(400).json({msg: "User not found"})
+            
+            res.status(200).json({
+                success: true,
+                user:user
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    updateAdmin: async (req,res) => {
+        let user = await Users.findById(req.params.id);
+
+        if(!user)
+        return res.status(400).json({msg: "User not found"})
+
+        try {
+
+            user = await Users.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    // updateProfile : async (req,res) => {
+
+    //     let user = await Users.findById(req.params.id);
+
+    //     if(user)
+    //     return res.status(400).json({msg: "User not found"})
+
+    // },
 
     // /user/logout
     logout: async (req, res) => {

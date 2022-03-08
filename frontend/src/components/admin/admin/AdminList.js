@@ -3,14 +3,14 @@ import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
+import { FaPencilAlt,FaUserAltSlash} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getUsers } from '../../../redux/actions/userActions';
+import { getAdmins } from '../../../redux/actions/adminActions';
 import AdminSidebar from '../../layout/AdminSidebar'
 const UserList = () => {
-    const { loading, error, users } = useSelector(state => state.users)
-    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
+    const { loading, error, admins } = useSelector(state => state.admins)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const UserList = () => {
     useEffect(() => {
 
         if(adminToken){
-            dispatch(getUsers(adminToken))
+            dispatch(getAdmins(adminToken))
         }
 
         if (error) {
@@ -41,7 +41,6 @@ const UserList = () => {
         
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
-
         }
     },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken]);
 
@@ -50,34 +49,30 @@ const UserList = () => {
             columns: [
                 {
                     label: 'ID',
-                    field: 'user_tupid',
+                    field: 'admin_tupid',
                     sort: 'asc'
                 },
                 {
                     label: 'First Name',
-                    field: 'user_fname',
+                    field: 'admin_fname',
                     sort: 'desc'
                 },
                 {
                     label: 'Last Name',
-                    field: 'user_lname',
+                    field: 'admin_lname',
                     sort: 'desc'
                 },
                 {
                     label: 'Contact',
-                    field: 'user_contact',
+                    field: 'admin_contact',
                 },
                 {
                     label: 'Email',
-                    field: 'user_tupmail',
+                    field: 'admin_tupmail',
                 },
                 {
                     label: 'Department',
                     field: 'department',
-                },
-                {
-                    label: 'Course',
-                    field: 'course',
                 },
                 {
                     label: 'Actions',
@@ -88,25 +83,24 @@ const UserList = () => {
             rows: []
         }
 
-        users.forEach(users => {
+        admins.forEach(admins => {
             data.rows.push({
-                user_tupid: users.user_tupid,
-                user_fname: users.user_fname,
-                user_lname: users.user_lname,
-                user_contact: users.user_contact,
-                user_tupmail: users.user_tupmail,
-                department: users.user_department.deptname,
-                course: users.user_course.coursecode,
+                admin_tupid: admins.admin_tupid,
+                admin_fname: admins.admin_fname,
+                admin_lname: admins.admin_lname,
+                admin_contact: admins.admin_contact,
+                admin_tupmail: admins.admin_tupmail,
+                department: admins.admin_department.deptname,
                 actions: 
                 <Fragment>
-                    <Link to={`/admin/users/edit/${users._id}`} className="decor-none block">
+                    {/* <Link to={`/admin/course/edit/${course._id}`} className="decor-none block"> */}
                         <Button variant="info">
                         <FaPencilAlt/>
                         </Button>
-                    </Link>
+                    {/* </Link> */}
 
                     <Button variant="danger" data-toggle="tooltip" data-placement="bottom" title="Deactivate">
-                    <i class="fas fa-user-alt-slash"></i>
+                    <FaUserAltSlash />
                     </Button>
                 </Fragment>
             })
@@ -123,8 +117,8 @@ const UserList = () => {
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
-                <h1>Users</h1>
-                    <button><Link to="/admin/users/new">Add</Link></button>
+                <h1>Admins</h1>
+                    <button><Link to="/admin/admins/new">Add</Link></button>
 
                     <MDBDataTableV5 
                         hover 

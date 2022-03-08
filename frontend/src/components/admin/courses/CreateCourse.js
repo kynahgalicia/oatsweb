@@ -21,6 +21,8 @@ const CreateCourse = () => {
 
     const {department} = useSelector(state => state.department)
     const { loading, error, success } = useSelector(state => state.newCourse);
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
 
@@ -35,9 +37,13 @@ const CreateCourse = () => {
             dispatch({ type: NEW_COURSE_RESET })
         }
 
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+
         dispatch(getDepartment())
 
-    }, [dispatch, alert, error, success, history])
+    }, [dispatch, alert, error, success, history,isLoggedInAdmin,adminToken])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -49,7 +55,7 @@ const CreateCourse = () => {
         formData.set('coursecode', coursecode);
         formData.set('departments', thisDepartment);
 
-        dispatch(newCourse(formData))
+        dispatch(newCourse(formData, adminToken))
     }
 
     return (

@@ -49,6 +49,10 @@ const adminSchema = new mongoose.Schema({
             required: true
         }
     },
+    admin_status:{
+        type: String,
+        default: "Active"
+    },
     avatar: {
         type: String,
         default: ""

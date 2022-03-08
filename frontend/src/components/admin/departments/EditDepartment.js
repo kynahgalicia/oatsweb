@@ -17,6 +17,8 @@ const Updatedepartment = ({ match, history }) => {
 
     const { loading, error, department } = useSelector(state => state.departmentDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.departments);
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     const {departmentId} = useParams();
 
@@ -44,7 +46,11 @@ const Updatedepartment = ({ match, history }) => {
             alert.success('Department updated successfully!');
             dispatch({ type: UPDATE_DEPARTMENT_RESET })
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, department, departmentId])
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken])
 
 
     const submitHandler = (e) => {
@@ -54,7 +60,7 @@ const Updatedepartment = ({ match, history }) => {
         formData.set('deptname', deptname);
         formData.set('deptcode', deptcode);
 
-        dispatch(updateDepartment(department._id, formData))
+        dispatch(updateDepartment(department._id, formData,adminToken))
     }
 
     return (

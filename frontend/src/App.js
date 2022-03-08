@@ -1,11 +1,11 @@
 import './App.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "react-datepicker/dist/react-datepicker.css"
 
-import React, {Fragment, useState,useEffect} from 'react'
+import React, {useState,useEffect} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import store from './redux/store'
 
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -16,12 +16,14 @@ import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 import ThesisList from './components/admin/thesis/ThesisList'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CourseList from './components/admin/courses/CourseList'
-import UserList from './components/admin/users/UserList'
 import PaymentList from './components/admin/payment/PaymentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
 import Updatedepartment from './components/admin/departments/EditDepartment'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
+import UserList from './components/admin/users/UserList'
+import EditUser from './components/admin/users/EditUser'
+import AdminList from './components/admin/admin/AdminList'
 
 //Home
 import Home from './components/user/Home/Home'
@@ -119,6 +121,8 @@ function App() {
         <Route path="/admin/course/new" component={CreateCourse} exact/>
         <Route path="/admin/course/edit/:courseId" component={Updatecourse} exact/>
         <Route path="/admin/users" component={UserList} exact/>
+        <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
+        <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
         <Route path="*">
           {NoMatch}

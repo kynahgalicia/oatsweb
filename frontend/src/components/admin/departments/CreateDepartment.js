@@ -16,6 +16,8 @@ const CreateDepartment = ({history}) => {
     const dispatch = useDispatch();
 
     const { loading, error, success } = useSelector(state => state.newDepartment);
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
 
@@ -30,7 +32,10 @@ const CreateDepartment = ({history}) => {
             dispatch({ type: NEW_DEPARTMENT_RESET })
         }
 
-    }, [dispatch, alert, error, success, history])
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, success, history,isLoggedInAdmin, adminToken])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -41,7 +46,7 @@ const CreateDepartment = ({history}) => {
         formData.set('deptname', deptname);
         formData.set('deptcode', deptcode);
 
-        dispatch(newDepartment(formData))
+        dispatch(newDepartment(formData,adminToken))
     }
 
     return (

@@ -13,8 +13,11 @@ import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 import AdminSidebar from '../../layout/AdminSidebar'
 
 const CourseList = () => {
-    const { loading, error, course } = useSelector(state => state.courses);
-    const {  error: deleteError, isDeleted } = useSelector(state => state.course);
+    const { loading, error, course } = useSelector(state => state.courses)
+    const {  error: deleteError, isDeleted } = useSelector(state => state.course)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const {adminToken} = useSelector(state => state.authAdminToken)
+
 
     const dispatch = useDispatch();
 
@@ -40,7 +43,10 @@ const CourseList = () => {
             dispatch({ type: DELETE_COURSE_RESET })
         }
         
-    },[ dispatch, alert, error, deleteError, isDeleted, history,]);
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    },[ dispatch, alert, error, deleteError, isDeleted, history, isLoggedInAdmin,adminToken]);
 
 
     const setData = () => { 
@@ -99,7 +105,7 @@ const CourseList = () => {
     }
 
     const deleteCourseHandler = (id) => {
-        dispatch(deleteCourse(id))
+        dispatch(deleteCourse(id,adminToken))
     }
 
     return(

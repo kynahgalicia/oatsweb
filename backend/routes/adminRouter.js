@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const adminController = require('../controller/adminController')
 const {authAdmin} = require('../middleware/auth')
-// const authAdmin = require('../middleware/authAdminRole')
+const authAdminRole = require('../middleware/authAdminRole')
 
 router.post('/register', adminController.register)
 
@@ -19,7 +19,7 @@ router.post('/reset', authAdmin, adminController.resetPassword)
 
 router.get('/infor', authAdmin, adminController.getAdminInfor)
 
-// router.get('/all_infor', auth, authAdmin, adminController.getUsersAllInfor)
+router.get('/all_infor', authAdmin, authAdminRole, adminController.getAdminsAllInfor)
 
 
 // router.get('/logout', adminController.logout)
