@@ -751,3 +751,6 @@ font-family: 'Poppins' , sans-serif;
   background-color: var(--black);
   color: var(--white);
 }
+.createthesis{
+  text-align: left!important;
+}
