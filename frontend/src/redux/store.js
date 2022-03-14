@@ -8,6 +8,8 @@ import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer }
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
 
+import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer} from './reducers/authGuestReducer'
+
 import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
 
 import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
@@ -46,6 +48,10 @@ const reducer = combineReducers({
     //Authentication Admin
     authAdmin:authAdminReducer,
     authAdminToken: authAdminTokenReducer,
+    //Authentication Guest
+    authGuest: authGuestReducer,
+    authGuestRegister: authGuestRegisterReducer,
+    authGuestToken: authGuestTokenReducer,
 
 })
 

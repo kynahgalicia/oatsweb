@@ -50,7 +50,7 @@ const LoginasUser = () => {
             
 
             <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
-            <h1 className='text-center'>Sign In as User</h1>
+            <h1 className='text-center'>Sign In as Student</h1>
 
             {error && showErrMsg(error)}
             {/* <Button className="w-100 btn-grey my-4" type="submit">
@@ -81,7 +81,7 @@ const LoginasUser = () => {
             </Button>
             </Link>
             <div className='text-center my-3'>
-            <label>Don't have an account?   <Link to="/SignUp"> Sign Up
+            <label>Don't have an account?   <Link to="/user/student"> Sign Up
             </Link></label>
             </div>
             </Form> 

@@ -7,6 +7,7 @@ import { BsPersonFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import {logout} from '../../redux/actions/authActions'
 import {logoutAdmin} from '../../redux/actions/authAdminActions'
+import {logoutGuest} from '../../redux/actions/authGuestActions'
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -15,10 +16,13 @@ const Header = () => {
 
     const [thisUser, setThisUser] = useState('')
     const [thisAdmin, setThisAdmin] = useState('')
+    const [thisGuest, setThisGuest] = useState('')
     const {isLoggedIn, user} = useSelector(state => state.authUser)
     const {token, isLogged, isUser} = useSelector(state => state.authToken)
     const {isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken, isLoggedAdmin, isAdmin} = useSelector(state => state.authAdminToken)
+    const {isLoggedInGuest, guest} = useSelector(state => state.authGuest)
+    const {guestToken, isLoggedGuest, isGuest} = useSelector(state => state.authGuestToken)
 
     useEffect(() => {
         
@@ -29,11 +33,21 @@ const Header = () => {
             if(isLoggedInAdmin){
                 setThisAdmin(admin.admin_tupid)        
             }
+
+            if(isLoggedInGuest){
+                setThisGuest(guest.guest_fname)        
+            }
         
-    }, [ dispatch,isLoggedIn, isLoggedInAdmin,isUser, user, admin]);
+    }, [ dispatch,isLoggedIn, isLoggedInAdmin, isLoggedInGuest,isUser, user, admin,guest]);
 
     const logoutHandler = () => {
 
+        if(isLoggedInGuest){
+            dispatch(logoutGuest());
+            history.push('/guest/login')
+            window.location.reload();
+            alert.success('Logged out successfully.')
+        }
         if(isLoggedInAdmin){
             dispatch(logoutAdmin());
             history.push('/admin/login')
@@ -60,6 +74,24 @@ const Header = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 <Dropdown.Item><Link to="/user/profile"> Account</Link></Dropdown.Item>
+                <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
+            </Dropdown.Menu>
+            </Dropdown>
+        </>
+        )
+        
+    }
+    const setProfileGuest = () => {
+
+        return (
+            <>
+            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
+            <Dropdown className='m-2'>
+            <Dropdown.Toggle id="dropdown-basic">
+            {thisGuest}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item><Link to="/guest/profile"> Account</Link></Dropdown.Item>
                 <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
@@ -111,8 +143,9 @@ const Header = () => {
             <Nav>
             {isLoggedInAdmin ? null  : setUserLink()}
             {isLoggedIn || isLogged ? setProfile() :null}
+            {isLoggedInGuest ? setProfileGuest() :null}
             {isLoggedInAdmin || isLoggedAdmin ? setProfileAdmin() : null  }
-            {isLoggedInAdmin || isLoggedIn ? null :  <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>   }
+            {isLoggedInAdmin || isLoggedIn || isLoggedInGuest ? null :  <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>   }
 
             </Nav>
         </Navbar.Collapse>

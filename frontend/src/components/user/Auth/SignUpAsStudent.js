@@ -4,7 +4,7 @@ import {Form, Button} from 'react-bootstrap';
 import {BsGoogle} from 'react-icons/bs'
 import { Row, Col} from 'react-bootstrap'
 import { useAlert } from 'react-alert'
-import study from '../../img/study.png'
+import study from '../../img/student.png'
 import { showErrMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import {getDepartment} from '../../../redux/actions/departmentActions'
@@ -90,86 +90,103 @@ const SignUpAsStudent = () => {
         <div className="wrapper">
 
         <Row>
-            <Col>
-            <img src={study} alt="logo" className="img-signup" />
+            <Col >
+            <img src={study} alt="logo" className="img-signup m-5" />
             </Col>
-            <Col>
-            <Form className="form-group auth-signup" onSubmit={submitHandler} encType='application/json'>
+            <Col className="auth-signup-form">
             <h1 className='text-center'>Sign Up as Student</h1>
-            
-            <Button className="w-100 btn-grey my-4" type="submit">
+            {/* <Button className="w-100 btn-grey my-4" type="submit">
                 <label><BsGoogle size={15} className='m-2'/> Sign with Google</label>
-            </Button>
-
+            </Button> */}
+            <Form className="form-group auth-signup" onSubmit={submitHandler} encType='application/json'>
             {error && showErrMsg(error)}
+            <Row>
+            <Col className="mx-3">
+                <h5>Personal Information</h5>
+            
+                <Form.Group className="mb-2">
+                        <Form.Label>TUP ID</Form.Label>
+                        <Form.Control type="text" placeholder="TUPT-XX-XXXX" value={user_tupid} onChange={(e) => setID(e.target.value)}/>
+                    </Form.Group>
+                <Row>
+                    <Col>
+                    <Form.Group className="mb-2">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control className=" w-100" type="text" placeholder="" value={user_fname} onChange={(e) => setFname(e.target.value)}/>
+                    </Form.Group>
+                    </Col>
+                    <Col>
+                    <Form.Group className="mb-2 mx-1">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control  className=" w-100" type="text" placeholder="" value={user_lname} onChange={(e) => setLname(e.target.value)}/>
+                    </Form.Group>
+                    </Col>
+                </Row>
 
-            <h5>Personal Information</h5>
-            <Form.Group className="mb-3">
-                <Form.Label>TUP ID</Form.Label>
-                <Form.Control type="text" placeholder="TUPT-XX-XXXX" value={user_tupid} onChange={(e) => setID(e.target.value)}/>
-            </Form.Group>
+                <Form.Group className="mb-2">
+                        <Form.Label>Contact Number</Form.Label>
+                        <Form.Control type="text" placeholder="" value={user_contact} onChange={(e) => setContact(e.target.value)}/>
+                    </Form.Group>
+                    
+                    <Form.Group className="mb-2">
+                        <Form.Label>Department</Form.Label>
+                        <Form.Select id="department_field" placeholder="" value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} >
+                        <option> -- SELECT DEPARTMENT --</option>
 
-            <Form.Group className="mb-3">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="" value={user_fname} onChange={(e) => setFname(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="" value={user_lname} onChange={(e) => setLname(e.target.value)}/>
-            </Form.Group>
-    
-            <Form.Group className="mb-3">
-                <Form.Label>Contact Number</Form.Label>
-                <Form.Control type="text" placeholder="" value={user_contact} onChange={(e) => setContact(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Form.Label>Department</Form.Label>
-                <Form.Select id="department_field" placeholder="" value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} >
-                <option> -- SELECT DEPARTMENT --</option>
-
-                    { department && department.map((departments) => (
-                                
-                            <option value={departments._id}>{departments.deptname}</option>
-                                
+                            { department && department.map((departments) => (
+                                        
+                                    <option value={departments._id}>{departments.deptname}</option>
+                                        
+                                ))}
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-2">
+                        <Form.Label>Course</Form.Label>
+                        <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
+                        {thisDepartment && course && course.map((courses) => (
+                                        
+                                        <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>
+                                            
                         ))}
-                </Form.Select>
-            </Form.Group>
+                        </Form.Select>
+                    </Form.Group>
 
-            <Form.Group className="mb-3">
-                <Form.Label>Course</Form.Label>
-                <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
-                {thisDepartment && course && course.map((courses) => (
-                                
-                                <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>
-                                    
-                ))}
-                </Form.Select>
-            </Form.Group>
 
-            <h5>Account Setup</h5>
-            <Form.Group className="mb-3">
+                </Col>
+                <Col>
+                <h5>Account Setup</h5>
+                <Form.Group className="mb-2">
             <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="" value={user_tupmail} onChange={(e) => setMail(e.target.value)}/>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-2">
             <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="" value={user_password} onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" id="formGridCheckbox">
+            
+            </Col>      
+            <Row>
+            <Form.Group className="mb-2 px-3" id="formGridCheckbox">
             <Form.Check type="checkbox" label="By creating an account you agree to our Terms of Service and Privacy Policy" 
             onClick={(e) => setAgree(e.target.checked)} />
             </Form.Group>
 
             <Button className="w-100 btn-login" type="submit" id="submitButton">
-                continue
+                Continue
             </Button>
-            <div className='text-center my-3'>
-            <label>Already have an account?   <Link to="/Login"> Sign In
+            <Link to ="/user/guest">
+            <Button className="w-100 btn-grey">
+                Sign Up as Guest
+            </Button>
+            </Link>
+            <div className='text-center my-1'>
+            <label>Already have an account?   <Link to="/student/login"> Sign In
             </Link></label>
             </div>
+            </Row>
+            </Row>
+                
             </Form> 
             </Col>
             </Row>

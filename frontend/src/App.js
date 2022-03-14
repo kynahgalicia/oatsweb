@@ -38,7 +38,9 @@ import SignUp from './components/user/Auth/SignUp'
 import SignUpAsStudent from './components/user/Auth/SignUpAsStudent'
 import SignUpAsOrg from './components/user/Auth/SignUpAsOrg'
 import ActivationEmail from './components/user/Auth/ActivationEmail';
+import ActivationEmailGuest from './components/user/Auth/ActivationEmailGuest';
 import Redirect from './components/user/Auth/Redirect'
+import RedirectGuest from './components/user/Auth/RedirectGuest'
 import ForgotPassword from './components/user/Auth/ForgotPassword'
 import ResetPassword from './components/user/Auth/ResetPassword';
 
@@ -55,14 +57,17 @@ import NotFound from './components/img/404.png'
 
 import { getToken, loadUser } from './redux/actions/authActions'
 import { getAdminToken, loadAdmin} from './redux/actions/authAdminActions'
+import { getGuestToken, loadGuest} from './redux/actions/authGuestActions'
 function App() {
 
   const dispatch = useDispatch()
   const [thisToken, setThisToken] = useState('')
   const [thisAdminToken, setThisAdminToken] = useState('')
+  const [thisGuestToken, setThisGuestToken] = useState('')
 
   const {token} = useSelector(state => state.authToken)
   const {adminToken} = useSelector(state => state.authAdminToken)
+  const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
     console.log(token)
 
@@ -76,9 +81,15 @@ function App() {
       setThisAdminToken(adminToken)
     }
 
+    if(!thisGuestToken){
+      dispatch(getGuestToken())
+      setThisGuestToken(guestToken)
+    }
+
     dispatch(loadUser(token))
     dispatch(loadAdmin(adminToken))
-  }, [dispatch, token,adminToken])
+    dispatch(loadGuest(guestToken))
+  }, [dispatch, token,adminToken, guestToken])
   
 
   return (
@@ -97,11 +108,13 @@ function App() {
         <Route path="/guest/login" component={LoginasGuest} exact/>
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>
-        <Route path="/user/organization" component={SignUpAsOrg} exact/>
+        <Route path="/user/guest" component={SignUpAsOrg} exact/>
         <Route path="/user/activate/:activation_token" component={ActivationEmail} exact/>
+        <Route path="/guest/activate/:activation_token" component={ActivationEmailGuest} exact/>
         <Route path="/user/forgot" component={ForgotPassword} exact/>
         <Route path="/user/reset/:token" component={ResetPassword} exact/>
         <Route path="/Redirect" component={Redirect} exact/>
+        <Route path="/RedirectGuest" component={RedirectGuest} exact/>
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>

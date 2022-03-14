@@ -25,7 +25,7 @@ const seedThesis = async () => {
         // await Thesis.insertMany(thesis)
         // await Course.insertMany(course)
         // await Department.insertMany(department)
-        console.log('Data Added.')
+        // console.log('Data Added.')
         process.exit();
     } catch (error) {
         console.log(error.message);
