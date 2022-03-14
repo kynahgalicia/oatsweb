@@ -12,21 +12,27 @@ const ThesisDetails = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
+    const [thisDepartment,setThisDepartment] = useState('')
+    const [thisCourse,setThisCourse] = useState('')
     const { loading, error, thesis } = useSelector(state => state.thesisDetails);
 
     let {thesisId} = useParams()
 
     useEffect(() => {
         
-        // if(thesisId){
-            console.log(thesisId)
+        if(thesisId){
+            // console.log(thesisId)
             dispatch(getThesisDetails(thesisId))
-        // }
+            setThisDepartment(thesis.department.deptname)
+            setThisCourse(thesis.course.coursecode)
+            console.log(thisCourse,thisDepartment)
+        }
+
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId]);
+    }, [dispatch, alert, error ,thesisId,thisCourse,thisDepartment]);
 
     return ( 
         <div className="wrapper">
@@ -39,8 +45,8 @@ const ThesisDetails = () => {
                     <Link1 className='d-inline'><i> {x.author}</i></Link1>
                 ))} */}
                 <div className="m-3">
-                <label> Published: <Link1>{moment(thesis.publishedAt).format('MMMM D YYYY')}</Link1> </label>
-                {/* | Department: <Link1>{thesis.department.deptname}</Link1> | Course: <Link1>{thesis.course.coursecode}</Link1></label> */}
+                <label> Published: <Link1>{thesis.publishedAt}</Link1>
+                | Department: <Link1>{thisDepartment}</Link1> | Course: <Link1>{thisCourse}</Link1></label>
                 </div>
                 <div className='details-button'>
                         <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">

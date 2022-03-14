@@ -20,9 +20,9 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
 
         let link = ''
         if(department){
-            link = `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gt]=${startDate}&publishedAt[lt]=${endDate}`
+            link = `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         } else{
-            link = `/api/thesis?keyword=${keyword}&publishedAt[gt]=${startDate}&publishedAt[lt]=${endDate}`
+            link = `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }
 
 

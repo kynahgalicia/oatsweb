@@ -23,8 +23,8 @@ const Search = () => {
     const [thisKeyword, setKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState(1)
     const [thisDepartment, setDepartment] = useState('')
-    const [startDate, setStartDate] = useState(ISODate(new Date("1999/12/31").toISOString()));
-    const [endDate, setEndDate] = useState(ISODate(new Date("2023/01/02").toISOString()));
+    const [startDate, setStartDate] = useState(1999);
+    const [endDate, setEndDate] = useState(2023);
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const Search = () => {
         }
         
     
-        dispatch(getThesis(keyword, thisDepartment, startDate.toISOString(), endDate.toISOString()));
+        dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
     }, [dispatch, alert, error, keyword, currentPage,userDept, thisDepartment,startDate,endDate])
 
@@ -147,9 +147,24 @@ const Search = () => {
                         </h2>
                         </div>
                         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div className="card-body year">
+                        <div className="card-body">
                         <label> Start Date:</label>
-                                <DatePicker
+                                <input
+                                    type="number"
+                                    id="coursename_field"
+                                    className="form-control"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                        <label> End Date:</label>
+                                <input
+                                    type="number"
+                                    id="coursename_field"
+                                    className="form-control"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                                {/* <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(ISODate(new Date(date).toISOString()))}
                                 selectsStart
@@ -164,7 +179,7 @@ const Search = () => {
                                 startDate={startDate}
                                 endDate={new Date(endDate)}
                                 minDate={new Date(startDate)}
-                                />
+                                /> */}
                         </div>
                         </div>
                     </div>

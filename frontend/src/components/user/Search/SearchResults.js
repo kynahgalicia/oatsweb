@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom'
 import moment from 'moment'
 const SearchResults = ({userDept,thesis}) => {
+
     return ( 
         <Fragment>
             { thesis && thesis.map((theses) => (
@@ -16,14 +17,14 @@ const SearchResults = ({userDept,thesis}) => {
                     </div>
                 </div>
                 
-        
-                { theses.authors.map((x) => (
+                <Link><p><i> {theses.authors[0].author + ' ...'} </i></p></Link>
+                {/* { theses.authors.map((x) => (
                     <Link><p><i> {x.author}</i></p></Link>
                 ))}
-            
+             */}
 
                 <div>
-                    <label> Published: <Link>{moment(theses.publishedAt).format('MMMM D YYYY')}</Link> | Department: <Link>{theses.department.deptname}</Link> | Course: <Link>{theses.course.coursecode}</Link></label>
+                    <label> Published: <Link>{theses.publishedAt}</Link> | Department: <Link>{theses.department.deptname}</Link> | Course: <Link>{theses.course.coursecode}</Link></label>
                 </div>
 
                 
