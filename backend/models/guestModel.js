@@ -1,60 +1,65 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
 
 const guestSchema = new mongoose.Schema({
-    gfname:{type: String, required: true, minlength: 2, maxlength: 30 },
-    glname:{type: String, required: true, minlength: 2, maxlength: 30 },
-    gcontact:{type: Number, required: true, minlength:11, maxlength: 11},
-    gprofession:{type: String, required: true, minlength:6},
-    gcompany:{type: String, required: true, minlength:6},
-    gcompanyadd:{type: String, required: true, minlength:6},
-    gemail: {type: String, required: true, unique: true, minlength:10, maxlength:30},
-    gpassword: {type: String, required:true, minlength:6},
-    avatar: [{
-        public_id: {type: String,required: true},
-        url: {type: String,required: true},
-    }],
-    createdAt: {type: Date, default: Date.now},
-    resetPasswordToken: String,
-    resetPasswordExpire: Date
-})
-
-// Encrypting password before saving user
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) {
-        next()
+    guest_fname: {
+        type: String,
+        required: [true, "Please enter your First name!"],
+        trim: true
+        
+    },
+    guest_lname: {
+        type: String,
+        required: [true, "Please enter your Last name!"],
+        trim: true
+        
+    },
+    guest_contact: {
+        type: Number,
+        required: [true, "Please enter your Contact Number!"],
+        trim: false,
+        unique: [true, "This number is already registered"]
+        
+    },
+    guest_profession: {
+        type: String,
+        required: [true, "Please enter your Profession!"],
+    },
+    guest_company: {
+        type: String,
+        required: [true, "Please enter your Company!"],
+    },
+    guest_company_address: {
+        type: String,
+        required: [true, "Please enter your Company Address!"],
+    },
+    guest_mail: {
+        type: String,
+        required: [true, "Please enter your Email!"],
+        trim: true,
+        unique: [true, " This Email is already registered"]
+    },
+    guest_password: {
+        type: String,
+        required: [true, "Please enter your password!"],
+        
+    },
+    guest_status:{
+        type: String,
+        default: "Active"
+    },
+    avatar: {
+        type: String,
+        default: ""
     }
-
-    this.password = await bcrypt.hash(this.password, 10)
+}, {
+    timestamps: true
 })
-
-// Compare user password
-userSchema.methods.comparePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password)
-}
 
 // Return JWT token
-userSchema.methods.getJwtToken = function () {
+guestSchema.methods.getJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_TIME
     });
 }
-
-// Generate password reset token
-userSchema.methods.getResetPasswordToken = function () {
-    // Generate token
-    const resetToken = crypto.randomBytes(20).toString('hex');
-
-    // Hash and set to resetPasswordToken
-    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-
-    // Set token expire time
-    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000
-
-    return resetToken
-
-}
-
-module.exports = mongoose.model('Guest', guestSchema);
+module.exports = mongoose.model("Guests", guestSchema)

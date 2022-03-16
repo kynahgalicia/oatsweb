@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const router = require('express').Router()
 const thesisController = require('../controllers/thesisController')
 const auth = require('../middleware/auth')
@@ -27,5 +28,17 @@ router.route('/thesis/:id')
     .put( thesisController.updateThesis)
 
 
+=======
+
+const router = require('express').Router()
+const thesisController = require('../controller/thesisController')
+
+
+router.get('/thesis',thesisController.get)
+router.get('/thesisCount',thesisController.thesisCount)
+router.get('/thesis/:id',thesisController.find)
+router.post('/thesis/new', thesisController.create)
+router.delete('/api/thesis/delete/:id', thesisController.delete)
+>>>>>>> frontend
 
 module.exports = router

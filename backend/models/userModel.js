@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
     user_tupid: {
@@ -38,11 +38,34 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter your password!"],
         
     },
-    user_section: {
+    user_department:{ 
+        departments: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Department',
+            required: true
+        },
+        deptname: {
+            type: String,
+            required: true
+        }
+    },
+    user_course:{ 
+        courses: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Course',
+            required: true
+        },
+        coursecode: {
+            type: String,
+            required: true
+        },
+        coursename:{
+            type:String
+        }
+    },
+    user_status:{
         type: String,
-        required: [true, "Please enter your Section!"],
-        trim: true
-        
+        default: "Active"
     },
     avatar: {
         type: String,
@@ -52,4 +75,10 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
+// Return JWT token
+userSchema.methods.getJwtToken = function () {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_TIME
+    });
+}
 module.exports = mongoose.model("Users", userSchema)

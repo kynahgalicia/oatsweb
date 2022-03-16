@@ -16,18 +16,6 @@ app.use(fileUpload({
     useTempFiles: true
 }))
 
-// app.use('/', (req, res, next) => {
-//     res.json({msg: "Hello Everyone!"})
-// })
-
-
-app.use(cors());
-app.use(express.json());
-
-
-//Routes
-app.use('/user',require('./routes/userRouter'))
-// app.use('/api', require('./routes/upload'))
 
 //mongodb connection 
 const uri = process.env.DB_LOCAL_URI;
@@ -49,12 +37,12 @@ app.listen(PORT, () => {
 
 
 
-
-
-//Routes by Vince:
-app.use('/user', require('./routes/userRouter'))
+// Routes
 app.use('/api', require('./routes/thesisRouter'))
-//---------------------END-----------------------//
-// app.use('/', require('./routes/router'));
+app.use('/api', require('./routes/departmentRouter'))
+app.use('/api', require('./routes/courseRouter'))
+app.use('/user', require('./routes/userRouter'))
+app.use('/admin', require('./routes/adminRouter'))
+app.use('/guest', require('./routes/guestRouter'))
 
 

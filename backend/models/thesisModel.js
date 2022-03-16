@@ -1,47 +1,69 @@
 const mongoose = require('mongoose')
 
-
 const thesisSchema = new mongoose.Schema({
-    title:{
-        type: String,
-        unique: true,
+    title: {
+        type: String, 
+        required: [true, 'Please enter Thesis title'],
         trim: true,
-        required: true
     },
-    publishedAt:{
-        type: String,
+    publishedAt: {
+        type: Number, 
+        required: true, 
+        trim:true, 
+    },
+    authors: [
+        {
+            id: {
+                type: mongoose.Schema.ObjectId,
+            },
+            author: {
+                type: String,
+                // required: true
+            }
+        }
+    ],
+    keywords: [
+        {
+            id: {
+                type: mongoose.Schema.ObjectId,
+            },
+            keyword: {
+                type: String,
+                // required: true
+            }
+        }
+    ],
+    abstract: {
+        type:String,
+        required: true,
         trim: true,
-        required: true
     },
-   author:[{
-        type: String,
-        required: true
-    }],
-   keyword:[{
-        type: String,
-        required: true
-    }],
-    department:{
-        type: String,
-        required: true
+    department:{ 
+        departments: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Department',
+            required: true
+        },
+        deptname: {
+            type: String,
+            required: true
+        }
     },
-    price:{
-        type: Number,
-        trim: true,
-        required: true
-    },
-    abstract:{
-        type: String,
-        required: true
-    },
-    upload:{
-        type: Object,
-        required: true
+    course:{ 
+        courses: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Course',
+            required: true
+        },
+        coursecode: {
+            type: String,
+            required: true
+        }
+    }, 
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-    
-}, {
-    timestamps: true //important
 })
 
-
-module.exports = mongoose.model("Thesis", thesisSchema)
+module.exports = mongoose.model('Thesis', thesisSchema);
