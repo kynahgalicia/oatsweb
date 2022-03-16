@@ -1,41 +1,46 @@
 import { 
-    ALL_USERS_REQUEST,
-    ALL_USERS_SUCCESS,
-    ALL_USERS_FAIL,
-    USER_DETAILS_REQUEST,
-    USER_DETAILS_SUCCESS,
-    USER_DETAILS_FAIL,
-    UPDATE_USER_REQUEST,
-    UPDATE_USER_SUCCESS,
-    UPDATE_USER_FAIL,
-    UPDATE_USER_RESET,
-    DEACTIVATE_USER_REQUEST,
-    DEACTIVATE_USER_SUCCESS,
-    DEACTIVATE_USER_FAIL,
-    DEACTIVATE_USER_RESET,
-    DELETE_USER_REQUEST,
-    DELETE_USER_SUCCESS,
-    DELETE_USER_FAIL,
-    DELETE_USER_RESET,
-    CLEAR_ERRORS
-} from '../constants/userConstants'
+    ALL_GUESTS_REQUEST,
+    ALL_GUESTS_SUCCESS,
+    ALL_GUESTS_FAIL,
 
-export const usersReducer = (state = { users: [] }, action) => {
+    GUEST_DETAILS_REQUEST,
+    GUEST_DETAILS_SUCCESS,
+    GUEST_DETAILS_FAIL,
+
+    UPDATE_GUEST_REQUEST,
+    UPDATE_GUEST_SUCCESS,
+    UPDATE_GUEST_FAIL,
+    UPDATE_GUEST_RESET,
+
+    DEACTIVATE_GUEST_REQUEST,
+    DEACTIVATE_GUEST_SUCCESS,
+    DEACTIVATE_GUEST_FAIL,
+    DEACTIVATE_GUEST_RESET,
+
+    DELETE_GUEST_REQUEST,
+    DELETE_GUEST_SUCCESS,
+    DELETE_GUEST_FAIL,
+    DELETE_GUEST_RESET,
+    
+    CLEAR_ERRORS
+} from '../constants/guestConstants'
+
+export const guestsReducer = (state = { guests: [] }, action) => {
     switch (action.type) {
-        case  ALL_USERS_REQUEST:
+        case  ALL_GUESTS_REQUEST:
             return {
                 loading: true,
-                users: []
+                guests: []
             }
 
-        case  ALL_USERS_SUCCESS:
+        case  ALL_GUESTS_SUCCESS:
             return {
                 loading: false,
-                users: action.payload.users,
+                guests: action.payload.guests,
                 msg:action.paload
             }
 
-        case ALL_USERS_FAIL:
+        case ALL_GUESTS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -52,18 +57,18 @@ export const usersReducer = (state = { users: [] }, action) => {
     }
 }
 
-export const userReducer = (state = {}, action) => {
+export const guestReducer = (state = {}, action) => {
     switch (action.type) {
 
-        case DELETE_USER_REQUEST:
-        case UPDATE_USER_REQUEST:
-        case DEACTIVATE_USER_REQUEST:
+        case DELETE_GUEST_REQUEST:
+        case UPDATE_GUEST_REQUEST:
+        case DEACTIVATE_GUEST_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case DELETE_USER_SUCCESS:
+        case DELETE_GUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -71,7 +76,7 @@ export const userReducer = (state = {}, action) => {
                 msg: action.payload.msg
             }
 
-        case DEACTIVATE_USER_SUCCESS:
+        case DEACTIVATE_GUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -79,7 +84,7 @@ export const userReducer = (state = {}, action) => {
                 msg: action.payload.msg
             }
 
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_GUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -87,27 +92,27 @@ export const userReducer = (state = {}, action) => {
             }
 
 
-        case DEACTIVATE_USER_FAIL:
-        case UPDATE_USER_FAIL:
-        case DELETE_USER_FAIL:
+        case DEACTIVATE_GUEST_FAIL:
+        case UPDATE_GUEST_FAIL:
+        case DELETE_GUEST_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
-        case DELETE_USER_RESET:
+        case DELETE_GUEST_RESET:
             return {
                 ...state,
                 isDeleted: false
             }
 
-        case DEACTIVATE_USER_RESET:
+        case DEACTIVATE_GUEST_RESET:
             return {
                 ...state,
                 isDeactivated: false
             }
 
-        case UPDATE_USER_RESET:
+        case UPDATE_GUEST_RESET:
             return {
                 ...state,
                 isUpdated: false
@@ -124,21 +129,21 @@ export const userReducer = (state = {}, action) => {
     }
 }
 
-export const userDetailsReducer = (state = { user: [] }, action) => {
+export const guestDetailsReducer = (state = { guest: [] }, action) => {
     switch (action.type) {
-        case  USER_DETAILS_REQUEST:
+        case  GUEST_DETAILS_REQUEST:
             return {
                 loading: true,
-                user: []
+                guest: []
             }
 
-        case  USER_DETAILS_SUCCESS:
+        case  GUEST_DETAILS_SUCCESS:
             return {
                 loading: false,
-                user: action.payload.user
+                guest: action.payload.guest
             }
 
-        case USER_DETAILS_FAIL:
+        case GUEST_DETAILS_FAIL:
             return {
                 loading: false,
                 error: action.payload

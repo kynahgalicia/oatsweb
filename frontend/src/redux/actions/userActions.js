@@ -3,12 +3,23 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
+
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
+
+    DEACTIVATE_USER_REQUEST,
+    DEACTIVATE_USER_SUCCESS,
+    DEACTIVATE_USER_FAIL,
+    
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
+    
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -80,6 +91,58 @@ export const updateUser = (id, userData,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+//User Edit
+export const deactivateUser = (id, userData,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DEACTIVATE_USER_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(`/user/deactivate/${id}`, userData, config)
+
+        dispatch({
+            type: DEACTIVATE_USER_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DEACTIVATE_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+//User Delete Admin
+export const deleteUser = (id,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_USER_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+            }
+        }
+        const { data } = await axios.delete(`/user/delete/${id}`, config)
+
+        dispatch({
+            type: DELETE_USER_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_USER_FAIL,
             payload: error.response.data.message
         })
     }

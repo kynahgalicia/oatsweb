@@ -23,6 +23,12 @@ router.get('/all_infor',authAdmin,authAdminRole, guestController.getGuestsAllInf
 
 router.get('/inforAdmin/:id',authAdmin,authAdminRole, guestController.getGuestInforAdmin)
 
+router.put('/deactivate/:id',authAdmin,authAdminRole, guestController.deactivate)
+
+router.put('/edit/:id',authAdmin,authAdminRole, guestController.updateAdmin)
+
+router.delete('/delete/:id',authAdmin,authAdminRole,  guestController.delete)
+
 // router.put('/edit/:id',authAdmin,authAdminRole, guestController.updateAdmin)
 
 

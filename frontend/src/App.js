@@ -13,17 +13,25 @@ import Footer from './components/layout/Footer'
 //Admin
 import LoginasAdmin from './components/admin/auth/LoginasAdmin'
 import AdminDashboard from './components/admin/dashboard/AdminDashboard'
+
 import ThesisList from './components/admin/thesis/ThesisList'
+
 import DepartmentList from './components/admin/departments/DepartmentList'
-import CourseList from './components/admin/courses/CourseList'
-import PaymentList from './components/admin/payment/PaymentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
 import Updatedepartment from './components/admin/departments/EditDepartment'
+
+import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
+
+import PaymentList from './components/admin/payment/PaymentList'
+
 import UserList from './components/admin/users/UserList'
 import EditUser from './components/admin/users/EditUser'
+
 import AdminList from './components/admin/admin/AdminList'
+
+import GuestList from './components/admin/guest/GuestList'
 
 //Home
 import Home from './components/user/Home/Home'
@@ -99,7 +107,6 @@ function App() {
       <Header/>
 
       <Switch>
-
         <Route path="/" component={Home} exact/>
         <Route path="/About" component={About} exact/>
         <Route path="/Category" component={Category} exact/>
@@ -136,6 +143,7 @@ function App() {
         <Route path="/admin/users" component={UserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
+        <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
         <Route path="*">
           {NoMatch}

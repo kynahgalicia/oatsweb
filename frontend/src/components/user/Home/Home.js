@@ -14,11 +14,16 @@ const Home = () => {
     const dispatch = useDispatch();
     const [keyword, setKeyword] = useState('');
     const { thesisCount } = useSelector(state => state.thesis);
+    const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
+
+        if (adminToken) {
+            history.push('/admin/dashboard');
+        }
         dispatch(getThesisCount())
         console.log(thesisCount)
-    }, [dispatch, history])
+    }, [dispatch, history,adminToken])
     
     const searchHandler = (e) => {
         

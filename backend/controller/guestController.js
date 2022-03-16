@@ -252,6 +252,38 @@ const guestController = {
             return res.status(500).json({msg: err.message})
         }
     },
+     //guest/deactivate
+    deactivate: async (req,res) => {
+        let guest = await Guests.findById(req.params.id);
+        if(!guest)
+        return res.status(400).json({msg: "Guest not found"})
+
+        try {
+
+            guest = await Guests.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    delete: async (req,res) => {
+        try {
+            await Guests.findByIdAndDelete(req.params.id)
+            res.json({msg: "Guest has been Deleted!", success: true})
+        } catch (error) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
 
     // updateProfile : async (req,res) => {
 

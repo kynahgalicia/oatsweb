@@ -23,7 +23,11 @@ router.get('/all_infor',authAdmin,authAdminRole, userController.getUsersAllInfor
 
 router.get('/inforAdmin/:id',authAdmin,authAdminRole, userController.getUserInforAdmin)
 
+router.put('/deactivate/:id',authAdmin,authAdminRole, userController.deactivate)
+
 router.put('/edit/:id',authAdmin,authAdminRole, userController.updateAdmin)
+
+router.delete('/delete/:id',authAdmin,authAdminRole,  userController.delete)
 
 
 // router.get('/logout', userController.logout)

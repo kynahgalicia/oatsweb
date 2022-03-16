@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom'
 import {Row, Col, Button, Card} from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import profile from '../../img/profile.png'
-
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
 const AdminDashboard = () => {
 
     const history = useHistory()
 
     const [thisDepartment, setThisDepartment] = useState('')
-    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
+    const { loading,isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
 
     useEffect(() => {
@@ -27,10 +27,12 @@ const AdminDashboard = () => {
         <Fragment>
 
             <Row>
-                    <Col sm= {2}>
+                    <Col sm= {2} className="admin-sidebar">
                         <AdminSidebar/>
                     </Col>  
                     <Col sm={10}>
+                    {loading ? <LoaderAdmin/>  :  
+                    <>
                 <div className="user-wrapper">
                 { admin ? 
                 <>
@@ -77,6 +79,8 @@ const AdminDashboard = () => {
                     </Row>
                     
                 </div>
+                </>
+                    }
             </Col>
         </Row>
     

@@ -9,7 +9,7 @@ const PaymentList = () => {
     return(
         <Fragment>
         <Row>
-        <Col sm= {2}>
+        <Col sm= {2} className="admin-sidebar">
             <AdminSidebar/>
         </Col>
             <Col sm={10}>

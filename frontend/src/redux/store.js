@@ -14,6 +14,8 @@ import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminRedu
 
 import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
 
+import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/guestReducer'
+
 import { adminsReducer } from './reducers/adminReducer'
 
 import thunk from 'redux-thunk'
@@ -38,6 +40,10 @@ const reducer = combineReducers({
     users:usersReducer,
     user:userReducer,
     userDetails: userDetailsReducer,
+    //Guests
+    guests:guestsReducer,
+    guest:guestReducer,
+    guestDetails: guestDetailsReducer,
     //Admin
     admins:adminsReducer,
     // Authentication

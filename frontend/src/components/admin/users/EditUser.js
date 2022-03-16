@@ -76,11 +76,11 @@ const EditUser = () => {
     return(
         <Fragment>
         <Row>
-        <Col sm= {2}>
+        <Col sm= {2} className="admin-sidebar">
             <AdminSidebar/>
         </Col>
             <Col sm={10}>
-                <div className="admin-wrapper">
+                <div className="form-admin-wrapper">
             <h1>Edit User</h1>
 
             <Form className="form-group auth-signup" onSubmit={submitHandler} encType='application/json'>
