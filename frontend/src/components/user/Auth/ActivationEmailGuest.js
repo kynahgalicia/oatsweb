@@ -1,8 +1,7 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import { Link, useHistory, useParams} from 'react-router-dom' 
-import { useAlert } from 'react-alert'
 import { Button } from 'react-bootstrap'
-import {activateEmail, clearErrors} from '../../../redux/actions/authGuestActions'
+import {activateEmail} from '../../../redux/actions/authGuestActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const ActivationEmailGuest = () => {
@@ -17,7 +16,7 @@ const ActivationEmailGuest = () => {
         if(activation_token){
             dispatch(activateEmail(activation_token))
         }
-    }, [ dispatch, history]);
+    }, [ dispatch, history, activation_token]);
     
 
     function successMsg(success) {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Table from 'react-bootstrap/Table'
 import {Row, Col} from 'react-bootstrap';
 
-import AdminSidebar from '../../layout/AdminSidebar'
+import AdminSidebar from '../../../layout/AdminSidebar'
 const BorrowList = () => {
 
     return(
@@ -15,7 +15,7 @@ const BorrowList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
             <div className="admin-wrapper">
-            <h1>Borrowed</h1>
+            <h1>Returned</h1>
             </div>
                     
             </div>

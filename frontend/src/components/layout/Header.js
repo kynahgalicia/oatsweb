@@ -18,11 +18,11 @@ const Header = () => {
     const [thisAdmin, setThisAdmin] = useState('')
     const [thisGuest, setThisGuest] = useState('')
     const {isLoggedIn, user} = useSelector(state => state.authUser)
-    const {token, isLogged, isUser} = useSelector(state => state.authToken)
+    const {isLogged, isUser} = useSelector(state => state.authToken)
     const {isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
-    const {adminToken, isLoggedAdmin, isAdmin} = useSelector(state => state.authAdminToken)
+    const {isLoggedAdmin} = useSelector(state => state.authAdminToken)
     const {isLoggedInGuest, guest} = useSelector(state => state.authGuest)
-    const {guestToken, isLoggedGuest, isGuest} = useSelector(state => state.authGuestToken)
+    const { isLoggedGuest} = useSelector(state => state.authGuestToken)
 
     useEffect(() => {
         
@@ -143,7 +143,7 @@ const Header = () => {
             <Nav>
             {isLoggedInAdmin ? null  : setUserLink()}
             {isLoggedIn || isLogged ? setProfile() :null}
-            {isLoggedInGuest ? setProfileGuest() :null}
+            {isLoggedInGuest || isLoggedGuest ? setProfileGuest() :null}
             {isLoggedInAdmin || isLoggedAdmin ? setProfileAdmin() : null  }
             {isLoggedInAdmin || isLoggedIn || isLoggedInGuest ? null :  <Link to="/user/login" className='white'>{<BsPersonFill size={20}/>}</Link>   }
 

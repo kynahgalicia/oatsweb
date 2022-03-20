@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { getUsers , deactivateUser, deleteUser, clearErrors} from '../../../redux/actions/userActions';
@@ -12,15 +11,15 @@ import AdminSidebar from '../../layout/AdminSidebar'
 import { DEACTIVATE_USER_RESET, DELETE_USER_RESET } from '../../../redux/constants/userConstants'
 const UserList = () => {
     const { loading, error, users } = useSelector(state => state.users)
-    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin,} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
     const{error: deleteError,isDeactivated, isDeleted, msg} = useSelector(state=>state.user)
     const dispatch = useDispatch();
     const history = useHistory();
     const alert = useAlert();
 
-    const [deactivate, setDeactivate] = useState("Deactivated")
-    const [activate, setActivate] = useState("Active")
+    const deactivate = "Deactivated"
+    const activate = "Active"
 
     useEffect(() => {
 
@@ -54,7 +53,7 @@ const UserList = () => {
             history.push('/admin/login');
 
         }
-    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, isDeactivated, isDeleted, msg]);
+    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, isDeactivated, isDeleted, msg, deleteError]);
 
     const setData = () => { 
         const data = {

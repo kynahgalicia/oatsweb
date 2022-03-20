@@ -1,11 +1,11 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useParams,useHistory, Link} from 'react-router-dom'
+import {useParams,useHistory} from 'react-router-dom'
 
 import { Row, Col} from 'react-bootstrap'
 import {Form} from 'react-bootstrap'
-import ISODate from 'isodate'
-import DatePicker from 'react-datepicker'
+// import ISODate from 'isodate'
+// import DatePicker from 'react-datepicker'
 import { useAlert } from 'react-alert'
 import SearchResults from './SearchResults'
 
@@ -21,7 +21,7 @@ const Search = () => {
 
     const history = useHistory()
     const [thisKeyword, setKeyword] = useState('');
-    const [currentPage, setCurrentPage] = useState(1)
+    // const [currentPage, setCurrentPage] = useState(1)
     const [thisDepartment, setDepartment] = useState('')
     const [startDate, setStartDate] = useState(1999);
     const [endDate, setEndDate] = useState(2023);
@@ -43,7 +43,7 @@ const Search = () => {
     
         dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
-    }, [dispatch, alert, error, keyword, currentPage,userDept, thisDepartment,startDate,endDate])
+    }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate])
 
     // function setCurrentPageNo(pageNumber) {
     //     setCurrentPage(pageNumber)

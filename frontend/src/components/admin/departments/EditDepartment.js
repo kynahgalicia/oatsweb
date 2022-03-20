@@ -50,7 +50,7 @@ const Updatedepartment = ({ match, history }) => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken])
+    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken, departmentId])
 
 
     const submitHandler = (e) => {

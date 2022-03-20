@@ -1,12 +1,11 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
 import {Form, Button} from 'react-bootstrap';
-import { Link, useHistory, useParams } from 'react-router-dom' 
+// import { Link, useHistory, useParams } from 'react-router-dom' 
 // import { useAlert } from 'react-alert'
-import {isEmail} from '../../utils/Validation'
+// import {isEmail} from '../../utils/Validation',
 import { showErrMsg,showSuccessMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../../redux/actions/authActions';
-import { GiToken } from 'react-icons/gi';
 
 const ForgotPassword = () => {
     const dispatch = useDispatch()
@@ -20,7 +19,7 @@ const ForgotPassword = () => {
     
     useEffect(() => {
         
-    }, [dispatch, alert, error, message])
+    }, [dispatch, error, message])
     
     const submitHandler = async e => {
         e.preventDefault()

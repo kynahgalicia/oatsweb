@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom'
-import moment from 'moment'
+// import moment from 'moment'
 const SearchResults = ({userDept,thesis}) => {
 
     return ( 

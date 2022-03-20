@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {Nav, Form} from 'react-bootstrap'
+import {Nav} from 'react-bootstrap'
 const AdminSidebar = () => {
 
     return (
@@ -60,8 +60,8 @@ const AdminSidebar = () => {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="list-group">
-                                    <Link to="admin/borrowed" className="list-group-item list-group-item-action">Borrowed</Link>
-                                    <Link to="admin/returned" className="list-group-item list-group-item-action">Returned</Link>
+                                    <Link to="/admin/borrowed" className="list-group-item list-group-item-action">Borrowed</Link>
+                                    <Link to="/admin/returned" className="list-group-item list-group-item-action">Returned</Link>
                                 </div>
                             </div>
                         </div>

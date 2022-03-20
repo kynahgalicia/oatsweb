@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaPencilAlt,FaUserAltSlash} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { getAdmins } from '../../../redux/actions/adminActions';

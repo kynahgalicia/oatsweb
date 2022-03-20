@@ -24,6 +24,9 @@ import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
 
+import BorrowList from './components/admin/lending/borrowed/BorrowList'
+import ReturnList from './components/admin/lending/returned/ReturnList'
+
 import PaymentList from './components/admin/payment/PaymentList'
 
 import UserList from './components/admin/users/UserList'
@@ -97,7 +100,7 @@ function App() {
     dispatch(loadUser(token))
     dispatch(loadAdmin(adminToken))
     dispatch(loadGuest(guestToken))
-  }, [dispatch, token,adminToken, guestToken])
+  }, [dispatch, token,adminToken, guestToken, thisAdminToken, thisGuestToken, thisToken])
   
 
   return (
@@ -145,6 +148,8 @@ function App() {
         <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
+        <Route path="/admin/borrowed" component={BorrowList} exact/>
+        <Route path="/admin/returned" component={ReturnList} exact/>
         <Route path="*">
           {NoMatch}
         </Route>

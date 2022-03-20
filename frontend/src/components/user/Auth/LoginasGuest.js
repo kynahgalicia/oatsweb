@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Form, Button} from 'react-bootstrap';
-import {BsGoogle} from 'react-icons/bs'
+// import {BsGoogle} from 'react-icons/bs'
 import { useAlert } from 'react-alert'
 import { showErrMsg } from '../../utils/Notification';
 import {login, clearErrors} from '../../../redux/actions/authGuestActions'
