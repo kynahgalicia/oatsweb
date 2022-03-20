@@ -10,6 +10,7 @@
     "client": "npm start --prefix frontend",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\" ",
     "seeder": "node backend/utils/seeder.js"
+
   },
   "keywords": [],
   "author": "",
@@ -33,6 +34,7 @@
     "mongoose": "^6.1.6",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
+    "react-scripts": "^5.0.0",
     "redux": "^4.1.2",
     "stripe": "^8.195.0",
     "tesseract.js": "^2.1.5",
