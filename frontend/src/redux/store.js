@@ -7,6 +7,7 @@ import { departmentsReducer, newDepartmentReducer, departmentReducer, Department
 import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
+import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
 
@@ -42,6 +43,10 @@ const reducer = combineReducers({
     bookmarks: bookmarksReducer,
     newBookmark: newBookmarkReducer,
     bookmark: bookmarkReducer,
+    //Borrow
+    borrows: borrowsReducer,
+    newBorrow: newBorrowReducer,
+    borrow: borrowReducer,
     //Users
     users:usersReducer,
     user:userReducer,

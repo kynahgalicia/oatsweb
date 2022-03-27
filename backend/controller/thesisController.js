@@ -13,7 +13,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         success: true,
         thesis
     })
-    })
+})
 
 
 exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
