@@ -18,13 +18,17 @@ import {
     CLEAR_ERRORS
 } from '../constants/courseConstants'
 
-export const getCourse = () => async (dispatch) => {
+export const getCourse = (department) => async (dispatch) => {
     try {
         dispatch({ type: ALL_COURSE_REQUEST })
 
-        let link =`/api/course`
-
-
+        let link =''
+        if(department){
+            link =`/api/course?department.id=${department}`
+        } else {
+            link =`/api/course`
+        }
+    
         const { data } = await axios.get(link)
         console.log(link)
         dispatch({

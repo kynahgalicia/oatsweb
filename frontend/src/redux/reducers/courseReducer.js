@@ -20,7 +20,7 @@ import {
     CLEAR_ERRORS
 } from '../constants/courseConstants'
 
-export const coursesReducer = (state = { course: [] }, action) => {
+export const courseReducer = (state = { course: [] }, action) => {
     switch (action.type) {
         case  ALL_COURSE_REQUEST:
             return {
@@ -93,7 +93,7 @@ export const newCourseReducer = (state = { course: {} }, action) => {
     }
 }
 
-export const courseReducer = (state = {}, action) => {
+export const courseUpdateReducer = (state = {}, action) => {
     switch (action.type) {
 
         case DELETE_COURSE_REQUEST:

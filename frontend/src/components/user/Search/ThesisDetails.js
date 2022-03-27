@@ -25,7 +25,7 @@ const ThesisDetails = () => {
             dispatch(getThesisDetails(thesisId))
 
             
-            setThisDepartment(thesis.department.deptname)
+            // setThisDepartment(thesis.department.deptname)
             // setThisCourse(thesis.course.coursecode)
             // console.log(thisCourse,thisDepartment)
         }
@@ -46,8 +46,9 @@ const ThesisDetails = () => {
                 {/* { thesis.authors && thesis.authors.map((x) => (
                     <Link1 className='d-inline'><i> {x.author}</i></Link1>
                 ))} */}
+                
                 <div className="m-3">
-                <label> Published: <Link1>{thesis.publishedAt} | Department: <Link1>{thisDepartment}</Link1>  </Link1></label>
+                <label> Published: <Link1>{thesis.publishedAt}</Link1> </label>
                 {/* | Department: <Link1>{thisDepartment}</Link1> | Course: <Link1>{thisCourse}</Link1> */}
                 </div>
                 <div className='details-button'>
