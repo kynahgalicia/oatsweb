@@ -68,23 +68,20 @@ const ThesisList = () => {
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
-            <h1>Thesis</h1>
-            </div>
+                    <h1>Thesis</h1>
+                    <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
+
+                    {/* <MDBDataTableV5 
+                        hover 
+                        entriesOptions={[5, 10, 15, 25]} 
+                        entries={10} 
+                        pagesAmount={4}
+                        data={setData()} 
+                        className='table'
+                        container-sm="true"/> */}
+                </div>
             </Col>
         </Row>
-            <div className="admin-wrapper">
-                <h1>Thesis</h1>
-                <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
-
-                {/* <MDBDataTableV5 
-                    hover 
-                    entriesOptions={[5, 10, 15, 25]} 
-                    entries={10} 
-                    pagesAmount={4}
-                    data={setData()} 
-                    className='table'
-                    container-sm="true"/> */}
-            </div>
         </Fragment>
     )
 }

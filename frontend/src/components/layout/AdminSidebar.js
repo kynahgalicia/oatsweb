@@ -4,8 +4,8 @@ import {Nav, Form} from 'react-bootstrap'
 const AdminSidebar = () => {
 
     return (
-        <div className="admin-sidebar">
-            <Nav className=" col-md-12 d-none d-md-block bg-light"
+        <div className="admin-sidebar container-lg">
+            <Nav className=" col-lg-12 d-none d-md-block bg-light"
             activeKey="/home"
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
         >
@@ -54,8 +54,8 @@ const AdminSidebar = () => {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="list-group">
-                                    <Link to="admin/borrowed" className="list-group-item list-group-item-action">Borrowed</Link>
-                                    <Link to="admin/returned" className="list-group-item list-group-item-action">Returned</Link>
+                                    <Link to="/admin/borrow" className="list-group-item list-group-item-action">Borrowed</Link>
+                                    <Link to="/admin/return" className="list-group-item list-group-item-action">Returned</Link>
                                 </div>
                             </div>
                         </div>

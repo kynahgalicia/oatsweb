@@ -46,7 +46,6 @@ app.listen(PORT, () => {
 app.use('/api', require('./routes/thesisRouter'))
 app.use('/api', require('./routes/departmentRouter'))
 app.use('/api', require('./routes/courseRouter'))
+app.use('/api', require('./routes/borrowRouter'))
 app.use('/user', require('./routes/userRouter'))
 app.use('/admin', require('./routes/adminRouter'))
-
-
