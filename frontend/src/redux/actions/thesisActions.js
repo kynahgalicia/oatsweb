@@ -1,4 +1,5 @@
 import axios from "axios"
+
 import {
     ALL_THESIS_REQUEST,
     ALL_THESIS_SUCCESS,
@@ -45,7 +46,7 @@ export const getThesisCount = () => async (dispatch) => {
     try {
         dispatch({ type: THESIS_COUNT_REQUEST })
 
-        let link = `/api/thesisCount`
+        let link = process.env.REACT_APP_URL + `/api/thesisCount`
         
         const { data } = await axios.get(link)
         dispatch({
