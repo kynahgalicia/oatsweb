@@ -8,7 +8,7 @@ const UserBorrow = () => {
         <Fragment>
 
             <Row>
-                    <Col sm= {2}>
+                    <Col sm= {2} className="admin-sidebar">
                         <UserSidebar/>
                     </Col>  
                     <Col sm={10}>

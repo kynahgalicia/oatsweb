@@ -1,10 +1,10 @@
-import React, { Fragment,useState,  useEffect } from 'react'
-import { Link as Link2, animateScroll as scroll } from "react-scroll"
+import React, { useState,  useEffect } from 'react'
+import { Link as Link2} from "react-scroll"
 import {Link as Link1, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, Button} from 'react-bootstrap'
-import moment from 'moment'
+// import moment from 'moment'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 const ThesisDetails = () => {
@@ -12,21 +12,29 @@ const ThesisDetails = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
+    const [thisDepartment,setThisDepartment] = useState('')
+    const [thisCourse,setThisCourse] = useState('')
     const { loading, error, thesis } = useSelector(state => state.thesisDetails);
 
     let {thesisId} = useParams()
 
     useEffect(() => {
         
-        // if(thesisId){
-            console.log(thesisId)
+        if(thesisId){
+            // console.log(thesisId)
             dispatch(getThesisDetails(thesisId))
-        // }
+
+            
+            setThisDepartment(thesis.department.deptname)
+            // setThisCourse(thesis.course.coursecode)
+            // console.log(thisCourse,thisDepartment)
+        }
+
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId]);
+    }, [dispatch, alert, error ,thesisId, thisDepartment]);
 
     return ( 
         <div className="wrapper">
@@ -39,8 +47,8 @@ const ThesisDetails = () => {
                     <Link1 className='d-inline'><i> {x.author}</i></Link1>
                 ))} */}
                 <div className="m-3">
-                <label> Published: <Link1>{moment(thesis.publishedAt).format('MMMM D YYYY')}</Link1> </label>
-                {/* | Department: <Link1>{thesis.department.deptname}</Link1> | Course: <Link1>{thesis.course.coursecode}</Link1></label> */}
+                <label> Published: <Link1>{thesis.publishedAt} | Department: <Link1>{thisDepartment}</Link1>  </Link1></label>
+                {/* | Department: <Link1>{thisDepartment}</Link1> | Course: <Link1>{thisCourse}</Link1> */}
                 </div>
                 <div className='details-button'>
                         <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">

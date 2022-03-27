@@ -61,7 +61,7 @@ const userController = {
             console.log(newUser)
         
             const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            sendMail(user_tupmail, url, "Verify your email address")
+            // sendMail(user_tupmail, url, "Verify your email address")
 
 
             res.json({
@@ -263,6 +263,37 @@ const userController = {
             })
 
         } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //user/deactivate
+    deactivate: async (req,res) => {
+        let user = await Users.findById(req.params.id);
+        if(!user)
+        return res.status(400).json({msg: "User not found"})
+
+        try {
+
+            user = await Users.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    delete: async (req,res) => {
+        try {
+            await Users.findByIdAndDelete(req.params.id)
+            res.json({msg: "User has been Deleted!", success: true})
+        } catch (error) {
             return res.status(500).json({msg: err.message})
         }
     },

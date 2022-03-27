@@ -1,10 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Form, Button} from 'react-bootstrap';
-import {BsGoogle} from 'react-icons/bs'
+// import {BsGoogle} from 'react-icons/bs'
 import { useAlert } from 'react-alert'
 import { showErrMsg } from '../../utils/Notification';
-import {login, clearErrors} from '../../../redux/actions/authActions'
+import {login, clearErrors} from '../../../redux/actions/authGuestActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const LoginasGuest = () => {
@@ -12,15 +12,15 @@ const LoginasGuest = () => {
     const history = useHistory()
     const alert = useAlert()
 
-    const [user_tupmail, setEmail] = useState('');
-    const [user_password, setPassword] = useState('');
+    const [guest_tupmail, setEmail] = useState('');
+    const [guest_password, setPassword] = useState('');
 
-    const {error, msg, isLogged} = useSelector(state => state.authUser);
+    const {error, msg, isLoggedInGuest} = useSelector(state => state.authGuest);
 
     const redirect = window.location.search ? window.location.search.split('=')[1] : '/'
 
     useEffect(() => {
-        if (isLogged) {
+        if (isLoggedInGuest) {
             if(msg){
                 history.push('/')
                 alert.success(msg)
@@ -33,12 +33,12 @@ const LoginasGuest = () => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isLogged, error, history, redirect,msg])
+    }, [dispatch, alert, isLoggedInGuest, error, history, redirect,msg])
 
     const submitHandler = async e => {
         e.preventDefault()
         localStorage.setItem('firstLogin', true)
-        dispatch(login(user_tupmail,user_password));
+        dispatch(login(guest_tupmail,guest_password));
 
     }
 
@@ -57,12 +57,12 @@ const LoginasGuest = () => {
             </Button> */}
             <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="" name="user_tupmail" id="user_tupmail" value={user_tupmail}
+                <Form.Control type="email" placeholder="" name="guest_tupmail" id="guest_tupmail" value={guest_tupmail}
                 onChange={(e) => setEmail(e.target.value)} />
             </Form.Group>
             <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="" name="user_password" id="user_password" value={user_password}
+                <Form.Control type="password" placeholder="" name="guest_password" id="guest_password" value={guest_password}
                 onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
 
@@ -83,7 +83,7 @@ const LoginasGuest = () => {
             </Button>
             </Link>
             <div className='text-center my-3'>
-            <label>Don't have an account?   <Link to="/SignUp"> Sign Up
+            <label>Don't have an account?   <Link to="/user/guest"> Sign Up
             </Link></label>
             </div>
             </Form> 

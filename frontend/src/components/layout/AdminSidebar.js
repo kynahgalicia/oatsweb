@@ -1,16 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {Nav, Form} from 'react-bootstrap'
+import {Nav} from 'react-bootstrap'
 const AdminSidebar = () => {
 
     return (
-        <div className="admin-sidebar container-lg">
-            <Nav className=" col-lg-12 d-none d-md-block bg-light"
+        
+            <Nav className=" col-md-12 d-none d-md-block bg-light"
             activeKey="/home"
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
         >
             <Nav.Item>
                 <Link to="/admin/dashboard">Dashboard</Link>
+            </Nav.Item>
+            <hr/>
+
+            <Nav.Item>
+                <Link to="/admin/admins">Administrators</Link>
             </Nav.Item>
             <hr/>
 
@@ -25,9 +30,10 @@ const AdminSidebar = () => {
             <hr/>
 
             <Nav.Item>
-                <Link to="/admin/admins">Administrators</Link>
+                <Link to="/admin/guests">Guests</Link>
             </Nav.Item>
             <hr/>
+
 
             <Nav.Item>  
                 <Link to="/admin/department">Departments</Link>
@@ -69,7 +75,6 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
     </Nav>
-        </div>
     
     )
 }

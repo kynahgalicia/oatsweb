@@ -69,13 +69,13 @@ const CreateBorrow = () => {
     return(
         <Fragment>
             <Row>
-                <Col sm={2}>
+                <Col sm={2} className="admin-sidebar">
                     <AdminSidebar/>
                 </Col>
 
                 <Col sm={10}>
                     <Container>
-                        <div className='createthesis'>
+                        <div className='form-admin-wrapper'>
                             <div className='wrapper my-5'>
                                 <Row>
                                     <h1>Create Borrow Request</h1>
@@ -84,7 +84,7 @@ const CreateBorrow = () => {
                                         <Form.Group className='mb-3'>
                                             <Form.Label>TUP ID</Form.Label>
                                             <Form.Control
-                                                className='w-75 my-1'
+                                                className=' my-1'
                                                 type="text"
                                                 id="borrowtupid"
                                                 onChange={(e) => setUsertupid(e.target.value)}
@@ -94,7 +94,7 @@ const CreateBorrow = () => {
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Thesis Title</Form.Label>
                                             <Form.Control
-                                                className='w-75 my-1'
+                                                className=' my-1'
                                                 type="text"
                                                 id="borrowthesis"
                                                 onChange={(e) => setTitle(e.target.value)}
@@ -104,7 +104,7 @@ const CreateBorrow = () => {
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Date Borrowed</Form.Label>
                                             <Form.Control
-                                                className='w-75 my-1'
+                                                className=' my-1'
                                                 type="date"
                                                 id="borrowdateborrowed"
                                                 onChange={(e) => setDateborrowed(e.target.value)}
@@ -114,22 +114,22 @@ const CreateBorrow = () => {
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Due Date</Form.Label>
                                             <Form.Control
-                                                className='w-75 my-1'
+                                                className=' my-1'
                                                 type="date"
                                                 id="borrowdue"
                                                 onChange={(e) => setDuedate(e.target.value)}
                                             />
                                         </Form.Group>
-
+                                        <div className='d-flex justify-content-end'>
                                         <Button 
-                                            className='my-3'
-                                            variant="primary" 
+                                            className='my-3 '
+                                            variant="success" 
                                             type="submit"
-                                            // id="login_button"
                                             disabled={loading ? true : false}
                                         >
                                             Submit
                                         </Button>
+                                        </div>
                                     </Form>
                                 </Row>
                             </div>

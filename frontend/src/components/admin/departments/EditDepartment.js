@@ -50,7 +50,7 @@ const Updatedepartment = ({ match, history }) => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken])
+    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken, departmentId])
 
 
     const submitHandler = (e) => {
@@ -66,7 +66,7 @@ const Updatedepartment = ({ match, history }) => {
     return (
         <Fragment>
         <Row>
-        <Col sm= {2}>
+        <Col sm= {2} className="admin-sidebar">
             <AdminSidebar/>
         </Col>
             <Col sm={10}>

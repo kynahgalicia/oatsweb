@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import { Link, useHistory, useParams} from 'react-router-dom' 
-import { useAlert } from 'react-alert'
+import { Link, useParams} from 'react-router-dom' 
+// import { useAlert } from 'react-alert'
 import { Form, Button } from 'react-bootstrap'
 import { showErrMsg,showSuccessMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,17 +8,17 @@ import { resetPassword } from '../../../redux/actions/authActions';
 
 const ResetPassword = () => {
     const dispatch = useDispatch()
-    const history = useHistory()
+    // const history = useHistory()
     const {token} = useParams()
     const [thisError, setThisError] = useState('');
     const [user_password, setPassword] = useState('');
     const [confirm_password, setConfirmPassword] = useState('');
 
-    const {error, message, loading} = useSelector(state => state.authForgot);
+    const {error, message} = useSelector(state => state.authForgot);
 
     useEffect(() => {
         
-    }, [dispatch, alert, error, message])
+    }, [dispatch, error, message])
 
     const submitHandler = async e => {
         e.preventDefault()

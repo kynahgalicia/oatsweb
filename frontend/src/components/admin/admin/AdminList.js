@@ -3,9 +3,8 @@ import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaPencilAlt,FaUserAltSlash} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
-
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { getAdmins } from '../../../redux/actions/adminActions';
 import AdminSidebar from '../../layout/AdminSidebar'
 const UserList = () => {
@@ -91,17 +90,61 @@ const UserList = () => {
                 admin_contact: admins.admin_contact,
                 admin_tupmail: admins.admin_tupmail,
                 department: admins.admin_department.deptname,
-                actions: 
+                actions:
                 <Fragment>
-                    {/* <Link to={`/admin/course/edit/${course._id}`} className="decor-none block"> */}
-                        <Button variant="info">
-                        <FaPencilAlt/>
+                    {/* <Link to={`/admin/admins/edit/${admins._id}`} className="decor-none block">
+                    <Button variant="primary" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                        <i className="fas fa-pencil-alt"></i>
                         </Button>
-                    {/* </Link> */}
+                    </Link> */}
 
-                    <Button variant="danger" data-toggle="tooltip" data-placement="bottom" title="Deactivate">
-                    <FaUserAltSlash />
+                    <Button className='m-1' variant="secondary" data-toggle="modal" data-target="#deactivateModal"> 
+                    <i className="fas fa-user-times"></i>
                     </Button>
+
+                    <Button className="m-1" variant="danger" data-toggle="modal" data-target="#deleteModal">
+                    <i className="fas fa-trash"></i>
+                    </Button>
+
+                    <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                            <div className="modal-body">
+                                Delete Admin Permanently?
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deleteAdminHandler(admins._id)}>Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div className="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                            <div className="modal-body">
+                                Deactivate Admin?
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deactivateAdminHandler(admins._id)}>Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div className="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                            <div className="modal-body">
+                                Activate Admin?
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => activateAdminHandler(admins._id)}>Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
                 </Fragment>
             })
             console.log('test')
@@ -109,25 +152,52 @@ const UserList = () => {
 
         return data;
     }
+
+    const deactivateAdminHandler = (id) => {
+        // const formData = new FormData();
+        // formData.set('user_status', deactivate);
+        // dispatch(deactivateUser(id,formData,adminToken))
+    }
+    const activateAdminHandler = (id) => {
+        // const formData = new FormData();
+        // formData.set('user_status', activate);
+        // dispatch(deactivateUser(id,formData,adminToken))
+    }
+
+    const deleteAdminHandler = (id) => {
+        // dispatch(deleteUser(id,adminToken))
+        // console.log('deleted' , id)
+    }
+
     return(
         <Fragment>
         <Row>
-        <Col sm= {2}>
+        <Col sm= {2} className="admin-sidebar">
             <AdminSidebar/>
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
-                <h1>Admins</h1>
-                    <button><Link to="/admin/admins/new">Add</Link></button>
-
+                <div className="table-admin">
+                
+                {loading ? <LoaderAdmin/>  :  
+                    <>
+                    <div className='d-flex align-items-start m-2'>
+                    <h1>Administrators</h1>
+                </div>
+                <div className='d-flex align-items-start mx-5 mt-3'>
+                    <Button variant="success"><Link to="/admin/admins/new">+ Add</Link></Button>
+                </div>
                     <MDBDataTableV5 
                         hover 
                         entriesOptions={[5, 10, 15, 25]} 
                         entries={10} 
                         pagesAmount={4}
                         data={setData()} 
-                        className='table'
+                        className='table px-4'
                         container-sm="true"/>
+                    </>
+                    }
+                </div>
                 </div>
             </Col>
         </Row>

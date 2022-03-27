@@ -1,10 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Form, Button} from 'react-bootstrap';
-import {BsGoogle} from 'react-icons/bs'
+// import {BsGoogle} from 'react-icons/bs'
 import { useAlert } from 'react-alert'
 import { showErrMsg } from '../../utils/Notification';
-import {login, clearErrors} from '../../../redux/actions/authActions'
+import {login} from '../../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const LoginasUser = () => {
@@ -50,7 +50,7 @@ const LoginasUser = () => {
             
 
             <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
-            <h1 className='text-center'>Sign In as User</h1>
+            <h1 className='text-center'>Sign In as Student</h1>
 
             {error && showErrMsg(error)}
             {/* <Button className="w-100 btn-grey my-4" type="submit">
@@ -81,7 +81,7 @@ const LoginasUser = () => {
             </Button>
             </Link>
             <div className='text-center my-3'>
-            <label>Don't have an account?   <Link to="/SignUp"> Sign Up
+            <label>Don't have an account?   <Link to="/user/student"> Sign Up
             </Link></label>
             </div>
             </Form> 

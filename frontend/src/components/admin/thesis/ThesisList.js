@@ -1,10 +1,9 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import AdminSidebar from '../../layout/AdminSidebar'
 
-import {Row, Col, Button} from 'react-bootstrap';
-import {MDBDataTableV5 } from 'mdbreact'
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
+import {Row, Col} from 'react-bootstrap';
+// import {MDBDataTableV5 } from 'mdbreact'
 
 
 const ThesisList = () => {
@@ -69,7 +68,7 @@ const ThesisList = () => {
     return(
         <Fragment>
         <Row>
-        <Col sm= {2}>
+        <Col sm= {2} className="admin-sidebar">
             <AdminSidebar/>
         </Col>
             <Col sm={10}>

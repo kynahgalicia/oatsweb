@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
-
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { useDispatch, useSelector } from 'react-redux'
 import {getCourse, deleteCourse, clearErrors} from '../../../redux/actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
@@ -111,23 +111,33 @@ const CourseList = () => {
     return(
         <Fragment>
         <Row>
-            <Col sm= {2}>
+            <Col sm= {2} className="admin-sidebar">
                 <AdminSidebar/>
             </Col>
 
             <Col sm={10}>
                 <div className="admin-wrapper">
+                <div className="table-admin">
+                
+                {loading ? <LoaderAdmin/>  :  
+                    <>
+                    <div className='d-flex align-items-start m-2'>
                     <h1>Courses</h1>
-                    <button><Link to="/admin/course/new">Add Course</Link></button>
-
+                </div>
+                <div className='d-flex align-items-start mx-5 mt-3'>
+                    <Button variant="success"><Link to="/admin/course/new">+ Add</Link></Button>
+                </div>
                     <MDBDataTableV5 
                         hover 
                         entriesOptions={[5, 10, 15, 25]} 
                         entries={10} 
                         pagesAmount={4}
                         data={setData()} 
-                        className='table'
+                        className='table px-4'
                         container-sm="true"/>
+                        </>
+                    }
+                    </div>
                 </div>
             </Col>
         </Row>

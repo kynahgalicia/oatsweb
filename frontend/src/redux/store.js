@@ -6,15 +6,20 @@ import { departmentsReducer, newDepartmentReducer, departmentReducer, Department
 
 import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
+import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
 import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
+
+import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer} from './reducers/authGuestReducer'
 
 import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
 
 import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
 
-import { adminsReducer } from './reducers/adminReducer'
+import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/guestReducer'
+
+import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adminReducer'
 
 import thunk from 'redux-thunk'
 
@@ -34,6 +39,10 @@ const reducer = combineReducers({
     newCourse: newCourseReducer,
     course: courseReducer,
     courseDetails: CourseDetailsReducer,
+    //Bookmark
+    bookmarks: bookmarksReducer,
+    newBookmark: newBookmarkReducer,
+    bookmark: bookmarkReducer,
     //Borrow
     borrows: borrowsReducer,
     newBorrow: newBorrowReducer,
@@ -42,8 +51,14 @@ const reducer = combineReducers({
     users:usersReducer,
     user:userReducer,
     userDetails: userDetailsReducer,
+    //Guests
+    guests:guestsReducer,
+    guest:guestReducer,
+    guestDetails: guestDetailsReducer,
     //Admin
     admins:adminsReducer,
+    admin:adminReducer,
+    adminDetails: adminDetailsReducer,
     // Authentication
     authUser: authUserReducer,
     authUserRegister: authUserRegisterReducer,
@@ -52,6 +67,10 @@ const reducer = combineReducers({
     //Authentication Admin
     authAdmin:authAdminReducer,
     authAdminToken: authAdminTokenReducer,
+    //Authentication Guest
+    authGuest: authGuestReducer,
+    authGuestRegister: authGuestRegisterReducer,
+    authGuestToken: authGuestTokenReducer,
 
 })
 

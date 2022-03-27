@@ -135,18 +135,18 @@ const CreateThesis = () => {
         }
             fetchData()
         }, [])
-     ///////////////
 
     return(
         <Fragment>
             <Row>
-                <Col sm={2}>
+                <Col sm={2} className="admin-sidebar">
                     <AdminSidebar/>
                 </Col>
 
                 <Col sm={10}>
                     <Container>
-                        <div className='createthesis'>
+                    <div className="admin-wrapper">
+                        <div className="form-admin-wrapper-two text-start">
                             <div className="wrapper my-5">
                                 <Row>
                                     <h1>Create Thesis</h1>
@@ -381,6 +381,8 @@ const CreateThesis = () => {
                                 </Row>
                             </div>
                         </div>
+                    </div>
+                        
                     </Container>
                 </Col>
             </Row>
