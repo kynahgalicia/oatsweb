@@ -68,12 +68,11 @@ const ThesisList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
             <h1>Thesis</h1>
+            <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
             </div>
             </Col>
         </Row>
-            <div className="admin-wrapper">
-                <h1>Thesis</h1>
-                <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
+                
 
                 {/* <MDBDataTableV5 
                     hover 
@@ -83,7 +82,6 @@ const ThesisList = () => {
                     data={setData()} 
                     className='table'
                     container-sm="true"/> */}
-            </div>
         </Fragment>
     )
 }

@@ -106,7 +106,8 @@ hr{
   color: white;
   text-decoration: none;
   text-align: left;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2vh;
 }
 .admin-sidebar .nav-item a:hover {
   color: #232f3e;
@@ -147,6 +148,8 @@ hr{
 .admin-accordion .accordion .card-header .collapsed:after {
   content: "\f078"; 
 } 
+
+
 
 .nav-item .list-group{
   font-family: 'Montserrat', sans-serif;
@@ -496,6 +499,14 @@ form h5{
   color: var(--red);
 }
 
+.user-accordion .form-control{
+  text-align: center;
+}
+
+.user-accordion span{
+
+  color: var(--darkRed);
+}
 .year{
   min-height: 450px !important;
 }
@@ -540,10 +551,15 @@ form h5{
   padding: 20px;
   border-bottom: 1px solid #41414194;
 }
-.thesis-result .fas{
-  color: var(--red);
+.thesis-result .fas,
+.thesis-result .far{
+  color: var(--grey);
   float: right;
-  font-size: 20px;
+  font-size: 23px;
+}
+
+.thesis-result .fa-lock{
+  color: var(--red);
 }
 
 .form-check-input:checked{
@@ -792,4 +808,35 @@ table td{
 
 .custom-select{
   width: 50px !important;
+}
+
+
+.bookmark-result .card{
+  display:inline-flex;
+  margin: 10px;
+}
+
+.bookmark-result a{
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--black)
+}
+.bookmark-result p{
+  font-size: 1.5vh;
+}
+.bookmark-result label{
+  font-size: 2vh;
+  color: var(--grey);
+}
+.bookmark-result a:hover{
+  color: var(--darkRed);
+}
+
+.icon-bookmark:hover .far,
+.icon-bookmark .fas{
+    display: none !important;
+}
+
+.icon-bookmark:hover .fas{
+  display: inline-block !important;
 }

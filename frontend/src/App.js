@@ -33,6 +33,7 @@ import UserList from './components/admin/users/UserList'
 import EditUser from './components/admin/users/EditUser'
 
 import AdminList from './components/admin/admin/AdminList'
+import EditAdmin from './components/admin/admin/EditAdmin'
 
 import GuestList from './components/admin/guest/GuestList'
 
@@ -63,6 +64,11 @@ import ThesisDetails from './components/user/Search/ThesisDetails'
 import UserProfile from './components/user/Account/UserProfile';
 import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
+
+//Guest Account
+import GuestProfile from './components/guest/Account/GuestProfile';
+import GuestBookmark from './components/guest/Account/GuestBookmark';
+import GuestPaid from './components/guest/Account/GuestPaid';
 
 import NotFound from './components/img/404.png'
 
@@ -134,6 +140,10 @@ function App() {
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
 
+        <Route path="/guest/profile" component={GuestProfile} exact/>
+        <Route path="/guest/bookmark" component={GuestBookmark} exact/>
+        <Route path="/guest/paid" component={GuestPaid} exact/>
+
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
         <Route path="/admin/thesis" component={ThesisList} exact/>
@@ -146,6 +156,7 @@ function App() {
         <Route path="/admin/users" component={UserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
+        <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
         <Route path="/admin/borrowed" component={BorrowList} exact/>
