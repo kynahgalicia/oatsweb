@@ -94,73 +94,64 @@ const BorrowList = () => {
         }
 
         borrow.forEach(borrow => {
-            data.rows.push({
-                user: borrow.user.fname + " " + borrow.user.lname,
-                user_tupid: borrow.user.tupid,
-                thesis: borrow.thesis.title,
-                admin: borrow.admin.fname + " " + borrow.admin.lname,
-                admin_tupid: borrow.admin.tupid, 
-                dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
-                dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                actions: 
-                <Fragment>
-                    <Button variant="info" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
-                        Return
-                    </Button> 
-                    <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
-                        <FaTrash/>
-                    </Button> 
-
-
-                    <div className="modal fade" id={'returnModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-body">
-                            <Form.Group className='mb-3'>
-                                            <Form.Label>Date Returned</Form.Label>
-                                            <Form.Control
-                                                className='w-75 my-1 flex-center'
-
-
-
-
-
-
-
-
-
-
-                                                
-                                                type="date"
-                                                onChange={(e) => setDateReturned(e.target.value)}
-                                            />
-                                        </Form.Group>
-                            </div>
-                            <div className="modal-footer">
-                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button>
-                            </div>
+            if(borrow.dateReturned === ""){
+                data.rows.push({
+                    user: borrow.user.fname + " " + borrow.user.lname,
+                    user_tupid: borrow.user.tupid,
+                    thesis: borrow.thesis.title,
+                    admin: borrow.admin.fname + " " + borrow.admin.lname,
+                    admin_tupid: borrow.admin.tupid, 
+                    dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
+                    dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
+                    actions: 
+                    <Fragment>
+                        <Button variant="info" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
+                            Return
+                        </Button> 
+                        <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
+                            <FaTrash/>
+                        </Button> 
+    
+    
+                        <div className="modal fade" id={'returnModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                <div className="modal-body">
+                                <Form.Group className='mb-3'>
+                                                <Form.Label>Date Returned</Form.Label>
+                                                <Form.Control
+                                                    className='w-75 my-1 flex-center'
+                                                    type="date"
+                                                    onChange={(e) => setDateReturned(e.target.value)}
+                                                />
+                                            </Form.Group>
+                                </div>
+                                <div className="modal-footer">
+                                    <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button>
+                                </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="modal fade" id={'deleteModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-body">
-                                Delete Permanently?
-                            </div>
-                            <div className="modal-footer">
-                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                <Button  className="btn btn-danger" data-dismiss="modal" >Yes</Button>
-                            </div>
+    
+                        <div className="modal fade" id={'deleteModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                <div className="modal-body">
+                                    Delete Permanently?
+                                </div>
+                                <div className="modal-footer">
+                                    <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" >Yes</Button>
+                                </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                </Fragment>
-                
-            })
+    
+                    </Fragment>
+                    
+                })
+            }
         })
 
         return data;
@@ -177,15 +168,19 @@ const BorrowList = () => {
     return(
         <Fragment>
             <Row>
-                <Col sm= {2}>
+                <Col sm= {2} className="admin-sidebar">
                     <AdminSidebar/>
                 </Col>
 
                 <Col sm={10}>
                     <div className="admin-wrapper">
-                        <div className="admin-wrapper">
+                        <div className="table-admin">
+                        <div className='d-flex align-items-start m-2'>
                             <h1>Borrow</h1>
-                            <button><Link to="/admin/borrow/new">Create Borrow</Link></button>
+                        </div>
+                        <div className='d-flex align-items-start mx-5 mt-3'>
+                            <Button variant="success"><Link to="/admin/borrow/new">+ Add</Link></Button>
+                        </div>
 
                             <MDBDataTableV5 
                             hover 
@@ -193,7 +188,7 @@ const BorrowList = () => {
                             entries={10} 
                             pagesAmount={4}
                             data={setData()} 
-                            className='table'
+                            className='table px-4'
                             container-sm="true"/>
                         </div>
                     </div>

@@ -72,13 +72,12 @@ export const updateBorrow = (id, borrowData) => async (dispatch) => {
 
         dispatch({ type: UPDATE_BORROW_REQUEST })
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': adminToken,
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
-        const { data } = await axios.put(`/api/borrow/edit/${id}`, borrowData)
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(`/api/borrow/edit/${id}`, borrowData,config)
 
         dispatch({
             type: UPDATE_BORROW_SUCCESS,

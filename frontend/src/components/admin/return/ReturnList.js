@@ -1,16 +1,45 @@
-import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Table from 'react-bootstrap/Table'
+import React, { Fragment,useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import moment from 'moment'
 import {MDBDataTableV5 } from 'mdbreact'
-
 import { useDispatch, useSelector } from 'react-redux'
-
+import { getBorrow, clearErrors} from '../../../redux/actions/borrowActions';
 import AdminSidebar from '../../layout/AdminSidebar'
+import { FaTrash} from 'react-icons/fa';
 
 const ReturnList = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const alert = useAlert();
+
+    useEffect(() => {
+        // if(adminToken){
+            dispatch(getBorrow())
+        // }
+
+        // if (error) {
+        //     alert.error(error);
+        // }
+
+        // if (updateError) {
+        //     alert.error(updateError);
+        //     dispatch(clearErrors())
+        // }
+
+        // if (isUpdated) {
+        //     history.push('/admin/borrow');
+        //     alert.success('Returned');
+        //     dispatch({ type: UPDATE_BORROW_RESET })
+        // }
+        // if (!isLoggedInAdmin) {
+        //     history.push('/admin/login');
+        // }
+    }, [dispatch, alert, history])
+
 
     const setData = () => { 
         const data = {
@@ -65,7 +94,7 @@ const ReturnList = () => {
 
             borrow.forEach(borrow => {
 
-                if(borrow.dateReturned !== null){
+                if(borrow.dateReturned !== ""){
                     data.rows.push({
                         user: borrow.user.fname + " " + borrow.user.lname,
                         user_tupid: borrow.user.tupid,
@@ -74,10 +103,10 @@ const ReturnList = () => {
                         admin_tupid: borrow.admin.tupid,
                         dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                         dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                        dateReturned: borrow.dateReturned,
+                        dateReturned:moment(borrow.dateReturned).format('MM/DD/YYYY'),
                         actions: 
                             <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
-                                Return
+                                <FaTrash/>
                             </Button> 
                     })
                 }
@@ -90,14 +119,16 @@ const ReturnList = () => {
     return(
         <Fragment>
             <Row>
-                <Col sm= {2}>
+                <Col sm= {2} className="admin-sidebar">
                     <AdminSidebar/>
                 </Col>
 
                 <Col sm={10}>
-                    <div className="admin-wrapper">
-                        <div className="admin-wrapper">
+                <div className="admin-wrapper">
+                        <div className="table-admin">
+                        <div className='d-flex align-items-start m-2'>
                             <h1>Return</h1>
+                        </div>
                         
 
                             <MDBDataTableV5 
@@ -106,7 +137,7 @@ const ReturnList = () => {
                                 entries={10} 
                                 pagesAmount={4}
                                 data={setData()} 
-                                className='table'
+                                className='table px-4'
                                 container-sm="true"/>
 
                         </div>

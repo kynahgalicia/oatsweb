@@ -36,6 +36,12 @@ li, p {
 .form-admin-wrapper{
   max-width: 50%;
   margin: 10px 25%;
+  text-align: start;
+}
+
+.form-admin-wrapper-two{
+  max-width: 90%;
+  margin: 10px 5%;
 }
 .admin-wrapper{
   color: var(--black);

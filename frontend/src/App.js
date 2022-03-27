@@ -25,8 +25,6 @@ import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
 
-import BorrowList from './components/admin/lending/borrowed/BorrowList'
-import ReturnList from './components/admin/lending/returned/ReturnList'
 
 import PaymentList from './components/admin/payment/PaymentList'
 
@@ -37,6 +35,7 @@ import AdminList from './components/admin/admin/AdminList'
 import EditAdmin from './components/admin/admin/EditAdmin'
 
 import GuestList from './components/admin/guest/GuestList'
+
 import BorrowList from './components/admin/borrow/BorrowList'
 import CreateBorrow from './components/admin/borrow/CreateBorrow'
 import ReturnList from './components/admin/return/ReturnList'

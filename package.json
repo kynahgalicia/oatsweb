@@ -1,7 +1,7 @@
 {
   "name": "oatsweb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Clone project to computer then install dependencies",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node backend/server",
@@ -40,5 +40,14 @@
     "stripe": "^8.195.0",
     "tesseract.js": "^2.1.5",
     "validator": "^13.7.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kynahgalicia/oatsweb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kynahgalicia/oatsweb/issues"
+  },
+  "homepage": "https://github.com/kynahgalicia/oatsweb#readme"
 }
