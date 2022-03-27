@@ -10,31 +10,37 @@ import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 const ThesisList = () => {
     // const { loading, error, thesis } = useSelector(state => state.thesis);
 
-    // const setData = () => { 
-    //     const data = {
-    //         columns: [
-    //             {
-    //                 label: 'Title',
-    //                 field: 'title',
-    //                 sort: 'asc'
-    //             },
-    //             {
-    //                 label: 'Code',
-    //                 field: 'coursecode',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Department',
-    //                 field: 'department',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Actions',
-    //                 field: 'actions',
-    //             },
-    //         ],
-    //         rows: []
-    //     }
+    const setData = () => { 
+        const data = {
+            columns: [
+                {
+                    label: 'Title',
+                    field: 'title',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Year',
+                    field: 'publishedAt',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Course',
+                    field: 'course',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                },
+            ],
+            rows: []
+        }
+    }
 
     //     theses.forEach(theses => {
     //         data.rows.push({

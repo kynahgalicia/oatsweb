@@ -74,7 +74,7 @@ const ReturnList = () => {
                         admin_tupid: borrow.admin.tupid,
                         dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                         dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                        dateReturned: borrow.dateReturned,
+                        dateReturned: moment(borrow.dateReturned).format('MM/DD/YYYY'),
                         actions: 
                             <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
                                 Return

@@ -28,12 +28,7 @@ const CreateThesis = () => {
     //     });
     // };
 
-    // const [thesisname, setThesisname] = useState('');
-    // const [thesiscode, setThesiscode] = useState('');
-    // const [thisDepartment, setDepartment] = useState('');
-
     //Scan to text declaration
-    // const [isLoading, setIsLoading] = React.useState(false);
     const [image, setImage] = React.useState('');
     const [text, setText] = React.useState('');
     const [progress, setProgress] = React.useState(0);
@@ -121,8 +116,6 @@ const CreateThesis = () => {
         setTags(tags.filter((_, index) => index !== indexToRemove))
     }
 
-
-
     // const uploadFile = async (e) => {
         
     //     e.preventDefault();
@@ -159,6 +152,8 @@ const CreateThesis = () => {
                                     <h1>Create Thesis</h1>
                                     <Col sm={6}>
                                         <Form action="" onSubmit={handleFormSubmit}>
+
+                                            {/* Title Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Title</Form.Label>
                                                 <Form.Control
@@ -168,6 +163,7 @@ const CreateThesis = () => {
                                                 />
                                             </Form.Group>
 
+                                            {/* Year Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Year Published</Form.Label>
                                                 <Form.Control
@@ -181,6 +177,7 @@ const CreateThesis = () => {
                                                 </Form.Text>
                                             </Form.Group>
 
+                                            {/* Author Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Author/s</Form.Label>
                                                 <div className='d-inline'>
@@ -216,6 +213,39 @@ const CreateThesis = () => {
                                                 </Form.Text>
                                             </Form.Group>
 
+                                            {/* Department Input */}
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Department</Form.Label>
+                                                <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2">
+                                                {/* <option> -- SELECT Department --</option> */}
+                                                
+                                                {/* value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} */}
+
+                                                    {/* { department && department.map((departments) => (
+                                                                
+                                                            <option value={departments._id}>{departments.deptname}</option>
+                                                                
+                                                        ))} */}
+                                                </Form.Select>
+                                            </Form.Group>
+
+                                            {/* Course Input */}
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Course</Form.Label>
+                                                <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2">
+                                                {/* <option> -- SELECT Course --</option> */}
+
+                                                {/* value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} */}
+
+                                                    {/* { department && department.map((departments) => (
+                                                                
+                                                            <option value={departments._id}>{departments.deptname}</option>
+                                                                
+                                                        ))} */}
+                                                </Form.Select>
+                                            </Form.Group>
+
+                                            {/* Keywords Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Keyword/s</Form.Label>
                                                 <div className='tags-input'>
@@ -241,6 +271,7 @@ const CreateThesis = () => {
                                                 </div>
                                             </Form.Group>
 
+                                            {/* Abstract Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Abstract</Form.Label>
                                                 <Form.Control
@@ -253,6 +284,7 @@ const CreateThesis = () => {
                                                 />
                                             </Form.Group>
 
+                                            {/* Upload PDF */}
                                             <Form.Label>Thesis PDF</Form.Label>
                                             
                                             {/* <div className="container"> */}
