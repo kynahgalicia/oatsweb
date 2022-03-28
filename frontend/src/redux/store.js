@@ -4,7 +4,10 @@ import { thesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
 
 import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
-import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer"
+import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsReducer } from "./reducers/courseReducer"
+
+import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
+import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
 
@@ -16,7 +19,7 @@ import { usersReducer , userReducer, userDetailsReducer } from './reducers/userR
 
 import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/guestReducer'
 
-import { adminsReducer } from './reducers/adminReducer'
+import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adminReducer'
 
 import thunk from 'redux-thunk'
 
@@ -32,10 +35,18 @@ const reducer = combineReducers({
     departments: departmentReducer,
     departmentDetails: DepartmentDetailsReducer,
     //Course
-    courses: coursesReducer,
+    courses: courseReducer,
     newCourse: newCourseReducer,
-    course: courseReducer,
+    course: courseUpdateReducer,
     courseDetails: CourseDetailsReducer,
+    //Bookmark
+    bookmarks: bookmarksReducer,
+    newBookmark: newBookmarkReducer,
+    bookmark: bookmarkReducer,
+    //Borrow
+    borrows: borrowsReducer,
+    newBorrow: newBorrowReducer,
+    borrow: borrowReducer,
     //Users
     users:usersReducer,
     user:userReducer,
@@ -46,6 +57,8 @@ const reducer = combineReducers({
     guestDetails: guestDetailsReducer,
     //Admin
     admins:adminsReducer,
+    admin:adminReducer,
+    adminDetails: adminDetailsReducer,
     // Authentication
     authUser: authUserReducer,
     authUserRegister: authUserRegisterReducer,

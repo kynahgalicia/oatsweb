@@ -67,17 +67,16 @@ const Header = () => {
 
         return (
             <>
-            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
-            <Dropdown>
-            <Dropdown.Toggle id="dropdown-basic">
-            {thisUser}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-                <Dropdown.Item><Link to="/user/profile"> Account</Link></Dropdown.Item>
-                <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
-            </Dropdown.Menu>
-            </Dropdown>
-        </>
+                    <Dropdown className='m-2'>
+                    <Dropdown.Toggle id="dropdown-basic">
+                    {thisUser}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item><Link to="/user/profile"> Account</Link></Dropdown.Item>
+                        <Dropdown.Item><Link onClick={() => logoutHandler()}> Logout</Link></Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </>
         )
         
     }

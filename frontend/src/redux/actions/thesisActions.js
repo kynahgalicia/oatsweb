@@ -9,6 +9,10 @@ import {
     THESIS_COUNT_SUCCESS,
     THESIS_COUNT_FAIL,
 
+    NEW_THESIS_REQUEST,
+    NEW_THESIS_SUCCESS,
+    NEW_THESIS_FAIL,
+
     THESIS_DETAILS_REQUEST,
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
@@ -83,6 +87,33 @@ export const getThesisDetails = (thesisId) => async (dispatch) => {
     }
 
 };
+
+//Create Thesis
+export const newThesis = (thesisData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: NEW_THESIS_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post(`/api/thesis/new`, thesisData, config)
+
+        dispatch({
+            type: NEW_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: NEW_THESIS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

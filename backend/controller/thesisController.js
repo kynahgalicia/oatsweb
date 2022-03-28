@@ -2,18 +2,53 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const ErrorHandler = require('../utils/errorHandler');
 
 const APIFeatures = require('../utils/apiFeatures')
-
+const Department = require('../models/departmentModel')
+const Course = require('../models/courseModel')
 const Thesis = require('../models/thesisModel')
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
+
+    const uDept = await Department.findById(req.body.departments);
+    const uCourse = await Course.findById(req.body.courses);
+
+    const department ={ 
+        departments: uDept._id,
+        deptname: uDept.deptname
+    }
+    const course = {
+        courses: uCourse._id,
+        coursecode: uCourse.coursecode,
+        coursename: uCourse.coursename
+    }
+    
+    let key = req.body.thisKey
+    let auth = req.body.thisAuthors
+    
+    let keywords = []
+    for (let i = 0; i < key.length; i++) {
+        keywords.push({
+
+            keyword: key[i]
+        })
+    }
+    let authors = []
+    for (let i = 0; i < auth.length; i++) {
+        authors.push({
+            author: auth[i]
+        })
+    }aaaa
+    req.body.authors = authors
+    req.body.keywords = keywords
+    req.body.department = department
+    req.body.course = course
+
     const thesis = await Thesis.create(req.body);
 
     res.status(201).json({
-        success: true,
-        thesis
+        success: true
     })
-    })
+})
 
 
 exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {

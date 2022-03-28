@@ -13,37 +13,48 @@ import Loader from '../../utils/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
-
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 const Search = () => {
-    // Test Data for User
-    let userDept = null 
-    // let userDept = 'Basic Arts and Science' 
-
     const history = useHistory()
-    const [thisKeyword, setKeyword] = useState('');
+    const [thisKeyword, setKeyword] = useState('')
+    const [userDept, setUserDept] = useState('')
+    const [thisId, setThisId] = useState('')
     // const [currentPage, setCurrentPage] = useState(1)
     const [thisDepartment, setDepartment] = useState('')
-    const [startDate, setStartDate] = useState(1999);
-    const [endDate, setEndDate] = useState(2023);
-
+    const [startDate, setStartDate] = useState(1999)
+    const [endDate, setEndDate] = useState(2023)
+    
     const alert = useAlert();
     const dispatch = useDispatch();
-
-
+    
+    const {user, isLoggedIn} = useSelector(state => state.authUser)
+    const {guest, isLoggedInGuest} = useSelector(state => state.authGuest)
     const { loading, thesis, error} = useSelector(state => state.thesis)
     const { department} = useSelector(state => state.department)
 
     const {keyword} = useParams()
+
+
+    
 
     useEffect(() => {
         if (error) {
             return alert.error(error)
         }
         
+        if(isLoggedIn){
+            setUserDept(user.user_department.deptname)
+            setThisId(user._id)
+        }
+
+        if(isLoggedInGuest){
+            setThisId(guest._id)
+        }
     
         dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
-    }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate])
+    }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
 
     // function setCurrentPageNo(pageNumber) {
     //     setCurrentPage(pageNumber)
@@ -54,6 +65,15 @@ const Search = () => {
     //     count = filteredthesisCount
     // }
 
+
+    const [value, setValue] = useState([new Date().getFullYear(),2000]);
+
+    const onSliderChange = (newValue) => {
+        setStartDate(newValue[0])
+        setEndDate(newValue[1])
+        setValue(newValue)
+        // console.log(newValue)
+    }
 
     const searchHandler = (e) => {
         if(thisKeyword){
@@ -122,6 +142,7 @@ const Search = () => {
                                     onClick={() => setDepartment('')}
                             />
 
+
         {
             userDept ? <Form.Check
             inline
@@ -147,39 +168,42 @@ const Search = () => {
                         </h2>
                         </div>
                         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div className="card-body">
-                        <label> Start Date:</label>
+                        <div className="card-body ">
+                            <Row>
+                                <Col>
+                                <label> Start Date</label>
                                 <input
                                     type="number"
-                                    id="coursename_field"
-                                    className="form-control"
+                                    className="form-control "
                                     value={startDate}
                                     onChange={(e) => setStartDate(e.target.value)}
                                 />
-                        <label> End Date:</label>
+                                </Col>
+                                    -
+                                <Col>
+                                <label> End Date</label>
                                 <input
                                     type="number"
-                                    id="coursename_field"
                                     className="form-control"
                                     value={endDate}
                                     onChange={(e) => setEndDate(e.target.value)}
                                 />
-                                {/* <DatePicker
-                                selected={startDate}
-                                onChange={(date) => setStartDate(ISODate(new Date(date).toISOString()))}
-                                selectsStart
-                                startDate={new Date(startDate)}
-                                endDate={new Date(endDate)}
-                                />
-                                <label> End Date:</label>
-                                <DatePicker
-                                selected={endDate}
-                                onChange={(date) => setEndDate(ISODate(new Date(date).toISOString()))}
-                                selectsEnd
-                                startDate={startDate}
-                                endDate={new Date(endDate)}
-                                minDate={new Date(startDate)}
-                                /> */}
+                                </Col>
+                            </Row>
+                        
+                        <div className="px-4">
+                            <Slider
+                                getAriaLabel={() => 'Year Range'}
+                                value={value}
+                                min={2000}
+                                max={2022}
+                                onChange={(e) => onSliderChange(e.target.value)}
+                                valueLabelDisplay="off"
+                                disableSwap
+                            />
+                        </div>
+                        
+                            
                         </div>
                         </div>
                     </div>
@@ -219,7 +243,7 @@ const Search = () => {
                 <Col sm={7} className='text-start'>
                 {loading ? <Loader /> : (
                     keyword ? (
-                    <SearchResults userDept={userDept} thesis={thesis}></SearchResults>
+                    <SearchResults userDept={userDept} thesis={thesis} thisId={thisId}></SearchResults>
                     ): null
                 )}
                 </Col>

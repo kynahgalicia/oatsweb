@@ -3,7 +3,7 @@ import { Link as Link2} from "react-scroll"
 import {Link as Link1, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button} from 'react-bootstrap'
+import { Row, Col, Button, InputGroup, Form} from 'react-bootstrap'
 // import moment from 'moment'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
@@ -23,6 +23,8 @@ const ThesisDetails = () => {
         if(thesisId){
             // console.log(thesisId)
             dispatch(getThesisDetails(thesisId))
+
+            
             // setThisDepartment(thesis.department.deptname)
             // setThisCourse(thesis.course.coursecode)
             // console.log(thisCourse,thisDepartment)
@@ -32,7 +34,7 @@ const ThesisDetails = () => {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId]);
+    }, [dispatch, alert, error ,thesisId, thisDepartment]);
 
     return ( 
         <div className="wrapper">
@@ -44,8 +46,9 @@ const ThesisDetails = () => {
                 {/* { thesis.authors && thesis.authors.map((x) => (
                     <Link1 className='d-inline'><i> {x.author}</i></Link1>
                 ))} */}
+                
                 <div className="m-3">
-                <label> Published: <Link1>{thesis.publishedAt} </Link1></label>
+                <label> Published: <Link1>{thesis.publishedAt}</Link1> </label>
                 {/* | Department: <Link1>{thisDepartment}</Link1> | Course: <Link1>{thisCourse}</Link1> */}
                 </div>
                 <div className='details-button'>
@@ -105,6 +108,111 @@ const ThesisDetails = () => {
                     <h5 id="abstract">Abstract</h5>
                     <p className="text-justify">{thesis.abstract}</p>
                 </div>
+
+                <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
+                    Purchase Subscription
+                </Button>
+
+                <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
+                            </div>
+
+                            <div className="modal-body text-start">
+                                {['radio'].map((type) => (
+                                    <div key={`inline-${type}`} className="mb-3">
+                                        <Form.Check
+                                            label="₱50/month"
+                                            name="group1"
+                                            type={type}
+                                            id={`${type}`}
+                                        />
+                                        <Form.Check
+                                            label="₱140/quarter"
+                                            name="group1"
+                                            type={type}
+                                            id={`${type}`}
+                                        />
+                                        <Form.Check
+                                            label="₱550/year"
+                                            name="group1"
+                                            type={type}
+                                            id={`${type}`}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-primary">Save changes</button>
+                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
+                            </div>
+
+                            <div className="modal-body text-start">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
+                                    <label className="form-check-label" for="exampleRadios1">
+                                        Default radio
+                                    </label>
+                                </div>
+
+                                <div className="form-check">
+                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
+                                    <label className="form-check-label" for="exampleRadios2">
+                                        Second default radio
+                                    </label>
+                                </div>
+
+                                <div className="form-check">
+                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled/>
+                                    <label className="form-check-label" for="exampleRadios3">
+                                        Disabled radio
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-primary">Save changes</button>
+                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+
+                {/* <div className="modal fade" id={'subscriptionModal'} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <Form.Group className='mb-3'>
+                                    <Form.Label>OATS Thesis Archive Subscription</Form.Label>
+                                    <Form.Control
+                                        className='w-75 my-1 flex-center'
+                                        type="date"
+                                        // onChange={(e) => setDateReturned(e.target.value)}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="modal-footer">
+                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                {/* <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button> 
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+
                 <div className='p-3'>
                     <div className="user-accordion accordion" id="accordionExample">
                         <div className="card">

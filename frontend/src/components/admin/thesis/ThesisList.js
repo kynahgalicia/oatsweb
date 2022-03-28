@@ -9,31 +9,37 @@ import {Row, Col} from 'react-bootstrap';
 const ThesisList = () => {
     // const { loading, error, thesis } = useSelector(state => state.thesis);
 
-    // const setData = () => { 
-    //     const data = {
-    //         columns: [
-    //             {
-    //                 label: 'Title',
-    //                 field: 'title',
-    //                 sort: 'asc'
-    //             },
-    //             {
-    //                 label: 'Code',
-    //                 field: 'coursecode',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Department',
-    //                 field: 'department',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Actions',
-    //                 field: 'actions',
-    //             },
-    //         ],
-    //         rows: []
-    //     }
+    const setData = () => { 
+        const data = {
+            columns: [
+                {
+                    label: 'Title',
+                    field: 'title',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Year',
+                    field: 'publishedAt',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Course',
+                    field: 'course',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                },
+            ],
+            rows: []
+        }
+    }
 
     //     theses.forEach(theses => {
     //         data.rows.push({
@@ -67,23 +73,20 @@ const ThesisList = () => {
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
-            <h1>Thesis</h1>
-            </div>
+                    <h1>Thesis</h1>
+                    <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
+
+                    {/* <MDBDataTableV5 
+                        hover 
+                        entriesOptions={[5, 10, 15, 25]} 
+                        entries={10} 
+                        pagesAmount={4}
+                        data={setData()} 
+                        className='table'
+                        container-sm="true"/> */}
+                </div>
             </Col>
         </Row>
-            <div className="admin-wrapper">
-                <h1>Thesis</h1>
-                <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
-
-                {/* <MDBDataTableV5 
-                    hover 
-                    entriesOptions={[5, 10, 15, 25]} 
-                    entries={10} 
-                    pagesAmount={4}
-                    data={setData()} 
-                    className='table'
-                    container-sm="true"/> */}
-            </div>
         </Fragment>
     )
 }

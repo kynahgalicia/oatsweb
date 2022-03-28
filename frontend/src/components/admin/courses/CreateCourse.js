@@ -65,9 +65,9 @@ const CreateCourse = () => {
             <AdminSidebar/>
         </Col>
             <Col sm={10}>
-                <div className="admin-wrapper">
+                <div className="form-admin-wrapper">
                     <div className="wrapper my-5">
-                        <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
+                        <form onSubmit={submitHandler} encType='multipart/form-data'>
                             <h1 className="mb-4">New Course</h1>
 
                             <div className="form-group">
@@ -104,11 +104,12 @@ const CreateCourse = () => {
                                         ))}
                                 </Form.Select>
                             </Form.Group>
-
-                            <Button id="login_button" type="submit" disabled={loading ? true : false}>
+                            <div className='d-flex justify-content-end'>
+                            <Button id="login_button" type="submit" variant="success" disabled={loading ? true : false}>
                                 Save
                             </Button>
-
+                            </div>
+                            
                         </form>
                     </div>
                 </div>

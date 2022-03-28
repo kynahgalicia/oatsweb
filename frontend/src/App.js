@@ -16,6 +16,7 @@ import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 
 import ThesisList from './components/admin/thesis/ThesisList'
 
+import CreateThesis from './components/admin/thesis/CreateThesis'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
 import Updatedepartment from './components/admin/departments/EditDepartment'
@@ -24,8 +25,6 @@ import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
 
-import BorrowList from './components/admin/lending/borrowed/BorrowList'
-import ReturnList from './components/admin/lending/returned/ReturnList'
 
 import PaymentList from './components/admin/payment/PaymentList'
 
@@ -33,8 +32,13 @@ import UserList from './components/admin/users/UserList'
 import EditUser from './components/admin/users/EditUser'
 
 import AdminList from './components/admin/admin/AdminList'
+import EditAdmin from './components/admin/admin/EditAdmin'
 
 import GuestList from './components/admin/guest/GuestList'
+
+import BorrowList from './components/admin/borrow/BorrowList'
+import CreateBorrow from './components/admin/borrow/CreateBorrow'
+import ReturnList from './components/admin/return/ReturnList'
 
 //Home
 import Home from './components/user/Home/Home'
@@ -63,6 +67,11 @@ import ThesisDetails from './components/user/Search/ThesisDetails'
 import UserProfile from './components/user/Account/UserProfile';
 import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
+
+//Guest Account
+import GuestProfile from './components/guest/Account/GuestProfile';
+import GuestBookmark from './components/guest/Account/GuestBookmark';
+import GuestPaid from './components/guest/Account/GuestPaid';
 
 import NotFound from './components/img/404.png'
 
@@ -129,14 +138,18 @@ function App() {
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
 
-
         <Route path="/user/profile" component={UserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
 
+        <Route path="/guest/profile" component={GuestProfile} exact/>
+        <Route path="/guest/bookmark" component={GuestBookmark} exact/>
+        <Route path="/guest/paid" component={GuestPaid} exact/>
+
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
         <Route path="/admin/thesis" component={ThesisList} exact/>
+        <Route path="/admin/thesis/new" component={CreateThesis} exact/>
         <Route path="/admin/department" component={DepartmentList} exact/>
         <Route path="/admin/department/new" component={CreateDepartment} exact/>
         <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
@@ -146,10 +159,12 @@ function App() {
         <Route path="/admin/users" component={UserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
+        <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
-        <Route path="/admin/borrowed" component={BorrowList} exact/>
-        <Route path="/admin/returned" component={ReturnList} exact/>
+        <Route path="/admin/borrow" component={BorrowList} exact/>
+        <Route path="/admin/borrow/new" component={CreateBorrow} exact/>
+        <Route path="/admin/return" component={ReturnList} exact/>
         <Route path="*">
           {NoMatch}
         </Route>
