@@ -19,7 +19,7 @@ export const getBookmark = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_BOOKMARK_REQUEST })
 
-        let link =`/api/bookmark`
+        let link = process.env.REACT_APP_URL + `/api/bookmark`
 
 
         const { data } = await axios.get(link)
@@ -42,7 +42,7 @@ export const getUserBookmarks = (id) => async (dispatch) => {
 
         dispatch({ type: USER_BOOKMARK_REQUEST })
 
-        const { data } = await axios.get(`/api/bookmark/${id}`)
+        const { data } = await axios.get( process.env.REACT_APP_URL + `/api/bookmark/${id}`)
 
         dispatch({
             type: USER_BOOKMARK_SUCCESS,
@@ -69,7 +69,7 @@ export const newBookmark = (bookmarkData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/bookmark/new`, bookmarkData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + `/api/bookmark/new`, bookmarkData, config)
 
         dispatch({
             type: NEW_BOOKMARK_SUCCESS,
@@ -90,7 +90,7 @@ export const deleteBookmark = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_BOOKMARK_REQUEST })
 
-        const { data } = await axios.delete(`/api/bookmark/delete/${id}`)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/bookmark/delete/${id}`)
 
         dispatch({
             type: DELETE_BOOKMARK_SUCCESS,

@@ -47,7 +47,7 @@ const guestController = {
             console.log(newGuest)
         
             const url = `${FRONTEND_URL}/guest/activate/${activation_token}`
-            // sendMail(guest_mail, url, "Verify your email address")
+            sendMail(guest_mail, url, "Verify your email address")
 
 
             res.json({

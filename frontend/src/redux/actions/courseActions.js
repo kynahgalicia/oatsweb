@@ -24,9 +24,9 @@ export const getCourse = (department) => async (dispatch) => {
 
         let link =''
         if(department){
-            link =`/api/course?department.id=${department}`
+            link = process.env.REACT_APP_URL + `/api/course?department.id=${department}`
         } else {
-            link =`/api/course`
+            link = process.env.REACT_APP_URL + `/api/course`
         }
     
         const { data } = await axios.get(link)
@@ -50,7 +50,7 @@ export const getCourseDetails = (id) => async (dispatch) => {
 
         dispatch({ type: COURSE_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/course/${id}`)
+        const { data } = await axios.get(process.env.REACT_APP_URL + `/api/course/${id}`)
         console.log(data.course)
         dispatch({
             type: COURSE_DETAILS_SUCCESS,
@@ -78,7 +78,7 @@ export const newCourse = (courseData,adminToken) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/course/new`, courseData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + `/api/course/new`, courseData, config)
 
         dispatch({
             type: NEW_COURSE_SUCCESS,
@@ -105,7 +105,7 @@ export const updateCourse = (id, courseData,adminToken) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/api/course/edit/${id}`, courseData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/course/edit/${id}`, courseData, config)
 
         dispatch({
             type: UPDATE_COURSE_SUCCESS,
@@ -131,7 +131,7 @@ export const deleteCourse = (id,adminToken) => async (dispatch) => {
                 'Authorization': adminToken,
             }
         }
-        const { data } = await axios.delete(`/api/course/delete/${id}`, config)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/course/delete/${id}`, config)
 
         dispatch({
             type: DELETE_COURSE_SUCCESS,

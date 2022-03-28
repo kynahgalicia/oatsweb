@@ -25,9 +25,9 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
 
         let link = ''
         if(department){
-            link = `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
+            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         } else{
-            link = `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
+            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }
 
 
@@ -72,7 +72,7 @@ export const getThesisDetails = (thesisId) => async (dispatch) => {
 
         dispatch({ type: THESIS_DETAILS_REQUEST })
 
-        const {data}= await axios.get(`/api/thesis/${thesisId}`)
+        const {data}= await axios.get( process.env.REACT_APP_URL + `/api/thesis/${thesisId}`)
 
         dispatch({
             type: THESIS_DETAILS_SUCCESS,
@@ -100,7 +100,7 @@ export const newThesis = (thesisData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/thesis/new`, thesisData, config)
+        const { data } = await axios.post( process.env.REACT_APP_URL + `/api/thesis/new`, thesisData, config)
 
         dispatch({
             type: NEW_THESIS_SUCCESS,

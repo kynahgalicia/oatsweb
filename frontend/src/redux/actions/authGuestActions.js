@@ -45,7 +45,7 @@ export const register = (guestData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/guest/register', guestData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/register', guestData, config)
 
         dispatch({
             type: REGISTER_GUEST_SUCCESS,
@@ -71,7 +71,7 @@ export const login = (guest_mail, guest_password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/guest/login' , {guest_mail,guest_password}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/login' , {guest_mail,guest_password}, config)
 
         dispatch({
             type: LOGIN_GUEST_SUCCESS,
@@ -97,7 +97,7 @@ export const activateEmail = (activation_token) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/guest/activation' , {activation_token}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/activation' , {activation_token}, config)
 
         dispatch({
             type: ACTIVATE_GUEST_SUCCESS,
@@ -118,7 +118,7 @@ export const loadGuest = (guestToken) => async (dispatch) => {
 
         dispatch({ type: LOAD_GUEST_REQUEST })
 
-        const {data} = await axios.get('/guest/infor', {
+        const {data} = await axios.get(process.env.REACT_APP_URL + '/guest/infor', {
             headers: {Authorization: guestToken}
         })
 
@@ -143,7 +143,7 @@ export const getGuestToken = () => async (dispatch) => {
         dispatch({ type: GET_TOKEN_GUEST_REQUEST })
 
 
-        const { data } = await axios.post('/guest/access')
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/access')
 
         dispatch({
             type: GET_TOKEN_GUEST_SUCCESS,
@@ -165,7 +165,7 @@ export const logoutGuest = () => async (dispatch) => {
         dispatch({ type: LOGOUT_GUEST_REQUEST
         })
 
-        await axios.get('/guest/logout')
+        await axios.get(process.env.REACT_APP_URL + '/guest/logout')
 
         dispatch({
             type: LOGOUT_GUEST_SUCCESS,
@@ -192,7 +192,7 @@ export const forgotPassword = (guest_mail) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/guest/forgot' , {guest_mail}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/forgot' , {guest_mail}, config)
 
 
         dispatch({
@@ -222,7 +222,7 @@ export const resetPassword = (guest_password,token) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/guest/reset' , {guest_password}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/reset' , {guest_password}, config)
 
 
         dispatch({

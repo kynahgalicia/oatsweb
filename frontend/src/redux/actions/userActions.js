@@ -28,7 +28,7 @@ export const getUsers = (adminToken) => async (dispatch) => {
 
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const {data} = await axios.get('/user/all_infor', {
+        const {data} = await axios.get(process.env.REACT_APP_URL + '/user/all_infor', {
             headers: {Authorization: adminToken}
         })
 
@@ -52,7 +52,7 @@ export const getUserDetails = (id,adminToken) => async (dispatch) => {
 
         dispatch({ type: USER_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/user/inforAdmin/${id}`, {
+        const { data } = await axios.get(process.env.REACT_APP_URL + `/user/inforAdmin/${id}`, {
             headers: {Authorization: adminToken}
         })
 
@@ -81,7 +81,7 @@ export const updateUser = (id, userData,adminToken) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/user/edit/${id}`, userData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/user/edit/${id}`, userData, config)
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -107,7 +107,7 @@ export const deactivateUser = (id, userData,adminToken) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/user/deactivate/${id}`, userData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/user/deactivate/${id}`, userData, config)
 
         dispatch({
             type: DEACTIVATE_USER_SUCCESS,
@@ -133,7 +133,7 @@ export const deleteUser = (id,adminToken) => async (dispatch) => {
                 'Authorization': adminToken,
             }
         }
-        const { data } = await axios.delete(`/user/delete/${id}`, config)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/user/delete/${id}`, config)
 
         dispatch({
             type: DELETE_USER_SUCCESS,
