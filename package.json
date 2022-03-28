@@ -30,18 +30,11 @@
     "express": "^4.17.2",
     "express-fileupload": "^1.2.1",
     "googleapis": "^94.0.0",
-    "i": "^0.3.7",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.6",
     "nodemailer": "^6.7.2",
-    "nodemon": "^2.0.15",
-    "react-file-base64": "^1.0.3",
-    "redux": "^4.1.2",
-    "stripe": "^8.195.0",
-    "tesseract.js": "^2.1.5",
-    "validator": "^13.7.0"
+    "nodemon": "^2.0.15"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kynahgalicia/oatsweb.git"
