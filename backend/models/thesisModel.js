@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const thesisSchema = new mongoose.Schema({
     title: {
         type: String, 
-        required: [true, 'Please enter Thesis title'],
+        // required: [true, 'Please enter Thesis title'],
         trim: true,
     },
     publishedAt: {
         type: Number, 
-        required: true, 
+        // required: true, 
         trim:true, 
     },
     authors: [
@@ -35,7 +35,6 @@ const thesisSchema = new mongoose.Schema({
     ],
     abstract: {
         type:String,
-        required: true,
         trim: true,
     },
     department:{ 
@@ -58,11 +57,19 @@ const thesisSchema = new mongoose.Schema({
         coursecode: {
             type: String,
             required: true
+        },
+        coursename:{
+            type: String,
+            required: true
         }
     }, 
     upload:{
         type: String,
-        required: true
+        required:true
+    },
+    status:{
+        type: String,
+        default: "Active"
     },
     createdAt: {
         type: Date,

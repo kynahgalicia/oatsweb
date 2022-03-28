@@ -72,7 +72,7 @@ const Search = () => {
         setStartDate(newValue[0])
         setEndDate(newValue[1])
         setValue(newValue)
-        console.log(newValue)
+        // console.log(newValue)
     }
 
     const searchHandler = (e) => {

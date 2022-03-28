@@ -4,7 +4,7 @@ import { thesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
 
 import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
-import { coursesReducer, newCourseReducer, courseReducer, CourseDetailsReducer } from "./reducers/courseReducer"
+import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
 import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
@@ -35,9 +35,9 @@ const reducer = combineReducers({
     departments: departmentReducer,
     departmentDetails: DepartmentDetailsReducer,
     //Course
-    courses: coursesReducer,
+    courses: courseReducer,
     newCourse: newCourseReducer,
-    course: courseReducer,
+    course: courseUpdateReducer,
     courseDetails: CourseDetailsReducer,
     //Bookmark
     bookmarks: bookmarksReducer,

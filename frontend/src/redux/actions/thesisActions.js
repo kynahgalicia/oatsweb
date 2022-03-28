@@ -88,14 +88,13 @@ export const getThesisDetails = (thesisId) => async (dispatch) => {
 };
 
 //Create Thesis
-export const newThesis = (thesisData,adminToken) => async (dispatch) => {
+export const newThesis = (thesisData) => async (dispatch) => {
     try {
 
         dispatch({ type: NEW_THESIS_REQUEST })
 
         const config = {
             headers: {
-                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
