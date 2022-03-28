@@ -104,8 +104,8 @@ const CreateThesis = () => {
         formData.set("title", title)
         formData.set("publishedAt", publishedAt)
         formData.set("abstract", abstract)
-        formData.set("departments", thisDepartment)
-        formData.set("courses", thisCourse)
+        formData.set("department", thisDepartment)
+        formData.set("course", thisCourse)
         formData.set("upload", upload)
         tags.forEach(keyword => {
             formData.append('thisKey',keyword)

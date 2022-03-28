@@ -47,7 +47,7 @@ const SignUpAsStudent = () => {
 
         
 
-    }, [dispatch, alert, error, history, thisDepartment, msg,agree,canBeSubmitted])
+    }, [dispatch, alert, error, history, thisDepartment, msg,agree])
 
     const submitHandler = (e) => {
         e.preventDefault();

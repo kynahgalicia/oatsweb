@@ -38,7 +38,7 @@ const SignUpAsOrg = () => {
 
         
 
-    }, [dispatch, alert, error, history, msg, agree,canBeSubmitted])
+    }, [dispatch, alert, error, history, msg, agree])
 
     const submitHandler = (e) => {
         e.preventDefault();
