@@ -12,7 +12,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
     const history = useHistory();
     const alert = useAlert();
 
-    const { success,msg,loading,error } = useSelector(state => state.newBookmark)
+    const { success,error } = useSelector(state => state.newBookmark)
 
     const [thisUserId, setThisUserId] = useState('')
     useEffect(() => {
@@ -30,7 +30,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
         }
 
 
-    },[ dispatch, alert,history, success,error]);
+    },[ dispatch, alert,history, success,error, thisId]);
 
     const bookmarkHandler = (id) => {
 

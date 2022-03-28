@@ -47,7 +47,7 @@ const UserBookmark = () => {
         
 
 
-    }, [dispatch, alert, error, isLoggedIn, thisId,deleteError, isDeleted])
+    }, [dispatch, alert, history, error, isLoggedIn, thisId,deleteError, isDeleted])
 
     const deleteHandler = (id) => {
         dispatch(deleteBookmark(id))

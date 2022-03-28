@@ -1,10 +1,9 @@
-import React, { useState,  useEffect } from 'react'
+import React, {useEffect } from 'react'
 import { Link as Link2} from "react-scroll"
 import {Link as Link1, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button, InputGroup, Form} from 'react-bootstrap'
-// import moment from 'moment'
+import { Row, Col, Button, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 const ThesisDetails = () => {
@@ -12,8 +11,8 @@ const ThesisDetails = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const [thisDepartment,setThisDepartment] = useState('')
-    const [thisCourse,setThisCourse] = useState('')
+    // const [thisDepartment,setThisDepartment] = useState('')
+    // const [thisCourse,setThisCourse] = useState('')
     const { loading, error, thesis } = useSelector(state => state.thesisDetails);
 
     let {thesisId} = useParams()
@@ -34,7 +33,7 @@ const ThesisDetails = () => {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId, thisDepartment]);
+    }, [dispatch, alert, error ,thesisId]);
 
     return ( 
         <div className="wrapper">

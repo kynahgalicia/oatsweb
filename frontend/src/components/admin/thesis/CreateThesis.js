@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import {Form, FloatingLabel, Row, Col, Container, Button, TextField} from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+import {Form, FloatingLabel, Row, Col, Container, Button} from 'react-bootstrap'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,7 +8,7 @@ import Tesseract from 'tesseract.js';
 import AdminSidebar from '../../layout/AdminSidebar'
 
 import FileBase64 from 'react-file-base64';
-import  {newThesis,getThesisDetails} from '../../../redux/actions/thesisActions'
+import  {newThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions'
 
@@ -16,21 +16,6 @@ const CreateThesis = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const history = useHistory();
-    
-    // const convertBase64 = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.readAsDataURL(file);
-    
-    //         fileReader.onload = () => {
-    //             resolve(fileReader.result);
-    //         };
-    
-    //         fileReader.onerror = (error) => {
-    //             reject(error);
-    //         };
-    //     });
-    // };
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -50,10 +35,7 @@ const CreateThesis = () => {
     const [thisCourse, setCourse] = useState('')
 
     //UPLOAD PDF
-    const [upload, setUploadFile] = useState('');
-    const [uploads, setUploadFiles] = useState([]);
-
-    const [test,setTest] = useState([])
+    const [upload, setUploadFile] = useState('')
 
     //multiple input fields
     const [authors, setAuthors] = useState([
@@ -327,7 +309,7 @@ const CreateThesis = () => {
                                                         className='d-inline w-75 my-1 keywordInput'
                                                         type="text"
                                                         placeholder='Press enter to add keywords'
-                                                        onKeyUp={e => e.key == "Enter" ? addTags(e): null}
+                                                        onKeyUp={e => e.key === "Enter" ? addTags(e): null}
                                                         // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
                                                 </div>
@@ -406,7 +388,7 @@ const CreateThesis = () => {
                                             }
                                             className="form-control mt-5 mb-2"
                                         />
-                                        <img src={image} width="660px"/>
+                                        <img alt="scanimage"src={image} width="660px"/>
 
                                         <progress className="form-control" value={progress} max="100">
                                             {progress}%{' '}

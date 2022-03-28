@@ -1,7 +1,7 @@
 import React, {Fragment, useState,useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Form, Button} from 'react-bootstrap';
-import {BsGoogle} from 'react-icons/bs'
+// import {BsGoogle} from 'react-icons/bs'
 import { Row, Col} from 'react-bootstrap'
 import { useAlert } from 'react-alert'
 import study from '../../img/student.png'
@@ -47,7 +47,7 @@ const SignUpAsStudent = () => {
 
         
 
-    }, [dispatch, alert, error, history, thisDepartment, msg,agree])
+    }, [dispatch, alert, error, history, thisDepartment, msg,agree,canBeSubmitted])
 
     const submitHandler = (e) => {
         e.preventDefault();
