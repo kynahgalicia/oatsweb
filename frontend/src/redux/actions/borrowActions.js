@@ -93,17 +93,17 @@ export const updateBorrow = (id, borrowData) => async (dispatch) => {
 }
 
 //DELETE
-export const deleteBorrow = (id,adminToken) => async (dispatch) => {
+export const deleteBorrow = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_BORROW_REQUEST })
 
-        const config = {
-            headers: {
-                'Authorization': adminToken,
-            }
-        }
-        const { data } = await axios.delete(`/api/borrow/delete/${id}`, config)
+        // const config = {
+        //     headers: {
+        //         'Authorization': adminToken,
+        //     }
+        // }
+        const { data } = await axios.delete(`/api/borrow/delete/${id}`)
 
         dispatch({
             type: DELETE_BORROW_SUCCESS,

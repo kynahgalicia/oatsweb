@@ -3,6 +3,8 @@ const Users = require('../models/userModel')
 const Admins = require('../models/adminModel')
 const Thesis = require('../models/thesisModel')
 
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+
 // Create Borrower 
 exports.create = async(req,res,next) => {
     try{
@@ -85,3 +87,13 @@ exports.edit = async(req,res,next) => {
         console.log(error.message);
     }
 }
+
+// /api/course/delete/:id 
+exports.delete = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        await Borrow.findByIdAndDelete(req.params.id)
+        res.json({msg: "Borrow Request has been deleted!", success: true})
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
+})

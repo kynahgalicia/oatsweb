@@ -1,19 +1,25 @@
 import React, { Fragment,useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
+
 import {Row, Col, Button} from 'react-bootstrap';
 import moment from 'moment'
 import {MDBDataTableV5 } from 'mdbreact'
-import { useDispatch, useSelector } from 'react-redux'
-import { getBorrow, clearErrors} from '../../../redux/actions/borrowActions';
-import AdminSidebar from '../../layout/AdminSidebar'
 import { FaTrash} from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getBorrow, deleteBorrow, clearErrors} from '../../../redux/actions/borrowActions';
+import { DELETE_BORROW_RESET } from '../../../redux/constants/borrowConstants'
+
+import AdminSidebar from '../../layout/AdminSidebar'
 
 const ReturnList = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
+    const {  error: deleteError, isDeleted } = useSelector(state => state.borrow)
 
     const dispatch = useDispatch();
     const history = useHistory();
+
     const alert = useAlert();
 
     useEffect(() => {
@@ -21,9 +27,21 @@ const ReturnList = () => {
             dispatch(getBorrow())
         // }
 
-        // if (error) {
-        //     alert.error(error);
-        // }
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (deleteError) {
+            alert.error(deleteError);
+            dispatch(clearErrors())
+        }
+
+        if (isDeleted) {
+            history.push('/admin/return');
+            alert.success('Borrow Request deleted successfully');
+            dispatch({ type: DELETE_BORROW_RESET })
+        }
 
         // if (updateError) {
         //     alert.error(updateError);
@@ -38,7 +56,7 @@ const ReturnList = () => {
         // if (!isLoggedInAdmin) {
         //     history.push('/admin/login');
         // }
-    }, [dispatch, alert, history])
+    }, [dispatch, alert, history, error, deleteError, isDeleted])
 
 
     const setData = () => { 
@@ -94,7 +112,7 @@ const ReturnList = () => {
 
             borrow.forEach(borrow => {
 
-                if(borrow.dateReturned !== ""){
+                if(borrow.dateReturned !== null){
                     data.rows.push({
                         user: borrow.user.fname + " " + borrow.user.lname,
                         user_tupid: borrow.user.tupid,
@@ -105,7 +123,7 @@ const ReturnList = () => {
                         dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
                         dateReturned:moment(borrow.dateReturned).format('MM/DD/YYYY'),
                         actions: 
-                            <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
+                            <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id} onClick={() => deleteBorrowHandler(borrow._id)}>
                                 <FaTrash/>
                             </Button> 
                     })
@@ -114,6 +132,10 @@ const ReturnList = () => {
         
 
         return data;
+    }
+
+    const deleteBorrowHandler = (id) => {
+        dispatch(deleteBorrow(id))
     }
 
     return(

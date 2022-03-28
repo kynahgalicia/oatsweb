@@ -61,7 +61,7 @@ const userController = {
             console.log(newUser)
         
             const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            // sendMail(user_tupmail, url, "Verify your email address")
+            sendMail(user_tupmail, url, "Verify your email address")
 
 
             res.json({
