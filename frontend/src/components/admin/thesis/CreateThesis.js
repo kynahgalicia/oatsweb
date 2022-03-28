@@ -104,8 +104,8 @@ const CreateThesis = () => {
         formData.set("title", title)
         formData.set("publishedAt", publishedAt)
         formData.set("abstract", abstract)
-        formData.set("department", thisDepartment)
-        formData.set("course", thisCourse)
+        formData.set("departments", thisDepartment)
+        formData.set("courses", thisCourse)
         formData.set("upload", upload)
         tags.forEach(keyword => {
             formData.append('thisKey',keyword)
@@ -388,7 +388,7 @@ const CreateThesis = () => {
                                             }
                                             className="form-control mt-5 mb-2"
                                         />
-                                        <img alt="scanimage"src={image} width="660px"/>
+                                        <img src={image} width="660px"/>
 
                                         <progress className="form-control" value={progress} max="100">
                                             {progress}%{' '}

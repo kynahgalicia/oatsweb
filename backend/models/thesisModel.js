@@ -41,14 +41,26 @@ const thesisSchema = new mongoose.Schema({
         departments: {
             type: mongoose.Schema.ObjectId,
             ref: 'Department',
-            // required: true
+            required: true
+        },
+        deptname: {
+            type: String,
+            required: true
         }
     },
     course:{ 
         courses: {
             type: mongoose.Schema.ObjectId,
             ref: 'Course',
-            // required: true
+            required: true
+        },
+        coursecode: {
+            type: String,
+            required: true
+        },
+        coursename:{
+            type: String,
+            required: true
         }
     }, 
     upload:{
