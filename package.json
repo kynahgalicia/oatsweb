@@ -43,7 +43,7 @@
   "bugs": {
     "url": "https://github.com/kynahgalicia/oatsweb/issues"
   },
-  "homepage": ".",
+  "homepage": "https://github.com/kynahgalicia/oatsweb#readme",
   "optionalDependencies": {
     "fsevents": "^2.3.2"
   }
