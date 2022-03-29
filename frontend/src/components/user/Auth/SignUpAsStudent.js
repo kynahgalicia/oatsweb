@@ -8,7 +8,7 @@ import study from '../../img/student.png'
 import { showErrMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import {getDepartment} from '../../../redux/actions/departmentActions'
-import {getCourse} from '../../../redux/actions/courseActions1'
+import {getCourse} from '../../../redux/actions/courseActions'
 import {register, clearErrors} from '../../../redux/actions/authActions'
 
 
