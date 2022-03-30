@@ -9,7 +9,7 @@ const {google} = require('googleapis')
 const {OAuth2} = google.auth
 // const fetch = require('node-fetch')
 
-const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
+// const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 
 const {FRONTEND_URL} = process.env
 
@@ -118,12 +118,12 @@ const userController = {
                 httpOnly: true
             }
         
-            res.status(200).cookie('refreshtoken', refresh_token, options).json({
-                success: true,
-                refresh_token,
-                user,
-                msg: "Login success!"
-            })
+            // res.status(200).cookie('refreshtoken', refresh_token, options).json({
+            //     success: true,
+            //     refresh_token,
+            //     user,
+            //     msg: "Login success!"
+            // })
 
             
             
@@ -134,31 +134,29 @@ const userController = {
             // })
             
             // sendToken(user, 200, res)
-            // res.json({msg: "Login success!"})
+            res.json({
+                msg: "Login success!",
+                refresh_token: refresh_token,
+            })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
     // /user/cookie 
     getAccessToken: (req, res) => {
-        // try{
-        // const rf_token = req.cookies.token
-        // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-        // res.json({msg: "Cookie Found",
-        //         token: rf_token})
-        // } catch (err) {
-        //     return res.status(500).json({msg: err.message})
-        // }
 
         try {
-            const rf_token = req.cookies.refreshtoken
+            const {rf_token} = req.body 
+            console.log(rf_token)
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if(err) return res.status(400).json({msg: "Please login now jwt!"})
 
                 const access_token = createAccessToken({id: user.id})
-                res.json({token: access_token})
+                res.json({
+                    token: access_token
+                })
             })
         } catch (err) {
             return res.status(500).json({msg: err.message})

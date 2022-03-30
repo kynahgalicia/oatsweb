@@ -18,9 +18,9 @@ const Home = () => {
 
     useEffect(() => {
 
-        if (adminToken) {
-            history.push('/admin/dashboard');
-        }
+        // if (adminToken) {
+        //     history.push('/admin/dashboard');
+        // }
         dispatch(getThesisCount())
         console.log(thesisCount)
     }, [dispatch, history])

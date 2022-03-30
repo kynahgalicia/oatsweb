@@ -89,26 +89,25 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
-    console.log(token)
-
+    // console.log(token)
     if(!thisToken){
       dispatch(getToken())
       setThisToken(token)
     }
 
-    if(!thisAdminToken){
-      dispatch(getAdminToken())
-      setThisAdminToken(adminToken)
-    }
+    // if(!thisAdminToken){
+    //   dispatch(getAdminToken())
+    //   setThisAdminToken(adminToken)
+    // }
 
-    if(!thisGuestToken){
-      dispatch(getGuestToken())
-      setThisGuestToken(guestToken)
-    }
+    // if(!thisGuestToken){
+    //   dispatch(getGuestToken())
+    //   setThisGuestToken(guestToken)
+    // }
 
     dispatch(loadUser(token))
-    dispatch(loadAdmin(adminToken))
-    dispatch(loadGuest(guestToken))
+    // dispatch(loadAdmin(adminToken))
+    // dispatch(loadGuest(guestToken))
   }, [dispatch, token,adminToken, guestToken, thisAdminToken, thisGuestToken, thisToken])
   
 

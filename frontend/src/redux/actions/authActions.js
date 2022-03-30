@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cookies from 'js-cookie'
 import{
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -73,6 +74,8 @@ export const login = (user_tupmail, user_password) => async (dispatch) => {
 
         const { data } = await axios.post(process.env.REACT_APP_URL + '/user/login' , {user_tupmail,user_password}, config)
 
+        Cookies.set('refreshtoken', data.refresh_token)
+
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data
@@ -81,7 +84,7 @@ export const login = (user_tupmail, user_password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.msg
+            payload: error.response.data
         })
     }
 }
@@ -141,9 +144,14 @@ export const getToken = () => async (dispatch) => {
     try {
 
         dispatch({ type: GET_TOKEN_REQUEST })
+        const rf_token = Cookies.get('refreshtoken')
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
-
-        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/access')
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/access', {rf_token}, config)
 
         dispatch({
             type: GET_TOKEN_SUCCESS,
