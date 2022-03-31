@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cookies from "js-cookie"
 import{
     LOGIN_ADMIN_REQUEST,
     LOGIN_ADMIN_SUCCESS,
@@ -73,6 +74,7 @@ export const login = (admin_tupmail, admin_password) => async (dispatch) => {
 
         const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/login' , {admin_tupmail,admin_password}, config)
 
+        Cookies.set('refreshadmintoken', data.token , { expires: 7 })
         dispatch({
             type: LOGIN_ADMIN_SUCCESS,
             payload: data
@@ -141,9 +143,14 @@ export const getAdminToken = () => async (dispatch) => {
     try {
 
         dispatch({ type: GET_ADMIN_TOKEN_REQUEST })
+        const rf_token = Cookies.get('refreshadmintoken')
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
-
-        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/access')
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/access', {rf_token}, config)
 
         dispatch({
             type: GET_ADMIN_TOKEN_SUCCESS,
@@ -165,8 +172,8 @@ export const logoutAdmin = () => async (dispatch) => {
         dispatch({ type: LOGOUT_ADMIN_REQUEST
         })
 
-        await axios.get(process.env.REACT_APP_URL + '/admin/logout')
-
+        // await axios.get(process.env.REACT_APP_URL + '/admin/logout')
+        Cookies.remove('refreshadmintoken')
         dispatch({
             type: LOGOUT_ADMIN_SUCCESS,
         })

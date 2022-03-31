@@ -111,12 +111,12 @@ const userController = {
 
             const refresh_token = createRefreshToken({id: user._id})
 
-            const options = {
-                expires: new Date(
-                    Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
-                ),
-                httpOnly: true
-            }
+            // const options = {
+            //     expires: new Date(
+            //         Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
+            //     ),
+            //     httpOnly: true
+            // }
         
             // res.status(200).cookie('refreshtoken', refresh_token, options).json({
             //     success: true,
@@ -124,19 +124,10 @@ const userController = {
             //     user,
             //     msg: "Login success!"
             // })
-
             
-            
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/user/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
-            // })
-            
-            // sendToken(user, 200, res)
             res.json({
                 msg: "Login success!",
-                refresh_token: refresh_token,
+                token: refresh_token,
             })
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -146,8 +137,7 @@ const userController = {
     getAccessToken: (req, res) => {
 
         try {
-            const {rf_token} = req.body 
-            console.log(rf_token)
+            const {rf_token} = req.body
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {

@@ -95,19 +95,20 @@ function App() {
       setThisToken(token)
     }
 
-    // if(!thisAdminToken){
-    //   dispatch(getAdminToken())
-    //   setThisAdminToken(adminToken)
-    // }
+    if(!thisAdminToken){
+      dispatch(getAdminToken())
+      setThisAdminToken(adminToken)
+    }
 
-    // if(!thisGuestToken){
-    //   dispatch(getGuestToken())
-    //   setThisGuestToken(guestToken)
-    // }
+    if(!thisGuestToken){
+      dispatch(getGuestToken())
+      setThisGuestToken(guestToken)
+    }
 
-    dispatch(loadUser(token))
-    // dispatch(loadAdmin(adminToken))
-    // dispatch(loadGuest(guestToken))
+    
+      dispatch(loadUser(token))
+    dispatch(loadAdmin(adminToken))
+    dispatch(loadGuest(guestToken))
   }, [dispatch, token,adminToken, guestToken, thisAdminToken, thisGuestToken, thisToken])
   
 

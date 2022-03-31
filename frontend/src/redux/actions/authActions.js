@@ -74,7 +74,7 @@ export const login = (user_tupmail, user_password) => async (dispatch) => {
 
         const { data } = await axios.post(process.env.REACT_APP_URL + '/user/login' , {user_tupmail,user_password}, config)
 
-        Cookies.set('refreshtoken', data.refresh_token)
+        Cookies.set('refreshtoken', data.token , { expires: 7 })
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -84,7 +84,7 @@ export const login = (user_tupmail, user_password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data
+            payload: error.response.data.msg
         })
     }
 }
@@ -173,7 +173,9 @@ export const logout = () => async (dispatch) => {
         dispatch({ type: LOGOUT_REQUEST
         })
 
-        await axios.get(process.env.REACT_APP_URL + '/user/logout')
+        Cookies.remove('refreshtoken')
+
+        // await axios.get(process.env.REACT_APP_URL + '/user/logout')
 
         dispatch({
             type: LOGOUT_SUCCESS,

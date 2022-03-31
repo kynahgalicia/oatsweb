@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cookies from "js-cookie"
 import{
     LOGIN_GUEST_REQUEST,
     LOGIN_GUEST_SUCCESS,
@@ -73,6 +74,8 @@ export const login = (guest_mail, guest_password) => async (dispatch) => {
 
         const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/login' , {guest_mail,guest_password}, config)
 
+        Cookies.set('refreshguesttoken', data.token , { expires: 7 })
+
         dispatch({
             type: LOGIN_GUEST_SUCCESS,
             payload: data
@@ -142,8 +145,15 @@ export const getGuestToken = () => async (dispatch) => {
 
         dispatch({ type: GET_TOKEN_GUEST_REQUEST })
 
+        const rf_token = Cookies.get('refreshguesttoken')
 
-        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/access')
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/guest/access', {rf_token}, config)
 
         dispatch({
             type: GET_TOKEN_GUEST_SUCCESS,
@@ -165,7 +175,9 @@ export const logoutGuest = () => async (dispatch) => {
         dispatch({ type: LOGOUT_GUEST_REQUEST
         })
 
-        await axios.get(process.env.REACT_APP_URL + '/guest/logout')
+        Cookies.remove('refreshguesttoken')
+
+        // await axios.get(process.env.REACT_APP_URL + '/guest/logout')
 
         dispatch({
             type: LOGOUT_GUEST_SUCCESS,
