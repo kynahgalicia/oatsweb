@@ -39,7 +39,7 @@ const CreateThesis = () => {
 
     //multiple input fields
     const [authors, setAuthors] = useState([
-        {author: ''}
+            {fname: '', lname:''}
     ])
 
     //keywords
@@ -93,13 +93,7 @@ const CreateThesis = () => {
     //Form Submit
     const handleFormSubmit  = (e) => {
         e.preventDefault()
-        // const result = newThesis(upload);
         // setUploadFiles({...uploads,result});
-        let thisAuthors = []
-        authors.map((author1) => (                            
-            thisAuthors.push(author1.author)
-                
-        ))
         const formData = new FormData();
         formData.set("title", title)
         formData.set("publishedAt", publishedAt)
@@ -107,18 +101,14 @@ const CreateThesis = () => {
         formData.set("departments", thisDepartment)
         formData.set("courses", thisCourse)
         formData.set("upload", upload)
+
         tags.forEach(keyword => {
             formData.append('thisKey',keyword)
-            
         });
-        
-        thisAuthors.forEach(authors =>{
-            formData.append('thisAuthors', authors)
-        })
+
+        formData.append('thisAuthors', JSON.stringify(authors))
 
         dispatch(newThesis(formData))
-
-
 
         // console.log(thisKeyword)
         // console.log(authors)
@@ -135,7 +125,7 @@ const CreateThesis = () => {
 
     // Add Author
     const handleAddFields = () => {
-        setAuthors([...authors, {author: ''}])
+        setAuthors([...authors, {fname: '', lname:''}])
     }
 
     // Remove Author
@@ -228,13 +218,21 @@ const CreateThesis = () => {
                                                     {authors.map((inputField, index) => (
                                                         <div key={index}>
                                                             <Form.Control
-                                                                name="author"
-                                                                label="author"
-                                                                value={inputField.author}
-                                                                className="d-inline w-75 my-2"
+                                                                name="fname"
+                                                                label="fname"
+                                                                value={inputField.fname}
+                                                                className="d-inline w-25 my-2"
+                                                                onChange={event => handleChangeInput(index, event)}
+                                                            />
+                                                            <Form.Control
+                                                                name="lname"
+                                                                label="lname"
+                                                                value={inputField.lname}
+                                                                className="d-inline w-25 m-2"
                                                                 onChange={event => handleChangeInput(index, event)}
                                                             />
 
+                                                            {/* Add Author Button */}
                                                             <Button 
                                                                 variant ="outline" 
                                                                 className='mx-2'
@@ -242,7 +240,8 @@ const CreateThesis = () => {
                                                             >
                                                                 <i class="fas fa-plus"></i>
                                                             </Button>
-                                                                
+                                                            
+                                                            {/* Remove Author Button */}
                                                             <Button 
                                                                 variant ="outline"
                                                                 onClick={() => handleRemoveFields(index)}

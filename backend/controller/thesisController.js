@@ -8,7 +8,6 @@ const Thesis = require('../models/thesisModel')
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
-
     const uDept = await Department.findById(req.body.departments);
     const uCourse = await Course.findById(req.body.courses);
 
@@ -24,18 +23,12 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     
     let key = req.body.thisKey
     let auth = req.body.thisAuthors
-    
+    let authors = JSON.parse(auth)
     let keywords = []
     for (let i = 0; i < key.length; i++) {
         keywords.push({
 
             keyword: key[i]
-        })
-    }
-    let authors = []
-    for (let i = 0; i < auth.length; i++) {
-        authors.push({
-            author: auth[i]
         })
     }
     req.body.authors = authors
@@ -45,8 +38,9 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
     const thesis = await Thesis.create(req.body);
 
-    res.status(201).json({
-        success: true
+    res.status(200).json({
+        success: true,
+        thesis
     })
 })
 

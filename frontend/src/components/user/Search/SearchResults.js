@@ -55,7 +55,12 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                     </Col>
                 </Row>
                 
-                <Link><p><i> {theses.authors[0].author + ' ...'} </i></p></Link>
+                {
+                    theses.authors.map((author) =>(
+                        <Link><p><i> {author.fname.charAt(0)}. {author.lname} ;</i></p></Link>
+
+                        ))
+                } 
                 <div>
                     <label> Published: <Link>{theses.publishedAt}</Link> | Department: <Link>{theses.department.deptname}</Link> | Course: <Link>{theses.course.coursecode}</Link></label>
                 </div>
