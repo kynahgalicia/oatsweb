@@ -914,3 +914,8 @@ table td{
   background: #fff;
   cursor: pointer;
 }
+
+.cardTitle{
+  text-align: center;
+  font-size: 30px!important;
+}

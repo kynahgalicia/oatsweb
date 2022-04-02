@@ -5,32 +5,21 @@ import {Form, FloatingLabel, Row, Col, Container, Button, TextField} from 'react
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Tesseract from 'tesseract.js';
-import AdminSidebar from '../../layout/AdminSidebar'
-
 import FileBase64 from 'react-file-base64';
-import  {newThesis,getThesisDetails} from '../../../redux/actions/thesisActions'
+
+import  {newThesis,getThesisDetails, clearErrors} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions'
+import { NEW_THESIS_RESET } from '../../../redux/constants/thesisConstants'
+
+import AdminSidebar from '../../layout/AdminSidebar'
 
 const CreateThesis = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const history = useHistory();
-    
-    // const convertBase64 = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.readAsDataURL(file);
-    
-    //         fileReader.onload = () => {
-    //             resolve(fileReader.result);
-    //         };
-    
-    //         fileReader.onerror = (error) => {
-    //             reject(error);
-    //         };
-    //     });
-    // };
+
+    const { loading, error, success } = useSelector(state => state.newThesis);
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -57,7 +46,7 @@ const CreateThesis = () => {
 
     //multiple input fields
     const [authors, setAuthors] = useState([
-        {author: ''}
+        {fname: '', lname:''}
     ])
 
     //keywords
@@ -65,7 +54,20 @@ const CreateThesis = () => {
 
     useEffect(() => {
 
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (success) {
+            history.push('/admin/thesis');
+            alert.success('thesis created successfully');
+            dispatch({ type: NEW_THESIS_RESET })
+        }
+
+
         dispatch(getDepartment())
+
         if(thisDepartment){
             dispatch(getCourse(thisDepartment))
             console.log(thisDepartment)
@@ -78,11 +80,10 @@ const CreateThesis = () => {
         // }
         //     fetchData()
         
-        }, [dispatch,alert,history, thisDepartment])
+        }, [dispatch, alert, error, success, history, thisDepartment])
 
     // Scan to text convert
     const handleSubmit = () => {
-        // setIsLoading(true);
         Tesseract.recognize(image, 'eng', {
             logger: (m) => {
                 console.log(m);
@@ -97,7 +98,6 @@ const CreateThesis = () => {
             .then((result) => {
                 console.log(result.data.text);
                 setText(result.data.text);
-                // setIsLoading(false);
             });
     };
 
@@ -106,18 +106,18 @@ const CreateThesis = () => {
         const values = [...authors]
         values[index][event.target.name] = event.target.value
         setAuthors(values)
-    }
+
+        // let nAuthor = event.target.value
+        // let arr = authors.concat(nAuthor)
+    } 
 
     //Form Submit
     const handleFormSubmit  = (e) => {
         e.preventDefault()
         // const result = newThesis(upload);
         // setUploadFiles({...uploads,result});
-        let thisAuthors = []
-        authors.map((author1) => (                            
-            thisAuthors.push(author1.author)
-                
-        ))
+        let thisAuthors = [authors]
+        
         const formData = new FormData();
         formData.set("title", title)
         formData.set("publishedAt", publishedAt)
@@ -130,15 +130,27 @@ const CreateThesis = () => {
             
         });
         
-        thisAuthors.forEach(authors =>{
-            formData.append('thisAuthors', authors)
-        })
+        // thisAuthors.forEach(authors => {
+            formData.append('thisAuthors',JSON.stringify(thisAuthors))
+            // console.log(thisAuthors)
+        // });
+        
+    
+        // let authors1 = {"authors":[
+        //     {"fname":"sdfsdf","lname":"sfsdf"},
+        //     {"fname":"aaaa","lname":"aaaa"}
+        // ]}
+
+        // let authors2  =  authors1['authors']
+    
+        // for (let i = 0; i < authors2.length; i++) {
+    
+        //     console.log(i)
+        // }
 
         dispatch(newThesis(formData))
-
-
-
         // console.log(thisKeyword)
+        // console.log(thisAuthors)
         // console.log(authors)
         // console.log(tags)
         // console.log("title:", title)
@@ -146,14 +158,14 @@ const CreateThesis = () => {
         // console.log("abstract:", abstract)
         // console.log("departments:", thisDepartment)
         // console.log("courses:", thisCourse)
-        // console.log("InputFields", authors) 
+        // console.log("authors", thisAuthors) 
         // console.log("Keywords", tags)
         // console.log("PDF", upload)
     }
 
     // Add Author
     const handleAddFields = () => {
-        setAuthors([...authors, {author: ''}])
+        setAuthors([...authors, {fname: '', lname:''}])
     }
 
     // Remove Author
@@ -180,19 +192,6 @@ const CreateThesis = () => {
     const removeTags = indexToRemove => {
         setTags(tags.filter((_, index) => index !== indexToRemove))
     }
-
-    // const uploadFile = async (e) => {
-        
-    //     e.preventDefault();
-    //     const result = await newThesis(upload);
-    //     setUploadFiles([...uploads,result]);
-    //     // const file = e.target.files[0];
-    //     // const base64 = await convertBase64(file);
-        
-    //     // setBaseImage(base64);
-    // }
-
-
 
     return(
         <Fragment>
@@ -246,13 +245,21 @@ const CreateThesis = () => {
                                                     {authors.map((inputField, index) => (
                                                         <div key={index}>
                                                             <Form.Control
-                                                                name="author"
-                                                                label="author"
-                                                                value={inputField.author}
-                                                                className="d-inline w-75 my-2"
+                                                                name="fname"
+                                                                label="fname"
+                                                                value={inputField.fname}
+                                                                className="d-inline w-25 my-2"
+                                                                onChange={event => handleChangeInput(index, event)}
+                                                            />
+                                                            <Form.Control
+                                                                name="lname"
+                                                                label="lname"
+                                                                value={inputField.lname}
+                                                                className="d-inline w-25 m-2"
                                                                 onChange={event => handleChangeInput(index, event)}
                                                             />
 
+                                                            {/* Add Author Button */}
                                                             <Button 
                                                                 variant ="outline" 
                                                                 className='mx-2'
@@ -260,7 +267,8 @@ const CreateThesis = () => {
                                                             >
                                                                 <i class="fas fa-plus"></i>
                                                             </Button>
-                                                                
+                                                            
+                                                            {/* Remove Author Button */}
                                                             <Button 
                                                                 variant ="outline"
                                                                 onClick={() => handleRemoveFields(index)}
@@ -281,8 +289,6 @@ const CreateThesis = () => {
                                                 <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2"  value={thisDepartment} onChange={(e) => setDepartment(e.target.value)}>
                                                 <option> -- SELECT Department --</option>
                                                 
-                                                {/* value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} */}
-
                                                     { department && department.map((departments) => (
                                                                 
                                                             <option value={departments._id}>{departments.deptname}</option>
@@ -296,11 +302,9 @@ const CreateThesis = () => {
                                                 <Form.Label>Course</Form.Label><br/>
                                                 <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
                                                 <option> -- SELECT Course --</option>
-
-                                                {/* value={thisCourse} onChange={(e) => setCourse(e.target.value)} */}
-
+                                                
                                                 {thisDepartment && course && course.map((courses) => (
-                                        
+                                                
                                                                 <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>
                                                                     
                                                 ))}
@@ -352,7 +356,7 @@ const CreateThesis = () => {
                                             <Form.Label>Thesis PDF</Form.Label>
                                             
                                             <div className="container">
-                                                <pre>{JSON.stringify(upload, null, '\t')}</pre>
+                                                {/* <pre>{JSON.stringify(upload, null, '\t')}</pre> */}
                                                     <form action="" onSubmit={handleFormSubmit}> 
                                                     <FileBase64
                                                         type="file"
@@ -362,19 +366,12 @@ const CreateThesis = () => {
                                                 </form>
                                             </div>
 
-                                            {/* <input
-                                                type="file"
-                                                onChange={(e) =>
-                                                setImage(URL.createObjectURL(e.target.files[0]))
-                                                }
-                                                className="form-control w-75 my-1"
-                                            /> */}
-
                                             <Button 
                                                 className='my-3'
                                                 variant="primary" 
                                                 type="submit"
-                                                oonClick={handleFormSubmit}
+                                                onClick={handleFormSubmit}
+                                                // disabled={loading ? true : false}
                                             >
                                                 Submit
                                             </Button>
@@ -383,9 +380,9 @@ const CreateThesis = () => {
 
                                     <Col sm={6}>
                                         <h3>Scan to text</h3>
-
+                                        
                                         <p>
-                                            Disclaimer:
+                                            Notes:
                                             <ul>
                                                 <li>You are only allowed to upload image formats:</li>
                                                     <ul>

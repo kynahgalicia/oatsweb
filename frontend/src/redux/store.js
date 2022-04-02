@@ -1,6 +1,6 @@
 import { combineReducers , createStore, applyMiddleware, compose} from "redux";
 
-import { thesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
+import { thesisReducer, newThesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
 
 import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
@@ -28,6 +28,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
     // Thesis
     thesis: thesisReducer,
+    newThesis: newThesisReducer,
     thesisDetails: thesisDetailsReducer,
     // Department
     department: departmentsReducer, 

@@ -62,11 +62,13 @@ import ResetPassword from './components/user/Auth/ResetPassword';
 //Thesis User
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
+import Citation from './components/user/Search/Citation'
 
 //User Account
 import UserProfile from './components/user/Account/UserProfile';
 import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
+import UserPayment from './components/user/Account/UserPayment';
 
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
@@ -137,10 +139,12 @@ function App() {
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
+        <Route path="/citation" component={Citation} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
+        <Route path="/user/payment" component={UserPayment} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>

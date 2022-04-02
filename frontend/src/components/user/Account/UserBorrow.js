@@ -4,20 +4,17 @@ import UserSidebar from '../../layout/UserSidebar'
 const UserBorrow = () => {
 
     return (
-
         <Fragment>
-
             <Row>
-                    <Col sm= {2} className="admin-sidebar">
-                        <UserSidebar/>
-                    </Col>  
-                    <Col sm={10}>
-                        <h1>User Borrow</h1>
-                    </Col>
-        </Row>
-    
-            
+                <Col sm= {2} className="admin-sidebar">
+                    <UserSidebar/>
+                </Col> 
                 
+                <Col sm={10}>
+                    <h1>User Borrow</h1>
+                    
+                </Col>
+            </Row>
         </Fragment>
     );
 }

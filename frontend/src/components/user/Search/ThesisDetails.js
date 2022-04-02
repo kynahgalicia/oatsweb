@@ -3,10 +3,11 @@ import { Link as Link2} from "react-scroll"
 import {Link as Link1, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button, InputGroup, Form} from 'react-bootstrap'
+import { Row, Col, Button, Card, CardGroup, InputGroup, Form} from 'react-bootstrap'
 // import moment from 'moment'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
+
 const ThesisDetails = () => {
     
     const dispatch = useDispatch()
@@ -114,104 +115,70 @@ const ThesisDetails = () => {
                 </Button>
 
                 <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
+                                
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
 
                             <div className="modal-body text-start">
-                                {['radio'].map((type) => (
-                                    <div key={`inline-${type}`} className="mb-3">
-                                        <Form.Check
-                                            label="₱50/month"
-                                            name="group1"
-                                            type={type}
-                                            id={`${type}`}
-                                        />
-                                        <Form.Check
-                                            label="₱140/quarter"
-                                            name="group1"
-                                            type={type}
-                                            id={`${type}`}
-                                        />
-                                        <Form.Check
-                                            label="₱550/year"
-                                            name="group1"
-                                            type={type}
-                                            id={`${type}`}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                                <CardGroup>
+                                    <Card>
+                                        <Card.Body>
+                                            <div className='cardTitle'>
+                                                <h1 className='d-inline'>₱50</h1><h3 className='d-inline'>/mo.</h3>
+                                            </div>
+                                            <br/>
+                                            <Card.Text>
+                                                Avail the subscription to access all of the thesis available in OATS.
+                                            </Card.Text>
+                                        </Card.Body>
 
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                        <Card.Footer className='cardTitle'>
+                                            <Button type='submit'  data-backdrop="false" ><Link1 data-backdrop="" to="/user/payment" >Subscribe</Link1></Button>
+                                        </Card.Footer>
+                                    </Card>
+
+                                    <Card>
+                                        <Card.Body>
+                                            <div className='cardTitle'>
+                                                <h1 className='d-inline'>₱140</h1><h3 className='d-inline'>/qtr.</h3>
+                                            </div>
+                                            <br/>
+                                            <Card.Text>
+                                                For 4 months, you can have access to the theses that has been archived in OATS.
+                                            </Card.Text>
+                                        </Card.Body>
+
+                                        <Card.Footer className='cardTitle'>
+                                            <Button>Subscribe</Button>
+                                        </Card.Footer>
+                                    </Card>
+
+                                    <Card>
+                                        <Card.Body>
+                                            <div className='cardTitle'>
+                                                <h1 className='d-inline'>₱550</h1><h3 className='d-inline'>/yr.</h3>
+                                            </div>
+                                            <br/>
+                                            <Card.Text>
+                                                Open access to ALL archived research in OATS for a whole year!
+                                            </Card.Text>
+                                        </Card.Body>
+
+                                        <Card.Footer className='cardTitle'>
+                                            <Button>Subscribe</Button>
+                                        </Card.Footer>
+                                    </Card>
+                                </CardGroup>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
-                            </div>
-
-                            <div className="modal-body text-start">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
-                                    <label className="form-check-label" for="exampleRadios1">
-                                        Default radio
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
-                                    <label className="form-check-label" for="exampleRadios2">
-                                        Second default radio
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled/>
-                                    <label className="form-check-label" for="exampleRadios3">
-                                        Disabled radio
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
-                {/* <div className="modal fade" id={'subscriptionModal'} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-body">
-                                <Form.Group className='mb-3'>
-                                    <Form.Label>OATS Thesis Archive Subscription</Form.Label>
-                                    <Form.Control
-                                        className='w-75 my-1 flex-center'
-                                        type="date"
-                                        // onChange={(e) => setDateReturned(e.target.value)}
-                                    />
-                                </Form.Group>
-                            </div>
-
-                            <div className="modal-footer">
-                                <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                {/* <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button> 
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
 
                 <div className='p-3'>
                     <div className="user-accordion accordion" id="accordionExample">

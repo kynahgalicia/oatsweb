@@ -24,6 +24,11 @@ const UserSidebar = () => {
             </Nav.Item>
             <hr/>
 
+            <Nav.Item>
+                <Link to="/user/payment"> <i class="fas fa-shopping-cart"></i> Payment</Link>
+            </Nav.Item>
+            <hr/>
+
     </Nav>
         </div>
     
