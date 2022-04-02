@@ -47,7 +47,7 @@ const guestController = {
             console.log(newGuest)
         
             const url = `${FRONTEND_URL}/guest/activate/${activation_token}`
-            // sendMail(guest_mail, url, "Verify your email address")
+            sendMail(guest_mail, url, "Verify your email address")
 
 
             res.json({
@@ -97,47 +97,20 @@ const guestController = {
 
             const refresh_token = createRefreshToken({id: guest._id})
 
-            const options = {
-                expires: new Date(
-                    Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
-                ),
-                httpOnly: true
-            }
-        
-            res.status(200).cookie('refreshtokenguest', refresh_token, options).json({
-                success: true,
-                refresh_token,
-                guest,
-                msg: "Login success!"
+            res.json({
+                msg: "Login success!",
+                token: refresh_token,
             })
-
             
-            
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/guest/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
-            // })
-            
-            // sendToken(guest, 200, res)
-            // res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
     // /guest/cookie 
     getAccessToken: (req, res) => {
-        // try{
-        // const rf_token = req.cookies.token
-        // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-        // res.json({msg: "Cookie Found",
-        //         token: rf_token})
-        // } catch (err) {
-        //     return res.status(500).json({msg: err.message})
-        // }
 
         try {
-            const rf_token = req.cookies.refreshtokenguest
+            const {rf_token} = req.body
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, guest) => {

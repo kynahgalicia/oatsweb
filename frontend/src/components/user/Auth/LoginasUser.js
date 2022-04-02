@@ -23,7 +23,9 @@ const LoginasUser = () => {
         if (isLoggedIn) {
             if(msg){
                 history.push('/')
+                window.location.reload();
                 alert.success(msg)
+
             }else{
             history.push(redirect) 
             }

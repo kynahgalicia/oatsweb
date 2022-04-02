@@ -15,12 +15,12 @@ const Home = () => {
     const [keyword, setKeyword] = useState('');
     const { thesisCount } = useSelector(state => state.thesis);
     const {adminToken} = useSelector(state => state.authAdminToken)
-
+    const { admin} = useSelector(state => state.authAdmin)
     useEffect(() => {
 
-        if (adminToken) {
-            history.push('/admin/dashboard');
-        }
+        // if (adminToken) {
+        //     history.push('/admin/dashboard');
+        // }
         dispatch(getThesisCount())
         console.log(thesisCount)
     }, [dispatch, history])
@@ -47,8 +47,7 @@ const Home = () => {
     ])
     return (  
         <Fragment>
-            
-            <div className="content">
+            {!adminToken ? <div className="content">
             <div className="landingpage">
                 <img src={back} alt="logo" className="img-bg" />
 
@@ -94,7 +93,11 @@ const Home = () => {
             </div>
             
             
-        </div>
+        </div> : null}
+        {adminToken ? 
+        <div className='wrapper'>
+        Welcome Admin !
+        </div> : null}
         </Fragment>
     );
 }

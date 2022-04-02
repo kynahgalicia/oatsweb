@@ -1,10 +1,9 @@
-import React, { useState,  useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link as Link2} from "react-scroll"
 import {Link as Link1, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button, Card, CardGroup, InputGroup, Form} from 'react-bootstrap'
-// import moment from 'moment'
+import { Row, Col, Button, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 
@@ -12,30 +11,36 @@ const ThesisDetails = () => {
     
     const dispatch = useDispatch()
     const alert = useAlert()
-
+    const [title, setTitle] = useState('')
+    const [publishedAt, setPublishedAt] = useState('')
+    const [abstract, setAbstract] = useState('')
+    const [keywords, setKeyword] = useState('')
+    const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
-    const { loading, error, thesis } = useSelector(state => state.thesisDetails);
+    const {loading, error, thesis } = useSelector(state => state.thesisDetails);
 
     let {thesisId} = useParams()
 
     useEffect(() => {
         
-        if(thesisId){
-            // console.log(thesisId)
+        if(thesis && thesis._id !== thesisId){
             dispatch(getThesisDetails(thesisId))
-
-            
-            // setThisDepartment(thesis.department.deptname)
-            // setThisCourse(thesis.course.coursecode)
-            // console.log(thisCourse,thisDepartment)
+        } else {
+            setTitle(thesis.title)
+            setPublishedAt(thesis.publishedAt)
+            setAbstract(thesis.abstract)
+            setKeyword(thesis.keywords)
+            setAuthor(thesis.authors)
+            setThisDepartment(thesis.department)
+            setThisCourse(thesis.course)
         }
 
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId, thisDepartment]);
+    }, [dispatch, alert, error ,thesisId, thesis]);
 
     return ( 
         <div className="wrapper">
@@ -43,14 +48,11 @@ const ThesisDetails = () => {
                 <Row>
                 <Col sm={9}>
                 <div className="details-title text-start mx-5">
-                <h5 className="m-3">{thesis.title}</h5>
-                {/* { thesis.authors && thesis.authors.map((x) => (
-                    <Link1 className='d-inline'><i> {x.author}</i></Link1>
-                ))} */}
+                <h5 className="m-3">{title}</h5>
                 
                 <div className="m-3">
-                <label> Published: <Link1>{thesis.publishedAt}</Link1> </label>
-                {/* | Department: <Link1>{thisDepartment}</Link1> | Course: <Link1>{thisCourse}</Link1> */}
+                <label> Published: <Link1>{publishedAt}</Link1> | Department:<Link1> {thisDepartment.deptname}</Link1> | Course: <Link1>{thisCourse.coursecode}</Link1> 
+                </label>
                 </div>
                 <div className='details-button'>
                         <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
@@ -107,7 +109,7 @@ const ThesisDetails = () => {
                 <Col sm={9}>
                 <div className="text-start m-1 my-5">
                     <h5 id="abstract">Abstract</h5>
-                    <p className="text-justify">{thesis.abstract}</p>
+                    <p className="text-justify">{abstract}</p>
                 </div>
 
                 <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
@@ -193,8 +195,8 @@ const ThesisDetails = () => {
 
                             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body text-start">
-                            { thesis.authors && thesis.authors.map((x) => (
-                                <li>{x.author}</li>
+                            { authors && authors.map((x) => (
+                                <li>{x.fname} {x.lname}</li>
                             ))}
                             </div>
                             </div>
@@ -205,12 +207,12 @@ const ThesisDetails = () => {
                             <h2 className="mb-0">
                                 <button id="keywords" className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Keywords
-                                </button>
+                                </button> 
                             </h2>
                             </div>
                             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div className="card-body text-start">
-                            { thesis.keywords && thesis.keywords.map((x) => (
+                            { keywords && keywords.map((x) => (
                                 <li>{x.keyword}</li>
                             ))}
                             </div>

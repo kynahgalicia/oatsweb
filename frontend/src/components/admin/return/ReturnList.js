@@ -1,5 +1,5 @@
-import React, { Fragment,useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { Fragment,useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 
 import {Row, Col, Button} from 'react-bootstrap';
@@ -12,7 +12,7 @@ import { getBorrow, deleteBorrow, clearErrors} from '../../../redux/actions/borr
 import { DELETE_BORROW_RESET } from '../../../redux/constants/borrowConstants'
 
 import AdminSidebar from '../../layout/AdminSidebar'
-
+import LoaderAdmin from '../../utils/LoaderAdmin'
 const ReturnList = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
     const {  error: deleteError, isDeleted } = useSelector(state => state.borrow)
@@ -148,11 +148,12 @@ const ReturnList = () => {
                 <Col sm={10}>
                 <div className="admin-wrapper">
                         <div className="table-admin">
+                            {loading ? <LoaderAdmin /> :
+                        <>
                         <div className='d-flex align-items-start m-2'>
                             <h1>Return</h1>
                         </div>
                         
-
                             <MDBDataTableV5 
                                 hover 
                                 entriesOptions={[5, 10, 15, 25]} 
@@ -161,6 +162,8 @@ const ReturnList = () => {
                                 data={setData()} 
                                 className='table px-4'
                                 container-sm="true"/>
+                        </>
+                            }
 
                         </div>
                     </div>

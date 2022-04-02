@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cookies from 'js-cookie'
 import{
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -45,7 +46,7 @@ export const register = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/user/register', userData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/register', userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -71,7 +72,9 @@ export const login = (user_tupmail, user_password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/user/login' , {user_tupmail,user_password}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/login' , {user_tupmail,user_password}, config)
+
+        Cookies.set('refreshtoken', data.token , { expires: 7 })
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -97,7 +100,7 @@ export const activateEmail = (activation_token) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/user/activation' , {activation_token}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/activation' , {activation_token}, config)
 
         dispatch({
             type: ACTIVATE_USER_SUCCESS,
@@ -118,7 +121,7 @@ export const loadUser = (token) => async (dispatch) => {
 
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const {data} = await axios.get('/user/infor', {
+        const {data} = await axios.get(process.env.REACT_APP_URL + '/user/infor', {
             headers: {Authorization: token}
         })
 
@@ -141,9 +144,14 @@ export const getToken = () => async (dispatch) => {
     try {
 
         dispatch({ type: GET_TOKEN_REQUEST })
+        const rf_token = Cookies.get('refreshtoken')
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
-
-        const { data } = await axios.post('/user/access')
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/access', {rf_token}, config)
 
         dispatch({
             type: GET_TOKEN_SUCCESS,
@@ -165,7 +173,9 @@ export const logout = () => async (dispatch) => {
         dispatch({ type: LOGOUT_REQUEST
         })
 
-        await axios.get('/user/logout')
+        Cookies.remove('refreshtoken')
+
+        // await axios.get(process.env.REACT_APP_URL + '/user/logout')
 
         dispatch({
             type: LOGOUT_SUCCESS,
@@ -192,7 +202,7 @@ export const forgotPassword = (user_tupmail) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/user/forgot' , {user_tupmail}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/forgot' , {user_tupmail}, config)
 
 
         dispatch({
@@ -222,7 +232,7 @@ export const resetPassword = (user_password,token) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/user/reset' , {user_password}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/user/reset' , {user_password}, config)
 
 
         dispatch({

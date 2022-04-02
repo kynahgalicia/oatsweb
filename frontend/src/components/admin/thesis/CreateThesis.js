@@ -1,13 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import {Form, FloatingLabel, Row, Col, Container, Button, TextField} from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+import {Form, FloatingLabel, Row, Col, Container, Button} from 'react-bootstrap'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Tesseract from 'tesseract.js';
 import FileBase64 from 'react-file-base64';
-
-import  {newThesis,getThesisDetails, clearErrors} from '../../../redux/actions/thesisActions'
+import  {newThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions'
 import { NEW_THESIS_RESET } from '../../../redux/constants/thesisConstants'
@@ -39,10 +38,7 @@ const CreateThesis = () => {
     const [thisCourse, setCourse] = useState('')
 
     //UPLOAD PDF
-    const [upload, setUploadFile] = useState('');
-    const [uploads, setUploadFiles] = useState([]);
-
-    const [test,setTest] = useState([])
+    const [upload, setUploadFile] = useState('')
 
     //multiple input fields
     const [authors, setAuthors] = useState([
@@ -114,10 +110,7 @@ const CreateThesis = () => {
     //Form Submit
     const handleFormSubmit  = (e) => {
         e.preventDefault()
-        // const result = newThesis(upload);
         // setUploadFiles({...uploads,result});
-        let thisAuthors = [authors]
-        
         const formData = new FormData();
         formData.set("title", title)
         formData.set("publishedAt", publishedAt)
@@ -125,30 +118,15 @@ const CreateThesis = () => {
         formData.set("departments", thisDepartment)
         formData.set("courses", thisCourse)
         formData.set("upload", upload)
+
         tags.forEach(keyword => {
             formData.append('thisKey',keyword)
-            
         });
-        
-        // thisAuthors.forEach(authors => {
-            formData.append('thisAuthors',JSON.stringify(thisAuthors))
-            // console.log(thisAuthors)
-        // });
-        
-    
-        // let authors1 = {"authors":[
-        //     {"fname":"sdfsdf","lname":"sfsdf"},
-        //     {"fname":"aaaa","lname":"aaaa"}
-        // ]}
 
-        // let authors2  =  authors1['authors']
-    
-        // for (let i = 0; i < authors2.length; i++) {
-    
-        //     console.log(i)
-        // }
+        formData.append('thisAuthors', JSON.stringify(authors))
 
         dispatch(newThesis(formData))
+
         // console.log(thisKeyword)
         // console.log(thisAuthors)
         // console.log(authors)
@@ -331,7 +309,7 @@ const CreateThesis = () => {
                                                         className='d-inline w-75 my-1 keywordInput'
                                                         type="text"
                                                         placeholder='Press enter to add keywords'
-                                                        onKeyUp={e => e.key == "Enter" ? addTags(e): null}
+                                                        onKeyUp={e => e.key === "Enter" ? addTags(e): null}
                                                         // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
                                                 </div>

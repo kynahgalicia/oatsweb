@@ -23,6 +23,7 @@ const LoginasGuest = () => {
         if (isLoggedInGuest) {
             if(msg){
                 history.push('/')
+                window.location.reload();
                 alert.success(msg)
             }else{
             history.push(redirect) 

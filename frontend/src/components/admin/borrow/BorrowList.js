@@ -14,8 +14,8 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const BorrowList = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
     const {  error: updateError, isUpdated, deleteError, isDeleted } = useSelector(state => state.borrow);
-    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
-    const {adminToken} = useSelector(state => state.authAdminToken)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    // const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -54,10 +54,10 @@ const BorrowList = () => {
             alert.success('Borrow Request deleted successfully');
             dispatch({ type: DELETE_BORROW_RESET })
         }
-        // if (!isLoggedInAdmin) {
-        //     history.push('/admin/login');
-        // }
-    }, [dispatch, alert, error, history,isUpdated, updateError, deleteError, isDeleted,])
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, history,isUpdated, updateError, deleteError, isDeleted,isLoggedInAdmin])
 
     const setData = () => { 
         const data = {

@@ -13,7 +13,6 @@ import Loader from '../../utils/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 const Search = () => {
     const history = useHistory()

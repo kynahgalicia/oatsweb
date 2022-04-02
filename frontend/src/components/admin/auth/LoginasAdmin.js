@@ -21,7 +21,8 @@ const LoginasAdmin = () => {
     useEffect(() => {
         if (isLoggedInAdmin) {
             if(msg){
-                history.push('/admin/dashboard')
+                history.push('/')
+                window.location.reload()
                 alert.success(msg)
             }else{
             history.push(redirect) 

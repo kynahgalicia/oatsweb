@@ -84,7 +84,6 @@ const Header = () => {
 
         return (
             <>
-            <Link to="/Cart" className='white'><FaShoppingCart size={20} /></Link>
             <Dropdown className='m-2'>
             <Dropdown.Toggle id="dropdown-basic">
             {thisGuest}

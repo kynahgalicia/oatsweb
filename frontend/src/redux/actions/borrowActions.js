@@ -20,7 +20,7 @@ export const getBorrow = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_BORROW_REQUEST })
 
-        let link =`/api/borrow`
+        let link = process.env.REACT_APP_URL + `/api/borrow`
 
 
         const { data } = await axios.get(link)
@@ -51,7 +51,7 @@ export const newBorrow = (borrowData,adminToken) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/borrow/new`, borrowData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + `/api/borrow/new`, borrowData, config)
 
         dispatch({
             type: NEW_BORROW_SUCCESS,
@@ -77,7 +77,7 @@ export const updateBorrow = (id, borrowData) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/api/borrow/edit/${id}`, borrowData,config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/borrow/edit/${id}`, borrowData,config)
 
         dispatch({
             type: UPDATE_BORROW_SUCCESS,
@@ -103,7 +103,7 @@ export const deleteBorrow = (id) => async (dispatch) => {
         //         'Authorization': adminToken,
         //     }
         // }
-        const { data } = await axios.delete(`/api/borrow/delete/${id}`)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/borrow/delete/${id}`)
 
         dispatch({
             type: DELETE_BORROW_SUCCESS,

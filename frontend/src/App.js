@@ -91,8 +91,7 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
-    console.log(token)
-
+    // console.log(token)
     if(!thisToken){
       dispatch(getToken())
       setThisToken(token)
@@ -108,7 +107,8 @@ function App() {
       setThisGuestToken(guestToken)
     }
 
-    dispatch(loadUser(token))
+    
+      dispatch(loadUser(token))
     dispatch(loadAdmin(adminToken))
     dispatch(loadGuest(guestToken))
   }, [dispatch, token,adminToken, guestToken, thisAdminToken, thisGuestToken, thisToken])

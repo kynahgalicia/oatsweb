@@ -23,7 +23,7 @@ const thesisSchema = new mongoose.Schema({
             lname: {
                 type: String,
                 required: true
-            }
+            },
         }
     ],
     keywords: [
@@ -69,7 +69,7 @@ const thesisSchema = new mongoose.Schema({
     }, 
     upload:{
         type: String,
-        required:true
+        // required: true
     },
     status:{
         type: String,
