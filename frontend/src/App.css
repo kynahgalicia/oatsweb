@@ -588,15 +588,19 @@ font-family: 'Poppins' , sans-serif;
   margin: 15px
 }
 
-.details-button button{
+.details-button button,
+.details-button a{
   background-color: var(--red);
   color: var(--white);
   border: none;
+  text-decoration: none;
 }
-.details-button button:hover{
+.details-button button:hover,
+.details-button a:hover{
   background-color: var(--red);
   color: var(--white);
   border: none;
+  text-decoration: none;
 }
 .details-nav{
   padding: 20px;
@@ -918,4 +922,9 @@ table td{
 .cardTitle{
   text-align: center;
   font-size: 30px!important;
+}
+
+.citation{
+  font-family: 'Poppins', sans-serif;
+  padding: 5%;
 }
