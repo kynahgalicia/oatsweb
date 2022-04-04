@@ -544,7 +544,7 @@ form h5{
 
 }
 .thesis-result i{
-  padding:1px;
+  padding:5px;
   text-decoration: none;
   color: var(--grey);
 }
@@ -919,3 +919,53 @@ table td{
   text-align: center;
   font-size: 30px!important;
 }
+
+.sub-cards{
+  padding: 0 18%;
+}
+
+.sub-card{
+  margin: 20px 0;
+  width: 75%;
+}
+
+.sub-card button{
+  background-color:#00be75;
+  border: none;
+  float: right;
+}
+
+.sub-card button:hover{
+  background-color: var(--grey);
+  border: none;
+}
+
+.sub-card li{
+  list-style-type: none;
+}
+
+.sub-card i{
+  color: #00be75;
+}
+
+.sub-card h1{
+  font-size: 6vh;
+  color: var(--grey);
+}
+
+.sub-current .card-header{
+  background-color: #00be75 !important;
+  color: var(--white);
+}
+
+.sub-card .card-header{
+  /* background-color: var(--grey);
+  color: var(--white); */
+}
+
+.border-current{
+  border: 3px solid #00be75 !important;
+}
+
+/* Multi-form  */
+

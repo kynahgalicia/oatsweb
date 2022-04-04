@@ -3,7 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 
 const APIFeatures = require('../utils/apiFeatures')
 
-const Bookmarks = require('../models/bookmarkModel.js')
+const z = require('../models/bookmarkModel.js')
 const Thesis = require('../models/thesisModel.js')
 exports.create = catchAsyncErrors(async(req,res,next) => {
 

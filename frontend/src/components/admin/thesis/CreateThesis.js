@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Tesseract from 'tesseract.js';
 import FileBase64 from 'react-file-base64';
-import  {newThesis} from '../../../redux/actions/thesisActions'
+import  {newThesis, clearErrors} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions'
 import { NEW_THESIS_RESET } from '../../../redux/constants/thesisConstants'

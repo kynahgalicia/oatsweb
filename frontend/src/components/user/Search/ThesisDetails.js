@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { Link as Link2} from "react-scroll"
-import {Link as Link1, useParams} from 'react-router-dom'
+import {Link as Link1, useParams, useHistory} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button, Form} from 'react-bootstrap'
+import { Row, Col, Button, Form, CardGroup, Card} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 
@@ -11,6 +11,7 @@ const ThesisDetails = () => {
     
     const dispatch = useDispatch()
     const alert = useAlert()
+    const history = useHistory()
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
     const [abstract, setAbstract] = useState('')
@@ -41,6 +42,11 @@ const ThesisDetails = () => {
             dispatch(clearErrors())
         }
     }, [dispatch, alert, error ,thesisId, thesis]);
+
+    const userPayment = () => {
+        
+        history.push('/user/payment')
+    }
 
     return ( 
         <div className="wrapper">
@@ -122,9 +128,9 @@ const ThesisDetails = () => {
                             <div className="modal-header">
                                 <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
                                 
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <Button data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </button>
+                                </Button>
                             </div>
 
                             <div className="modal-body text-start">
@@ -136,28 +142,12 @@ const ThesisDetails = () => {
                                             </div>
                                             <br/>
                                             <Card.Text>
-                                                Avail the subscription to access all of the thesis available in OATS.
+                                                Avail the subscription to access all of the thesis available in OATS for 1 month.
                                             </Card.Text>
                                         </Card.Body>
 
                                         <Card.Footer className='cardTitle'>
-                                            <Button type='submit'  data-backdrop="false" ><Link1 data-backdrop="" to="/user/payment" >Subscribe</Link1></Button>
-                                        </Card.Footer>
-                                    </Card>
-
-                                    <Card>
-                                        <Card.Body>
-                                            <div className='cardTitle'>
-                                                <h1 className='d-inline'>₱140</h1><h3 className='d-inline'>/qtr.</h3>
-                                            </div>
-                                            <br/>
-                                            <Card.Text>
-                                                For 4 months, you can have access to the theses that has been archived in OATS.
-                                            </Card.Text>
-                                        </Card.Body>
-
-                                        <Card.Footer className='cardTitle'>
-                                            <Button>Subscribe</Button>
+                                            <Button type='submit' data-backdrop="false" data-dismiss="modal" onClick={() => userPayment()} >Subscribe</Button>
                                         </Card.Footer>
                                     </Card>
 
@@ -173,7 +163,7 @@ const ThesisDetails = () => {
                                         </Card.Body>
 
                                         <Card.Footer className='cardTitle'>
-                                            <Button>Subscribe</Button>
+                                            <Button data-dismiss="modal" >Subscribe</Button>
                                         </Card.Footer>
                                     </Card>
                                 </CardGroup>
