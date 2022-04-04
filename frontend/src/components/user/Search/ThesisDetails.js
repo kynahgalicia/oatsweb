@@ -66,7 +66,7 @@ const ThesisDetails = () => {
                     + '<em>Online Archiving Thesis System</em>' + ', '
                     + publishedAt + '. [Online]. ' 
                     + 'Available: ' + window.location.origin + '/. '
-                    + '[Accessed: ' + date.getDay() + '-'
+                    + '[Accessed: ' + date.getDate() + '-'
                     + months.substring(0, 3) + '-'
                     + date.getFullYear() + '].'
                 )
@@ -76,8 +76,8 @@ const ThesisDetails = () => {
                 setFormat(
                     authString + '(' + publishedAt + '). ' 
                     + '<em>' + title + '</em>' + '. ' 
-                    + '. Retrieved ' + monthNames[date.getMonth()] 
-                    +  ' ' + date.getDay()
+                    + 'Retrieved ' + monthNames[date.getMonth()] 
+                    +  ' ' + date.getDate()
                     + ', ' + date.getFullYear()
                     + ' from ' + window.location.origin + '/'
                 )
