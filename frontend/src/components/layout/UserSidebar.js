@@ -4,7 +4,6 @@ import {Nav} from 'react-bootstrap'
 const UserSidebar = () => {
 
     return (
-        <div className="admin-sidebar">
             <Nav className=" col-md-12 d-none d-md-block bg-light"
             activeKey="/home"
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
@@ -29,8 +28,7 @@ const UserSidebar = () => {
             </Nav.Item>
             <hr/>
 
-    </Nav>
-        </div>
+            </Nav>
     
     )
 }

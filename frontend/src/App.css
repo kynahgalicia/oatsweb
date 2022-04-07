@@ -958,14 +958,42 @@ table td{
   color: var(--white);
 }
 
-.sub-card .card-header{
-  /* background-color: var(--grey);
-  color: var(--white); */
-}
-
 .border-current{
   border: 3px solid #00be75 !important;
 }
 
-/* Multi-form  */
+.payment-wrapper{
+  margin: 1% 10%;
+  padding: 1%;
+  /* border: 1px solid; */
+}
+
+
+.payment-wrapper h5{
+  text-align: left;
+  border-bottom: 3px solid #41414177;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+}
+.payment-wrapper label{
+  text-align: left;
+}
+
+input[type="file"]{
+  border: 1px solid var(--grey);
+}
+
+.payment-details{
+  padding:  10%;
+}
+
+.payment-process img{
+  align-items: center; display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.payment-process p{
+  text-align: center;
+}
 

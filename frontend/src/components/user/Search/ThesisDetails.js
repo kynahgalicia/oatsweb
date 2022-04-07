@@ -8,7 +8,7 @@ import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 
 const ThesisDetails = () => {
-    
+    const subscribed = true
     const dispatch = useDispatch()
     const alert = useAlert()
     const history = useHistory()
@@ -118,7 +118,7 @@ const ThesisDetails = () => {
                     <p className="text-justify">{abstract}</p>
                 </div>
 
-                <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
+                <Button variant="danger" className={'mx-1 ' + ( subscribed ? 'd-none' : null)} data-toggle="modal" data-target={'#subscriptionModal'}>
                     Purchase Subscription
                 </Button>
 
