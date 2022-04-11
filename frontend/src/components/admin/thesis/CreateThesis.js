@@ -308,8 +308,8 @@ const CreateThesis = () => {
                                                     <Form.Control
                                                         className='d-inline w-75 my-1 keywordInput'
                                                         type="text"
-                                                        placeholder='Press enter to add keywords'
-                                                        onKeyUp={e => e.key === "Enter" ? addTags(e): null}
+                                                        placeholder='Press spa to add keywords'
+                                                        onKeyUp={e => e.key == " " ? addTags(e): null}
                                                         // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
                                                 </div>

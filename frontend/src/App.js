@@ -62,6 +62,7 @@ import ResetPassword from './components/user/Auth/ResetPassword';
 //Thesis User
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
+import ViewPDF from './components/user/Search/ViewPDF'
 import Citation from './components/user/Search/Citation'
 
 //User Account
@@ -140,6 +141,7 @@ function App() {
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
+        <Route path="/view/:thesisId" component={ViewPDF} exact/>
         <Route path="/citation" component={Citation} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>

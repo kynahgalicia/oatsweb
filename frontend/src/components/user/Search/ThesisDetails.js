@@ -7,11 +7,13 @@ import { Row, Col, Button, Form, CardGroup, Card} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 
+
 const ThesisDetails = () => {
     const subscribed = true
     const dispatch = useDispatch()
     const alert = useAlert()
     const history = useHistory()
+    const [id, setThisID] = useState('')
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
     const [abstract, setAbstract] = useState('')
@@ -19,10 +21,10 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
+
     const {loading, error, thesis } = useSelector(state => state.thesisDetails);
 
     let {thesisId} = useParams()
-
     useEffect(() => {
         
         if(thesis && thesis._id !== thesisId){
@@ -35,18 +37,22 @@ const ThesisDetails = () => {
             setAuthor(thesis.authors)
             setThisDepartment(thesis.department)
             setThisCourse(thesis.course)
+            setThisID(thesis._id)
         }
 
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
         }
+        
     }, [dispatch, alert, error ,thesisId, thesis]);
 
     const userPayment = () => {
         
         history.push('/user/payment')
     }
+
+    
 
     return ( 
         <div className="wrapper">
@@ -61,9 +67,12 @@ const ThesisDetails = () => {
                 </label>
                 </div>
                 <div className='details-button'>
-                        <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
+                    <Link1 to={`/view/${id}`}>
+                    <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
                         <i className="fas fa-file-pdf"></i> PDF  
                         </Button>
+                    </Link1>
+                        
                         
                 </div>
                         
@@ -118,10 +127,12 @@ const ThesisDetails = () => {
                     <p className="text-justify">{abstract}</p>
                 </div>
 
-                <Button variant="danger" className={'mx-1 ' + ( subscribed ? 'd-none' : null)} data-toggle="modal" data-target={'#subscriptionModal'}>
+                {/* <Button variant="danger" className={'mx-1 ' + ( subscribed ? 'd-none' : null)} data-toggle="modal" data-target={'#subscriptionModal'}>
                     Purchase Subscription
-                </Button>
+                </Button> */}
 
+                
+                
                 <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
