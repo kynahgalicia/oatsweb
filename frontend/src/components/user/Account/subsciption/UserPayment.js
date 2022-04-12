@@ -22,7 +22,7 @@ const ThesisDetails = () => {
     const[contact,setContact] = useState('')
     const[reference, setReference] = useState('')
     const[reciept,setReciept] = useState('')
-    const[subType,setSubType] = useState('')
+    const[sub_type,setSubType] = useState('')
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
     const { isLoggedInGuest, guest} = useSelector(state => state.authGuest)
@@ -31,14 +31,10 @@ const ThesisDetails = () => {
 
         if(user){
             setId(user._id)
-            setName(user.user_fname + " " +user.user_lname)
-            setContact("0" + user.user_contact)
         }
 
         if(guest){
             setId(guest._id)
-            setName(guest.guest_fname + " " +guest.guest_lname)
-            setContact("0" + guest.guest_contact)
         }
 
     }, [history]);
@@ -48,8 +44,11 @@ const ThesisDetails = () => {
 
         const formData = new FormData();
         formData.set('user_id', id);
-        formData.set('user_name', name);
-        formData.set('user_name', name);
+        formData.set('sender_name', name);
+        formData.set('sender_no', contact);
+        formData.set('reference_no', reference);
+        formData.set('sub_type', sub_type);
+        formData.set('reciept', reciept);
 
         // dispatch(newDepartment(formData))
     }
@@ -107,7 +106,6 @@ const ThesisDetails = () => {
                         </div>
 
                         <div className="payment-process text-start">
-                            
                             <Row>
                                 <h5>Payment</h5>
                                 <Col className="p-5">
@@ -119,27 +117,26 @@ const ThesisDetails = () => {
                                 </Col>
 
                                 <Col className='text-start payment-details'>
+                                        <h4>Sender Details</h4>
                                 <Form action="" >
                                         <Form.Group className='mb-3'>
-                                            <Form.Label>Name</Form.Label>
+                                            <Form.Label>Sender Name</Form.Label>
                                             <Form.Control
                                                 className=' my-1'
                                                 type="text"
                                                 id="name"
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
-                                                disabled
                                             />
                                         </Form.Group>
                                         <Form.Group className='mb-3'>
-                                            <Form.Label>Contact no.</Form.Label>
+                                            <Form.Label>Gcash Number</Form.Label>
                                             <Form.Control
                                                 className=' my-1'
                                                 type="text"
                                                 id="contact"
                                                 value={contact}
                                                 onChange={(e) => setContact(e.target.value)}
-                                                disabled
                                             />
                                         </Form.Group>
 

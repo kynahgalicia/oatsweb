@@ -3,11 +3,15 @@ const subSchema = new mongoose.Schema({
     user_id: {
         type: String
     },
-    user_name:{
+    sender_name:{
+        type:String
+    },
+    sender_no:{
         type:String
     },
     reference_no: {
-        type: String
+        type: String,
+        unique: true
     },
     sub_type:{
         type:String
@@ -19,15 +23,11 @@ const subSchema = new mongoose.Schema({
         type: String,
         default: "Pending"
     },
-    expireAt:{ 
+    paidAt: {
         type: Date,
-        expires: 11,
-        default:Date.now
-    }  
+        default: Date.now
+    }
 
 }
-// , {
-//     timestamps: true
-// }
 )
 module.exports = mongoose.model("Subscriptions", subSchema)
