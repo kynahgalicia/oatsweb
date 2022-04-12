@@ -5,6 +5,10 @@ import {
     ALL_THESIS_SUCCESS,
     ALL_THESIS_FAIL,
 
+    GET_THESIS_REQUEST,
+    GET_THESIS_SUCCESS,
+    GET_THESIS_FAIL,
+
     THESIS_COUNT_REQUEST,
     THESIS_COUNT_SUCCESS,
     THESIS_COUNT_FAIL,
@@ -19,6 +23,32 @@ import {
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
+export const getAllThesis = (department) => async (dispatch) => {
+    try {
+        dispatch({ type: GET_THESIS_REQUEST })
+
+        let link =''
+        if(department){
+            link = process.env.REACT_APP_URL + `/api/thesis?department.id=${department}`
+        } else {
+            link = process.env.REACT_APP_URL + `/api/thesis`
+        }
+    
+        const { data } = await axios.get(link)
+        console.log(link)
+        dispatch({
+            type: GET_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: GET_THESIS_FAIL,
+            payload: error
+        })
+    }
+}
+
 export const getThesis = (keyword='',department, startDate,endDate) => async (dispatch) => {
     try {
         dispatch({ type: ALL_THESIS_REQUEST })
@@ -29,8 +59,6 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         } else{
             link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }
-
-
 
         const { data } = await axios.get(link)
         console.log(link)

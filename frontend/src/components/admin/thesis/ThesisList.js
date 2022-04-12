@@ -1,92 +1,137 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useAlert } from 'react-alert';
+
+import {Row, Col, Button} from 'react-bootstrap';
+import {MDBDataTableV5 } from 'mdbreact'
+import { FaTrash, FaPencilAlt} from 'react-icons/fa';
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
+import { useDispatch, useSelector } from 'react-redux'
+import { getThesis, deleteThesis, clearErrors} from '../../../redux/actions/thesisActions'
+import { DELETE_THESIS_RESET } from '../../../redux/constants/thesisConstants'
+
 import AdminSidebar from '../../layout/AdminSidebar'
 
-import {Row, Col} from 'react-bootstrap';
-// import {MDBDataTableV5 } from 'mdbreact'
-
-
 const ThesisList = () => {
-    // const { loading, error, thesis } = useSelector(state => state.thesis);
+    // const { loading, error, thesis } = useSelector(state => state.thesis)
+    // const {  error: deleteError, isDeleted } = useSelector(state => state.course)
+    const history = useHistory();
+    const alert = useAlert();
 
-    // const setData = () => { 
-    //     const data = {
-    //         columns: [
-    //             {
-    //                 label: 'Title',
-    //                 field: 'title',
-    //                 sort: 'asc'
-    //             },
-    //             {
-    //                 label: 'Year',
-    //                 field: 'publishedAt',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Department',
-    //                 field: 'department',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Course',
-    //                 field: 'course',
-    //                 sort: 'desc'
-    //             },
-    //             {
-    //                 label: 'Actions',
-    //                 field: 'actions',
-    //             },
-    //         ],
-    //         rows: []
-    //     }
-    // }
+    const dispatch = useDispatch();
 
-    //     theses.forEach(theses => {
-    //         data.rows.push({
-    //             // id: course._id,
-    //             coursename: course.coursename,
-    //             coursecode: course.coursecode,
-    //             department: course.department.deptname,
-    //             actions: 
-    //             <Fragment>
-    //                 <Link to={`/admin/course/edit/${course._id}`} className="decor-none block">
-    //                     <Button variant="info">
-    //                     <FaPencilAlt/>
-    //                     </Button>
-    //                 </Link>
+    useEffect(() => {
+        dispatch(getThesis())
 
-    //                 <Button variant="danger" onClick={() => deleteCourseHandler(course._id)}>
-    //                     <FaTrash/>
-    //                 </Button>
-    //             </Fragment>
-    //         })
-    //     })
+        // if (error) {
+        //     alert.error(error);
+        //     dispatch(clearErrors())
+        // }
 
-    //     return data;
-    // }
+        // if (deleteError) {
+        //     alert.error(deleteError);
+        //     dispatch(clearErrors())
+        // }
+
+    },[dispatch])
+
+    const setData = () => { 
+        const data = {
+            columns: [
+                {
+                    label: 'Title',
+                    field: 'title',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Authors',
+                    field: 'authors',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Year',
+                    field: 'publishedAt',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Course',
+                    field: 'course',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                },
+            ],
+            rows: []
+        }
+
+        // thesis.forEach(thesis => {
+        //     data.rows.push({
+        //         title: thesis.title,
+        //         // authors: thesis.authors.fname + thesis.authors.lname,
+        //         publishedAt: thesis.publishedAt,
+        //         department: thesis.department.deptname,
+        //         course: thesis.course.coursename,
+        //         actions:
+        //         <Fragment>
+        //             <Link to={`/admin/thesis/edit/${thesis._id}`} className="decor-none block">
+        //                 <Button variant="info">
+        //                 <FaPencilAlt/>
+        //                 </Button>
+        //             </Link>
+
+        //             <Button variant="danger" onClick={() => deleteThesisHandler(thesis._id)}>
+        //                 <FaTrash/>
+        //             </Button>
+        //         </Fragment>
+        //     })
+        // })
+    }
+
+    const deleteThesisHandler = (id) => {
+        // dispatch(deleteThesis(id))
+    }
 
     return(
         <Fragment>
-        <Row>
-        <Col sm= {2} className="admin-sidebar">
-            <AdminSidebar/>
-        </Col>
-            <Col sm={10}>
-                <div className="admin-wrapper">
-                    <h1>Thesis</h1>
-                    <button><Link to="/admin/thesis/new">Add Thesis</Link></button>
+            <Row>
+                <Col sm= {2} className="admin-sidebar">
+                    <AdminSidebar/>
+                </Col>
 
-                    {/* <MDBDataTableV5 
-                        hover 
-                        entriesOptions={[5, 10, 15, 25]} 
-                        entries={10} 
-                        pagesAmount={4}
-                        data={setData()} 
-                        className='table'
-                        container-sm="true"/> */}
-                </div>
-            </Col>
-        </Row>
+                <Col sm={10}>
+                    <div className="admin-wrapper">
+                        <div className="table-admin">
+                            {/* {loading ? <LoaderAdmin/>  :   */}
+                                <>
+                                    <div className='d-flex align-items-start m-2'>
+                                        <h1>Thesis</h1>
+                                    </div>
+
+                                    <div className='d-flex align-items-start mx-5 mt-3'>
+                                        <Button variant="success"><Link to="/admin/thesis/new">+ Add</Link></Button>
+                                    </div>
+
+                                    <MDBDataTableV5 
+                                        hover 
+                                        entriesOptions={[5, 10, 15, 25]} 
+                                        entries={10} 
+                                        pagesAmount={4}
+                                        data={setData()} 
+                                        className='table px-4'
+                                        container-sm="true"/>
+                                </>
+                            {/* } */}
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </Fragment>
     )
 }

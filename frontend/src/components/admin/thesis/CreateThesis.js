@@ -257,7 +257,7 @@ const CreateThesis = () => {
                                                     ))}
                                                 </div>
                                                 <Form.Text id="author" muted>
-                                                    Input the full name of the author/s.
+                                                    Input the first and last name of the author respectively.
                                                 </Form.Text>
                                             </Form.Group>
 
