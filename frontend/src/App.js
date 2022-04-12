@@ -62,11 +62,8 @@ import ResetPassword from './components/user/Auth/ResetPassword';
 //Thesis User
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
-<<<<<<< HEAD
-=======
 import ViewPDF from './components/user/Search/ViewPDF'
 import Citation from './components/user/Search/Citation'
->>>>>>> 51d34f15f7e4478fe0bf07242fbbc4eba864cd6a
 
 //User Account
 import UserProfile from './components/user/Account/UserProfile';
