@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { Link as Link2} from "react-scroll"
-import {Link as Link1, useParams} from 'react-router-dom'
+import {Link as Link1, useParams, useHistory} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, Button, Card, CardGroup, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
 
+
 const ThesisDetails = () => {
-    
+    const subscribed = true
     const dispatch = useDispatch()
     const alert = useAlert()
+    const history = useHistory()
+    const [id, setThisID] = useState('')
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
     const [abstract, setAbstract] = useState('')
@@ -18,11 +21,11 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
+
     const {loading, error, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
 
     let {thesisId} = useParams()
-
     useEffect(() => {
         
         if(thesis && thesis._id !== thesisId){
@@ -35,6 +38,7 @@ const ThesisDetails = () => {
             setAuthor(thesis.authors)
             setThisDepartment(thesis.department)
             setThisCourse(thesis.course)
+            setThisID(thesis._id)
         }
 
         if (error) {
@@ -99,6 +103,13 @@ const ThesisDetails = () => {
                 break;
         }
     }   
+
+    const userPayment = () => {
+        
+        history.push('/user/payment')
+    }
+
+    
 
     return ( 
         <div className="wrapper">
