@@ -1,27 +1,40 @@
 const mongoose = require('mongoose')
 const subSchema = new mongoose.Schema({
     user_id: {
-        type: String
+        type: String,
+        required: true
     },
     sender_name:{
-        type:String
+        type:String,
+        required: true
     },
     sender_no:{
-        type:String
+        type:String,
+        required: true
     },
     reference_no: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     sub_type:{
         type:String
     },
-    reciept:{
-        type:String
-    },
+    reciept: [
+        {
+            public_id: {
+                type: String,
+                required: true
+            },
+            url: {
+                type: String,
+                required: true
+            },
+        }
+    ],
     status:{
         type: String,
-        default: "Pending"
+        default: "Pending",
     },
     paidAt: {
         type: Date,

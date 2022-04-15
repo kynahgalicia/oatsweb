@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Fragment} from 'react'
-import { useHistory} from 'react-router-dom'
+import { useHistory, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
 import FileBase64 from 'react-file-base64';
@@ -8,6 +8,8 @@ import UserSidebar from "../../../layout/UserSidebar";
 import gcash from '../../../img/gcash.png'
 import fifty from '../../../img/fifty.jpg'
 import fivefifty from '../../../img/fivefifty.jpg'
+
+import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
 
 const ThesisDetails = () => {
     const monthly = true
@@ -21,23 +23,51 @@ const ThesisDetails = () => {
     const[name,setName] = useState('')
     const[contact,setContact] = useState('')
     const[reference, setReference] = useState('')
-    const[reciept,setReciept] = useState('')
+    const[reciept,setReciept] = useState([])
     const[sub_type,setSubType] = useState('')
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
     const { isLoggedInGuest, guest} = useSelector(state => state.authGuest)
 
+    const { loading, msg, error, success} = useSelector
+
+    const {sub} = useParams()
+
     useEffect(() => {
 
         if(user){
             setId(user._id)
+            setSubType(sub)
         }
 
         if(guest){
             setId(guest._id)
+            setSubType(sub)
         }
 
-    }, [history]);
+        if (success) {
+            alert.success(msg);
+        }
+
+    }, [dispatch, alert, error, success,history, msg]);
+
+    const onChange = e => {
+
+        const files = Array.from(e.target.files)
+        setReciept([])
+
+        files.forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setReciept(oldArray => [...oldArray, reader.result])
+                }
+            }
+
+            reader.readAsDataURL(file)
+        })
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -48,10 +78,12 @@ const ThesisDetails = () => {
         formData.set('sender_no', contact);
         formData.set('reference_no', reference);
         formData.set('sub_type', sub_type);
-        formData.set('reciept', reciept);
+        formData.set('recieptImage', reciept);
 
-        // dispatch(newDepartment(formData))
+        dispatch(userSubscribe(formData))
     }
+
+    
 
     return ( 
         <Fragment>
@@ -118,7 +150,7 @@ const ThesisDetails = () => {
 
                                 <Col className='text-start payment-details'>
                                         <h4>Sender Details</h4>
-                                <Form action="" >
+                                <Form onSubmit={submitHandler} encType='multipart/form-data'>
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Sender Name</Form.Label>
                                             <Form.Control
@@ -151,18 +183,15 @@ const ThesisDetails = () => {
                                             />
                                         </Form.Group>
 
-                                        <label>Please attach GCash reciept below:</label>
-                                        <FileBase64
-                                            className="upload m-5 w-100"
-                                            type="file"
-                                            multiple={false}
-                                            onDone={({ base64 }) => setReciept(base64)}
-                                        />
+                                        <Form.Group controlId="formFile" className="mb-3">
+                                            <Form.Label>Please attach GCash reciept below:</Form.Label>
+                                            <Form.Control type="file"  onChange={onChange} multiple />
+                                        </Form.Group>
                                     
                                                 <Button 
                                                         className='my-3 w-100 '
                                                         variant="success" 
-                                                        type="submit"
+                                                        type="submit" disabled={loading ? true : false}
                                                         
                                                     >
                                             Subscribe

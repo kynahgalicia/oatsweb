@@ -1,5 +1,5 @@
 require('dotenv').config({ path: '.env' });
-
+const cloudinary =  require('cloudinary')
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -20,6 +20,12 @@ app.use(fileUpload({
 app.use(cors());
 app.use(express.json());
 
+// Setting up cloudinary configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 
 //mongodb connection 

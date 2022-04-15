@@ -4,8 +4,11 @@ import {Row, Col, Card, Button} from 'react-bootstrap'
 import UserSidebar from "../../../layout/UserSidebar";
 
 const UserSubscription = () => {
+    const day = false
     const monthly = false
-    const yearly = false
+
+    const oneDaySub = 'ondeDay'
+    const monthlySub = 'monthly'
 
     return (
         <Fragment>
@@ -21,8 +24,8 @@ const UserSubscription = () => {
                     </div>
                     <div className="sub-cards">
                         
-                        <Card className= {"sub-card text-start " + ( monthly ? 'border-current' : null)}>
-                            <div className={( monthly ? 'sub-current' : 'd-none')}>
+                        <Card className= {"sub-card text-start " + ( day ? 'border-current' : null)}>
+                            <div className={( day ? 'sub-current' : 'd-none')}>
                                 <Card.Header >Current</Card.Header>
                             </div>
                                 <Card.Header> <h1 className="text-start">₱50/mo.</h1></Card.Header>
@@ -40,12 +43,12 @@ const UserSubscription = () => {
                                         </ul>
                                         </Col>
                                     </Row>
-                                    <Link to="/user/payment"><Button className={( monthly ? 'd-none' : '')}>Select</Button></Link>
+                                    <Link to={`/user/payment/${oneDaySub}`}><Button className={( day ? 'd-none' : '')}>Select</Button></Link>
                                 </Card.Body>
                         </Card>
 
-                        <Card className= {"sub-card text-start " + ( yearly ? 'border-current' : null)}>
-                            <div className={( yearly ? 'sub-current' : 'd-none')}>
+                        <Card className= {"sub-card text-start " + ( monthly ? 'border-current' : null)}>
+                            <div className={( monthly ? 'sub-current' : 'd-none')}>
                                 <Card.Header >Current</Card.Header>
                             </div>
                             <Card.Header><h1 className="text-start">₱550/yr.</h1></Card.Header>
@@ -64,7 +67,7 @@ const UserSubscription = () => {
                                     </ul>
                                     </Col>
                                 </Row>
-                                <Button className={( yearly ? 'd-none' : '')}>Select</Button>
+                                <Button className={( monthly ? 'd-none' : '')}>Select</Button>
                             </Card.Body>
                         </Card>
                         </div>  
