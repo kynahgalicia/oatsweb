@@ -1,10 +1,9 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Form, Button} from 'react-bootstrap';
-import {BsGoogle} from 'react-icons/bs'
 import { useAlert } from 'react-alert'
 import { showErrMsg } from '../../utils/Notification';
-import {login, clearErrors} from '../../../redux/actions/authAdminActions'
+import {login} from '../../../redux/actions/authAdminActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const LoginasAdmin = () => {
@@ -22,16 +21,13 @@ const LoginasAdmin = () => {
     useEffect(() => {
         if (isLoggedInAdmin) {
             if(msg){
-                history.push('/admin/dashboard')
+                history.push('/')
+                window.location.reload()
                 alert.success(msg)
             }else{
             history.push(redirect) 
             }
         }
-
-        // if(error){
-        //     dispatch(clearErrors())
-        // }
 
     }, [dispatch, alert, isLoggedInAdmin, error, history, redirect,msg])
 
@@ -52,10 +48,7 @@ const LoginasAdmin = () => {
             <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
             <h1 className='text-center'>Sign In as Admin</h1>
 
-            {/* {error && showErrMsg(error)} */}
-            {/* <Button className="w-100 btn-grey my-4" type="submit">
-                <label><BsGoogle size={15} className='m-2'/> Sign with Google</label>
-            </Button> */}
+            {error && showErrMsg(error)}
             <Form.Group className="mb-3">
             <Form.Label className="d-block">Email</Form.Label>
                 <Form.Control  type="text" placeholder="" name="admin_tupmail" id="admin_tupmail" value={admin_tupmail}

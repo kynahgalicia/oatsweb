@@ -21,7 +21,7 @@ const AdminDashboard = () => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    },[ history, isLoggedInAdmin,thisDepartment]);
+    },[ history, isLoggedInAdmin,thisDepartment, admin]);
     return (
 
         <Fragment>

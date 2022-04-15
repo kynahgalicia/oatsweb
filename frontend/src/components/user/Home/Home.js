@@ -3,7 +3,7 @@ import back from '../../img/back-red.png';
 import { FaSearch } from 'react-icons/fa';
 import Cards from './home-components/Cards';
 import Department from './home-components/Department';
-import {Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {Row, Col} from 'react-bootstrap'
 import { getThesisCount } from '../../../redux/actions/thesisActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,15 +15,15 @@ const Home = () => {
     const [keyword, setKeyword] = useState('');
     const { thesisCount } = useSelector(state => state.thesis);
     const {adminToken} = useSelector(state => state.authAdminToken)
-
+    const { admin} = useSelector(state => state.authAdmin)
     useEffect(() => {
 
-        if (adminToken) {
-            history.push('/admin/dashboard');
-        }
+        // if (adminToken) {
+        //     history.push('/admin/dashboard');
+        // }
         dispatch(getThesisCount())
         console.log(thesisCount)
-    }, [dispatch, history,adminToken])
+    }, [dispatch, history])
     
     const searchHandler = (e) => {
         
@@ -40,15 +40,14 @@ const Home = () => {
             history.push('/')
         }
     }
-    const [cards, setCards] = useState([
+    const [cards] = useState([
         { title: 'Integer consequat sed quam sit amet scelerisque.', author: 'Author 1', id: 1 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
         { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 2', id: 2 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
         { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 3', id: 3 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
     ])
     return (  
         <Fragment>
-            
-            <div className="content">
+            {!adminToken ? <div className="content">
             <div className="landingpage">
                 <img src={back} alt="logo" className="img-bg" />
 
@@ -94,7 +93,11 @@ const Home = () => {
             </div>
             
             
-        </div>
+        </div> : null}
+        {adminToken ? 
+        <div className='wrapper'>
+        Welcome Admin !
+        </div> : null}
         </Fragment>
     );
 }

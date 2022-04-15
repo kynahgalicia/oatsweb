@@ -22,7 +22,7 @@ export const getDepartment = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_DEPARTMENT_REQUEST })
 
-        let link =`/api/department`
+        let link = process.env.REACT_APP_URL + `/api/department`
 
 
         const { data } = await axios.get(link)
@@ -46,7 +46,7 @@ export const getDepartmentDetails = (id) => async (dispatch) => {
 
         dispatch({ type: DEPARTMENT_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/department/${id}`)
+        const { data } = await axios.get(process.env.REACT_APP_URL + `/api/department/${id}`)
 
         dispatch({
             type: DEPARTMENT_DETAILS_SUCCESS,
@@ -74,7 +74,7 @@ export const newDepartment = (departmentData, adminToken) => async (dispatch) =>
             }
         }
 
-        const { data } = await axios.post(`/api/department/new`, departmentData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + `/api/department/new`, departmentData, config)
 
         dispatch({
             type: NEW_DEPARTMENT_SUCCESS,
@@ -101,7 +101,7 @@ export const updateDepartment = (id, departmentData,adminToken) => async (dispat
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/api/department/edit/${id}`, departmentData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/department/edit/${id}`, departmentData, config)
 
         dispatch({
             type: UPDATE_DEPARTMENT_SUCCESS,
@@ -127,7 +127,7 @@ export const deleteDepartment = (id,adminToken) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.delete(`/api/department/delete/${id}`, config)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/department/delete/${id}`, config)
 
         dispatch({
             type: DELETE_DEPARTMENT_SUCCESS,

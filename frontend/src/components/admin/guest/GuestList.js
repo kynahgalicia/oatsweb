@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react'
+import {useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { getGuests , deactivateGuest, deleteGuest} from '../../../redux/actions/guestActions';
@@ -12,15 +11,15 @@ import AdminSidebar from '../../layout/AdminSidebar'
 import { DEACTIVATE_GUEST_RESET, DELETE_GUEST_RESET } from '../../../redux/constants/guestConstants'
 const GuestList = () => {
     const { loading, error, guests } = useSelector(state => state.guests)
-    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
     const{isDeactivated, isDeleted, msg} = useSelector(state=>state.guest)
     const dispatch = useDispatch();
     const history = useHistory();
     const alert = useAlert();
 
-    const [deactivate, setDeactivate] = useState("Deactivated")
-    const [activate, setActivate] = useState("Active")
+    const deactivate ="Deactivated"
+    const activate = "Active"
 
     useEffect(() => {
 

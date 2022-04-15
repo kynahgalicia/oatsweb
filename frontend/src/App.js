@@ -16,6 +16,7 @@ import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 
 import ThesisList from './components/admin/thesis/ThesisList'
 
+import CreateThesis from './components/admin/thesis/CreateThesis'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
 import Updatedepartment from './components/admin/departments/EditDepartment'
@@ -24,14 +25,20 @@ import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
 
+
 import PaymentList from './components/admin/payment/PaymentList'
 
 import UserList from './components/admin/users/UserList'
 import EditUser from './components/admin/users/EditUser'
 
 import AdminList from './components/admin/admin/AdminList'
+import EditAdmin from './components/admin/admin/EditAdmin'
 
 import GuestList from './components/admin/guest/GuestList'
+
+import BorrowList from './components/admin/borrow/BorrowList'
+import CreateBorrow from './components/admin/borrow/CreateBorrow'
+import ReturnList from './components/admin/return/ReturnList'
 
 //Home
 import Home from './components/user/Home/Home'
@@ -55,11 +62,19 @@ import ResetPassword from './components/user/Auth/ResetPassword';
 //Thesis User
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
+import ViewPDF from './components/user/Search/ViewPDF'
 
 //User Account
 import UserProfile from './components/user/Account/UserProfile';
 import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
+import UserSubscription from './components/user/Account/subsciption/UserSubscription';
+import UserPayment from './components/user/Account/subsciption/UserPayment';
+
+//Guest Account
+import GuestProfile from './components/guest/Account/GuestProfile';
+import GuestBookmark from './components/guest/Account/GuestBookmark';
+import GuestPaid from './components/guest/Account/GuestPaid';
 
 import NotFound from './components/img/404.png'
 
@@ -77,8 +92,7 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
-    console.log(token)
-
+    // console.log(token)
     if(!thisToken){
       dispatch(getToken())
       setThisToken(token)
@@ -94,10 +108,11 @@ function App() {
       setThisGuestToken(guestToken)
     }
 
-    dispatch(loadUser(token))
+    
+      dispatch(loadUser(token))
     dispatch(loadAdmin(adminToken))
     dispatch(loadGuest(guestToken))
-  }, [dispatch, token,adminToken, guestToken])
+  }, [dispatch, token,adminToken, guestToken, thisAdminToken, thisGuestToken, thisToken])
   
 
   return (
@@ -125,15 +140,22 @@ function App() {
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
-
+        <Route path="/view/:thesisId" component={ViewPDF} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
+        <Route path="/user/subscription" component={UserSubscription} exact/>
+        <Route path="/user/payment/:sub" component={UserPayment} exact/>
+
+        <Route path="/guest/profile" component={GuestProfile} exact/>
+        <Route path="/guest/bookmark" component={GuestBookmark} exact/>
+        <Route path="/guest/paid" component={GuestPaid} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
         <Route path="/admin/thesis" component={ThesisList} exact/>
+        <Route path="/admin/thesis/new" component={CreateThesis} exact/>
         <Route path="/admin/department" component={DepartmentList} exact/>
         <Route path="/admin/department/new" component={CreateDepartment} exact/>
         <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
@@ -143,8 +165,12 @@ function App() {
         <Route path="/admin/users" component={UserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
+        <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/payment" component={PaymentList} exact/>
+        <Route path="/admin/borrow" component={BorrowList} exact/>
+        <Route path="/admin/borrow/new" component={CreateBorrow} exact/>
+        <Route path="/admin/return" component={ReturnList} exact/>
         <Route path="*">
           {NoMatch}
         </Route>

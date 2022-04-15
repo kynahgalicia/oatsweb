@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaPencilAlt,FaUserAltSlash} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { getAdmins } from '../../../redux/actions/adminActions';
@@ -91,13 +90,13 @@ const UserList = () => {
                 admin_contact: admins.admin_contact,
                 admin_tupmail: admins.admin_tupmail,
                 department: admins.admin_department.deptname,
-                actions: 
+                actions:
                 <Fragment>
-                    {/* <Link to={`/admin/course/edit/${course._id}`} className="decor-none block"> */}
+                    {/* <Link to={`/admin/admins/edit/${admins._id}`} className="decor-none block">
                     <Button variant="primary" data-toggle="tooltip" data-placement="bottom" title="Edit">
                         <i className="fas fa-pencil-alt"></i>
                         </Button>
-                    {/* </Link> */}
+                    </Link> */}
 
                     <Button className='m-1' variant="secondary" data-toggle="modal" data-target="#deactivateModal"> 
                     <i className="fas fa-user-times"></i>

@@ -1,7 +1,7 @@
 {
   "name": "oatsweb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Clone project to computer then install dependencies",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node backend/server",
@@ -15,10 +15,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@appearhere/react-input-range": "^1.2.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
-    "cloudinary": "^1.28.1",
+    "cloudinary": "^1.29.0",
     "concurrently": "^7.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -33,9 +34,17 @@
     "mongoose": "^6.1.6",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
-    "redux": "^4.1.2",
-    "stripe": "^8.195.0",
-    "tesseract.js": "^2.1.5",
     "validator": "^13.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kynahgalicia/oatsweb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kynahgalicia/oatsweb/issues"
+  },
+  "homepage": "https://github.com/kynahgalicia/oatsweb#readme",
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }

@@ -1,10 +1,9 @@
 import React, {Fragment, useState,useEffect} from 'react'
-import { Link, useHistory,useParams } from 'react-router-dom' 
+import { useHistory,useParams } from 'react-router-dom' 
 import {Row, Col, Form, Button} from 'react-bootstrap';
 import { useAlert } from 'react-alert'
 import AdminSidebar from '../../layout/AdminSidebar'
 
-import { showErrMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions1'
@@ -58,7 +57,7 @@ const EditUser = () => {
 
         
 
-    }, [dispatch, alert, history, isUpdated, thisDepartment, adminToken, userId])
+    }, [dispatch, alert, history, isUpdated, thisDepartment, adminToken, userId, error, user])
 
     const submitHandler = (e) => {
 

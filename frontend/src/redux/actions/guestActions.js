@@ -28,7 +28,7 @@ export const getGuests = (adminToken) => async (dispatch) => {
 
         dispatch({ type: ALL_GUESTS_REQUEST })
 
-        const {data} = await axios.get('/guest/all_infor', {
+        const {data} = await axios.get(process.env.REACT_APP_URL + '/guest/all_infor', {
             headers: {Authorization: adminToken}
         })
 
@@ -52,7 +52,7 @@ export const getGuestDetails = (id,adminToken) => async (dispatch) => {
 
         dispatch({ type: GUEST_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/guest/inforAdmin/${id}`, {
+        const { data } = await axios.get(process.env.REACT_APP_URL + `/guest/inforAdmin/${id}`, {
             headers: {Authorization: adminToken}
         })
 
@@ -81,7 +81,7 @@ export const updateGuest = (id, guestData,adminToken) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/guest/edit/${id}`, guestData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/guest/edit/${id}`, guestData, config)
 
         dispatch({
             type: UPDATE_GUEST_SUCCESS,
@@ -107,7 +107,7 @@ export const deactivateGuest = (id, guestData,adminToken) => async (dispatch) =>
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(`/guest/deactivate/${id}`, guestData, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/guest/deactivate/${id}`, guestData, config)
 
         dispatch({
             type: DEACTIVATE_GUEST_SUCCESS,
@@ -133,7 +133,7 @@ export const deleteGuest = (id,adminToken) => async (dispatch) => {
                 'Authorization': adminToken,
             }
         }
-        const { data } = await axios.delete(`/guest/delete/${id}`, config)
+        const { data } = await axios.delete(process.env.REACT_APP_URL + `/guest/delete/${id}`, config)
 
         dispatch({
             type: DELETE_GUEST_SUCCESS,

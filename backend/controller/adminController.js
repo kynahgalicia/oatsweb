@@ -104,31 +104,11 @@ const adminController = {
             console.log(admin)   
 
             const refresh_token = createRefreshToken({id: admin._id})
-
-            const options = {
-                expires: new Date(
-                    Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
-                ),
-                httpOnly: true
-            }
         
-            res.status(200).cookie('refreshtokenadmin', refresh_token, options).json({
-                success: true,
-                refresh_token,
-                admin,
-                msg: "Login success!"
+            res.json({
+                msg: "Login success!",
+                token: refresh_token,
             })
-
-            
-            
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/admin/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
-            // })
-            
-            // sendToken(admin, 200, res)
-            // res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -145,7 +125,7 @@ const adminController = {
         // }
 
         try {
-            const rf_token = req.cookies.refreshtokenadmin
+            const {rf_token} = req.body 
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, admin) => {
@@ -197,6 +177,23 @@ const adminController = {
         }
     }, 
 
+    //admin/inforAdmin
+    getAdminInforAdmin : async(req,res) => {
+        try {
+            let admin = await Admins.findById(req.params.id);
+
+            if(!admin)
+            return res.status(400).json({msg: "Admin not found"})
+            
+            res.status(200).json({
+                success: true,
+                admin:admin
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
     // /admin/infor
     getAdminInfor: async (req, res) => {
         try {
@@ -209,8 +206,60 @@ const adminController = {
         }
     },
 
+    updateAdmin: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
 
-    //pwedeng alisin to dito kase pang admin lang to 
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //admin/deactivate
+    deactivate: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    delete: async (req,res) => {
+        try {
+            await Admins.findByIdAndDelete(req.params.id)
+            res.json({msg: "Admin has been Deleted!", success: true})
+        } catch (error) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
     // /admin/all_infor
     getAdminsAllInfor: async (req, res) => {
         try {
@@ -237,7 +286,7 @@ const adminController = {
         } catch (error) {
             return res.status(500).json({msg: err.message})
         }
-    },
+    }
 
 }
 

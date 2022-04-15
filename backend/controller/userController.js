@@ -1,6 +1,7 @@
 const Users = require('../models/userModel')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
+const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
@@ -9,7 +10,7 @@ const {google} = require('googleapis')
 const {OAuth2} = google.auth
 // const fetch = require('node-fetch')
 
-const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
+// const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 
 const {FRONTEND_URL} = process.env
 
@@ -61,7 +62,7 @@ const userController = {
             console.log(newUser)
         
             const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            // sendMail(user_tupmail, url, "Verify your email address")
+            sendMail(user_tupmail, url, "Verify your email address")
 
 
             res.json({
@@ -111,54 +112,42 @@ const userController = {
 
             const refresh_token = createRefreshToken({id: user._id})
 
-            const options = {
-                expires: new Date(
-                    Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
-                ),
-                httpOnly: true
-            }
+            // const options = {
+            //     expires: new Date(
+            //         Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
+            //     ),
+            //     httpOnly: true
+            // }
         
-            res.status(200).cookie('refreshtoken', refresh_token, options).json({
-                success: true,
-                refresh_token,
-                user,
-                msg: "Login success!"
-            })
-
-            
-            
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/user/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
+            // res.status(200).cookie('refreshtoken', refresh_token, options).json({
+            //     success: true,
+            //     refresh_token,
+            //     user,
+            //     msg: "Login success!"
             // })
             
-            // sendToken(user, 200, res)
-            // res.json({msg: "Login success!"})
+            res.json({
+                msg: "Login success!",
+                token: refresh_token,
+            })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
     // /user/cookie 
     getAccessToken: (req, res) => {
-        // try{
-        // const rf_token = req.cookies.token
-        // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-        // res.json({msg: "Cookie Found",
-        //         token: rf_token})
-        // } catch (err) {
-        //     return res.status(500).json({msg: err.message})
-        // }
 
         try {
-            const rf_token = req.cookies.refreshtoken
+            const {rf_token} = req.body
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if(err) return res.status(400).json({msg: "Please login now jwt!"})
 
                 const access_token = createAccessToken({id: user.id})
-                res.json({token: access_token})
+                res.json({
+                    token: access_token
+                })
             })
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -205,10 +194,15 @@ const userController = {
     // /user/infor
     getUserInfor: async (req, res) => {
         try {
+
+            const user_id = req.user.id
             const user = await Users.findById(req.user.id).select('-user_password')
+            const subType = await Subscriptions.findOne({user_id})
 
             res.json({user: user,
-                    msg: "Success User"})
+                    msg: "Success User",
+                    subType: subType})
+                    
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -219,10 +213,15 @@ const userController = {
     // /user/all_infor
     getUsersAllInfor: async (req, res) => {
         try {
+            
+            
             const users = await Users.find()
 
-            res.json({users: users,
-            })
+            
+                res.json({
+                    users: users,
+                })
+
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

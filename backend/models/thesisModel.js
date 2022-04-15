@@ -16,10 +16,14 @@ const thesisSchema = new mongoose.Schema({
             id: {
                 type: mongoose.Schema.ObjectId,
             },
-            author: {
+            fname: {
                 type: String,
-                // required: true
-            }
+                required: true
+            },
+            lname: {
+                type: String,
+                required: true
+            },
         }
     ],
     keywords: [
@@ -29,13 +33,12 @@ const thesisSchema = new mongoose.Schema({
             },
             keyword: {
                 type: String,
-                // required: true
+                required: true
             }
         }
     ],
     abstract: {
         type:String,
-        required: true,
         trim: true,
     },
     department:{ 
@@ -58,8 +61,20 @@ const thesisSchema = new mongoose.Schema({
         coursecode: {
             type: String,
             required: true
+        },
+        coursename:{
+            type: String,
+            required: true
         }
     }, 
+    upload:{
+        type: String,
+        // required: true
+    },
+    status:{
+        type: String,
+        default: "Active"
+    },
     createdAt: {
         type: Date,
         default: Date.now
