@@ -1,6 +1,7 @@
 const Users = require('../models/userModel')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
+const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
@@ -193,10 +194,15 @@ const userController = {
     // /user/infor
     getUserInfor: async (req, res) => {
         try {
+
+            const user_id = req.user.id
             const user = await Users.findById(req.user.id).select('-user_password')
+            const subType = await Subscriptions.findOne({user_id})
 
             res.json({user: user,
-                    msg: "Success User"})
+                    msg: "Success User",
+                    subType: subType})
+                    
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -207,10 +213,15 @@ const userController = {
     // /user/all_infor
     getUsersAllInfor: async (req, res) => {
         try {
+            
+            
             const users = await Users.find()
 
-            res.json({users: users,
-            })
+            
+                res.json({
+                    users: users,
+                })
+
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

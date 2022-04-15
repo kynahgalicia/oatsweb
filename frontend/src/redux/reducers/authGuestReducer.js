@@ -56,7 +56,8 @@ export const authGuestReducer = ( state = {guest: {}}, action) => {
                 isLoggedInGuest: true,
                 isGuest: true,
                 msg: action.payload.msg,
-                guest: action.payload.guest
+                guest: action.payload.guest,
+                subTypeGuest: action.payload.subType
             }
 
         case LOGOUT_GUEST_SUCCESS:

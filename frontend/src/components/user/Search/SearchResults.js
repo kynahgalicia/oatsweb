@@ -13,8 +13,11 @@ const SearchResults = ({userDept,thesis, thisId}) => {
     const alert = useAlert();
 
     const { success,error } = useSelector(state => state.newBookmark)
+    const {subType} = useSelector(state => state.authUser)
+    const {subTypeGuest} = useSelector(state => state.authGuest)
 
     const [thisUserId, setThisUserId] = useState('')
+    const [sub, setSub] = useState(true)
     useEffect(() => {
 
         if(error){
@@ -29,8 +32,9 @@ const SearchResults = ({userDept,thesis, thisId}) => {
             dispatch({ type: NEW_BOOKMARK_RESET })
         }
 
+        
 
-    },[ dispatch, alert,history, success,error, thisId]);
+    },[ dispatch, alert,history, success,error, thisId,subType,subTypeGuest,sub]);
 
     const bookmarkHandler = (id) => {
 
@@ -43,15 +47,21 @@ const SearchResults = ({userDept,thesis, thisId}) => {
     return ( 
         <Fragment>
             { thesis && thesis.map((theses) => (
-            <div className='thesis-result'>
+                <div className='thesis-result'>
 
                 <Row>
                     <Col>
-                    <h5> <Link to={`/thesis/${theses._id}`}> {theses.title}</Link> </h5>
+                    {subType ? <h5> <Link to={userDept && subType && userDept !== theses.department.deptname  && subType.status === "Pending"?  '#' : `/thesis/${theses._id}`} > {theses.title}</Link> </h5> : null}
+                    {subTypeGuest ? <h5> <Link to={subTypeGuest && subTypeGuest.status === "Pending" ? '#' : `/thesis/${theses._id}`} > {theses.title}</Link> </h5>: null}
+                    {!subTypeGuest && !subType? <h5> <Link to='#' > {theses.title}</Link> </h5>: null}
+                    
                     </Col>
-                    <Col>
+                    <Col> 
             { thisId ?<div className="icon-bookmark" onClick={() => bookmarkHandler(theses._id)} data-toggle="tooltip" data-placement="bottom" title="Bookmark">  <i class="fas fa-bookmark"></i>  <i class="far fa-bookmark" ></i></div>  : null}
-            { userDept !== theses.department.deptname ? <i className="fas fa-lock"></i> :  null  }
+            
+            {  userDept && subType && userDept !== theses.department.deptname  && subType.status === "Pending" ? <i className="fas fa-lock"></i> :  null  }
+            {  subTypeGuest && subTypeGuest.status === "Pending"   ?  <i className="fas fa-lock"></i>  : null  }
+            {  !userDept && !subType && !subTypeGuest ?  <i className="fas fa-lock"></i>  : null  }
                     </Col>
                 </Row>
                 

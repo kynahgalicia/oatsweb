@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {logout} from '../../redux/actions/authActions'
 import {logoutAdmin} from '../../redux/actions/authAdminActions'
 import {logoutGuest} from '../../redux/actions/authGuestActions'
+import { deleteSubscribe } from '../../redux/actions/subscriptionActions';
+import moment from 'moment'
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -17,28 +19,63 @@ const Header = () => {
     const [thisUser, setThisUser] = useState('')
     const [thisAdmin, setThisAdmin] = useState('')
     const [thisGuest, setThisGuest] = useState('')
-    const {isLoggedIn, user} = useSelector(state => state.authUser)
+    const {isLoggedIn, user, subType} = useSelector(state => state.authUser)
     const {isLogged, isUser} = useSelector(state => state.authToken)
     const {isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {isLoggedAdmin} = useSelector(state => state.authAdminToken)
-    const {isLoggedInGuest, guest} = useSelector(state => state.authGuest)
+    const {isLoggedInGuest, guest, subTypeGuest} = useSelector(state => state.authGuest)
     const { isLoggedGuest} = useSelector(state => state.authGuestToken)
+    const {isDeleted} = useSelector(state => state.subscribes)
 
     useEffect(() => {
         
             if(isLoggedIn){
                 setThisUser(user.user_tupid)
-            }
+
+                
+                if(subType){
+                const startDate = moment(subType.paidAt);
+                const timeEnd = moment(Date.now());
+                const diff = timeEnd.diff(startDate);
+                const diffDuration = moment.duration(diff);
+
+                const duration = diffDuration._data.days;
+                
+                console.log(duration)
+                if(subType.status === "Active" && duration >= 1 ){
+                    dispatch(deleteSubscribe(subType._id))
+                    window.location.reload()
+                }
+            }}
 
             if(isLoggedInAdmin){
                 setThisAdmin(admin.admin_tupid)        
             }
 
             if(isLoggedInGuest){
-                setThisGuest(guest.guest_fname)        
+                setThisGuest(guest.guest_fname)
+
+                if(subTypeGuest){
+                    const startDate = moment(subTypeGuest.paidAt);
+                    const timeEnd = moment(Date.now());
+                    const diff = timeEnd.diff(startDate);
+                    const diffDuration = moment.duration(diff);
+    
+                    const duration = diffDuration._data.days;
+                    
+                    console.log(duration)
+                    if(subTypeGuest.status === "Active" && duration >= 1 ){
+                        dispatch(deleteSubscribe(subTypeGuest._id))
+                        window.location.reload()
+                    }
+            }
+        }
+
+            if(isDeleted){
+                alert.error("Subscription has expired")
             }
         
-    }, [ dispatch,isLoggedIn, isLoggedInAdmin, isLoggedInGuest,isUser, user, admin,guest]);
+    }, [ dispatch,isLoggedIn, isLoggedInAdmin, isLoggedInGuest,isUser, user, admin,guest, subType, subTypeGuest, isDeleted]);
 
     const logoutHandler = () => {
 

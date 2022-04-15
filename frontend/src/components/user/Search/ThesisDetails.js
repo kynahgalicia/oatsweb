@@ -21,6 +21,8 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
+    const {subType} = useSelector(state => state.authUser)
+    const {subTypeGuest} = useSelector(state => state.authGuest)
 
     const {loading, error, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
@@ -45,7 +47,12 @@ const ThesisDetails = () => {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format]);
+
+        if(!subType && !subTypeGuest){
+            history.goBack()
+            alert.error("Restricted")
+        }
+    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest]);
 
     const handleChange = (e) => {
         var authString = ''
