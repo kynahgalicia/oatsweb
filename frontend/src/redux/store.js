@@ -23,6 +23,8 @@ import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adm
 
 import { subscriptionReducer , subscriptionsReducer } from "./reducers/subscriptionReducer"
 
+import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer } from "./reducers/loggingReducer"
+
 import thunk from 'redux-thunk'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -76,7 +78,13 @@ const reducer = combineReducers({
     authGuestToken: authGuestTokenReducer,
 
     subscribed: subscriptionReducer,
-    subscribes: subscriptionsReducer
+    subscribes: subscriptionsReducer,
+
+    logging: loggingReducer,
+    logs: logsReducer,
+    dataCount: dataCountReducer,
+    homeCount: homeCountReducer,
+    featuredCount: featuredCountReducer
 
 })
 

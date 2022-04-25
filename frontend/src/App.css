@@ -594,6 +594,7 @@ font-family: 'Poppins' , sans-serif;
   color: var(--white);
   border: none;
   text-decoration: none;
+  /* margin: 15px; */
 }
 .details-button button:hover,
 .details-button a:hover{

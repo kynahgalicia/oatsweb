@@ -5,6 +5,7 @@ const APIFeatures = require('../utils/apiFeatures')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
 const Thesis = require('../models/thesisModel')
+const SearchLogs = require('../models/searchLogModel');
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
@@ -61,6 +62,7 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
     
     const thesisCount = await Thesis.countDocuments();
     const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    
     
     let Thesis_query = await apiFeatures.query;
 

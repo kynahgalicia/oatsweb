@@ -6,6 +6,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, Button, Card, CardGroup, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
+import {viewLog} from '../../../redux/actions/loggingActions'
 
 
 const ThesisDetails = () => {
@@ -31,7 +32,12 @@ const ThesisDetails = () => {
     useEffect(() => {
         
         if(thesis && thesis._id !== thesisId){
+
+            const formData = new FormData();
+            formData.set("thesis_id", thesisId)
+
             dispatch(getThesisDetails(thesisId))
+            dispatch(viewLog(formData))
         } else {
             setTitle(thesis.title)
             setPublishedAt(thesis.publishedAt)
@@ -132,9 +138,12 @@ const ThesisDetails = () => {
                             </label>
                         </div>
                         <div className='details-button'>
-                            <Button className='mr-2' data-toggle="tooltip" data-placement="bottom" title="Download PDF">
-                                <i className="fas fa-file-pdf"></i> PDF  
-                            </Button>
+
+                            <Link1 to={`/view/${id}`} className="m-1">
+                            <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
+                                <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
 
                             <Button data-toggle="tooltip" data-placement="bottom" title="Citation Tool">
                                 <Link1 data-toggle="modal"  data-target={"#citationModal"}><i class="fas fa-pen-nib"></i> Citation Tool  </Link1>
@@ -196,9 +205,9 @@ const ThesisDetails = () => {
                             </div>
 
                             {/* Subscription Button */}
-                            <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
+                            {/* <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
                                 Purchase Subscription
-                            </Button>
+                            </Button> */}
 
                             {/* Subscription Modal */}
                             <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

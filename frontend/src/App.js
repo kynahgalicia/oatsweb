@@ -81,6 +81,7 @@ import NotFound from './components/img/404.png'
 import { getToken, loadUser } from './redux/actions/authActions'
 import { getAdminToken, loadAdmin} from './redux/actions/authAdminActions'
 import { getGuestToken, loadGuest} from './redux/actions/authGuestActions'
+
 function App() {
 
   const dispatch = useDispatch()
@@ -92,6 +93,7 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
+
     // console.log(token)
     if(!thisToken){
       dispatch(getToken())
