@@ -6,6 +6,7 @@ import Department from './home-components/Department';
 import { useHistory } from 'react-router-dom'
 import {Row, Col} from 'react-bootstrap'
 import { getThesisCount } from '../../../redux/actions/thesisActions';
+import { searchLog, fetchHomeCount, fetchFeaturedCount} from '../../../redux/actions/loggingActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -15,36 +16,47 @@ const Home = () => {
     const [keyword, setKeyword] = useState('');
     const { thesisCount } = useSelector(state => state.thesis);
     const {adminToken} = useSelector(state => state.authAdminToken)
-    const { admin} = useSelector(state => state.authAdmin)
+    const {homeCount} = useSelector(state => state.homeCount)
+    const {featuredCount} = useSelector(state => state.featuredCount)
+
+    const{ topViewed, setThisTopView } = useState([])
+    const{ featuredThesis, setThisFeaturedThesis} = useState([])
     useEffect(() => {
 
-        // if (adminToken) {
-        //     history.push('/admin/dashboard');
-        // }
         dispatch(getThesisCount())
+
+        // if(!topViewed && !featuredThesis){
+            dispatch(fetchHomeCount())
+            dispatch(fetchFeaturedCount())
+        // }else{
+        //     setThisTopView(homeCount)
+        //     setThisFeaturedThesis(featuredCount)
+        // }
+        
         console.log(thesisCount)
-    }, [dispatch, history])
+    }, [dispatch, history, topViewed, featuredThesis])
     
     const searchHandler = (e) => {
         
-        if(keyword){
+        if(!keyword){
             console.log('no key')
         }
         e.preventDefault()
         if (keyword) {
+            const formData = new FormData();
+            formData.set('keyword', keyword.toLowerCase());
+            dispatch(searchLog(formData))
+            
             if (window.location.pathname === '/') {
                     history.push(`/search/${keyword}`)
             }
+
+            
 
         } else {
             history.push('/')
         }
     }
-    const [cards] = useState([
-        { title: 'Integer consequat sed quam sit amet scelerisque.', author: 'Author 1', id: 1 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 2', id: 2 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-        { title: 'Integer consequat sed quam sit amet scelerisque. Sed vestibulum vfacilisis diam non auctor', abstract: 'Lorem ipsum dolor sit amet consectetur adipiscing elit In tempus, velit semper ullamcorper rhoncus', author: 'Author 3', id: 3 , year: 2022, department: 'Electrical & Allied', course: 'BSIT'},
-    ])
     return (  
         <Fragment>
             {!adminToken ? <div className="content">
@@ -81,14 +93,13 @@ const Home = () => {
                 
             </div>
             <div className="section">
-            <Cards cards={cards} title="Featured Thesis" />
+            <Cards cards={featuredCount} title="Featured Thesis" />
             </div>
             <div className="category">
                 <Department/>
             </div>
             <div className="section">
-
-                <Cards cards={cards} title="Top Searches"></Cards>
+                <Cards cards={homeCount} title="Top Viewed"></Cards>
 
             </div>
             

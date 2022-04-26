@@ -13,6 +13,7 @@ import Loader from '../../utils/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
+import {searchLog} from '../../../redux/actions/loggingActions'
 import Slider from '@mui/material/Slider';
 const Search = () => {
     const history = useHistory()
@@ -75,13 +76,17 @@ const Search = () => {
     }
 
     const searchHandler = (e) => {
-        if(thisKeyword){
+        if(!thisKeyword){
             console.log('no key')
         }
         e.preventDefault()
         if (thisKeyword) {
-                    history.replace(`/search/${thisKeyword}`)
+            const formData = new FormData();
+            formData.set('keyword', thisKeyword.toLowerCase());
+            dispatch(searchLog(formData))
 
+                    history.replace(`/search/${thisKeyword}`)
+            
         } else {
             history.push('/')
         }

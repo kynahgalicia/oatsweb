@@ -10,6 +10,7 @@ exports.authUser = (req, res, next) => {
             if(err) return res.status(400).json({msg: "Invalid Authentication jwt."})
 
             req.user = user
+            req.user_id
             next()
         })
     } catch (err) {
@@ -25,6 +26,7 @@ exports.authGuest = (req, res, next) => {
             if(err) return res.status(400).json({msg: "Invalid Authentication jwt."})
 
             req.guest = guest
+            req.guest_id
             next()
         })
     } catch (err) {

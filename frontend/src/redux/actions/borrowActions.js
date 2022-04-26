@@ -3,9 +3,15 @@ import {
     ALL_BORROW_REQUEST,
     ALL_BORROW_SUCCESS,
     ALL_BORROW_FAIL,
+    ALL_STUDENT_BORROW_REQUEST,
+    ALL_STUDENT_BORROW_SUCCESS,
+    ALL_STUDENT_BORROW_FAIL,
     NEW_BORROW_REQUEST,
     NEW_BORROW_SUCCESS,
     NEW_BORROW_FAIL,
+    STUDENT_BORROW_REQUEST,
+    STUDENT_BORROW_SUCCESS,
+    STUDENT_BORROW_FAIL,
     UPDATE_BORROW_REQUEST,
     UPDATE_BORROW_SUCCESS,
     UPDATE_BORROW_FAIL,
@@ -37,6 +43,27 @@ export const getBorrow = () => async (dispatch) => {
         })
     }
 }
+export const getStudentBorrow = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_STUDENT_BORROW_REQUEST })
+
+        let link = process.env.REACT_APP_URL + `/api/borrow/request/all`
+
+
+        const { data } = await axios.get(link, userData)
+        console.log(link)
+        dispatch({
+            type: ALL_STUDENT_BORROW_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: ALL_STUDENT_BORROW_FAIL,
+            payload: error
+        })
+    }
+}
 
 //Create borrow
 export const newBorrow = (borrowData,adminToken) => async (dispatch) => {
@@ -61,6 +88,27 @@ export const newBorrow = (borrowData,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_BORROW_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const studentBorrow = (borrowData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: STUDENT_BORROW_REQUEST })
+
+
+        const { data } = await axios.post(process.env.REACT_APP_URL + `/api/borrow/request`, borrowData)
+
+        dispatch({
+            type: STUDENT_BORROW_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: STUDENT_BORROW_FAIL,
             payload: error.response.data.message
         })
     }

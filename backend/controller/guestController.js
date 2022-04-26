@@ -1,4 +1,5 @@
 const Guests = require('../models/guestModel')
+const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
@@ -164,10 +165,15 @@ const guestController = {
     // /guest/infor
     getGuestInfor: async (req, res) => {
         try {
+            const user_id = req.guest.id
             const guest = await Guests.findById(req.guest.id).select('-guest_password')
+            const subType = await Subscriptions.findOne({user_id})
 
-            res.json({guest: guest,
-                    msg: "Success Guest"})
+            res.json({
+                guest: guest,
+                msg: "Success User",
+                subType: subType
+                })
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -178,6 +184,7 @@ const guestController = {
     // /guest/all_infor
     getGuestsAllInfor: async (req, res) => {
         try {
+            const subType = await Subscriptions.findOne({guest_id})
             const guests = await Guests.find()
 
             res.json({guests: guests,

@@ -2,10 +2,17 @@ import {
     ALL_BORROW_REQUEST,
     ALL_BORROW_SUCCESS,
     ALL_BORROW_FAIL,
+    ALL_STUDENT_BORROW_REQUEST,
+    ALL_STUDENT_BORROW_SUCCESS,
+    ALL_STUDENT_BORROW_FAIL,
     NEW_BORROW_REQUEST,
     NEW_BORROW_SUCCESS,
     NEW_BORROW_RESET,
     NEW_BORROW_FAIL,
+    STUDENT_BORROW_REQUEST,
+    STUDENT_BORROW_SUCCESS,
+    STUDENT_BORROW_RESET,
+    STUDENT_BORROW_FAIL,
     UPDATE_BORROW_REQUEST,
     UPDATE_BORROW_SUCCESS,
     UPDATE_BORROW_FAIL,
@@ -20,21 +27,24 @@ import {
 export const borrowsReducer = (state = { borrow: [] }, action) => {
     switch (action.type) {
         case  ALL_BORROW_REQUEST:
+        case  ALL_STUDENT_BORROW_REQUEST:
             return {
                 loading: true,
                 borrow: []
             }
 
         case  ALL_BORROW_SUCCESS:
+        case  ALL_STUDENT_BORROW_SUCCESS:
             return {
                 loading: false,
-                borrow: action.payload.borrow,
-                borrowCount: action.payload.borrowCount,
-                resPerPage: action.payload.resPerPage,
-                filteredBorrowCount: action.payload.filteredBorrowCount
+                borrow: action.payload.borrow
+                // borrowCount: action.payload.borrowCount,
+                // resPerPage: action.payload.resPerPage,
+                // filteredBorrowCount: action.payload.filteredBorrowCount
             }
 
         case ALL_BORROW_FAIL:
+        case ALL_STUDENT_BORROW_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -55,25 +65,29 @@ export const newBorrowReducer = (state = { borrow: {} }, action) => {
     switch (action.type) {
 
         case NEW_BORROW_REQUEST:
+        case STUDENT_BORROW_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
         case NEW_BORROW_SUCCESS:
+        case STUDENT_BORROW_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.success,
-                borrow: action.payload.borrow
+                msg: action.payload.success
             }
 
         case NEW_BORROW_FAIL:
+        case STUDENT_BORROW_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
         case NEW_BORROW_RESET:
+        case STUDENT_BORROW_RESET:
             return {
                 ...state,
                 success: false

@@ -544,7 +544,7 @@ form h5{
 
 }
 .thesis-result i{
-  padding:1px;
+  padding:5px;
   text-decoration: none;
   color: var(--grey);
 }
@@ -594,6 +594,7 @@ font-family: 'Poppins' , sans-serif;
   color: var(--white);
   border: none;
   text-decoration: none;
+  /* margin: 15px; */
 }
 .details-button button:hover,
 .details-button a:hover{
@@ -922,6 +923,83 @@ table td{
 .cardTitle{
   text-align: center;
   font-size: 30px!important;
+}
+
+.sub-cards{
+  padding: 0 18%;
+}
+
+.sub-card{
+  margin: 20px 0;
+  width: 75%;
+}
+
+.sub-card button{
+  background-color:#00be75;
+  border: none;
+  float: right;
+}
+
+.sub-card button:hover{
+  background-color: var(--grey);
+  border: none;
+}
+
+.sub-card li{
+  list-style-type: none;
+}
+
+.sub-card i{
+  color: #00be75;
+}
+
+.sub-card h1{
+  font-size: 6vh;
+  color: var(--grey);
+}
+
+.sub-current .card-header{
+  background-color: #00be75 !important;
+  color: var(--white);
+}
+
+.border-current{
+  border: 3px solid #00be75 !important;
+}
+
+.payment-wrapper{
+  margin: 1% 10%;
+  padding: 1%;
+  /* border: 1px solid; */
+}
+
+
+.payment-wrapper h5{
+  text-align: left;
+  border-bottom: 3px solid #41414177;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+}
+.payment-wrapper label{
+  text-align: left;
+}
+
+input[type="file"]{
+  border: 1px solid var(--grey);
+}
+
+.payment-details{
+  padding:  10%;
+}
+
+.payment-process img{
+  align-items: center; display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.payment-process p{
+  text-align: center;
 }
 
 .citation{

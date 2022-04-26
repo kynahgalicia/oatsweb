@@ -35,36 +35,37 @@ const borrowSchema = new mongoose.Schema({
     admin: {  
         id:{
             type: mongoose.Schema.ObjectId,
-            ref: 'Admins',
-            required: true
+            ref: 'Admins'
+            
         },
         tupid: {
             type: String,
-            required: true
         },
         fname: {
             type: String,
-            required: true
         },
         lname:{
             type: String,
-            required: true
         }
     },
 
     dateBorrowed : {
         type : Date,
-        required: [true, 'Please input borrow date']
+        default: null
     },
     
     dueDate: {
         type: Date,
-        required: [true, 'Input your due date']
+        default: null
     },
 
     dateReturned: {
         type: Date,
-        default: ""
+        default: null
+    },
+    status: {
+        type:String,
+        default: "Pending"
     }
 
 })

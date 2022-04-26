@@ -45,6 +45,8 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
 
 })
 
+
+
 exports.delete = catchAsyncErrors(async(req,res,next) =>{
     try {
         await Bookmarks.findByIdAndDelete(req.params.id)

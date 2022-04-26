@@ -62,11 +62,14 @@ import ResetPassword from './components/user/Auth/ResetPassword';
 //Thesis User
 import Search from './components/user/Search/Search'
 import ThesisDetails from './components/user/Search/ThesisDetails'
+import ViewPDF from './components/user/Search/ViewPDF'
+
 //User Account
 import UserProfile from './components/user/Account/UserProfile';
 import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
-import UserPayment from './components/user/Account/UserPayment';
+import UserSubscription from './components/user/Account/subsciption/UserSubscription';
+import UserPayment from './components/user/Account/subsciption/UserPayment';
 
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
@@ -78,6 +81,7 @@ import NotFound from './components/img/404.png'
 import { getToken, loadUser } from './redux/actions/authActions'
 import { getAdminToken, loadAdmin} from './redux/actions/authAdminActions'
 import { getGuestToken, loadGuest} from './redux/actions/authGuestActions'
+
 function App() {
 
   const dispatch = useDispatch()
@@ -89,6 +93,7 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
+
     // console.log(token)
     if(!thisToken){
       dispatch(getToken())
@@ -137,11 +142,13 @@ function App() {
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
+        <Route path="/view/:thesisId" component={ViewPDF} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
-        <Route path="/user/payment" component={UserPayment} exact/>
+        <Route path="/user/subscription" component={UserSubscription} exact/>
+        <Route path="/user/payment/:sub" component={UserPayment} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>

@@ -21,6 +21,10 @@ import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/gue
 
 import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adminReducer'
 
+import { subscriptionReducer , subscriptionsReducer } from "./reducers/subscriptionReducer"
+
+import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer } from "./reducers/loggingReducer"
+
 import thunk from 'redux-thunk'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -72,6 +76,16 @@ const reducer = combineReducers({
     authGuest: authGuestReducer,
     authGuestRegister: authGuestRegisterReducer,
     authGuestToken: authGuestTokenReducer,
+
+    subscribed: subscriptionReducer,
+    subscribes: subscriptionsReducer,
+
+    logging: loggingReducer,
+    logs: logsReducer,
+    dataCount: dataCountReducer,
+    homeCount: homeCountReducer,
+    featuredCount: featuredCountReducer,
+    studentCount: studentCountReducer
 
 })
 

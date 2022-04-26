@@ -1,28 +1,40 @@
 import React, { Fragment, useEffect } from 'react'
 import { useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Card} from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import UserSidebar from '../../layout/UserSidebar'
 import profile from '../../img/profile.png'
+
+import { fetchStudentCount } from '../../../redux/actions/loggingActions'
 const UserProfile = () => {
 
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
-
+    const { borrowCount, bookmarksCount} = useSelector(state => state.studentCount)
 
     useEffect(() => {
+
+    if(user){    
+        const formData = new FormData();
+        formData.set("user", user._id)
+
+        dispatch(fetchStudentCount(user._id))
+
+        console.log(user._id)
+    }
 
         if (!isLoggedIn) {
             history.push('/user/login');
         }
-    },[ history, isLoggedIn]);
+    },[ dispatch, history, isLoggedIn]);
     return (
         <Fragment>
             <Row>
-                <Col sm= {2}>
+            <Col sm= {2} className="admin-sidebar">
                     <UserSidebar/>
-                </Col>  
+                </Col> 
                 
                 <Col sm={10}>
                     <div className="user-wrapper">
@@ -51,13 +63,10 @@ const UserProfile = () => {
                         </>: null}
                 
                         <Row>
-                            <Button className='mb-3'>
-                                Add Thesis
-                            </Button>
                             <Col sm={4}>
                                 <Card className="user-stats">
                                     <label>My Bookmarks</label>
-                                    <h1>1</h1>
+                                    <h1>{bookmarksCount}</h1>
                                 </Card>
                             </Col>
                             <Col sm={4}>
@@ -69,7 +78,7 @@ const UserProfile = () => {
                             <Col sm={4}>
                                 <Card className="user-stats">
                                     <label>Borrowed Books</label>
-                                    <h1>10</h1>
+                                    <h1>{borrowCount}</h1>
                                 </Card>
                             </Col>
                         </Row>
