@@ -6,20 +6,20 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Tesseract from 'tesseract.js';
 import FileBase64 from 'react-file-base64';
-import  {newThesis, clearErrors} from '../../../redux/actions/thesisActions'
-import {getDepartment} from '../../../redux/actions/departmentActions'
-import {getCourse} from '../../../redux/actions/courseActions'
-import { NEW_THESIS_RESET } from '../../../redux/constants/thesisConstants'
+import  {newThesis, clearErrors} from '../../../../redux/actions/thesisActions'
+import {getDepartment} from '../../../../redux/actions/departmentActions'
+import {getCourse} from '../../../../redux/actions/courseActions'
+import { NEW_THESIS_RESET } from '../../../../redux/constants/thesisConstants'
 
-import AdminSidebar from '../../layout/AdminSidebar'
+import UserSidebar from '../../../layout/UserSidebar'
 
-const CreateThesis = () => {
+const UserCreateThesis = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const history = useHistory();
 
     const { loading, error, success } = useSelector(state => state.newThesis);
-    const { admin } = useSelector(state => state.authAdmin);
+    const { user } = useSelector(state => state.authUser);
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -56,8 +56,9 @@ const CreateThesis = () => {
             dispatch(clearErrors())
         }
 
+        
         if (success) {
-            history.push('/admin/thesis');
+            history.push('/user/thesis');
             alert.success('thesis created successfully');
             dispatch({ type: NEW_THESIS_RESET })
         }
@@ -119,8 +120,8 @@ const CreateThesis = () => {
         formData.set("departments", thisDepartment)
         formData.set("courses", thisCourse)
         formData.set("upload", upload)
-        formData.set("role", "admin")
-        formData.set("uploadedId", admin._id)
+        formData.set("role", "student")
+        formData.set("uploadedId", user._id)
 
 
         tags.forEach(keyword => {
@@ -178,9 +179,9 @@ const CreateThesis = () => {
     return(
         <Fragment>
             <Row>
-                <Col sm={2} className="admin-sidebar">
-                    <AdminSidebar/>
-                </Col>
+            <Col sm= {2} className="admin-sidebar">
+                        <UserSidebar/>
+                    </Col>  
 
                 <Col sm={10}>
                     <Container>
@@ -427,4 +428,4 @@ const CreateThesis = () => {
     )
 }
 
-export default CreateThesis
+export default UserCreateThesis

@@ -203,7 +203,8 @@ export const studentCountReducer = (state = { count: [] }, action) => {
             return {
                 loading:false,
                 bookmarksCount: action.payload.bookmarksCount,
-                borrowCount: action.payload.borrowCount
+                borrowCount: action.payload.borrowCount,
+                thesisCount: action.payload.thesisCount
             }
 
         case STUDENT_COUNT_FAIL:

@@ -19,9 +19,8 @@ const ThesisList = () => {
 
     useEffect(() => {
 
-        if(!thesis._id){
             dispatch(getThesis())
-        }
+        
     
     },[ dispatch, alert, error, history]);
 
