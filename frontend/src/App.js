@@ -150,7 +150,7 @@ function App() {
         <Route path="/user/bookmark" component={UserBookmark} exact/>
         <Route path="/user/subscription" component={UserSubscription} exact/>
         <Route path="/user/payment/:sub" component={UserPayment} exact/>
-        <Route path="/user/thesis/" component={UserThesisList} exact/>
+        <Route path="/user/thesis" component={UserThesisList} exact/>
         <Route path="/user/thesis/new" component={UserCreateThesis} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>

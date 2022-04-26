@@ -18,20 +18,17 @@ const UserThesisList = () => {
     const { loading, error, theses} = useSelector(state => state.studentThesis);
 
 
-    const [thisId, setThisId] = useState('624560d8bf54d59b5a4f916e')
+    const [thisId, setThisId] = useState('')
 
     useEffect(() => {
         
         if(isLoggedIn){
             setThisId(user._id)
         }
-
-
+        
         if(thisId){
             dispatch(getStudentThesis(thisId))
         }
-
-
 
         console.log(thisId)
         
