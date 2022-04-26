@@ -6,7 +6,7 @@ exports.authUser = (req, res, next) => {
         const token = req.header("Authorization")
         if(!token) return res.status(400).json({msg: "Invalid Authentication."})
 
-        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if(err) return res.status(400).json({msg: "Invalid Authentication jwt."})
 
             req.user = user
@@ -22,7 +22,7 @@ exports.authGuest = (req, res, next) => {
         const token = req.header("Authorization")
         if(!token) return res.status(400).json({msg: "Invalid Authentication."})
 
-        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, guest) => {
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, guest) => {
             if(err) return res.status(400).json({msg: "Invalid Authentication jwt."})
 
             req.guest = guest
