@@ -28,6 +28,10 @@ import {
     FEATURED_COUNT_SUCCESS,
     FEATURED_COUNT_FAIL,
 
+    STUDENT_COUNT_REQUEST,
+    STUDENT_COUNT_SUCCESS,
+    STUDENT_COUNT_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/loggingConstants';
 
@@ -179,6 +183,28 @@ export const fetchFeaturedCount = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FEATURED_COUNT_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
+export const fetchStudentCount = (user) => async (dispatch) => {
+    try {
+
+        dispatch({ type: STUDENT_COUNT_REQUEST })
+
+
+        const {data} = await axios.get( process.env.REACT_APP_URL + `/api/student/count/${user}`)
+
+        dispatch({
+            type: STUDENT_COUNT_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: STUDENT_COUNT_FAIL,
             payload: error.response.data.msg
         })
     }

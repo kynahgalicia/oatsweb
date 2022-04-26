@@ -12,6 +12,7 @@ router.get('/home/count', loggingController.homeCount)
 router.get('/featured/count', loggingController.featuredCount)
 router.get('/log/count', loggingController.logCount)
 router.get('/data/count', loggingController.dataCount)
+router.get('/student/count/:user', loggingController.studentDataCount)
 // router.put('/department/edit/:id', authAdmin,authAdminRole,  departmentController.editDepartment)
 // router.delete('/subscription/delete/:id', subscriptionController.delete)
 

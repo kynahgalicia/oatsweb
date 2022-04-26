@@ -36,6 +36,7 @@ const borrowSchema = new mongoose.Schema({
         id:{
             type: mongoose.Schema.ObjectId,
             ref: 'Admins'
+            
         },
         tupid: {
             type: String,
@@ -49,15 +50,18 @@ const borrowSchema = new mongoose.Schema({
     },
 
     dateBorrowed : {
-        type : Date
+        type : Date,
+        default: null
     },
     
     dueDate: {
-        type: Date
+        type: Date,
+        default: null
     },
 
     dateReturned: {
-        type: Date
+        type: Date,
+        default: null
     },
     status: {
         type:String,

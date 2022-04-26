@@ -27,6 +27,10 @@ import {
     FEATURED_COUNT_SUCCESS,
     FEATURED_COUNT_FAIL,
 
+    STUDENT_COUNT_REQUEST,
+    STUDENT_COUNT_SUCCESS,
+    STUDENT_COUNT_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/loggingConstants';
 
@@ -171,6 +175,38 @@ export const featuredCountReducer = (state = { count: [] }, action) => {
             }
 
         case FEATURED_COUNT_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const studentCountReducer = (state = { count: [] }, action) => {
+    switch (action.type) {
+        case  STUDENT_COUNT_REQUEST:
+            return {
+                loading: true,
+                count: []
+            }
+
+        case  STUDENT_COUNT_SUCCESS:
+            return {
+                loading:false,
+                bookmarksCount: action.payload.bookmarksCount,
+                borrowCount: action.payload.borrowCount
+            }
+
+        case STUDENT_COUNT_FAIL:
             return {
                 loading: false,
                 error: action.payload

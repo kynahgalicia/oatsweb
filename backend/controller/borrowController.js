@@ -49,6 +49,43 @@ exports.create = async(req,res,next) => {
         return res.status(500).json({msg: err.message})
     }
 }
+exports.studentRequest = async(req,res,next) => {
+    try{
+        const user_tupid = req.body.user
+        const cusers = await Users.findOne({user_tupid})
+
+        
+        req.body.user = {
+            id: cusers._id,
+            tupid: cusers.user_tupid,
+            fname: cusers.user_fname,
+            lname: cusers.user_lname
+        }
+        
+        const title = req.body.theses
+        const cthesis = await Thesis.findOne({title})
+        
+        req.body.thesis = {
+            id: cthesis._id,
+            title: cthesis.title
+        }
+        
+        const {user, thesis} = req.body
+        
+        
+        const borrowed = await Borrow.findOne({user, thesis})
+        if(borrowed) return res.status(400).json({msg: "Already Borrowed"})
+        
+        const borrow = await Borrow.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            msg: "Your borrow request has been sent!"
+        })
+    }catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+}
 
 // get All Borrowed
 exports.get = async (req, res, next) => {
@@ -58,6 +95,18 @@ exports.get = async (req, res, next) => {
     res.status(200).json({
         success: true,
         borrow
+    })
+
+}
+
+exports.getStudent = async (req, res, next) => {
+
+    const user_tupid = req.body.user
+    const borrow = await Borrow.find({user_tupid});
+
+    res.status(200).json({
+        success: true,
+        borrow: borrow
     })
 
 }

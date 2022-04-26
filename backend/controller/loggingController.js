@@ -7,6 +7,7 @@ const Admins = require('../models/adminModel')
 const Guests = require('../models/guestModel')
 const Subscriptions = require('../models/subscriptionModel')
 const Borrow = require('../models/borrowModel')
+const Bookmarks = require('../models/bookmarkModel')
 const SearchLogs = require('../models/searchLogModel');
 const DownloadLogs = require('../models/downloadLogModel')
 
@@ -155,5 +156,20 @@ exports.dataCount = catchAsyncErrors(async(req,res,next) => {
         borrowCount: borrowCount
     })
 
+
+})
+
+exports.studentDataCount = catchAsyncErrors(async(req,res,next) => {
+    const user_id = req.params.user
+    
+    console.log(user_id)
+    const bookmarks = await Bookmarks.find({user_id}).count()
+    const borrowCount = await Borrow.find({ '$user.id' : user_id ,status: "Active", dateReturned: null}).count()
+    
+    res.status(200).json({
+        bookmarksCount: bookmarks,
+        borrowCount: borrowCount
+
+    })
 
 })

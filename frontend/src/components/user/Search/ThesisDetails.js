@@ -6,11 +6,11 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, Button, Card, CardGroup, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
+import { studentBorrow} from '../../../redux/actions/borrowActions'
 import {viewLog} from '../../../redux/actions/loggingActions'
-
+import { STUDENT_BORROW_RESET } from '../../../redux/constants/borrowConstants'
 
 const ThesisDetails = () => {
-    const subscribed = true
     const dispatch = useDispatch()
     const alert = useAlert()
     const history = useHistory()
@@ -24,10 +24,11 @@ const ThesisDetails = () => {
     const [thisCourse,setThisCourse] = useState('')
     const {subType} = useSelector(state => state.authUser)
     const {subTypeGuest} = useSelector(state => state.authGuest)
-
+    const {user} = useSelector(state => state.authUser)
     const {loading, error, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
 
+    const {success, msg} = useSelector(state => state.newBorrow)
     let {thesisId} = useParams()
     useEffect(() => {
         
@@ -58,7 +59,12 @@ const ThesisDetails = () => {
             history.goBack()
             alert.error("Restricted")
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest]);
+
+        if(success){
+            alert.success('Your request has been sent!');
+            dispatch({ type: STUDENT_BORROW_RESET })
+        }
+    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest, success, msg]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -122,6 +128,15 @@ const ThesisDetails = () => {
         history.push('/user/payment')
     }
 
+    const borrowRequest = () => {
+        
+        const formData = new FormData();
+        formData.set('user', user.user_tupid);
+        formData.set('theses', title);
+
+        dispatch(studentBorrow(formData))
+    }
+
     
 
     return ( 
@@ -140,13 +155,17 @@ const ThesisDetails = () => {
                         <div className='details-button'>
 
                             <Link1 to={`/view/${id}`} className="m-1">
-                            <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
+                                <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
                                 <i className="fas fa-file-pdf"></i> PDF
                                 </Button>
                             </Link1>
 
                             <Button data-toggle="tooltip" data-placement="bottom" title="Citation Tool">
                                 <Link1 data-toggle="modal"  data-target={"#citationModal"}><i class="fas fa-pen-nib"></i> Citation Tool  </Link1>
+                            </Button>
+
+                            <Button data-toggle="tooltip" data-placement="bottom" title="Request to borrow the physical book" className='m-1' onClick={() => borrowRequest()}>
+                                <i class="fas fa-book"></i> Borrow Book
                             </Button>
                         </div>
                     </div>
