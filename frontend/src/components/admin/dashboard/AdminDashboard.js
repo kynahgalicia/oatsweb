@@ -12,7 +12,7 @@ import DownloadperDay from './analytics/DownloadperDay'
 import Thesis from './analytics/Thesis'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
-require('./dashboard.css');
+// require('./dashboard.css');
 
 
 const AdminDashboard = () => {

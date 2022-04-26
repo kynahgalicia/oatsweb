@@ -12,7 +12,7 @@ const UserProfile = () => {
     const dispatch = useDispatch()
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
-    const { borrowCount, bookmarksCount} = useSelector(state => state.studentCount)
+    const { borrowCount, bookmarksCount, thesisCount} = useSelector(state => state.studentCount)
 
     useEffect(() => {
 
@@ -63,23 +63,44 @@ const UserProfile = () => {
                         </>: null}
                 
                         <Row>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label>My Bookmarks</label>
-                                    <h1>{bookmarksCount}</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-peach">
+                                <div className="inner">
+                                <h3>{bookmarksCount}</h3>
+                                <p> My Bookmarks </p>
+                                </div>
+                                <div className="icon">
+                                <i className="fas fa-bookmark"></i>
+                                </div>
+                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                            </div>
                             </Col>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label> My Files</label>
-                                    <h1>1</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-peach2">
+                                    <div className="inner">
+                                    <h3> {thesisCount} </h3>
+                                    <p> Thesis Files </p>
+                                    </div>
+                                    <div className="icon">
+                                    <i className="fas fa-scroll"></i>
+                                    </div>
+                                    <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                                </div>
                             </Col>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label>Borrowed Books</label>
-                                    <h1>{borrowCount}</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-pink">
+                                    <div className="inner">
+                                    <h3> {borrowCount} </h3>
+                                    <p> Borrowed Books </p>
+                                    </div>
+                                    <div className="icon">
+                                    <i className="fas fa-book"></i>
+                                </div>
+                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                            </div>
                             </Col>
                         </Row>
                     </div>

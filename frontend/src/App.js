@@ -70,7 +70,8 @@ import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
 import UserSubscription from './components/user/Account/subsciption/UserSubscription';
 import UserPayment from './components/user/Account/subsciption/UserPayment';
-
+import UserThesisList from './components/user/Account/Thesis/UserThesisList';
+import UserCreateThesis from './components/user/Account/Thesis/UserCreateThesis';
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
 import GuestBookmark from './components/guest/Account/GuestBookmark';
@@ -149,6 +150,8 @@ function App() {
         <Route path="/user/bookmark" component={UserBookmark} exact/>
         <Route path="/user/subscription" component={UserSubscription} exact/>
         <Route path="/user/payment/:sub" component={UserPayment} exact/>
+        <Route path="/user/thesis/" component={UserThesisList} exact/>
+        <Route path="/user/thesis/new" component={UserCreateThesis} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>
