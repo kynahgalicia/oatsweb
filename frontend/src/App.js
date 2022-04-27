@@ -183,7 +183,9 @@ function App() {
         </Route>
         </Switch>
 
+    <div className="footer">
       <Footer/>
+    </div>
     </div>
     {/* )} */}
     

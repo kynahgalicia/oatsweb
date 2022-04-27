@@ -10,7 +10,7 @@ import {logoutAdmin} from '../../redux/actions/authAdminActions'
 import {logoutGuest} from '../../redux/actions/authGuestActions'
 import { deleteSubscribe } from '../../redux/actions/subscriptionActions';
 import moment from 'moment'
-
+import logo from '../img/logo.png'
 const Header = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -170,7 +170,7 @@ const Header = () => {
         <div className="header">
         <Navbar collapseOnSelect expand="lg">
         <Container>
-        {isLoggedInAdmin? <Navbar.Brand ><Link to="/admin/dashboard" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white">Online Archiving Thesis System</Link></Navbar.Brand>}
+        {isLoggedInAdmin? <Navbar.Brand ><Link to="/admin/dashboard" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>}
         
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
