@@ -18,7 +18,7 @@ const UserThesisList = () => {
     const { loading, error, theses} = useSelector(state => state.studentThesis);
 
 
-    const [thisId, setThisId] = useState('624560d8bf54d59b5a4f916e')
+    const [thisId, setThisId] = useState('')
 
     useEffect(() => {
         
@@ -30,8 +30,6 @@ const UserThesisList = () => {
         if(thisId){
             dispatch(getStudentThesis(thisId))
         }
-
-
 
         console.log(thisId)
         
@@ -87,18 +85,7 @@ const UserThesisList = () => {
             rows: []
         }
     
-        if(theses){
-            theses.forEach(theses => {
-                const authorlist = []
-                theses.authors.forEach(name => {
-                    authorlist.push(name.lname)
-                })
-    
-                const keylist = []
-                theses.keywords.forEach( tag => {
-                    keylist.push(tag.keyword)
-                })
-    
+            theses.length && theses.forEach(theses => {
                 data.rows.push({
                     title: theses.title,
                     publishedAt: theses.publishedAt,
@@ -121,7 +108,6 @@ const UserThesisList = () => {
                     </Fragment>
                 })
             })
-        }
         
 
         return data;

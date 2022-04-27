@@ -4,7 +4,7 @@ import {Form, Button} from 'react-bootstrap';
 // import {BsGoogle} from 'react-icons/bs'
 import { useAlert } from 'react-alert'
 import { showErrMsg } from '../../utils/Notification';
-import {login} from '../../../redux/actions/authActions'
+import {login, clearErrors} from '../../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 const LoginasUser = () => {
@@ -44,6 +44,20 @@ const LoginasUser = () => {
         dispatch(login(user_tupmail,user_password));
 
     }
+
+    const handleChangeEmail = (email) =>{
+        setEmail(email)
+        if(error){
+            dispatch(clearErrors())
+        }
+    }
+
+    const handleChangePassword = (pass) =>{
+        setPassword(pass)
+        if(error){
+            dispatch(clearErrors())
+        }
+    }
         
     return (
         <Fragment>
@@ -61,12 +75,12 @@ const LoginasUser = () => {
             <Form.Group className="mb-3">
             <Form.Label className="d-block">Email</Form.Label>
                 <Form.Control  type="text" placeholder="" name="user_tupmail" id="user_tupmail" value={user_tupmail}
-                    onChange={(e) => setEmail(e.target.value)}/>
+                    onChange={(e) => handleChangeEmail(e.target.value)}/>
             </Form.Group>
             <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="" name="user_password" id="user_password" value={user_password}
-                onChange={(e) => setPassword(e.target.value)} />
+                onChange={(e) => handleChangePassword(e.target.value)} />
             </Form.Group>
 
             <div className='text-center my-3'>
