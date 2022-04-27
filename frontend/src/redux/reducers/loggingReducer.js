@@ -31,6 +31,10 @@ import {
     STUDENT_COUNT_SUCCESS,
     STUDENT_COUNT_FAIL,
 
+    GUEST_COUNT_REQUEST,
+    GUEST_COUNT_SUCCESS,
+    GUEST_COUNT_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/loggingConstants';
 
@@ -208,6 +212,37 @@ export const studentCountReducer = (state = { count: [] }, action) => {
             }
 
         case STUDENT_COUNT_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const guestCountReducer = (state = { count: [] }, action) => {
+    switch (action.type) {
+        case  GUEST_COUNT_REQUEST:
+            return {
+                loading: true,
+                count: []
+            }
+
+        case  GUEST_COUNT_SUCCESS:
+            return {
+                loading:false,
+                bookmarksCount: action.payload.bookmarksCount
+            }
+
+        case GUEST_COUNT_FAIL:
             return {
                 loading: false,
                 error: action.payload

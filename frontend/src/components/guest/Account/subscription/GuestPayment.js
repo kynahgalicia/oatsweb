@@ -2,15 +2,15 @@ import React, {useEffect, useState, Fragment} from 'react'
 import { useHistory, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, Button, Form, Card} from 'react-bootstrap'
-import UserSidebar from "../../../layout/UserSidebar";
+import { Row, Col, Button, Form, CardGroup, Card} from 'react-bootstrap'
+import GuestSidebar from "../../../layout/GuestSidebar";
 import gcash from '../../../img/gcash.png'
 import fifty from '../../../img/oneDay.jpg'
 import fivefifty from '../../../img/weekly.jpg'
 
 import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
 
-const UserPayment = () => {
+const GuestPayment = () => {
     
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -23,26 +23,29 @@ const UserPayment = () => {
     const[reciept,setReciept] = useState([])
     const[sub_type,setSubType] = useState('')
 
-    const { isLoggedIn, user, subType} = useSelector(state => state.authUser)
+    const { isLoggedInGuest, guest, subTypeGuest} = useSelector(state => state.authGuest)
 
-    const { loading, msg, error, success} = useSelector(state => state.subscribed)
+    const { loading,msg, error, success} = useSelector(state => state.subscribed)
 
     const {sub} = useParams()
 
     useEffect(() => {
 
-        if(user){
-            setId(user._id)
+
+        if(guest){
+            setId(guest._id)
             setSubType(sub)
         }
 
         if (success) {
+            history.push('/guest/subscription');
             alert.success(msg);
-            history.push('/user/subscription')
             window.location.reload()
         }
 
-    }, [dispatch, alert, error, success,history, msg, subType, isLoggedIn, sub, user]);
+        console.log(sub)
+
+    }, [dispatch, alert, error, success,history, msg, subTypeGuest, isLoggedInGuest, sub_type]);
 
     const onChange = e => {
 
@@ -64,7 +67,7 @@ const UserPayment = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData();
         formData.set('user_id', id);
         formData.set('sender_name', name);
@@ -82,13 +85,14 @@ const UserPayment = () => {
         <Fragment>
             <Row>
                 <Col sm={2} className="admin-sidebar">
-                    <UserSidebar/>
+                    <GuestSidebar/>
                 </Col>
                 <Col sm={10}>
 
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
-                        { isLoggedIn && subType ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                
+                        { isLoggedInGuest && subTypeGuest ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
                             <h5 className='my-2'>Your Plan</h5>
                             <Card className= {"mx-4 sub-card text-start " + ( sub_type === 'oneDay' ? null : 'd-none')} >
                                     <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
@@ -205,4 +209,4 @@ const UserPayment = () => {
     );
 }
 
-export default UserPayment;
+export default GuestPayment;

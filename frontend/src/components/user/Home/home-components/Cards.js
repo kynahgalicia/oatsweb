@@ -5,11 +5,12 @@ import {Container, Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 const Cards = ({ cards, title}) => {
 
-    const {subType} = useSelector(state => state.authUser)
-    const {subTypeGuest} = useSelector(state => state.authGuest)
+    const {subType, isLoggedIn} = useSelector(state => state.authUser)
+    const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
 
     useEffect(() => {
-    }, [subType, subTypeGuest])
+
+    }, [subType, subTypeGuest, isLoggedIn, isLoggedInGuest])
     
     return ( 
         <div className="home-cards">
@@ -27,8 +28,8 @@ const Cards = ({ cards, title}) => {
                         <label className='d-inline'>{author.fname.charAt(0)}. {author.lname} ;</label>
 
                     ))}
-
-                    {subType  || subTypeGuest ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+                    
+                    {(subType && subType.status === 'Active')  || (subTypeGuest && subTypeGuest.status === 'Active')  ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : <Link className='d-block' to='#' >Read More <BsFillArrowRightCircleFill size={20}/></Link>}
                     {!subType  && !subTypeGuest ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
                     
                 </div> 

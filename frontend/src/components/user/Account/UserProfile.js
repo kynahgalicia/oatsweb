@@ -4,7 +4,7 @@ import {Row, Col, Button, Card} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import UserSidebar from '../../layout/UserSidebar'
 import profile from '../../img/profile.png'
-
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { fetchStudentCount } from '../../../redux/actions/loggingActions'
 const UserProfile = () => {
 
@@ -12,7 +12,7 @@ const UserProfile = () => {
     const dispatch = useDispatch()
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
-    const { borrowCount, bookmarksCount, thesisCount} = useSelector(state => state.studentCount)
+    const { borrowCount, bookmarksCount, thesisCount, loading} = useSelector(state => state.studentCount)
 
     useEffect(() => {
 
@@ -37,6 +37,7 @@ const UserProfile = () => {
                 </Col> 
                 
                 <Col sm={10}>
+                { loading ? <LoaderAdmin/>:
                     <div className="user-wrapper">
                         { user ? 
                         <>
@@ -104,6 +105,7 @@ const UserProfile = () => {
                             </Col>
                         </Row>
                     </div>
+                }
                 </Col>
             </Row>
     

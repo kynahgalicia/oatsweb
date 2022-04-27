@@ -1,20 +1,26 @@
 import React, { Fragment, useEffect } from 'react'
 import { useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Card} from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import GuestSidebar from '../../layout/GuestSidebar'
 import profile from '../../img/profile.png'
+import { fetchGuestCount } from '../../../redux/actions/loggingActions'
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 const GuestProfile = () => {
-
+    const dispatch = useDispatch()
     const history = useHistory()
 
     const { isLoggedInGuest, guest} = useSelector(state => state.authGuest)
-
+    const { bookmarksCount, loading} = useSelector(state => state.guestCount)
 
     useEffect(() => {
 
         if (!isLoggedInGuest) {
             history.push('/guest/login');
+        }
+
+        if(guest){
+            dispatch(fetchGuestCount(guest._id))
         }
     },[ history, isLoggedInGuest]);
     return (
@@ -26,6 +32,7 @@ const GuestProfile = () => {
                         <GuestSidebar/>
                     </Col>  
                     <Col sm={10}>
+                    { loading ? <LoaderAdmin/>:
                 <div className="guest-wrapper">
                 { guest ? 
                 <>
@@ -41,7 +48,7 @@ const GuestProfile = () => {
                         <h4>{guest.guest_fname} {guest.guest_lname}</h4>
                         <label><i>{guest.guest_mail}</i></label>
                         <br />
-                        <label> {guest.guest_contact}</label> <br />
+                        <label> +63{guest.guest_contact}</label> <br />
                         <label> {guest.guest_profession}</label> <br />
                         <label> {guest.guest_company}</label><br />
                         <label> {guest.guest_company_address}</label><br />
@@ -54,20 +61,25 @@ const GuestProfile = () => {
             
                     <Row>
                         <Col>
-                            <Card className="user-stats ">
-                                <label>My Bookmarks</label>
-                                <h1>1</h1>
-                            </Card>
                         </Col>
-                        <Col>
-                            <Card className="user-stats">
-                                <label>Bought Thesis</label>
-                                <h1>10</h1>
-                            </Card>
+                        <Col >
+                        <div className="card-box bg-peach">
+                                <div className="inner">
+                                <h3>{bookmarksCount}</h3>
+                                <p> My Bookmarks </p>
+                                </div>
+                                <div className="icon">
+                                <i className="fas fa-bookmark"></i>
+                                </div>
+                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                            </div>
+                        </Col>
+                        <Col >
                         </Col>
                     </Row>
                     
                 </div>
+        }
             </Col>
         </Row>
     

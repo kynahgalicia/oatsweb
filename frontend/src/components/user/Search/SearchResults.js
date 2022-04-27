@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import {Row,Col} from 'react-bootstrap'
+import { Row, Col, Button, Card, CardGroup, Form} from 'react-bootstrap'
 import {newBookmark, clearErrors} from '../../../redux/actions/bookmarkActions'
 import { NEW_BOOKMARK_RESET } from '../../../redux/constants/bookmarkConstants';
 // import moment from 'moment'
@@ -51,9 +51,9 @@ const SearchResults = ({userDept,thesis, thisId}) => {
 
                 <Row>
                     <Col>
-                    {subType ? <h5> <Link to={userDept && subType && userDept !== theses.department.deptname  && subType.status === "Pending"?  '#' : `/thesis/${theses._id}`} > {theses.title}</Link> </h5> : null}
-                    {subTypeGuest ? <h5> <Link to={subTypeGuest && subTypeGuest.status === "Pending" ? '#' : `/thesis/${theses._id}`} > {theses.title}</Link> </h5>: null}
-                    {!subTypeGuest && !subType? <h5> <Link to='#' > {theses.title}</Link> </h5>: null}
+                    {subType ? <h5> <Link to={`/thesis/${theses._id}`}> {theses.title}</Link> </h5> : null}
+                    {subTypeGuest ? <h5> <Link to={`/thesis/${theses._id}`} > {theses.title}</Link> </h5>: null}
+                    {!subTypeGuest && !subType? <h5> <Link to='/user/login'> {theses.title}</Link></h5>: null}
                     
                     </Col>
                     <Col> 
@@ -79,6 +79,73 @@ const SearchResults = ({userDept,thesis, thisId}) => {
             </div>
             
         ))}
+
+        {/* Subscription Modal */}
+        <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog modal-lg">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
+                                            
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div className="modal-body text-start">
+                                            <CardGroup>
+                                                <Card>
+                                                    <Card.Body>
+                                                        <div className='cardTitle'>
+                                                            <h1 className='d-inline'>₱50</h1><h3 className='d-inline'>/mo.</h3>
+                                                        </div>
+                                                        <br/>
+                                                        <Card.Text>
+                                                            Avail the subscription to access all of the thesis available in OATS.
+                                                        </Card.Text>
+                                                    </Card.Body>
+
+                                                    <Card.Footer className='cardTitle'>
+                                                        <Button type='submit'  data-backdrop="false" ><Link data-backdrop="" to="/user/payment" >Subscribe</Link></Button>
+                                                    </Card.Footer>
+                                                </Card>
+
+                                                <Card>
+                                                    <Card.Body>
+                                                        <div className='cardTitle'>
+                                                            <h1 className='d-inline'>₱140</h1><h3 className='d-inline'>/qtr.</h3>
+                                                        </div>
+                                                        <br/>
+                                                        <Card.Text>
+                                                            For 4 months, you can have access to the theses that has been archived in OATS.
+                                                        </Card.Text>
+                                                    </Card.Body>
+
+                                                    <Card.Footer className='cardTitle'>
+                                                        <Button>Subscribe</Button>
+                                                    </Card.Footer>
+                                                </Card>
+
+                                                <Card>
+                                                    <Card.Body>
+                                                        <div className='cardTitle'>
+                                                            <h1 className='d-inline'>₱550</h1><h3 className='d-inline'>/yr.</h3>
+                                                        </div>
+                                                        <br/>
+                                                        <Card.Text>
+                                                            Open access to ALL archived research in OATS for a whole year!
+                                                        </Card.Text>
+                                                    </Card.Body>
+
+                                                    <Card.Footer className='cardTitle'>
+                                                        <Button>Subscribe</Button>
+                                                    </Card.Footer>
+                                                </Card>
+                                            </CardGroup>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
         </Fragment>
     );
 }

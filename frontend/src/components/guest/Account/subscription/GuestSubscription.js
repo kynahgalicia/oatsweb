@@ -2,11 +2,10 @@ import { Fragment, useState, useEffect } from "react";
 import { useSelector} from 'react-redux'
 import { Link} from 'react-router-dom'
 import {Row, Col, Card, Button} from 'react-bootstrap'
-import UserSidebar from "../../../layout/UserSidebar";
+import GuestSidebar from "../../../layout/GuestSidebar";
 
-const UserSubscription = () => {
-
-    const {subType, isLoggedIn} = useSelector(state => state.authUser)
+const GuestSubscription = () => {
+    const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
 
     const [day, setDay] = useState(false)
     const [weekly, setWeek] = useState(false)
@@ -16,23 +15,23 @@ const UserSubscription = () => {
 
     useEffect(() => {
 
-        if(isLoggedIn){
-            if(subType && subType.sub_type === 'oneDay'){
+        if(isLoggedInGuest){
+            if( subTypeGuest && subTypeGuest.sub_type === 'oneDay'){
                 setDay(true)
             }
-            if(subType && subType.sub_type === 'weekly'){
+            if( subTypeGuest && subTypeGuest.sub_type === 'weekly'){
                 setWeek(true)
             }
         }
 
-    }, [isLoggedIn, day ,weekly, subType])
+    }, [isLoggedInGuest, day ,weekly])
     
 
     return (
         <Fragment>
             <Row>
                 <Col sm={2} className="admin-sidebar">
-                    <UserSidebar/>
+                    <GuestSidebar/>
                 </Col>
 
                 <Col sm={10}>
@@ -41,12 +40,12 @@ const UserSubscription = () => {
                         <h1 >Subscription</h1>
                     </div>
 
-                    { isLoggedIn && subType && subType.status === 'Pending' ? <div className="notif-bar bg-rose text-start"> <p>Please wait for the confirmation of your subscription</p> </div> : null}
+                    { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? <div className="notif-bar bg-rose text-start"> <p>Please wait for the confirmation of your subscription</p> </div> : null}
                     < div className="sub-cards">
                         
                         <Card className= {"sub-card text-start " + ( day ? 'border-current' : null)}>
                             <div className={( day ? 'sub-current' : 'd-none')}>
-                                <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null}</Card.Header> 
+                                <Card.Header >Current  { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}</Card.Header> 
                             </div>
                                 <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
                                 <Card.Body>
@@ -63,13 +62,13 @@ const UserSubscription = () => {
                                         </ul>
                                         </Col>
                                     </Row>
-                                    <Link to={`/user/payment/${oneDaySub}`}><Button className={( day ? 'd-none' : '')}>Select</Button></Link>
+                                    <Link to={`/guest/payment/${oneDaySub}`}><Button className={( day ? 'd-none' : '')}>Select</Button></Link>
                                 </Card.Body>
                         </Card>
 
                         <Card className= {"sub-card text-start " + ( weekly ? 'border-current' : null)}>
                             <div className={( weekly ? 'sub-current' : 'd-none')}>
-                            <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null}</Card.Header> 
+                                <Card.Header >Current { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}</Card.Header>
                             </div>
                             <Card.Header><h1 className="text-start">₱325/week</h1></Card.Header>
                             <Card.Body>
@@ -87,7 +86,7 @@ const UserSubscription = () => {
                                     </ul>
                                     </Col>
                                 </Row>
-                                <Link to={`/user/payment/${weeklySub}`}><Button className={( weekly ? 'd-none' : '')}>Select</Button></Link>
+                                <Link to={`/guest/payment/${weeklySub}`}><Button className={( weekly ? 'd-none' : '')}>Select</Button></Link>
                             </Card.Body>
                         </Card>
                         </div>  
@@ -99,4 +98,4 @@ const UserSubscription = () => {
     )
 }
 
-export default UserSubscription;
+export default GuestSubscription;

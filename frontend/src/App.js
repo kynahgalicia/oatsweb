@@ -75,7 +75,8 @@ import UserCreateThesis from './components/user/Account/Thesis/UserCreateThesis'
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
 import GuestBookmark from './components/guest/Account/GuestBookmark';
-import GuestPaid from './components/guest/Account/GuestPaid';
+import GuestSubscription from './components/guest/Account/subscription/GuestSubscription';
+import GuestPayment from './components/guest/Account/subscription/GuestPayment';
 
 import NotFound from './components/img/404.png'
 
@@ -155,7 +156,8 @@ function App() {
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>
-        <Route path="/guest/paid" component={GuestPaid} exact/>
+        <Route path="/guest/subscription" component={GuestSubscription} exact/>
+        <Route path="/guest/payment/:sub" component={GuestPayment} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>

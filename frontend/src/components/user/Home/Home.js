@@ -8,19 +8,18 @@ import {Row, Col} from 'react-bootstrap'
 import { getThesisCount } from '../../../redux/actions/thesisActions';
 import { searchLog, fetchHomeCount, fetchFeaturedCount} from '../../../redux/actions/loggingActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../../components/utils/Loader'
 
 
 const Home = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [keyword, setKeyword] = useState('');
-    const { thesisCount } = useSelector(state => state.thesis);
+    const { thesisCount, loading} = useSelector(state => state.thesis);
     const {adminToken} = useSelector(state => state.authAdminToken)
     const {homeCount} = useSelector(state => state.homeCount)
     const {featuredCount} = useSelector(state => state.featuredCount)
 
-    const{ topViewed, setThisTopView } = useState([])
-    const{ featuredThesis, setThisFeaturedThesis} = useState([])
     useEffect(() => {
 
         dispatch(getThesisCount())
@@ -34,7 +33,7 @@ const Home = () => {
         // }
         
         console.log(thesisCount)
-    }, [dispatch, history, topViewed, featuredThesis])
+    }, [dispatch, history])
     
     const searchHandler = (e) => {
         
@@ -59,52 +58,53 @@ const Home = () => {
     }
     return (  
         <Fragment>
-            {!adminToken ? <div className="content">
-            <div className="landingpage">
-                <img src={back} alt="logo" className="img-bg" />
+            {!adminToken ? 
+            loading ? <Loader/> :
+            <div className="content">
+                <div className="landingpage">
+                    <img src={back} alt="logo" className="img-bg" />
 
-                <Row>
-                    <Col sm={1}></Col>
-                    <Col sm={10}>
-                    <div className="search">
-                
-                        <h1>Preserving the past, opening the future.</h1>
-                        <h4>Search {thesisCount} items</h4>
+                    <Row>
+                        <Col sm={1}></Col>
+                        <Col sm={10}>
+                        <div className="search">
+                    
+                                <h1>Preserving the past, opening the future.</h1>
+                                <h4>Search {thesisCount} items</h4>
 
-                        <form onSubmit={searchHandler} className='searchbar ' >
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    id="search_field"
-                                    className="form-control "
-                                    onChange={(e) => setKeyword(e.target.value)}
-                                />
-                                <div className="input-group-append">
-                                    <button id="search_btn" className="btn">
-                                    <FaSearch></FaSearch>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                                <form onSubmit={searchHandler} className='searchbar ' >
+                                    <div className="input-group">
+                                        <input
+                                            type="text"
+                                            id="search_field"
+                                            className="form-control "
+                                            onChange={(e) => setKeyword(e.target.value)}
+                                        />
+                                        <div className="input-group-append">
+                                            <button id="search_btn" className="btn">
+                                            <FaSearch></FaSearch>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </Col>
+                        <Col sm={1}></Col>
+                    </Row>
                 </div>
-                </Col>
-                    <Col sm={1}></Col>
-                </Row>
-                
-            </div>
-            <div className="section">
-            <Cards cards={featuredCount} title="Featured Thesis" />
-            </div>
-            <div className="category">
-                <Department/>
-            </div>
-            <div className="section">
-                <Cards cards={homeCount} title="Top Viewed"></Cards>
 
-            </div>
-            
-            
-        </div> : null}
+                <div className="section">
+                <Cards cards={featuredCount} title="Featured Thesis" />
+                </div>
+                <div className="category">
+                    <Department/>
+                </div>
+                <div className="section">
+                    <Cards cards={homeCount} title="Top Viewed"></Cards>
+                </div>
+
+        </div> 
+        : null}
         {adminToken ? 
         <div className='wrapper'>
         Welcome Admin !

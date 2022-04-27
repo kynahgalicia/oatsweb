@@ -9,7 +9,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         return res.status(400).json({msg: "Please fill in all fields."})
 
     const subType = await Subscriptions.findOne({user_id})
-    if(subType) return res.status(400).json({msg: "You have an existing plan"})
+    if(subType) await Subscriptions.findOneAndDelete({user_id})
 
     const reference = await Subscriptions.findOne({reference_no})
     if(reference) return res.status(400).json({msg: "Reference number is invalid"})

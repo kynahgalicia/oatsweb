@@ -14,6 +14,8 @@ const ThesisDetails = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
     const history = useHistory()
+
+    const [userDept, setUserDept] = useState('')
     const [id, setThisID] = useState('')
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
@@ -22,9 +24,9 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
-    const {subType} = useSelector(state => state.authUser)
-    const {subTypeGuest} = useSelector(state => state.authGuest)
-    const {user} = useSelector(state => state.authUser)
+
+    const {subType, user, isLoggedIn} = useSelector(state => state.authUser)
+    const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
     const {loading, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
 
@@ -55,16 +57,20 @@ const ThesisDetails = () => {
             dispatch(clearErrors())
         }
 
-        if(!subType && !subTypeGuest){
-            history.goBack()
-            alert.error("Restricted")
+        // if(!subType && !subTypeGuest){
+        //     history.goBack()
+        //     alert.error("Restricted")
+        // }
+
+        if(isLoggedIn){
+            setUserDept(user.user_department.deptname)
         }
 
         if(success){
             alert.success('Your request has been sent!');
             dispatch({ type: STUDENT_BORROW_RESET })
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest, success, msg]);
+    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest, success, msg, isLoggedIn]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -153,20 +159,50 @@ const ThesisDetails = () => {
                             </label>
                         </div>
                         <div className='details-button'>
-
-                            <Link1 to={`/view/${id}`} className="m-1">
-                                <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
-                                <i className="fas fa-file-pdf"></i> PDF
+                        
+                    { userDept && userDept !== thisDepartment.deptname ? 
+                            <> 
+                            <Link1 to={subType && subType.status === "Pending" ? '#' : `/view/${id}`} className='m-1' > 
+                            <Button  data-placement="bottom" title="Download PDF" data-target={subType && subType.status === "Pending" ? '#subscriptionModal' : null} data-toggle="modal" >
+                            <i className="fas fa-file-pdf"></i> PDF
+                            {subType && subType.status === "Pending" ? <i className="fas fa-lock mx-1"></i> : null}
                                 </Button>
                             </Link1>
+                            </>
+                            :
+                            null
+                    }
+                    { userDept && userDept === thisDepartment.deptname ? 
+                            <> 
+                            <Link1 to={`/view/${id}`} className='m-1'> <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
+                            <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                    { isLoggedInGuest ? 
+                            <> 
+                            <Link1 to= {`/view/${id}`} className='m-1' > 
+                            <Button  data-placement="bottom" title="Download PDF"  >
+                            <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                            
+                                
 
                             <Button data-toggle="tooltip" data-placement="bottom" title="Citation Tool">
                                 <Link1 data-toggle="modal"  data-target={"#citationModal"}><i class="fas fa-pen-nib"></i> Citation Tool  </Link1>
                             </Button>
 
-                            <Button data-toggle="tooltip" data-placement="bottom" title="Request to borrow the physical book" className='m-1' onClick={() => borrowRequest()}>
+                            { isLoggedIn ? <Button data-toggle="tooltip" data-placement="bottom" title="Request to borrow the physical book" className='m-1' onClick={() => borrowRequest()}>
                                 <i class="fas fa-book"></i> Borrow Book
-                            </Button>
+                            </Button> : null}
                         </div>
                     </div>
             

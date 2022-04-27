@@ -175,3 +175,16 @@ exports.studentDataCount = catchAsyncErrors(async(req,res,next) => {
     })
 
 })
+
+exports.guestDataCount = catchAsyncErrors(async(req,res,next) => {
+    const user_id = req.params.user
+    
+    console.log(user_id)
+    const bookmarks = await Bookmarks.find({user_id}).count()
+    
+    res.status(200).json({
+        bookmarksCount: bookmarks
+
+    })
+
+})

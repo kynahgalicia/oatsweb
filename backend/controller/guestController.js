@@ -137,7 +137,7 @@ const guestController = {
             const url = `${FRONTEND_URL}/guest/reset/${access_token}`
 
             sendMail(guest_mail, url, "Reset your password")
-            res.json({msg: "Reset requeset sent! Please check your email."})
+            res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -184,7 +184,6 @@ const guestController = {
     // /guest/all_infor
     getGuestsAllInfor: async (req, res) => {
         try {
-            const subType = await Subscriptions.findOne({guest_id})
             const guests = await Guests.find()
 
             res.json({guests: guests,

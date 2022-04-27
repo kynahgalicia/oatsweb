@@ -62,7 +62,6 @@ const SignUpAsStudent = () => {
         formData.set('departments', thisDepartment);
         formData.set('courses', thisCourse);
 
-
         dispatch(register(formData));
     }
     
@@ -74,8 +73,8 @@ const SignUpAsStudent = () => {
         user_tupmail.trim().length && // TextInput
         user_contact.trim().length && // TextInput
         user_password.trim().length && // TextInput
-        thisDepartment.trim().length && // Dropdown
-        thisCourse.trim().length && // Dropdown
+        // thisDepartment.trim().length && // Dropdown
+        // thisCourse.trim().length && // Dropdown
           agree; // checkbox for terms
     
         if (isValid) {

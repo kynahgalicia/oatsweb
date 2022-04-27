@@ -23,7 +23,7 @@ import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adm
 
 import { subscriptionReducer , subscriptionsReducer } from "./reducers/subscriptionReducer"
 
-import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer } from "./reducers/loggingReducer"
+import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer, guestCountReducer } from "./reducers/loggingReducer"
 
 import thunk from 'redux-thunk'
 
@@ -86,7 +86,8 @@ const reducer = combineReducers({
     dataCount: dataCountReducer,
     homeCount: homeCountReducer,
     featuredCount: featuredCountReducer,
-    studentCount: studentCountReducer
+    studentCount: studentCountReducer,
+    guestCount: guestCountReducer
 
 })
 

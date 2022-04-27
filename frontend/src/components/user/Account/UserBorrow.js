@@ -7,6 +7,7 @@ import {Row, Col} from 'react-bootstrap'
 import moment from 'moment'
 import {MDBDataTableV5 } from 'mdbreact'
 import UserSidebar from '../../layout/UserSidebar'
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import {getStudentBorrow } from '../../../redux/actions/borrowActions';
 const UserBorrow = () => {
     const dispatch = useDispatch();
@@ -73,6 +74,8 @@ const UserBorrow = () => {
                 </Col> 
                 
                 <Col sm={10}>
+                
+                { loading ? <LoaderAdmin/>:
                 <div className="table-admin">
                         <div className='d-flex align-items-start m-2'>
                             <h1>Borrow</h1>
@@ -86,7 +89,9 @@ const UserBorrow = () => {
                             data={setData()} 
                             className='table px-4'
                             container-sm="true"/>
-                        </div>
+                </div>
+                        
+    }
                 </Col>
             </Row>
         </Fragment>
