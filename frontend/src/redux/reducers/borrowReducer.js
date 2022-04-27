@@ -83,7 +83,7 @@ export const newBorrowReducer = (state = { borrow: {} }, action) => {
         case STUDENT_BORROW_FAIL:
             return {
                 ...state,
-                error: action.payload
+                error: action.payload.msg
             }
 
         case NEW_BORROW_RESET:

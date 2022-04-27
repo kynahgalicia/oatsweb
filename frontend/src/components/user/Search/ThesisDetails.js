@@ -25,10 +25,10 @@ const ThesisDetails = () => {
     const {subType} = useSelector(state => state.authUser)
     const {subTypeGuest} = useSelector(state => state.authGuest)
     const {user} = useSelector(state => state.authUser)
-    const {loading, error, thesis } = useSelector(state => state.thesisDetails);
+    const {loading, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
 
-    const {success, msg} = useSelector(state => state.newBorrow)
+    const {success, msg, error} = useSelector(state => state.newBorrow)
     let {thesisId} = useParams()
     useEffect(() => {
         

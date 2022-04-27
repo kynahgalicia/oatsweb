@@ -109,7 +109,7 @@ export const studentBorrow = (borrowData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: STUDENT_BORROW_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data
         })
     }
 }
