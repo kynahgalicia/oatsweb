@@ -30,9 +30,7 @@ const LoginasGuest = () => {
             }
         }
 
-        if(error){
-            dispatch(clearErrors())
-        }
+        
 
     }, [dispatch, alert, isLoggedInGuest, error, history, redirect,msg])
 
@@ -41,6 +39,20 @@ const LoginasGuest = () => {
         localStorage.setItem('firstLogin', true)
         dispatch(login(guest_tupmail,guest_password));
 
+    }
+
+    const handleChangeEmail = (email) =>{
+        setEmail(email)
+        if(error){
+            dispatch(clearErrors())
+        }
+    }
+
+    const handleChangePassword = (pass) =>{
+        setPassword(pass)
+        if(error){
+            dispatch(clearErrors())
+        }
     }
 
     return (
@@ -59,12 +71,12 @@ const LoginasGuest = () => {
             <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="" name="guest_tupmail" id="guest_tupmail" value={guest_tupmail}
-                onChange={(e) => setEmail(e.target.value)} />
+                onChange={(e) => handleChangeEmail(e.target.value) } />
             </Form.Group>
             <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="" name="guest_password" id="guest_password" value={guest_password}
-                onChange={(e) => setPassword(e.target.value)} />
+                onChange={(e) => handleChangePassword(e.target.value)} />
             </Form.Group>
 
             {/* <Form.Group className="mb-3" id="formGridCheckbox">

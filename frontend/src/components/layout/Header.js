@@ -93,6 +93,7 @@ const Header = () => {
         }
         if(isLoggedIn){
             dispatch(logout());
+            history.push('/user/login')
             window.location.reload();
             alert.success('Logged out successfully.')
         }

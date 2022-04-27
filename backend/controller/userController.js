@@ -103,7 +103,7 @@ const userController = {
         try {
             const {user_tupmail, user_password} = req.body
             const user = await Users.findOne({user_tupmail})
-            if(!user) return res.status(400).json({msg: "This email does not exist."})
+            if(!user) return res.status(400).json({msg: "This email does not exist. Please register first."})
 
             const isMatch = await bcrypt.compare(user_password, user.user_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})

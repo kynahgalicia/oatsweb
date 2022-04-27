@@ -84,18 +84,7 @@ const UserThesisList = () => {
             rows: []
         }
     
-        if(theses){
-            theses.forEach(theses => {
-                const authorlist = []
-                theses.authors.forEach(name => {
-                    authorlist.push(name.lname)
-                })
-    
-                const keylist = []
-                theses.keywords.forEach( tag => {
-                    keylist.push(tag.keyword)
-                })
-    
+            theses.length && theses.forEach(theses => {
                 data.rows.push({
                     title: theses.title,
                     publishedAt: theses.publishedAt,
@@ -118,7 +107,6 @@ const UserThesisList = () => {
                     </Fragment>
                 })
             })
-        }
         
 
         return data;
