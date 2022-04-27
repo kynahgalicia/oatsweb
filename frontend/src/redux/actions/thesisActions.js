@@ -31,14 +31,14 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         if(department){
             link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }else{
-            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}`
+            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }
         
-        if(startDate && endDate){
-            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
-        }else{
-            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}`
-        }
+        // if(startDate && endDate){
+        //     link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
+        // }else{
+        //     link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}`
+        // }
         
         
         const { data } = await axios.get(link)

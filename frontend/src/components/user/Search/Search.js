@@ -54,6 +54,8 @@ const Search = () => {
     
         dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
+
+        console.log(thisDepartment)
     }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
 
     // function setCurrentPageNo(pageNumber) {
@@ -86,7 +88,6 @@ const Search = () => {
             dispatch(searchLog(formData))
 
                     history.replace(`/search/${thisKeyword}`)
-            
         } else {
             history.push('/')
         }
