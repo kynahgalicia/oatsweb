@@ -57,11 +57,6 @@ const ThesisDetails = () => {
             dispatch(clearErrors())
         }
 
-        // if(!subType && !subTypeGuest){
-        //     history.goBack()
-        //     alert.error("Restricted")
-        // }
-
         if(isLoggedIn){
             setUserDept(user.user_department.deptname)
         }
