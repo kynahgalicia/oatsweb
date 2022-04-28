@@ -29,7 +29,7 @@ const Cards = ({ cards, title}) => {
 
                     ))}
                     
-                    {(subType && subType.status === 'Active')  || (subTypeGuest && subTypeGuest.status === 'Active')  ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : <Link className='d-block' to='#' >Read More <BsFillArrowRightCircleFill size={20}/></Link>}
+                    {(subType && subType.status === 'Active')  || (subTypeGuest && subTypeGuest.status === 'Active')  ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
                     {!subType  && !subTypeGuest ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
                     
                 </div> 
