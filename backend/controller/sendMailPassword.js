@@ -18,7 +18,7 @@ const oauth2Client = new OAuth2(
 )
 
 // send mail
-const sendEmail = (to, url, txt) => {
+const sendEmailPassword = (to, url, txt) => {
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFRESH_TOKEN
     })
@@ -39,7 +39,7 @@ const sendEmail = (to, url, txt) => {
     const mailOptions = {
         from: SENDER_EMAIL_ADDRESS,
         to: to,
-        subject: "Verify Email Address",
+        subject: "Reset Password",
         html: `
         <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%; text-align: center; background-color: #F4F6F6;">
     <img 
@@ -53,13 +53,13 @@ const sendEmail = (to, url, txt) => {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: auto;
-    margin-right: auto;" src="cid:mailImageSVG"/>
-    <h3>Welcome to OATS!</h3>
-    <p> You're almost done in creating your account! <br> 
-    Just click the button below to verify your email address: 
+    margin-right: auto;" src="cid:passwordImageSVG"/>
+    <h3>Forgot your password?</h3>
+    <p>If you did not make this request, just ignore this email. <br>
+        Otherwise please click the button below to change your password:
     </p>
     
-    <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Verify</a>
+    <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Reset Password</a>
 
     </div>
         `,
@@ -68,9 +68,9 @@ const sendEmail = (to, url, txt) => {
                 path:'./backend/controller/img/logo.png',
                 cid: 'logoImagePng' //same cid value as in the html img src
             },{
-                filename: 'mail.png',
-                path:'./backend/controller/img/mail.png',
-                cid: 'mailImageSVG' //same cid value as in the html img src
+                filename: 'password.png',
+                path:'./backend/controller/img/password.png',
+                cid: 'passwordImageSVG' //same cid value as in the html img src
             },
             ]
     }
@@ -84,4 +84,4 @@ const sendEmail = (to, url, txt) => {
     })
 }
 
-module.exports = sendEmail
+module.exports = sendEmailPassword

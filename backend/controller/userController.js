@@ -5,6 +5,7 @@ const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
+const sendMailPassword = require('./sendMailPassword')
 const sendToken = require('../utils/jwtToken');
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
@@ -165,7 +166,7 @@ const userController = {
             const access_token = createAccessToken({id: user._id})
             const url = `${FRONTEND_URL}/user/reset/${access_token}`
 
-            sendMail(user_tupmail, url, "Reset your password")
+            sendMailPassword(user_tupmail, url, "Reset your password")
             res.json({msg: "Reset requeset sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
