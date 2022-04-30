@@ -95,7 +95,7 @@ const UserProfile = () => {
                                 <div className="card-box bg-pink">
                                     <div className="inner">
                                     <h3> {borrowCount} </h3>
-                                    <p> Borrowed Books </p>
+                                    <p> Unreturned Books </p>
                                     </div>
                                     <div className="icon">
                                     <i className="fas fa-book"></i>

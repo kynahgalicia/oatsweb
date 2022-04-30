@@ -35,10 +35,8 @@ const Search = () => {
 
     const {keyword} = useParams()
 
-
-    
-
     useEffect(() => {
+
         if (error) {
             return alert.error(error)
         }
@@ -52,11 +50,12 @@ const Search = () => {
             setThisId(guest._id)
         }
     
+
         dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
 
         console.log(thisDepartment)
-    }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
+    }, [dispatch, alert, error, keyword, userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
 
     // function setCurrentPageNo(pageNumber) {
     //     setCurrentPage(pageNumber)

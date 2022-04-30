@@ -69,7 +69,7 @@ const UserPayment = () => {
         formData.set('user_id', id);
         formData.set('sender_name', name);
         formData.set('sender_no', contact);
-        formData.set('reference_no', reference);
+        formData.set('reference_no1', reference.replace(/\s/g, ''));
         formData.set('sub_type', sub_type);
         formData.set('recieptImage', reciept);
 

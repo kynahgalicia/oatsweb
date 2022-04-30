@@ -70,9 +70,9 @@ const GuestPayment = () => {
 
         const formData = new FormData();
         formData.set('user_id', id);
-        formData.set('sender_name', name);
+        formData.set('sender_name', name.trim());
         formData.set('sender_no', contact);
-        formData.set('reference_no', reference);
+        formData.set('reference_no', reference.replace(/\s/g, ''));
         formData.set('sub_type', sub_type);
         formData.set('recieptImage', reciept);
 
@@ -172,6 +172,7 @@ const GuestPayment = () => {
 
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Reference no.</Form.Label>
+                                            
                                             <Form.Control
                                                 className=' my-1'
                                                 type="text"
