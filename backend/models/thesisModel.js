@@ -72,6 +72,14 @@ const thesisSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    uploadedBy:{
+        id:{
+            type: String
+        },
+        role:{
+            type:String
+        }
+    },
     status:{
         type: String,
         default: "Active"

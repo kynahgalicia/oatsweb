@@ -2,6 +2,7 @@ import {
     SUBSCRIBE_USER_REQUEST,
     SUBSCRIBE_USER_SUCCESS,
     SUBSCRIBE_USER_FAIL,
+    SUBSCRIBE_USER_RESET,
     DELETE_SUBSCRIBE_REQUEST,
     DELETE_SUBSCRIBE_SUCCESS,
     DELETE_SUBSCRIBE_FAIL,
@@ -30,6 +31,12 @@ export const subscriptionReducer = (state = { subscribe: [] }, action) => {
                 loading: false,
                 error: action.payload
             }
+
+            // case DELETE_SUBSCRIBE_RESET:
+            //     return {
+            //         ...state,
+            //         isDeleted: false
+            // }
 
         case CLEAR_ERRORS:
             return {

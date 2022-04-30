@@ -1,22 +1,34 @@
 import React, { Fragment, useEffect } from 'react'
 import { useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Card} from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import UserSidebar from '../../layout/UserSidebar'
 import profile from '../../img/profile.png'
+import LoaderAdmin from '../../../components/utils/LoaderAdmin'
+import { fetchStudentCount } from '../../../redux/actions/loggingActions'
 const UserProfile = () => {
 
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
-
+    const { borrowCount, bookmarksCount, thesisCount, loading} = useSelector(state => state.studentCount)
 
     useEffect(() => {
+
+    if(user){    
+        const formData = new FormData();
+        formData.set("user", user._id)
+
+        dispatch(fetchStudentCount(user._id))
+
+        console.log(user._id)
+    }
 
         if (!isLoggedIn) {
             history.push('/user/login');
         }
-    },[ history, isLoggedIn]);
+    },[ dispatch, history, isLoggedIn]);
     return (
         <Fragment>
             <Row>
@@ -25,6 +37,7 @@ const UserProfile = () => {
                 </Col> 
                 
                 <Col sm={10}>
+                { loading ? <LoaderAdmin/>:
                     <div className="user-wrapper">
                         { user ? 
                         <>
@@ -51,29 +64,48 @@ const UserProfile = () => {
                         </>: null}
                 
                         <Row>
-                            <Button className='mb-3'>
-                                Add Thesis
-                            </Button>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label>My Bookmarks</label>
-                                    <h1>1</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-peach">
+                                <div className="inner">
+                                <h3>{bookmarksCount}</h3>
+                                <p> My Bookmarks </p>
+                                </div>
+                                <div className="icon">
+                                <i className="fas fa-bookmark"></i>
+                                </div>
+                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                            </div>
                             </Col>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label> My Files</label>
-                                    <h1>1</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-peach2">
+                                    <div className="inner">
+                                    <h3> {thesisCount} </h3>
+                                    <p> Thesis Files </p>
+                                    </div>
+                                    <div className="icon">
+                                    <i className="fas fa-scroll"></i>
+                                    </div>
+                                    <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                                </div>
                             </Col>
-                            <Col sm={4}>
-                                <Card className="user-stats">
-                                    <label>Borrowed Books</label>
-                                    <h1>10</h1>
-                                </Card>
+                            <Col className="mx-1">
+
+                                <div className="card-box bg-pink">
+                                    <div className="inner">
+                                    <h3> {borrowCount} </h3>
+                                    <p> Unreturned Books </p>
+                                    </div>
+                                    <div className="icon">
+                                    <i className="fas fa-book"></i>
+                                </div>
+                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                            </div>
                             </Col>
                         </Row>
                     </div>
+                }
                 </Col>
             </Row>
     

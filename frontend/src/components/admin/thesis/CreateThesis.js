@@ -19,6 +19,7 @@ const CreateThesis = () => {
     const history = useHistory();
 
     const { loading, error, success } = useSelector(state => state.newThesis);
+    const { admin } = useSelector(state => state.authAdmin);
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -118,6 +119,9 @@ const CreateThesis = () => {
         formData.set("departments", thisDepartment)
         formData.set("courses", thisCourse)
         formData.set("upload", upload)
+        formData.set("role", "admin")
+        formData.set("uploadedId", admin._id)
+
 
         tags.forEach(keyword => {
             formData.append('thisKey',keyword)
@@ -308,7 +312,7 @@ const CreateThesis = () => {
                                                     <Form.Control
                                                         className='d-inline w-75 my-1 keywordInput'
                                                         type="text"
-                                                        placeholder='Press spa to add keywords'
+                                                        placeholder='Press space to add keywords'
                                                         onKeyUp={e => e.key == " " ? addTags(e): null}
                                                         // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
@@ -334,6 +338,7 @@ const CreateThesis = () => {
                                             <Form.Label>Thesis PDF</Form.Label>
                                             
                                             <div className="container">
+                                                <label><i>Note: Only PDF files below 500KB can be uploaded</i></label>
                                                 {/* <pre>{JSON.stringify(upload, null, '\t')}</pre> */}
                                                     <form action="" onSubmit={handleFormSubmit}> 
                                                     <FileBase64

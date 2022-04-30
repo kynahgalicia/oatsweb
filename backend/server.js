@@ -57,6 +57,7 @@ app.use('/user', require('./routes/userRouter'))
 app.use('/admin', require('./routes/adminRouter'))
 app.use('/guest', require('./routes/guestRouter'))
 app.use('/api', require('./routes/bookmarkRouter'))
+app.use('/api', require('./routes/loggingRouter'))
 app.use('/api', require('./routes/subscriptionRouter'))
 
 

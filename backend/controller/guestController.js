@@ -3,6 +3,7 @@ const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
+const sendMailPassword = require('./sendMailPassword')
 const sendToken = require('../utils/jwtToken');
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
@@ -130,14 +131,15 @@ const guestController = {
     forgotPassword: async (req, res) => {
         try {
             const {guest_mail} = req.body
+            console.log(guest_mail)
             const guest = await Guests.findOne({guest_mail})
             if(!guest) return res.status(400).json({msg: "This email does not exist."})
 
             const access_token = createAccessToken({id: guest._id})
             const url = `${FRONTEND_URL}/guest/reset/${access_token}`
 
-            sendMail(guest_mail, url, "Reset your password")
-            res.json({msg: "Reset requeset sent! Please check your email."})
+            sendMailPassword(guest_mail, url, "Reset your password")
+            res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -184,7 +186,6 @@ const guestController = {
     // /guest/all_infor
     getGuestsAllInfor: async (req, res) => {
         try {
-            const subType = await Subscriptions.findOne({guest_id})
             const guests = await Guests.find()
 
             res.json({guests: guests,

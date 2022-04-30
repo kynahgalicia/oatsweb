@@ -6,13 +6,16 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, Button, Card, CardGroup, Form} from 'react-bootstrap'
 import Loader from '../../utils/Loader'
 import { getThesisDetails, clearErrors } from '../../../redux/actions/thesisActions'
-
+import { studentBorrow} from '../../../redux/actions/borrowActions'
+import {viewLog} from '../../../redux/actions/loggingActions'
+import { STUDENT_BORROW_RESET } from '../../../redux/constants/borrowConstants'
 
 const ThesisDetails = () => {
-    const subscribed = true
     const dispatch = useDispatch()
     const alert = useAlert()
     const history = useHistory()
+
+    const [userDept, setUserDept] = useState('')
     const [id, setThisID] = useState('')
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
@@ -21,17 +24,24 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
-    const {subType} = useSelector(state => state.authUser)
-    const {subTypeGuest} = useSelector(state => state.authGuest)
 
-    const {loading, error, thesis } = useSelector(state => state.thesisDetails);
+    const {subType, user, isLoggedIn} = useSelector(state => state.authUser)
+    const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
+    const {loading, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
+    const [copyFormat, setCopyFormat] = useState('')
 
+    const {success, msg, error} = useSelector(state => state.newBorrow)
     let {thesisId} = useParams()
     useEffect(() => {
         
         if(thesis && thesis._id !== thesisId){
+
+            const formData = new FormData();
+            formData.set("thesis_id", thesisId)
+
             dispatch(getThesisDetails(thesisId))
+            dispatch(viewLog(formData))
         } else {
             setTitle(thesis.title)
             setPublishedAt(thesis.publishedAt)
@@ -48,11 +58,15 @@ const ThesisDetails = () => {
             dispatch(clearErrors())
         }
 
-        if(!subType && !subTypeGuest){
-            history.goBack()
-            alert.error("Restricted")
+        if(isLoggedIn){
+            setUserDept(user.user_department.deptname)
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest]);
+
+        if(success){
+            alert.success('Your request has been sent!');
+            dispatch({ type: STUDENT_BORROW_RESET })
+        }
+    }, [dispatch, alert, error ,thesisId, thesis, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -81,12 +95,33 @@ const ThesisDetails = () => {
                     + months.substring(0, 3) + '-'
                     + date.getFullYear() + '].'
                 )
+
+                setCopyFormat(
+                    authString 
+                    + '"' + title + '," '
+                    + 'Online Archiving Thesis System' + ', '
+                    + publishedAt + '. [Online]. ' 
+                    + 'Available: ' + window.location.origin + '/. '
+                    + '[Accessed: ' + date.getDate() + '-'
+                    + months.substring(0, 3) + '-'
+                    + date.getFullYear() + '].'
+                )
+
+
                 break;
             case('APA'):
                 console.log(e.target.value)
                 setFormat(
                     authString + '(' + publishedAt + '). ' 
                     + '<em>' + title + '</em>' + '. ' 
+                    + 'Retrieved ' + monthNames[date.getMonth()] 
+                    +  ' ' + date.getDate()
+                    + ', ' + date.getFullYear()
+                    + ' from ' + window.location.origin + '/'
+                )
+                setCopyFormat(
+                    authString + '(' + publishedAt + '). ' 
+                    + title + '. ' 
                     + 'Retrieved ' + monthNames[date.getMonth()] 
                     +  ' ' + date.getDate()
                     + ', ' + date.getFullYear()
@@ -103,6 +138,15 @@ const ThesisDetails = () => {
                 + date.getFullYear() + ', '
                 + ' from ' + window.location.origin + '/.'
             )
+            setFormat(
+                authors[0].lname 
+                + ', ' + authors[0].fname  
+                + ' , et al. ' 
+                + '"'+ title +'." '
+                + ' Online Archiving Thesis System ' + ', '
+                + date.getFullYear() + ', '
+                + ' from ' + window.location.origin + '/.'
+            )
                 console.log(e.target.value)
                 break;
             default:
@@ -114,6 +158,15 @@ const ThesisDetails = () => {
     const userPayment = () => {
         
         history.push('/user/payment')
+    }
+
+    const borrowRequest = () => {
+        
+        const formData = new FormData();
+        formData.set('user', user.user_tupid);
+        formData.set('theses', title);
+
+        dispatch(studentBorrow(formData))
     }
 
     
@@ -132,13 +185,50 @@ const ThesisDetails = () => {
                             </label>
                         </div>
                         <div className='details-button'>
-                            <Button className='mr-2' data-toggle="tooltip" data-placement="bottom" title="Download PDF">
-                                <i className="fas fa-file-pdf"></i> PDF  
-                            </Button>
+                        
+                    { userDept && userDept !== thisDepartment.deptname ? 
+                            <> 
+                            <Link1 to={!subType || (subType && subType.status === "Pending") ? '#' : `/view/${id}`} className='m-1' > 
+                            <Button  data-placement="bottom" title="Download PDF" data-target={!subType || (subType && subType.status === "Pending") ? '#subscriptionModal' : null} data-toggle="modal" >
+                            <i className="fas fa-file-pdf"></i> PDF
+                            {!subType || (subType && subType.status === "Pending") ? <i className="fas fa-lock mx-1"></i> : null}
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                    { userDept && userDept === thisDepartment.deptname ? 
+                            <> 
+                            <Link1 to={`/view/${id}`} className='m-1'> <Button data-toggle="tooltip" data-placement="bottom" title="Download PDF">
+                            <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                    { isLoggedInGuest ? 
+                            <> 
+                            <Link1 to= {`/view/${id}`} className='m-1' > 
+                            <Button  data-placement="bottom" title="Download PDF"  >
+                            <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                            
+                                
 
                             <Button data-toggle="tooltip" data-placement="bottom" title="Citation Tool">
                                 <Link1 data-toggle="modal"  data-target={"#citationModal"}><i class="fas fa-pen-nib"></i> Citation Tool  </Link1>
                             </Button>
+
+                            { isLoggedIn ? <Button data-toggle="tooltip" data-placement="bottom" title="Request to borrow the physical book" className='m-1' onClick={() => borrowRequest()}>
+                                <i class="fas fa-book"></i> Borrow Book
+                            </Button> : null}
                         </div>
                     </div>
             
@@ -190,15 +280,15 @@ const ThesisDetails = () => {
                         {/* Body */}
                         <Col sm={9}>
                             {/* Abstract */}
-                            <div className="text-start m-1 my-5">
+                            <div className="text-start m-1 my-5 abstract">
                                 <h5 id="abstract">Abstract</h5>
                                 <p className="text-justify">{abstract}</p>
                             </div>
 
                             {/* Subscription Button */}
-                            <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
+                            {/* <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#subscriptionModal'}>
                                 Purchase Subscription
-                            </Button>
+                            </Button> */}
 
                             {/* Subscription Modal */}
                             <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -332,8 +422,17 @@ const ThesisDetails = () => {
                                             <option> APA</option>
                                             <option> MLA</option>
                                         </Form.Select>
+                                        <div className="citation">
+                                        { format !== '' ? <Button className="float-right" variant="light"  data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard" 
+                                            onClick={() =>  navigator.clipboard.writeText( copyFormat )}
+                                            >
+                                            <i class="fas fa-copy"></i>
+                                        </Button>   :null } 
+                                        <div dangerouslySetInnerHTML={{ __html: format }} >
+                                        </div>
+                                        </div>
 
-                                        <div dangerouslySetInnerHTML={{ __html: format }} className="citation"></div>
+
                                     </Form.Group>
                                 </div>
                             </div>

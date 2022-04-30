@@ -46,18 +46,22 @@ import About from './components/user/Home/About'
 import Category from './components/user/Home/Category'
 import Contact from './components/user/Home/Contact'
 
-//Auth
+//Auth User
 import LoginasUser from './components/user/Auth/LoginasUser'
-import LoginasGuest from './components/user/Auth/LoginasGuest'
 import SignUp from './components/user/Auth/SignUp'
 import SignUpAsStudent from './components/user/Auth/SignUpAsStudent'
-import SignUpAsOrg from './components/user/Auth/SignUpAsOrg'
 import ActivationEmail from './components/user/Auth/ActivationEmail';
-import ActivationEmailGuest from './components/user/Auth/ActivationEmailGuest';
 import Redirect from './components/user/Auth/Redirect'
-import RedirectGuest from './components/user/Auth/RedirectGuest'
 import ForgotPassword from './components/user/Auth/ForgotPassword'
 import ResetPassword from './components/user/Auth/ResetPassword';
+
+// Auth Guest
+import LoginasGuest from './components/guest/Auth/LoginasGuest'
+import SignUpAsOrg from './components/guest/Auth/SignUpAsOrg'
+import ActivationEmailGuest from './components/guest/Auth/ActivationEmailGuest';
+import RedirectGuest from './components/guest/Auth/RedirectGuest'
+import ForgotPasswordGuest from './components/guest/Auth/ForgotPasswordGuest';
+import ResetPasswordGuest from './components/guest/Auth/ResetPasswordGuest';
 
 //Thesis User
 import Search from './components/user/Search/Search'
@@ -70,17 +74,21 @@ import UserBorrow from './components/user/Account/UserBorrow';
 import UserBookmark from './components/user/Account/UserBookmark';
 import UserSubscription from './components/user/Account/subsciption/UserSubscription';
 import UserPayment from './components/user/Account/subsciption/UserPayment';
-
+import UserThesisList from './components/user/Account/Thesis/UserThesisList';
+import UserCreateThesis from './components/user/Account/Thesis/UserCreateThesis';
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
 import GuestBookmark from './components/guest/Account/GuestBookmark';
-import GuestPaid from './components/guest/Account/GuestPaid';
+import GuestSubscription from './components/guest/Account/subscription/GuestSubscription';
+import GuestPayment from './components/guest/Account/subscription/GuestPayment';
 
 import NotFound from './components/img/404.png'
 
 import { getToken, loadUser } from './redux/actions/authActions'
 import { getAdminToken, loadAdmin} from './redux/actions/authAdminActions'
 import { getGuestToken, loadGuest} from './redux/actions/authGuestActions'
+
+
 function App() {
 
   const dispatch = useDispatch()
@@ -92,6 +100,7 @@ function App() {
   const {adminToken} = useSelector(state => state.authAdminToken)
   const {guestToken} = useSelector(state => state.authGuestToken)
   useEffect(() => {
+
     // console.log(token)
     if(!thisToken){
       dispatch(getToken())
@@ -127,30 +136,37 @@ function App() {
         <Route path="/Category" component={Category} exact/>
         <Route path="/Contact" component={Contact} exact/>
         <Route path="/user/login" component={LoginasUser} exact/>
-        <Route path="/guest/login" component={LoginasGuest} exact/>
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>
-        <Route path="/user/guest" component={SignUpAsOrg} exact/>
         <Route path="/user/activate/:activation_token" component={ActivationEmail} exact/>
-        <Route path="/guest/activate/:activation_token" component={ActivationEmailGuest} exact/>
         <Route path="/user/forgot" component={ForgotPassword} exact/>
         <Route path="/user/reset/:token" component={ResetPassword} exact/>
         <Route path="/Redirect" component={Redirect} exact/>
-        <Route path="/RedirectGuest" component={RedirectGuest} exact/>
         <Route path="/search" component={Search} exact/>
         <Route path="/search/:keyword" component={Search} exact/>
         <Route path="/thesis/:thesisId" component={ThesisDetails} exact/>
         <Route path="/view/:thesisId" component={ViewPDF} exact/>
+
+
+        <Route path="/guest/login" component={LoginasGuest} exact/>
+        <Route path="/RedirectGuest" component={RedirectGuest} exact/>
+        <Route path="/user/guest" component={SignUpAsOrg} exact/>
+        <Route path="/guest/activate/:activation_token" component={ActivationEmailGuest} exact/>
+        <Route path="/guest/forgot" component={ForgotPasswordGuest} exact/>
+        <Route path="/guest/reset/:token" component={ResetPasswordGuest} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
         <Route path="/user/subscription" component={UserSubscription} exact/>
         <Route path="/user/payment/:sub" component={UserPayment} exact/>
+        <Route path="/user/thesis" component={UserThesisList} exact/>
+        <Route path="/user/thesis/new" component={UserCreateThesis} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>
-        <Route path="/guest/paid" component={GuestPaid} exact/>
+        <Route path="/guest/subscription" component={GuestSubscription} exact/>
+        <Route path="/guest/payment/:sub" component={GuestPayment} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
@@ -176,7 +192,9 @@ function App() {
         </Route>
         </Switch>
 
+    <div className="footer">
       <Footer/>
+    </div>
     </div>
     {/* )} */}
     

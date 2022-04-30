@@ -5,6 +5,7 @@ const Subscriptions = require('../models/subscriptionModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
+const sendMailPassword = require('./sendMailPassword')
 const sendToken = require('../utils/jwtToken');
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
@@ -103,7 +104,7 @@ const userController = {
         try {
             const {user_tupmail, user_password} = req.body
             const user = await Users.findOne({user_tupmail})
-            if(!user) return res.status(400).json({msg: "This email does not exist."})
+            if(!user) return res.status(400).json({msg: "This email does not exist. Please register first."})
 
             const isMatch = await bcrypt.compare(user_password, user.user_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
@@ -165,8 +166,8 @@ const userController = {
             const access_token = createAccessToken({id: user._id})
             const url = `${FRONTEND_URL}/user/reset/${access_token}`
 
-            sendMail(user_tupmail, url, "Reset your password")
-            res.json({msg: "Reset requeset sent! Please check your email."})
+            sendMailPassword(user_tupmail, url, "Reset your password")
+            res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

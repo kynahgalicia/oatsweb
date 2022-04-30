@@ -5,11 +5,31 @@ const APIFeatures = require('../utils/apiFeatures')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
 const Thesis = require('../models/thesisModel')
+const Users = require('../models/userModel')
+const Admins = require('../models/adminModel')
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
     const uDept = await Department.findById(req.body.departments);
     const uCourse = await Course.findById(req.body.courses);
+
+    const role = req.body.role
+    const uploadedId = req.body.uploadedId
+
+    const uploadedBy ={
+        role: role,
+        id: uploadedId
+    }
+    // let uploadedBy = ''
+
+    // if(role === 'admin'){
+    //     uploadedBy = await Users.findById({uploadedId});
+
+    // }
+
+    // if(role === 'student'){
+    //     uploadedBy = await Admins.findById({uploadedId});
+    // }
 
     const department ={ 
         departments: uDept._id,
@@ -35,6 +55,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     req.body.keywords = keywords
     req.body.department = department
     req.body.course = course
+    req.body.uploadedBy = uploadedBy
 
     const thesis = await Thesis.create(req.body);
 
@@ -56,11 +77,24 @@ exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
 
 })
 
+exports.getStudentThesis = catchAsyncErrors(async (req, res, next) => {
+    const user_id = req.params.id
+
+    const theses = await Thesis.find({'uploadedBy.id': user_id});
+
+    res.status(200).json({
+        success: true,
+        theses
+    })
+
+})
+
 // /api/thesis
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
     const thesisCount = await Thesis.countDocuments();
     const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    
     
     let Thesis_query = await apiFeatures.query;
 

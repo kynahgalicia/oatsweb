@@ -1,6 +1,6 @@
 import { combineReducers , createStore, applyMiddleware, compose} from "redux";
 
-import { thesisReducer, newThesisReducer, thesisDetailsReducer } from "./reducers/thesisReducer";
+import { thesisReducer, newThesisReducer, thesisDetailsReducer, studentThesisReducer } from "./reducers/thesisReducer";
 
 import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
@@ -9,9 +9,9 @@ import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsRedu
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
 import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
 
-import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
+import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer}  from './reducers/authReducer'
 
-import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer} from './reducers/authGuestReducer'
+import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer, authGuestForgotPassReducer} from './reducers/authGuestReducer'
 
 import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
 
@@ -23,6 +23,8 @@ import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adm
 
 import { subscriptionReducer , subscriptionsReducer } from "./reducers/subscriptionReducer"
 
+import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer, guestCountReducer } from "./reducers/loggingReducer"
+
 import thunk from 'redux-thunk'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -32,6 +34,7 @@ const reducer = combineReducers({
     thesis: thesisReducer,
     newThesis: newThesisReducer,
     thesisDetails: thesisDetailsReducer,
+    studentThesis: studentThesisReducer,
     // Department
     department: departmentsReducer, 
     newDepartment: newDepartmentReducer,
@@ -74,9 +77,18 @@ const reducer = combineReducers({
     authGuest: authGuestReducer,
     authGuestRegister: authGuestRegisterReducer,
     authGuestToken: authGuestTokenReducer,
+    authGuestForgot: authGuestForgotPassReducer,
 
     subscribed: subscriptionReducer,
-    subscribes: subscriptionsReducer
+    subscribes: subscriptionsReducer,
+
+    logging: loggingReducer,
+    logs: logsReducer,
+    dataCount: dataCountReducer,
+    homeCount: homeCountReducer,
+    featuredCount: featuredCountReducer,
+    studentCount: studentCountReducer,
+    guestCount: guestCountReducer
 
 })
 

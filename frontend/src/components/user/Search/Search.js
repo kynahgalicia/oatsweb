@@ -13,6 +13,7 @@ import Loader from '../../utils/Loader'
 // Redux Action
 import {getThesis} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
+import {searchLog} from '../../../redux/actions/loggingActions'
 import Slider from '@mui/material/Slider';
 const Search = () => {
     const history = useHistory()
@@ -34,10 +35,8 @@ const Search = () => {
 
     const {keyword} = useParams()
 
-
-    
-
     useEffect(() => {
+
         if (error) {
             return alert.error(error)
         }
@@ -51,9 +50,12 @@ const Search = () => {
             setThisId(guest._id)
         }
     
+
         dispatch(getThesis(keyword, thisDepartment, startDate, endDate));
         dispatch(getDepartment())
-    }, [dispatch, alert, error, keyword,userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
+
+        console.log(thisDepartment)
+    }, [dispatch, alert, error, keyword, userDept, thisDepartment,startDate,endDate, thisId, isLoggedIn, isLoggedInGuest])
 
     // function setCurrentPageNo(pageNumber) {
     //     setCurrentPage(pageNumber)
@@ -75,13 +77,16 @@ const Search = () => {
     }
 
     const searchHandler = (e) => {
-        if(thisKeyword){
+        if(!thisKeyword){
             console.log('no key')
         }
         e.preventDefault()
         if (thisKeyword) {
-                    history.replace(`/search/${thisKeyword}`)
+            const formData = new FormData();
+            formData.set('keyword', thisKeyword.toLowerCase());
+            dispatch(searchLog(formData))
 
+                    history.replace(`/search/${thisKeyword}`)
         } else {
             history.push('/')
         }

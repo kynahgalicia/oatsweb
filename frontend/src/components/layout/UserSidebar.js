@@ -9,22 +9,27 @@ const UserSidebar = () => {
             onSelect={selectedKey => alert(`selected ${selectedKey}`)}
             >
             <Nav.Item>
-                <Link to="/user/profile"><i class="fas fa-user"></i> Profile</Link>
-            </Nav.Item>
-            <hr/>
-            
-            <Nav.Item>
-                <Link to="/user/borrow"><i class="fas fa-book"></i> Borrowed</Link>
-            </Nav.Item>
-            <hr/>
-            
-            <Nav.Item>
-                <Link to="/user/bookmark"> <i class="fas fa-bookmark"></i> Bookmarks</Link>
+                <Link to="/user/profile"><i className="fas fa-user"></i> Profile</Link>
             </Nav.Item>
             <hr/>
 
             <Nav.Item>
-                <Link to="/user/subscription"><i class="fas fa-credit-card"></i> Subscription</Link>
+                <Link to="/user/thesis"><i className="fas fa-scroll"></i> Thesis Files</Link>
+            </Nav.Item>
+            <hr/>
+            
+            <Nav.Item>
+                <Link to="/user/borrow"><i className="fas fa-book"></i> Borrow & Return</Link>
+            </Nav.Item>
+            <hr/>
+            
+            <Nav.Item>
+                <Link to="/user/bookmark"> <i className="fas fa-bookmark"></i> Bookmarks</Link>
+            </Nav.Item>
+            <hr/>
+
+            <Nav.Item>
+                <Link to="/user/subscription"><i className="fas fa-credit-card"></i> Subscription</Link>
             </Nav.Item>
             <hr/>
 

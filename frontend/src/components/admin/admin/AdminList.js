@@ -136,7 +136,6 @@ const UserList = () => {
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                             <div className="modal-body">
-                                Activate Admin?
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

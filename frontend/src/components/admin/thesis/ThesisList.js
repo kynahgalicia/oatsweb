@@ -19,9 +19,8 @@ const ThesisList = () => {
 
     useEffect(() => {
 
-        if(!thesis._id){
             dispatch(getThesis())
-        }
+        
     
     },[ dispatch, alert, error, history]);
 
@@ -77,7 +76,8 @@ const ThesisList = () => {
         }
     
 
-        thesis.forEach(thesis => {
+       if(thesis){ 
+           thesis.forEach(thesis => {
             const authorlist = []
             thesis.authors.forEach(name => {
                 authorlist.push(name.lname)
@@ -115,7 +115,7 @@ const ThesisList = () => {
         })
 
         return data;
-    }
+    }}
 
     return(
         <Fragment>

@@ -9,12 +9,12 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         return res.status(400).json({msg: "Please fill in all fields."})
 
     const subType = await Subscriptions.findOne({user_id})
-    if(subType) return res.status(400).json({msg: "You have an existing plan"})
+    if(subType) await Subscriptions.findOneAndDelete({user_id})
 
     const reference = await Subscriptions.findOne({reference_no})
     if(reference) return res.status(400).json({msg: "Reference number is invalid"})
 
-    const subscription = await Subscriptions.create(req.body);
+    
 
     let recieptLink = []
     let reciepts = []
@@ -37,6 +37,8 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
     req.body.reciept = recieptLink
 
+
+    const subscription = await Subscriptions.create(req.body);
 
     console.log(req.body)
     res.status(200).json({

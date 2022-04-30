@@ -5,9 +5,9 @@ import {
     ALL_THESIS_SUCCESS,
     ALL_THESIS_FAIL,
 
-    GET_THESIS_REQUEST,
-    GET_THESIS_SUCCESS,
-    GET_THESIS_FAIL,
+    ALL_STUDENT_THESIS_REQUEST,
+    ALL_STUDENT_THESIS_SUCCESS,
+    ALL_STUDENT_THESIS_FAIL,
 
     THESIS_COUNT_REQUEST,
     THESIS_COUNT_SUCCESS,
@@ -57,27 +57,21 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         if(department){
             link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&department.deptname=${department}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
         }else{
-            link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}`
-        }
-
-        if(startDate && endDate){
             link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}&publishedAt[gte]=${startDate}&publishedAt[lte]=${endDate}`
-        }else{
+        }
+        
+        if(!startDate && !endDate && !department){
             link = process.env.REACT_APP_URL + `/api/thesis?keyword=${keyword}`
         }
-
-
-
-
-
-
+        
+        
         const { data } = await axios.get(link)
         console.log(link)
         dispatch({
             type: ALL_THESIS_SUCCESS,
             payload: data
         })
-
+        
     } catch(error) {
         dispatch({
             type: ALL_THESIS_FAIL,
@@ -85,6 +79,27 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         })
     }
 }
+export const getStudentThesis = (id) => async (dispatch) => {
+
+    try {
+
+        dispatch({ type: ALL_STUDENT_THESIS_REQUEST })
+
+        const {data}= await axios.get( process.env.REACT_APP_URL + `/api/thesis/student/${id}`)
+
+        dispatch({
+            type: ALL_STUDENT_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ALL_STUDENT_THESIS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+
+};
 export const getThesisCount = () => async (dispatch) => {
     try {
         dispatch({ type: THESIS_COUNT_REQUEST })

@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
         <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
             
-                    <h1 className='text-center'>Forgot Password</h1>
+                    <h1 className='text-center'>Forgot Password <br /> (TUP-T Student)</h1>
 
                     {error && showErrMsg(error)}
                     {message && showSuccessMsg(message)}

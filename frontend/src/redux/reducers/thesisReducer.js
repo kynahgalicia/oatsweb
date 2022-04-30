@@ -12,6 +12,9 @@ import {
     THESIS_DETAILS_REQUEST,
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
+    ALL_STUDENT_THESIS_REQUEST,
+    ALL_STUDENT_THESIS_SUCCESS,
+    ALL_STUDENT_THESIS_FAIL,
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
@@ -107,6 +110,40 @@ export const thesisDetailsReducer = (state = { thesis: {} }, action) => {
             }
 
         case THESIS_DETAILS_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const studentThesisReducer = (state = { theses: {} }, action) => {
+    switch (action.type) {
+
+        case ALL_STUDENT_THESIS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                theses: []
+            }
+
+        case ALL_STUDENT_THESIS_SUCCESS:
+            return {
+                loading: false,
+                theses: action.payload.theses
+            }
+
+        case ALL_STUDENT_THESIS_FAIL:
             return {
                 ...state,
                 error: action.payload

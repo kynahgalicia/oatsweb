@@ -105,14 +105,14 @@ const BorrowList = () => {
             rows: []
         }
 
-        borrow.forEach(borrow => {
+        borrow && borrow.forEach(borrow => {
             if(borrow.dateReturned === null){
                 data.rows.push({
                     user: borrow.user.fname + " " + borrow.user.lname,
                     user_tupid: borrow.user.tupid,
                     thesis: borrow.thesis.title,
-                    admin: borrow.admin.fname + " " + borrow.admin.lname,
-                    admin_tupid: borrow.admin.tupid, 
+                    admin: ( borrow.admin ? borrow.admin.fname + " " + borrow.admin.lname: null),
+                    admin_tupid: ( borrow.admin? borrow.admin.tupid : null), 
                     dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                     dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
                     actions: 

@@ -2,18 +2,15 @@ import React, {useEffect, useState, Fragment} from 'react'
 import { useHistory, useParams} from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector} from 'react-redux'
-import FileBase64 from 'react-file-base64';
-import { Row, Col, Button, Form, CardGroup, Card} from 'react-bootstrap'
+import { Row, Col, Button, Form, Card} from 'react-bootstrap'
 import UserSidebar from "../../../layout/UserSidebar";
 import gcash from '../../../img/gcash.png'
-import fifty from '../../../img/fifty.jpg'
-import fivefifty from '../../../img/fivefifty.jpg'
+import fifty from '../../../img/oneDay.jpg'
+import fivefifty from '../../../img/weekly.jpg'
 
 import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
 
-const ThesisDetails = () => {
-    const monthly = true
-    const yearly = false
+const UserPayment = () => {
     
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -26,10 +23,9 @@ const ThesisDetails = () => {
     const[reciept,setReciept] = useState([])
     const[sub_type,setSubType] = useState('')
 
-    const { isLoggedIn, user} = useSelector(state => state.authUser)
-    const { isLoggedInGuest, guest} = useSelector(state => state.authGuest)
+    const { isLoggedIn, user, subType} = useSelector(state => state.authUser)
 
-    const { loading, msg, error, success} = useSelector
+    const { loading, msg, error, success} = useSelector(state => state.subscribed)
 
     const {sub} = useParams()
 
@@ -40,16 +36,13 @@ const ThesisDetails = () => {
             setSubType(sub)
         }
 
-        if(guest){
-            setId(guest._id)
-            setSubType(sub)
-        }
-
         if (success) {
             alert.success(msg);
+            history.push('/user/subscription')
+            window.location.reload()
         }
 
-    }, [dispatch, alert, error, success,history, msg]);
+    }, [dispatch, alert, error, success,history, msg, subType, isLoggedIn, sub, user]);
 
     const onChange = e => {
 
@@ -71,12 +64,12 @@ const ThesisDetails = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
+        
         const formData = new FormData();
         formData.set('user_id', id);
         formData.set('sender_name', name);
         formData.set('sender_no', contact);
-        formData.set('reference_no', reference);
+        formData.set('reference_no1', reference.replace(/\s/g, ''));
         formData.set('sub_type', sub_type);
         formData.set('recieptImage', reciept);
 
@@ -95,14 +88,15 @@ const ThesisDetails = () => {
 
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
-                            <h5>Your Plan</h5>
-                            <Card className= {"mx-4 sub-card text-start " + ( monthly ? null : 'd-none')} >
-                                    <Card.Header> <h1 className="text-start">₱50/mo.</h1></Card.Header>
+                        { isLoggedIn && subType ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                            <h5 className='my-2'>Your Plan</h5>
+                            <Card className= {"mx-4 sub-card text-start " + ( sub_type === 'oneDay' ? null : 'd-none')} >
+                                    <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
                                     <Card.Body>
                                         <Row>
                                             <Col>
                                             <p>
-                                            Access all of the thesis titles available for 1 month.
+                                            Access all of the thesis titles available for 1 day.
                                             </p>
                                             </Col>
                                             <Col>
@@ -115,14 +109,14 @@ const ThesisDetails = () => {
                                     </Card.Body>
                             </Card>
 
-                            <Card className= {"sub-card text-start w-100 " + ( yearly ? null : 'd-none')} >
-                                <Card.Header><h1 className="text-start">₱550/yr.</h1></Card.Header>
+                            <Card className= {"sub-card text-start w-100 " + ( sub_type === 'weekly' ? null : 'd-none')} >
+                                <Card.Header><h1 className="text-start">₱325/week</h1></Card.Header>
                                 <Card.Body>
                                     
                                     <Row>
                                         <Col>
                                         <p>
-                                        Open access to ALL archived research in OATS for a whole year
+                                        Open access to ALL archived research in OATS for 7 days
                                         </p>
                                         </Col>
                                         <Col>
@@ -142,10 +136,10 @@ const ThesisDetails = () => {
                                 <h5>Payment</h5>
                                 <Col className="p-5">
                                 <img src={gcash} alt="logo" className="p-3 w-50" />
-                                <img src={fifty} alt="logo" className={"p-3 w-75 " + ( monthly ? null : 'd-none')} />
-                                <img src={fivefifty} alt="logo" className={"p-3 w-75 "+ ( yearly ? null : 'd-none')} />
+                                <img src={fifty} alt="logo" className={"p-3 w-75 " + ( sub_type === 'oneDay' ? null : 'd-none')} />
+                                <img src={fivefifty} alt="logo" className={"p-3 w-75 "+ ( sub_type === 'weekly'? null : 'd-none')} />
                                 <p><strong>Open GCash &gt; Send Money &gt; Send via QR &gt; Confirmation details &gt; Screenshot Reciept</strong></p>
-                                <label>Note: Please use the GCash account of the number that is registered in your account</label>
+                                <label>Note: Make sure you have a screenshot of your receipt and take note of the reference number.</label>
                                 </Col>
 
                                 <Col className='text-start payment-details'>
@@ -211,4 +205,4 @@ const ThesisDetails = () => {
     );
 }
 
-export default ThesisDetails;
+export default UserPayment;

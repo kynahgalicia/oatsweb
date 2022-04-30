@@ -35,27 +35,52 @@ const sendEmail = (to, url, txt) => {
             accessToken
         }
     })
-
+    
     const mailOptions = {
         from: SENDER_EMAIL_ADDRESS,
         to: to,
-        subject: "OATS",
+        subject: "Verify Email Address",
         html: `
-            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
-            <h2 style="text-align: center; text-transform: uppercase;color: red;">Welcome to OATS!!!</h2>
-            <p>Congratulations! You're almost done in creating account for OATS!
-                Just click the button below to validate your email address.
-            </p>
-            
-            <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">${txt}</a>
+        <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%; text-align: center; background-color: #F4F6F6;">
+    <img 
+        style="max-width: 50px;  margin: 2px;"
+        src="cid:logoImagePng"/>
+    <h3 style="text-align: center; text-transform: uppercase;color: #6B2025;"> 
+    Online Archiving Thesis System</h5>
+    <img 
+    style="max-width: 200px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;" src="cid:mailImageSVG"/>
+    <h3>Welcome to OATS!</h3>
+    <p> You're almost done in creating your account! <br> 
+    Just click the button below to verify your email address: 
+    </p>
     
-            </div>
-        `
+    <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Verify</a>
+
+    </div>
+        `,
+        attachments: [{
+                filename: 'logo.png',
+                path:'./backend/controller/img/logo.png',
+                cid: 'logoImagePng' //same cid value as in the html img src
+            },{
+                filename: 'mail.png',
+                path:'./backend/controller/img/mail.png',
+                cid: 'mailImageSVG' //same cid value as in the html img src
+            },
+            ]
     }
 
     smtpTransport.sendMail(mailOptions, (err, infor) => {
-        if(err) return err;
-        return infor
+        if(err) {
+            console.log('Error:', err)
+        }else{
+            console.log('SENT!!!' + infor.response)
+        }
     })
 }
 

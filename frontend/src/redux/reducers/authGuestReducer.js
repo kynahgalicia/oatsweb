@@ -169,7 +169,7 @@ export const authGuestTokenReducer = (state = {token: {}}, action) => {
             return state
     }
 }
-export const authForgotPassReducer = (state = {msg: {}}, action) => {
+export const authGuestForgotPassReducer = (state = {msg: {}}, action) => {
     switch(action.type){
         case FORGOT_PASSWORD_GUEST_REQUEST:
         case RESET_PASSWORD_GUEST_REQUEST:
@@ -183,7 +183,8 @@ export const authForgotPassReducer = (state = {msg: {}}, action) => {
             return {
                 ...state,
                 loading: false,
-                message: action.payload.msg
+                message: action.payload.msg,
+                success:true
             }
 
         case FORGOT_PASSWORD_GUEST_FAIL:
@@ -191,7 +192,8 @@ export const authForgotPassReducer = (state = {msg: {}}, action) => {
             return {
                 ...state,
                 loading: false,
-                error: action.payload
+                error: action.payload,
+                success: false
             }
 
         case CLEAR_ERRORS:
