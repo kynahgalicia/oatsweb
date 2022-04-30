@@ -5,17 +5,17 @@ import {Form, Button} from 'react-bootstrap';
 // import {isEmail} from '../../utils/Validation',
 import { showErrMsg,showSuccessMsg } from '../../utils/Notification';
 import { useDispatch, useSelector } from 'react-redux';
-import { forgotPassword } from '../../../redux/actions/authActions';
+import { forgotPassword } from '../../../redux/actions/authGuestActions';
 
-const ForgotPassword = () => {
+const ForgotPasswordGuest = () => {
     const dispatch = useDispatch()
     
     // const history = useHistory()
     // const alert = useAlert()
     
-    const [user_tupmail, setEmail] = useState('');
+    const [guest_mail, setEmail] = useState('');
 
-    const {error, message, loading} = useSelector(state => state.authForgot);
+    const {error, message, loading} = useSelector(state => state.authGuestForgot);
     
     useEffect(() => {
         
@@ -23,20 +23,20 @@ const ForgotPassword = () => {
     
     const submitHandler = async e => {
         e.preventDefault()
-        dispatch(forgotPassword(user_tupmail))
+        dispatch(forgotPassword(guest_mail))
     }
     return ( 
         <div className="wrapper">
 
         <Form className="form-group auth-login" onSubmit={submitHandler} encType='application/json'>
             
-                    <h1 className='text-center'>Forgot Password <br /> (TUP-T Student)</h1>
+                    <h1 className='text-center'>Forgot Password <br />(Guest)</h1>
 
                     {error && showErrMsg(error)}
                     {message && showSuccessMsg(message)}
                     <Form.Group className="mb-3">
                     <Form.Label className="d-block">Enter your email address</Form.Label>
-                        <Form.Control  type="email" placeholder="" name="user_tupmail" id="user_tupmail" value={user_tupmail}
+                        <Form.Control  type="email" placeholder="" name="user_tupmail" id="user_tupmail" value={guest_mail}
                             onChange={(e) => setEmail(e.target.value)}/>
                     </Form.Group>
 
@@ -56,4 +56,4 @@ const ForgotPassword = () => {
     );
 }
 
-export default ForgotPassword;
+export default ForgotPasswordGuest;

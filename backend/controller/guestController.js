@@ -131,6 +131,7 @@ const guestController = {
     forgotPassword: async (req, res) => {
         try {
             const {guest_mail} = req.body
+            console.log(guest_mail)
             const guest = await Guests.findOne({guest_mail})
             if(!guest) return res.status(400).json({msg: "This email does not exist."})
 

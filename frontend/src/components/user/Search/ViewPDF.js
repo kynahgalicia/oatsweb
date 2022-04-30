@@ -94,7 +94,7 @@ const ViewPDF = () => {
 
     return(
 
-        <div className="wrapper">
+        <div className="wrapper pdf">
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
                     <Viewer fileUrl={viewPDF}
                         plugins={[defaultLayoutPluginInstance]}

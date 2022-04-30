@@ -79,7 +79,7 @@ const sendEmailPassword = (to, url, txt) => {
         if(err) {
             console.log('Error:', err)
         }else{
-            console.log('SENT!!!' + infor.response)
+            console.log('SENT!!!' + infor.response + to)
         }
     })
 }

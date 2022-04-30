@@ -1106,3 +1106,7 @@ input[type="file"]{
 .notif-bar p{
   color: var(--white);
 }
+
+.abstract, .pdf{
+    user-select: none;
+}

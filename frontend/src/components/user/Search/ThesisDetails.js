@@ -29,6 +29,7 @@ const ThesisDetails = () => {
     const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
     const {loading, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
+    const [copyFormat, setCopyFormat] = useState('')
 
     const {success, msg, error} = useSelector(state => state.newBorrow)
     let {thesisId} = useParams()
@@ -65,7 +66,7 @@ const ThesisDetails = () => {
             alert.success('Your request has been sent!');
             dispatch({ type: STUDENT_BORROW_RESET })
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format,subType, subTypeGuest, success, msg, isLoggedIn]);
+    }, [dispatch, alert, error ,thesisId, thesis, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -94,12 +95,33 @@ const ThesisDetails = () => {
                     + months.substring(0, 3) + '-'
                     + date.getFullYear() + '].'
                 )
+
+                setCopyFormat(
+                    authString 
+                    + '"' + title + '," '
+                    + 'Online Archiving Thesis System' + ', '
+                    + publishedAt + '. [Online]. ' 
+                    + 'Available: ' + window.location.origin + '/. '
+                    + '[Accessed: ' + date.getDate() + '-'
+                    + months.substring(0, 3) + '-'
+                    + date.getFullYear() + '].'
+                )
+
+
                 break;
             case('APA'):
                 console.log(e.target.value)
                 setFormat(
                     authString + '(' + publishedAt + '). ' 
                     + '<em>' + title + '</em>' + '. ' 
+                    + 'Retrieved ' + monthNames[date.getMonth()] 
+                    +  ' ' + date.getDate()
+                    + ', ' + date.getFullYear()
+                    + ' from ' + window.location.origin + '/'
+                )
+                setCopyFormat(
+                    authString + '(' + publishedAt + '). ' 
+                    + title + '. ' 
                     + 'Retrieved ' + monthNames[date.getMonth()] 
                     +  ' ' + date.getDate()
                     + ', ' + date.getFullYear()
@@ -113,6 +135,15 @@ const ThesisDetails = () => {
                 + ' , et al. ' 
                 + '"'+ title +'." '
                 + '<em> Online Archiving Thesis System </em>' + ', '
+                + date.getFullYear() + ', '
+                + ' from ' + window.location.origin + '/.'
+            )
+            setFormat(
+                authors[0].lname 
+                + ', ' + authors[0].fname  
+                + ' , et al. ' 
+                + '"'+ title +'." '
+                + ' Online Archiving Thesis System ' + ', '
                 + date.getFullYear() + ', '
                 + ' from ' + window.location.origin + '/.'
             )
@@ -249,7 +280,7 @@ const ThesisDetails = () => {
                         {/* Body */}
                         <Col sm={9}>
                             {/* Abstract */}
-                            <div className="text-start m-1 my-5">
+                            <div className="text-start m-1 my-5 abstract">
                                 <h5 id="abstract">Abstract</h5>
                                 <p className="text-justify">{abstract}</p>
                             </div>
@@ -391,8 +422,17 @@ const ThesisDetails = () => {
                                             <option> APA</option>
                                             <option> MLA</option>
                                         </Form.Select>
+                                        <div className="citation">
+                                        { format !== '' ? <Button className="float-right" variant="light"  data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard" 
+                                            onClick={() =>  navigator.clipboard.writeText( copyFormat )}
+                                            >
+                                            <i class="fas fa-copy"></i>
+                                        </Button>   :null } 
+                                        <div dangerouslySetInnerHTML={{ __html: format }} >
+                                        </div>
+                                        </div>
 
-                                        <div dangerouslySetInnerHTML={{ __html: format }} className="citation"></div>
+
                                     </Form.Group>
                                 </div>
                             </div>

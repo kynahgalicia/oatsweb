@@ -19,7 +19,7 @@ const UserSidebar = () => {
             <hr/>
             
             <Nav.Item>
-                <Link to="/user/borrow"><i className="fas fa-book"></i> Borrowed</Link>
+                <Link to="/user/borrow"><i className="fas fa-book"></i> Borrow & Return</Link>
             </Nav.Item>
             <hr/>
             

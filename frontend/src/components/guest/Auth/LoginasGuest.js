@@ -83,7 +83,7 @@ const LoginasGuest = () => {
             <Form.Check type="checkbox" label="Remember Me" />
             </Form.Group> */}
             <div className='text-center my-3'>
-            <label> <Link to="/forgotpassword"> Forgot your password?
+            <label> <Link to="/guest/forgot"> Forgot your password?
             </Link></label>
             </div>
 

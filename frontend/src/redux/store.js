@@ -9,9 +9,9 @@ import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsRedu
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
 import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
 
-import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer} from './reducers/authReducer'
+import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer}  from './reducers/authReducer'
 
-import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer} from './reducers/authGuestReducer'
+import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer, authGuestForgotPassReducer} from './reducers/authGuestReducer'
 
 import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
 
@@ -77,6 +77,7 @@ const reducer = combineReducers({
     authGuest: authGuestReducer,
     authGuestRegister: authGuestRegisterReducer,
     authGuestToken: authGuestTokenReducer,
+    authGuestForgot: authGuestForgotPassReducer,
 
     subscribed: subscriptionReducer,
     subscribes: subscriptionsReducer,

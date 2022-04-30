@@ -167,7 +167,7 @@ const userController = {
             const url = `${FRONTEND_URL}/user/reset/${access_token}`
 
             sendMailPassword(user_tupmail, url, "Reset your password")
-            res.json({msg: "Reset requeset sent! Please check your email."})
+            res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
