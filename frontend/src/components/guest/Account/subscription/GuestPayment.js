@@ -70,6 +70,7 @@ const GuestPayment = () => {
 
         const formData = new FormData();
         formData.set('user_id', id);
+        formData.set('user_role','guest');
         formData.set('sender_name', name.trim());
         formData.set('sender_no', contact);
         formData.set('reference_no', reference.replace(/\s/g, ''));

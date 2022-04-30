@@ -27,6 +27,7 @@ const ThesisDetails = () => {
 
     const {subType, user, isLoggedIn} = useSelector(state => state.authUser)
     const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
+    const {isLoggedInAdmin} = useSelector(state => state.authAdmin)
     const {loading, thesis } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
     const [copyFormat, setCopyFormat] = useState('')
@@ -66,7 +67,7 @@ const ThesisDetails = () => {
             alert.success('Your request has been sent!');
             dispatch({ type: STUDENT_BORROW_RESET })
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn]);
+    }, [dispatch, alert, error ,thesisId, thesis, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn, isLoggedInGuest, isLoggedInAdmin]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -138,7 +139,7 @@ const ThesisDetails = () => {
                 + date.getFullYear() + ', '
                 + ' from ' + window.location.origin + '/.'
             )
-            setFormat(
+            setCopyFormat(
                 authors[0].lname 
                 + ', ' + authors[0].fname  
                 + ' , et al. ' 
@@ -209,6 +210,17 @@ const ThesisDetails = () => {
                             null
                     }
                     { isLoggedInGuest ? 
+                            <> 
+                            <Link1 to= {`/view/${id}`} className='m-1' > 
+                            <Button  data-placement="bottom" title="Download PDF"  >
+                            <i className="fas fa-file-pdf"></i> PDF
+                                </Button>
+                            </Link1>
+                            </>
+                            :
+                            null
+                    }
+                    { isLoggedInAdmin ? 
                             <> 
                             <Link1 to= {`/view/${id}`} className='m-1' > 
                             <Button  data-placement="bottom" title="Download PDF"  >

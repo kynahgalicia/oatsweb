@@ -26,7 +26,8 @@ import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
 
 
-import PaymentList from './components/admin/payment/PaymentList'
+import SubscriptionList from './components/admin/subscribers/SubscriptionList'
+import SubscriptionRequest from './components/admin/subscribers/SubscriptionRequest'
 
 import UserList from './components/admin/users/UserList'
 import EditUser from './components/admin/users/EditUser'
@@ -37,6 +38,7 @@ import EditAdmin from './components/admin/admin/EditAdmin'
 import GuestList from './components/admin/guest/GuestList'
 
 import BorrowList from './components/admin/borrow/BorrowList'
+import BorrowRequest from './components/admin/borrow/BorrowRequest'
 import CreateBorrow from './components/admin/borrow/CreateBorrow'
 import ReturnList from './components/admin/return/ReturnList'
 
@@ -183,9 +185,11 @@ function App() {
         <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
-        <Route path="/admin/payment" component={PaymentList} exact/>
+        <Route path="/admin/subscription/list" component={SubscriptionList} exact/>
+        <Route path="/admin/subscription/request" component={SubscriptionRequest} exact/>
         <Route path="/admin/borrow" component={BorrowList} exact/>
         <Route path="/admin/borrow/new" component={CreateBorrow} exact/>
+        <Route path="/admin/borrow/request" component={BorrowRequest} exact/>
         <Route path="/admin/return" component={ReturnList} exact/>
         <Route path="*">
           {NoMatch}

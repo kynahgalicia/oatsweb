@@ -6,6 +6,19 @@
   --red: #B12A33;
   --white: #F4F6F6;
   --grey: #414141;
+  --success: #77DD76;
+  --danger: #FF6962;
+}
+
+.success{
+  background-color: var(--success) !important; 
+  color: var(--grey) !important;
+  border: 1px solid var(--success) !important;
+}
+.danger{
+  background-color: var(--danger) !important;
+  color: var(--grey) !important;
+  border: 1px solid var(--danger) !important;
 }
 
 .grey{
@@ -801,7 +814,7 @@ font-family: 'Poppins' , sans-serif;
   letter-spacing: 1.3px;
 }
 .successMsg{
-  background-color: #00be75;
+  background-color: var(--success);
   color: var(--black);
   text-align: center;
   padding: 10px;
@@ -829,7 +842,7 @@ font-family: 'Poppins' , sans-serif;
 }
 
 .activationMsg i{
-  color: #00be75;
+  color: var(--success);
 }
 
 .user-wrapper{
@@ -893,11 +906,18 @@ font-family: 'Poppins' , sans-serif;
   border: 1px solid  var(--black);
   left: 0 !important;
 }
-
+/* 
 .table-admin a{
   text-decoration: none;
   color: var(--white);
   font-family: 'Poppins' , sans-serif;
+} */
+.table-list{
+  color: var(--black) !important;
+}
+.link-admin{
+  text-decoration: none;
+  color: var(--white) !important;
 }
 
 .createthesis{
@@ -1027,7 +1047,7 @@ table td{
 }
 
 .sub-card button{
-  background-color:#00be75;
+  background-color:var(--success);
   border: none;
   float: right;
 }
@@ -1042,7 +1062,7 @@ table td{
 }
 
 .sub-card i{
-  color: #00be75;
+  color: var(--success);
 }
 
 .sub-card h1{
@@ -1051,12 +1071,12 @@ table td{
 }
 
 .sub-current .card-header{
-  background-color: #00be75 !important;
+  background-color: var(--success) !important;
   color: var(--white);
 }
 
 .border-current{
-  border: 3px solid #00be75 !important;
+  border: 3px solid var(--success) !important;
 }
 
 .payment-wrapper{

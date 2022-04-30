@@ -43,8 +43,8 @@ const Header = () => {
                 
                 console.log(duration)
                 if(subType.status === "Active" && duration >= 1 ){
-                    dispatch(deleteSubscribe(subType._id))
-                    window.location.reload()
+                    // dispatch(deleteSubscribe(subType._id))
+                    // window.location.reload()
                 }
             }}
 

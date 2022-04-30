@@ -1,11 +1,13 @@
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const cloudinary = require('cloudinary')   
 const Subscriptions = require('../models/subscriptionModel.js')
+const Users = require('../models/userModel.js')
+const Guests = require('../models/guestModel.js')
 exports.create = catchAsyncErrors(async(req,res,next) => {
 
-    const {user_id, sender_name, sender_no, reference_no, sub_type, recieptImage} = req.body
+    const {user_id, user_role, sender_name, sender_no, reference_no, sub_type, recieptImage} = req.body
     
-    if(!user_id || !sender_name || !sender_no || !reference_no || !sub_type || !recieptImage)
+    if(!user_id || !user_role || !sender_name || !sender_no || !reference_no || !sub_type || !recieptImage)
         return res.status(400).json({msg: "Please fill in all fields."})
 
     const subType = await Subscriptions.findOne({user_id})
@@ -14,7 +16,27 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     const reference = await Subscriptions.findOne({reference_no})
     if(reference) return res.status(400).json({msg: "Reference number is invalid"})
 
-    
+    let user = {}
+
+    if(user_role === 'student'){
+        const uData = await Users.findById(user_id);
+
+        user = {
+            user_id: user_id,
+            user_name: uData.user_fname + " " + uData.user_lname
+        }
+    }
+
+    if(user_role === 'guest'){
+        const gData = await Guests.findById(user_id);
+
+        user = {
+            user_id: user_id,
+            user_name: gData.guest_fname + " " + gData.guest_lname
+        }
+    }
+
+
 
     let recieptLink = []
     let reciepts = []
@@ -36,6 +58,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     }
 
     req.body.reciept = recieptLink
+    req.body.user = user
 
 
     const subscription = await Subscriptions.create(req.body);
@@ -53,6 +76,23 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
     const subscription = await Subscriptions.find({user_id});
 
     if(!subscription) return res.status(200).json({msg: "No Subscriptions"})
+
+
+    
+    res.status(200).json({
+        success: true,
+        subscription
+
+    })
+
+})
+
+exports.findList = catchAsyncErrors(async(req,res,next) => {
+    const subscription = await Subscriptions.find();
+    if(!subscription) return res.status(200).json({msg: "No Data"})
+    
+
+    console.log(subscription)
     
     res.status(200).json({
         success: true,

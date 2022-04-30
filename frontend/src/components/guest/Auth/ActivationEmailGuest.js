@@ -23,7 +23,7 @@ const ActivationEmailGuest = () => {
         return (
             <div className="activationMsg">
             <h4>{success} <i className="fas fa-check-circle"></i></h4>
-            <Button className="btn btn-dark"><Link to="/user/login">Login Now</Link></Button>
+            <Button className="btn btn-dark"><Link to="/guest/login">Login Now</Link></Button>
             </div>
         );
     }

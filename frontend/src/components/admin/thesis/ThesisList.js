@@ -90,7 +90,7 @@ const ThesisList = () => {
 
             console.log(authorlist)
             data.rows.push({
-                title: thesis.title,
+                title: <Link className='table-list' to={`/thesis/${thesis._id}`}> {thesis.title}</Link>,
                 publishedAt: thesis.publishedAt,
                 // authors: authorlist + "",
                 // keywords: keylist + "",
@@ -129,10 +129,13 @@ const ThesisList = () => {
                     <div className='d-flex align-items-start m-2'>
                         <h1>Thesis</h1>
                     </div>
-                    <div className='d-flex align-items-start mx-5 mt-3'>
-                        <Button variant="success"><Link to="/admin/thesis/new">+ Add</Link></Button>
-                    </div>
+                
 
+                { loading ? <LoaderAdmin /> :
+                <>
+                <div className='d-flex align-items-start mx-5 mt-3'>
+                        <Button variant="success"><Link className='link-admin' to="/admin/thesis/new">+ Add</Link></Button>
+                    </div>
                     <MDBDataTableV5 
                         hover 
                         entriesOptions={[5, 10, 15, 25]} 
@@ -141,6 +144,8 @@ const ThesisList = () => {
                         data={setData()} 
                         className='table'
                         container-sm="true"/>
+                </>
+                }
                 </div>
                 </div>
             </Col>

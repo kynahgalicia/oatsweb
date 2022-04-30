@@ -1,8 +1,15 @@
 const mongoose = require('mongoose')
 const subSchema = new mongoose.Schema({
-    user_id: {
-        type: String,
-        required: true
+    user:{ 
+        user_id: {
+            type: String
+        },
+        user_name: {
+            type: String
+        }
+    },
+    user_role:{
+        type: String
     },
     sender_name:{
         type:String,

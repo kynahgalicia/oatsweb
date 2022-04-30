@@ -11,7 +11,7 @@ import { getBorrow, updateBorrow, deleteBorrow, clearErrors} from '../../../redu
 import { UPDATE_BORROW_RESET, DELETE_BORROW_RESET } from '../../../redux/constants/borrowConstants';
 import AdminSidebar from '../../layout/AdminSidebar'
 
-const BorrowList = () => {
+const BorrowRequest = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
     const {  error: updateError, isUpdated, deleteError, isDeleted } = useSelector(state => state.borrow);
     const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
@@ -63,8 +63,8 @@ const BorrowList = () => {
         const data = {
             columns: [
                 {
-                    label: 'Borrower',
-                    field: 'user',
+                    label: 'Thesis',
+                    field: 'thesis',
                     sort: 'desc'
                 },
                 {
@@ -73,28 +73,13 @@ const BorrowList = () => {
                     sort: 'desc'
                 },
                 {
-                    label: 'Thesis',
-                    field: 'thesis',
+                    label: 'Borrower',
+                    field: 'user',
                     sort: 'desc'
                 },
                 {
-                    label: 'Admin',
-                    field: 'admin',
-                    sort: 'asc'
-                },
-                {
-                    label: 'TUPT ID',
-                    field: 'admin_tupid',
-                    sort: 'desc'
-                },
-                {
-                    label: 'Date Borrowed',
-                    field: 'dateBorrowed',
-                    sort: 'desc'
-                },
-                {
-                    label: 'Due Date',
-                    field: 'dueDate',
+                    label: 'Status',
+                    field: 'status',
                     sort: 'desc'
                 },
                 {
@@ -106,55 +91,31 @@ const BorrowList = () => {
         }
 
         borrow && borrow.forEach(borrow => {
-            if(borrow.dateReturned === null && borrow.status === 'Active'){
+            if(borrow.status === 'Pending'){
                 data.rows.push({
-                    user: borrow.user.fname + " " + borrow.user.lname,
-                    user_tupid: borrow.user.tupid,
                     thesis: borrow.thesis.title,
-                    admin: ( borrow.admin ? borrow.admin.fname + " " + borrow.admin.lname: null),
-                    admin_tupid: ( borrow.admin? borrow.admin.tupid : null), 
-                    dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
-                    dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
+                    user_tupid: borrow.user.tupid,
+                    user: borrow.user.fname + " " + borrow.user.lname,
+                    status: borrow.status,
                     actions: 
                     <Fragment>
-                        <Button variant="info" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
-                            Return
+                        <Button className="success">
+                            Accept
                         </Button> 
-                        <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
-                            <FaTrash/>
+                        <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
+                            Decline
                         </Button> 
     
-    
-                        <div className="modal fade" id={'returnModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                <div className="modal-body">
-                                <Form.Group className='mb-3'>
-                                                <Form.Label>Date Returned</Form.Label>
-                                                <Form.Control
-                                                    className='w-75 my-1 flex-center'
-                                                    type="date"
-                                                    onChange={(e) => setDateReturned(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                </div>
-                                <div className="modal-footer">
-                                    <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
     
                         <div className="modal fade" id={'deleteModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                 <div className="modal-body">
-                                    Delete Permanently?
+                                    Do you really want to decline the request?
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => deleteBorrowHandler(borrow._id)}>Yes</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => returnHandler(borrow._id)}>Submit</Button>
                                 </div>
                                 </div>
                             </div>
@@ -192,10 +153,7 @@ const BorrowList = () => {
                     <div className="admin-wrapper">
                         <div className="table-admin">
                         <div className='d-flex align-items-start m-2'>
-                            <h1>Borrow</h1>
-                        </div>
-                        <div className='d-flex align-items-start mx-5 mt-3'>
-                            <Button variant="success"><Link to="/admin/borrow/new">+ Add</Link></Button>
+                            <h1>Borrow Requests</h1>
                         </div>
 
                             <MDBDataTableV5 
@@ -214,4 +172,4 @@ const BorrowList = () => {
     )
 }
 
-export default BorrowList;
+export default BorrowRequest;

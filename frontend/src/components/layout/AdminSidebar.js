@@ -60,8 +60,9 @@ const AdminSidebar = () => {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="list-group">
-                                    <Link to="/admin/borrow" className="list-group-item list-group-item-action">Borrowed</Link>
-                                    <Link to="/admin/return" className="list-group-item list-group-item-action">Returned</Link>
+                                    <Link to="/admin/borrow/request" className="list-group-item list-group-item-action">Request</Link>
+                                    <Link to="/admin/borrow" className="list-group-item list-group-item-action">Borrow</Link>
+                                    <Link to="/admin/return" className="list-group-item list-group-item-action">Return</Link>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +72,26 @@ const AdminSidebar = () => {
             <hr/>
 
             <Nav.Item>
-                <Link to="/admin/payment">Payment</Link>
+                <div className=" admin-accordion accordion" id="accordionExample">
+                    <div className="card">
+                        <div className="card-header" id="headingOne">
+                            <h2 className="mb-0">
+                                <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Subscription
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div className="card-body">
+                                <div className="list-group">
+                                    <Link to="/admin/subscription/request" className="list-group-item list-group-item-action">Request</Link>
+                                    <Link to="/admin/subscription/list" className="list-group-item list-group-item-action">Subscriptions</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </Nav.Item>
             <hr/>
     </Nav>

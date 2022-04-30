@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { 
+    GET_SUBSCRIBE_REQUEST,
+    GET_SUBSCRIBE_SUCCESS,
+    GET_SUBSCRIBE_FAIL,
     SUBSCRIBE_USER_REQUEST,
     SUBSCRIBE_USER_SUCCESS,
     SUBSCRIBE_USER_FAIL,
@@ -10,6 +13,27 @@ import {
     CLEAR_ERRORS
 } from '../constants/subscriptionConstants';
 
+export const getSubscribe = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: GET_SUBSCRIBE_REQUEST })
+
+
+        const {data} = await axios.get( process.env.REACT_APP_URL + '/api/subscription')
+
+        dispatch({
+            type: GET_SUBSCRIBE_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: GET_SUBSCRIBE_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
 export const userSubscribe = (subData) => async (dispatch) => {
     try {
 

@@ -21,7 +21,7 @@ import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/gue
 
 import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adminReducer'
 
-import { subscriptionReducer , subscriptionsReducer } from "./reducers/subscriptionReducer"
+import { subscriptionReducer , subscriptionsReducer, fetchSubscriptionsReducer } from "./reducers/subscriptionReducer"
 
 import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer, guestCountReducer } from "./reducers/loggingReducer"
 
@@ -81,6 +81,7 @@ const reducer = combineReducers({
 
     subscribed: subscriptionReducer,
     subscribes: subscriptionsReducer,
+    subs: fetchSubscriptionsReducer,
 
     logging: loggingReducer,
     logs: logsReducer,

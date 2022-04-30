@@ -1,4 +1,7 @@
 import { 
+    GET_SUBSCRIBE_REQUEST,
+    GET_SUBSCRIBE_SUCCESS,
+    GET_SUBSCRIBE_FAIL,
     SUBSCRIBE_USER_REQUEST,
     SUBSCRIBE_USER_SUCCESS,
     SUBSCRIBE_USER_FAIL,
@@ -77,6 +80,40 @@ export const subscriptionsReducer = (state = {}, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+export const fetchSubscriptionsReducer = (state = { subs: []}, action) => {
+    switch (action.type) {
+
+        case GET_SUBSCRIBE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                subs: []
+            }
+
+        case GET_SUBSCRIBE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                subs: action.payload.subscription
+            }
+
+
+        case GET_SUBSCRIBE_FAIL:
+            return {
+                ...state,
+                error: action.payload
             }
 
         case CLEAR_ERRORS:
