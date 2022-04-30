@@ -52,6 +52,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                 <Row>
                     <Col>
                     { isLoggedIn ?  <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5>: null}
+                    { isLoggedInGuest &&  !subTypeGuest ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Active') ? <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5> : null}
                     { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     {!isLoggedInGuest && !isLoggedIn  ? <h5> <Link to='/user/login'> {theses.title}</Link></h5>: null}
