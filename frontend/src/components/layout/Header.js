@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {logout} from '../../redux/actions/authActions'
 import {logoutAdmin} from '../../redux/actions/authAdminActions'
 import {logoutGuest} from '../../redux/actions/authGuestActions'
-import { deleteSubscribe } from '../../redux/actions/subscriptionActions';
+import { expireSubscribe } from '../../redux/actions/subscriptionActions';
 import moment from 'moment'
 import logo from '../img/logo.png'
 const Header = () => {
@@ -34,7 +34,7 @@ const Header = () => {
 
                 
                 if(subType){
-                const startDate = moment(subType.paidAt);
+                const startDate = moment(subType.activatedAt);
                 const timeEnd = moment(Date.now());
                 const diff = timeEnd.diff(startDate);
                 const diffDuration = moment.duration(diff);
@@ -42,10 +42,16 @@ const Header = () => {
                 const duration = diffDuration._data.days;
                 
                 console.log(duration)
-                if(subType.status === "Active" && duration >= 1 ){
-                    // dispatch(deleteSubscribe(subType._id))
-                    // window.location.reload()
+                if(subType.sub_type === 'oneDay' && subType.status === "Active" && duration >= 1 ){
+                    dispatch(expireSubscribe(subType._id))
+                    window.location.reload()
                 }
+                if(subType.sub_type === 'weekly' && subType.status === "Active" && duration >= 7 ){
+                    dispatch(expireSubscribe(subType._id))
+                    window.location.reload()
+                }
+                
+
             }}
 
             if(isLoggedInAdmin){
@@ -56,7 +62,7 @@ const Header = () => {
                 setThisGuest(guest.guest_fname)
 
                 if(subTypeGuest){
-                    const startDate = moment(subTypeGuest.paidAt);
+                    const startDate = moment(subTypeGuest.activatedAt);
                     const timeEnd = moment(Date.now());
                     const diff = timeEnd.diff(startDate);
                     const diffDuration = moment.duration(diff);
@@ -64,8 +70,12 @@ const Header = () => {
                     const duration = diffDuration._data.days;
                     
                     console.log(duration)
-                    if(subTypeGuest.status === "Active" && duration >= 1 ){
-                        dispatch(deleteSubscribe(subTypeGuest._id))
+                    if(subTypeGuest.sub_type === 'oneDay' && subTypeGuest.status === "Active" && duration >= 1 ){
+                        dispatch(expireSubscribe(subTypeGuest._id))
+                        window.location.reload()
+                    }
+                    if(subTypeGuest.sub_type === 'weekly' && subTypeGuest.status === "Active" && duration >= 7 ){
+                        dispatch(expireSubscribe(subTypeGuest._id))
                         window.location.reload()
                     }
             }

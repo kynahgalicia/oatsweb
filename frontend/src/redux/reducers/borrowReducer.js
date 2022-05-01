@@ -2,25 +2,40 @@ import {
     ALL_BORROW_REQUEST,
     ALL_BORROW_SUCCESS,
     ALL_BORROW_FAIL,
+
     ALL_STUDENT_BORROW_REQUEST,
     ALL_STUDENT_BORROW_SUCCESS,
     ALL_STUDENT_BORROW_FAIL,
+
     NEW_BORROW_REQUEST,
     NEW_BORROW_SUCCESS,
     NEW_BORROW_RESET,
     NEW_BORROW_FAIL,
+
     STUDENT_BORROW_REQUEST,
     STUDENT_BORROW_SUCCESS,
     STUDENT_BORROW_RESET,
     STUDENT_BORROW_FAIL,
+
     UPDATE_BORROW_REQUEST,
     UPDATE_BORROW_SUCCESS,
     UPDATE_BORROW_FAIL,
     UPDATE_BORROW_RESET,
+
     DELETE_BORROW_REQUEST,
     DELETE_BORROW_SUCCESS,
     DELETE_BORROW_RESET,
     DELETE_BORROW_FAIL,
+
+    VERIFY_BORROW_REQUEST,
+    VERIFY_BORROW_SUCCESS,
+    VERIFY_BORROW_FAIL,
+    VERIFY_BORROW_RESET,
+
+    DECLINE_BORROW_REQUEST,
+    DECLINE_BORROW_SUCCESS,
+    DECLINE_BORROW_FAIL,
+    DECLINE_BORROW_RESET,
     CLEAR_ERRORS
 } from '../constants/borrowConstants'
 
@@ -146,6 +161,61 @@ export const borrowReducer = (state = {}, action) => {
             return {
                 ...state,
                 isUpdated: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const verifyBorrowsReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case VERIFY_BORROW_REQUEST:
+        case DECLINE_BORROW_REQUEST:
+            return {
+                ...state,
+                loadingButton: true,
+            }
+
+        case VERIFY_BORROW_SUCCESS:
+            return {
+                ...state,
+                loadingButton: false,
+                isVerified: action.payload.success, 
+                msg: action.payload.msg
+            }
+            
+        case DECLINE_BORROW_SUCCESS:
+            return {
+                ...state,
+                loadingButton: false,
+                isDeclined: action.payload.success, 
+                msg: action.payload.msg
+            }
+
+        case VERIFY_BORROW_FAIL:
+        case DECLINE_BORROW_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+
+        case VERIFY_BORROW_RESET:
+            return {
+                ...state,
+                isVerified: false
+            }
+        case DECLINE_BORROW_RESET:
+            return {
+                ...state,
+                isDeclined: false
             }
 
         case CLEAR_ERRORS:

@@ -40,7 +40,7 @@ import GuestList from './components/admin/guest/GuestList'
 import BorrowList from './components/admin/borrow/BorrowList'
 import BorrowRequest from './components/admin/borrow/BorrowRequest'
 import CreateBorrow from './components/admin/borrow/CreateBorrow'
-import ReturnList from './components/admin/return/ReturnList'
+import ReturnList from './components/admin/borrow/ReturnList'
 
 //Home
 import Home from './components/user/Home/Home'

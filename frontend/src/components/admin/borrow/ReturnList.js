@@ -103,6 +103,11 @@ const ReturnList = () => {
                     sort: 'desc'
                 },
                 {
+                    label: 'Status',
+                    field: 'status',
+                    sort: 'desc'
+                },
+                {
                     label: 'Actions',
                     field: 'actions',
                 },
@@ -112,7 +117,7 @@ const ReturnList = () => {
 
             borrow.forEach(borrow => {
 
-                if(borrow.dateReturned !== null){
+                if(borrow.status === 'Returned'){
                     data.rows.push({
                         user: borrow.user.fname + " " + borrow.user.lname,
                         user_tupid: borrow.user.tupid,
@@ -122,6 +127,7 @@ const ReturnList = () => {
                         dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                         dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
                         dateReturned:moment(borrow.dateReturned).format('MM/DD/YYYY'),
+                        status: borrow.status,
                         actions: 
                             <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id} onClick={() => deleteBorrowHandler(borrow._id)}>
                                 <FaTrash/>

@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 import {
     ALL_BORROW_REQUEST,
     ALL_BORROW_SUCCESS,
@@ -18,6 +18,12 @@ import {
     DELETE_BORROW_REQUEST,
     DELETE_BORROW_SUCCESS,
     DELETE_BORROW_FAIL,
+    VERIFY_BORROW_REQUEST,
+    VERIFY_BORROW_SUCCESS,
+    VERIFY_BORROW_FAIL,
+    DECLINE_BORROW_REQUEST,
+    DECLINE_BORROW_SUCCESS,
+    DECLINE_BORROW_FAIL,
     CLEAR_ERRORS
 } from '../constants/borrowConstants'
 
@@ -115,7 +121,7 @@ export const studentBorrow = (borrowData) => async (dispatch) => {
 }
 
 //EDIT
-export const updateBorrow = (id, borrowData) => async (dispatch) => {
+export const returnBorrow = (borrowData) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_BORROW_REQUEST })
@@ -125,17 +131,20 @@ export const updateBorrow = (id, borrowData) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/borrow/edit/${id}`, borrowData,config)
+
+
+        const {data} = await axios.put( process.env.REACT_APP_URL + `/api/borrow/return`, borrowData, config)
 
         dispatch({
             type: UPDATE_BORROW_SUCCESS,
-            payload: data.success
+            payload: data
         })
+
 
     } catch (error) {
         dispatch({
             type: UPDATE_BORROW_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
         })
     }
 }
@@ -162,6 +171,55 @@ export const deleteBorrow = (id) => async (dispatch) => {
         dispatch({
             type: DELETE_BORROW_FAIL,
             payload: error.response.data.message
+        })
+    }
+}
+
+export const verifyBorrow = (borrowData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: VERIFY_BORROW_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+
+        const {data} = await axios.put( process.env.REACT_APP_URL + `/api/borrow/verify`, borrowData, config)
+
+        dispatch({
+            type: VERIFY_BORROW_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: VERIFY_BORROW_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+export const declineBorrow = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DECLINE_BORROW_REQUEST })
+
+
+        const {data} = await axios.put( process.env.REACT_APP_URL + `/api/borrow/decline/${id}`)
+
+        dispatch({
+            type: DECLINE_BORROW_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: DECLINE_BORROW_FAIL,
+            payload: error.response.data.msg
         })
     }
 }

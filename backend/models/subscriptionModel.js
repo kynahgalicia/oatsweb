@@ -46,6 +46,10 @@ const subSchema = new mongoose.Schema({
     paidAt: {
         type: Date,
         default: Date.now
+    },
+    activatedAt:{
+        type: Date,
+        default: null
     }
 
 }

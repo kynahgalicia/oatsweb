@@ -110,3 +110,63 @@ exports.delete = catchAsyncErrors(async(req,res,next) =>{
         return res.status(500).json({msg: err.message})
     }
 })
+
+exports.subExpire = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Expired'
+
+        const expire = await Subscriptions.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Your subscription has expired",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
+})
+exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Active'
+        req.body.activatedAt = Date.now()
+
+        const accept = await Subscriptions.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Request has been verified",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
+})
+exports.declineRequest = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Denied'
+        req.body.activatedAt = Date.now()
+
+        const accept = await Subscriptions.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Request has been declined",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: err.message})
+    }
+})

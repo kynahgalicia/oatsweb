@@ -7,7 +7,7 @@ import {Row, Col, Button, Form} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getBorrow, updateBorrow, deleteBorrow, clearErrors} from '../../../redux/actions/borrowActions';
+import { getBorrow, returnBorrow, deleteBorrow, clearErrors} from '../../../redux/actions/borrowActions';
 import { UPDATE_BORROW_RESET, DELETE_BORROW_RESET } from '../../../redux/constants/borrowConstants';
 import AdminSidebar from '../../layout/AdminSidebar'
 
@@ -120,9 +120,6 @@ const BorrowList = () => {
                         <Button variant="info" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
                             Return
                         </Button> 
-                        <Button variant="danger" className='mx-1' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
-                            <FaTrash/>
-                        </Button> 
     
     
                         <div className="modal fade" id={'returnModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,20 +143,6 @@ const BorrowList = () => {
                             </div>
                         </div>
     
-                        <div className="modal fade" id={'deleteModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                <div className="modal-body">
-                                    Delete Permanently?
-                                </div>
-                                <div className="modal-footer">
-                                    <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => deleteBorrowHandler(borrow._id)}>Yes</Button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-    
                     </Fragment>
                     
                 })
@@ -168,6 +151,7 @@ const BorrowList = () => {
 
         return data;
     }
+    
 
     const deleteBorrowHandler = (id) => {
         dispatch(deleteBorrow(id))
@@ -177,7 +161,8 @@ const BorrowList = () => {
 
         const formData = new FormData();
         formData.set('dateReturned', dateReturned);
-        dispatch(updateBorrow(id))
+        formData.set('id', id);
+        dispatch(returnBorrow(formData))
         console.log(id)
     }
 

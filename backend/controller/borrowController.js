@@ -4,6 +4,7 @@ const Admins = require('../models/adminModel')
 const Thesis = require('../models/thesisModel')
 
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+// const { clearErrors } = require('../../frontend/src/redux/actions/borrowActions');
 
 // Create Borrower 
 exports.create = async(req,res,next) => {
@@ -113,14 +114,10 @@ exports.getStudent = async (req, res, next) => {
 
 // api/admin/Borrow/edit
 exports.edit = async(req,res,next) => {
-    let borrow = await Borrow.findById(req.params.id);
-
-    // if(!borrow) {
-    //     return next(new ErrorHandler('Not Found',404));
-    // }
     
     try{
-        borrow = await Borrow.findByIdAndUpdate(req.params.id,req.body,{
+        req.body.status = 'Returned'
+        const borrow = await Borrow.findByIdAndUpdate(req.body.id,req.body,{
             new: true,
             runValidators:true,
             useFindandModify:false
@@ -144,5 +141,74 @@ exports.delete = catchAsyncErrors(async(req,res,next) =>{
         res.json({msg: "Borrow Request has been deleted!", success: true})
     } catch (error) {
         return res.status(500).json({msg: err.message})
+    }
+})
+
+exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Active'
+        req.body.dateBorrowed = Date.now()
+
+        const cadmins = await Admins.findById(req.body.admins)
+
+        req.body.admin={
+            id: cadmins._id,
+            tupid:cadmins.admin_tupid,
+            fname:cadmins.admin_fname,
+            lname:cadmins.admin_lname
+        }
+
+        const accept = await Borrow.findByIdAndUpdate(req.body.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Request has been verified",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
+})
+exports.declineRequest = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Denied'
+
+
+        const accept = await Borrow.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Request has been declined",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
+})
+exports.returnBorrow = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        
+        req.body.status = 'Returned'
+
+        const accept = await Borrow.findByIdAndUpdate(req.body.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            msg: "Request has been declined",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
     }
 })

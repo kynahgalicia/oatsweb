@@ -10,6 +10,14 @@ import {
     DELETE_SUBSCRIBE_SUCCESS,
     DELETE_SUBSCRIBE_FAIL,
     DELETE_SUBSCRIBE_RESET,
+    VERIFY_SUBSCRIBE_REQUEST,
+    VERIFY_SUBSCRIBE_SUCCESS,
+    VERIFY_SUBSCRIBE_FAIL,
+    VERIFY_SUBSCRIBE_RESET,    
+    DECLINE_SUBSCRIBE_REQUEST,
+    DECLINE_SUBSCRIBE_SUCCESS,
+    DECLINE_SUBSCRIBE_FAIL,
+    DECLINE_SUBSCRIBE_RESET,
 
     CLEAR_ERRORS
 } from '../constants/subscriptionConstants';
@@ -114,6 +122,60 @@ export const fetchSubscriptionsReducer = (state = { subs: []}, action) => {
             return {
                 ...state,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+export const verifySubscriptionsReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case VERIFY_SUBSCRIBE_REQUEST:
+        case DECLINE_SUBSCRIBE_REQUEST:
+            return {
+                ...state,
+                loadingButton: true,
+            }
+
+        case VERIFY_SUBSCRIBE_SUCCESS:
+            return {
+                ...state,
+                loadingButton: false,
+                isVerified: action.payload.success, 
+                msg: action.payload.msg
+            }
+            
+        case DECLINE_SUBSCRIBE_SUCCESS:
+            return {
+                ...state,
+                loadingButton: false,
+                isDeclined: action.payload.success, 
+                msg: action.payload.msg
+            }
+
+        case VERIFY_SUBSCRIBE_FAIL:
+        case DECLINE_SUBSCRIBE_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+
+        case VERIFY_SUBSCRIBE_RESET:
+            return {
+                ...state,
+                isVerified: false
+            }
+        case DECLINE_SUBSCRIBE_RESET:
+            return {
+                ...state,
+                isDeclined: false
             }
 
         case CLEAR_ERRORS:

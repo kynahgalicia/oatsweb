@@ -7,7 +7,7 @@ import { departmentsReducer, newDepartmentReducer, departmentReducer, Department
 import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
-import {borrowsReducer, newBorrowReducer, borrowReducer} from "./reducers/borrowReducer"
+import {borrowsReducer, newBorrowReducer, borrowReducer, verifyBorrowsReducer} from "./reducers/borrowReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer}  from './reducers/authReducer'
 
@@ -21,7 +21,7 @@ import {guestsReducer , guestReducer, guestDetailsReducer } from './reducers/gue
 
 import { adminsReducer , adminReducer, adminDetailsReducer} from './reducers/adminReducer'
 
-import { subscriptionReducer , subscriptionsReducer, fetchSubscriptionsReducer } from "./reducers/subscriptionReducer"
+import { subscriptionReducer , subscriptionsReducer, fetchSubscriptionsReducer, verifySubscriptionsReducer } from "./reducers/subscriptionReducer"
 
 import { loggingReducer, logsReducer, dataCountReducer, homeCountReducer, featuredCountReducer, studentCountReducer, guestCountReducer } from "./reducers/loggingReducer"
 
@@ -53,6 +53,7 @@ const reducer = combineReducers({
     borrows: borrowsReducer,
     newBorrow: newBorrowReducer,
     borrow: borrowReducer,
+    verifyBorrow: verifyBorrowsReducer,
     //Users
     users:usersReducer,
     user:userReducer,
@@ -82,6 +83,7 @@ const reducer = combineReducers({
     subscribed: subscriptionReducer,
     subscribes: subscriptionsReducer,
     subs: fetchSubscriptionsReducer,
+    verifiedSub: verifySubscriptionsReducer,
 
     logging: loggingReducer,
     logs: logsReducer,

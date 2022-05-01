@@ -52,7 +52,7 @@ const UserBorrow = () => {
         }
 
         borrow.forEach(borrow => {
-            // if(borrow.dateReturned === null){
+            if(borrow.dateReturned === null){
                 data.rows.push({
                     thesis: borrow.thesis.title,
                     dateBorrowed: ( borrow.dateBorrowed === null ? "Pending" : moment(borrow.dateBorrowed).format('MM/DD/YYYY')),
@@ -60,7 +60,7 @@ const UserBorrow = () => {
                     status: borrow.status
                     
                 })
-            // }
+            }
         })
 
         return data;
@@ -97,7 +97,7 @@ const UserBorrow = () => {
         }
 
         borrow.forEach(borrow => {
-            if(borrow.dateReturned !== null){
+            if(borrow.dateReturned !== null && borrow.status === 'Returned'){
                 data.rows.push({
                     thesis: borrow.thesis.title,
                     dateBorrowed:  moment(borrow.dateBorrowed).format('MM/DD/YYYY'),

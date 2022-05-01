@@ -6,7 +6,8 @@ const authAdminRole = require('../middleware/authAdminRole')
 // router.get('/department',departmentController.get)
 router.get('/subscription',subscriptionController.findList)
 router.post('/subscription/new', subscriptionController.create)
-// router.put('/department/edit/:id', authAdmin,authAdminRole,  departmentController.editDepartment)
-router.delete('/subscription/delete/:id', subscriptionController.delete)
+router.put('/subscription/expired/:id', subscriptionController.subExpire)
+router.put('/subscription/verify/:id', subscriptionController.verifyRequest)
+router.put('/subscription/decline/:id', subscriptionController.declineRequest)
 
 module.exports = router
