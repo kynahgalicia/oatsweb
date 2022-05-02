@@ -23,8 +23,7 @@ export const getDepartment = () => async (dispatch) => {
         dispatch({ type: ALL_DEPARTMENT_REQUEST })
 
         let link = process.env.REACT_APP_URL + `/api/department`
-
-
+        
         const { data } = await axios.get(link)
         console.log(link)
         dispatch({

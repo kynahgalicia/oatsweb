@@ -543,12 +543,15 @@ form h5{
   font-size: 2vh;
 }
 
-
 .img-signup{
   width: 600px;
   padding: 10% 5%;
 }
 
+.img-admin{
+  width: 500px;
+  padding: 10% 5%;
+}
 
 .btn-login{
   color: var(--white) !important;
@@ -1037,6 +1040,10 @@ table td{
   font-size: 30px!important;
 }
 
+.sub-card-pdf{
+  margin: 20px;
+}
+
 .sub-cards{
   padding: 0 18%;
 }
@@ -1046,26 +1053,26 @@ table td{
   width: 75%;
 }
 
-.sub-card button{
+.sub-card button, .sub-card-pdf button{
   background-color:var(--success);
   border: none;
   float: right;
 }
 
-.sub-card button:hover{
+.sub-card button:hover, .sub-card-pdf button:hover{
   background-color: var(--grey);
   border: none;
 }
 
-.sub-card li{
+.sub-card li, .sub-card-pdf li{
   list-style-type: none;
 }
 
-.sub-card i{
+.sub-card i, .sub-card-pdf i{
   color: var(--success);
 }
 
-.sub-card h1{
+.sub-card h1, .sub-card-pdf h1{
   font-size: 6vh;
   color: var(--grey);
 }
@@ -1129,4 +1136,52 @@ input[type="file"]{
 
 .abstract, .pdf{
     user-select: none;
+}
+
+.close{
+  margin: 2%;
+}
+
+.admin-welcome{
+  margin-top: 15%;
+  margin-left: 19%;
+  font-size:100px;
+}
+
+.admin-subtitle{
+  margin-right: 20%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.admin-content{
+  font-size: 21px;
+  margin-left: 28%;
+}
+
+.admin-landing{
+  margin-top: 5%!important;
+}
+
+.admin-landing-btn{
+  margin-left: 15%;
+  color: var(--darkRed)!important;
+  border-color: var(--darkRed)!important;
+  border-radius: 50px!important;
+  width: 500px;
+  height: 55px;
+}
+
+.admin-landing-btn:hover{
+  background-color: var(--darkRed)!important;
+  color: var(--white)!important;
+}
+
+.admin-landing-arrow{
+  margin-left: 3%;
+  font-size: 19px;
+}
+
+.alert{
+  font-size: 72px;
+  color: var(--darkRed);
 }

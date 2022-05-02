@@ -40,6 +40,7 @@ const thesisSchema = new mongoose.Schema({
     abstract: {
         type:String,
         trim: true,
+        required:true
     },
     department:{ 
         departments: {
@@ -69,7 +70,7 @@ const thesisSchema = new mongoose.Schema({
     }, 
     upload:{
         type: String,
-        // required: true
+        required: true
     },
     uploadedBy:{
         id:{

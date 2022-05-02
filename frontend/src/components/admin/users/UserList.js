@@ -216,7 +216,7 @@ const UserList = () => {
                     {loading ? <LoaderAdmin/>  :  
                     <>
                     <div className='d-flex align-items-start m-2'>
-                        <h1>Users</h1>
+                        <h1>Students</h1>
                     </div>
                     <MDBDataTableV5 
                         hover 

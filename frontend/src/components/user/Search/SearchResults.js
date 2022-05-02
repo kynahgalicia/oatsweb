@@ -58,12 +58,13 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                     {!isLoggedInGuest && !isLoggedIn  ? <h5> <Link to='/user/login'> {theses.title}</Link></h5>: null}
                     
                     </Col>
+                    
                     <Col> 
-            { thisId ?<div className="icon-bookmark" onClick={() => bookmarkHandler(theses._id)} data-toggle="tooltip" data-placement="bottom" title="Bookmark">  <i class="fas fa-bookmark"></i>  <i class="far fa-bookmark" ></i></div>  : null}
-            
-            {  userDept && userDept !== theses.department.deptname  && (!subType || (subType && subType.status === "Pending")) ? <i className="fas fa-lock"></i> :  null  }
-            {  isLoggedInGuest && (subTypeGuest && subTypeGuest.status === "Pending" )  ?  <i className="fas fa-lock"></i>  : null  }
-            {  !userDept && !isLoggedIn && !isLoggedInGuest ?  <i className="fas fa-lock"></i>  : null  }
+                        { thisId ?<div className="icon-bookmark" onClick={() => bookmarkHandler(theses._id)} data-toggle="tooltip" data-placement="bottom" title="Bookmark">  <i class="fas fa-bookmark"></i>  <i class="far fa-bookmark" ></i></div>  : null}
+                        
+                        {  userDept && userDept !== theses.department.deptname  && (!subType || (subType && subType.status === "Pending")) ? <i className="fas fa-lock"></i> :  null  }
+                        {  isLoggedInGuest && (subTypeGuest && subTypeGuest.status === "Pending" )  ?  <i className="fas fa-lock"></i>  : null  }
+                        {  !userDept && !isLoggedIn && !isLoggedInGuest ?  <i className="fas fa-lock"></i>  : null  }
                     </Col>
                 </Row>
                 
