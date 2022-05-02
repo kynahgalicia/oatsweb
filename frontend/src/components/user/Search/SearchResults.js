@@ -52,8 +52,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                 <Row>
                     <Col>
                     { isLoggedIn ?  <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5>: null}
-                    { isLoggedInGuest &&  !subTypeGuest ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
-                    { isLoggedInGuest &&  (subTypeGuest && (subTypeGuest.status === 'Denied' || subTypeGuest.status === 'Expired') )  ? <h5> <Link to='#' data-target='#subscriptionModal' data-toggle="modal"> {theses.title} </Link> </h5> : null}
+                    { isLoggedInGuest &&  !subTypeGuest ? <h5> <Link to='#' data-target='#subscriptionModal' data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Active') ? <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5> : null}
                     { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     {!isLoggedInGuest && !isLoggedIn  ? <h5> <Link to='/user/login'> {theses.title}</Link></h5>: null}
@@ -65,6 +64,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                         
                         {  userDept && userDept !== theses.department.deptname  && (!subType || (subType && subType.status === "Pending")) ? <i className="fas fa-lock"></i> :  null  }
                         {  isLoggedInGuest && (subTypeGuest && subTypeGuest.status === "Pending" )  ?  <i className="fas fa-lock"></i>  : null  }
+                        {  isLoggedInGuest && !subTypeGuest ?  <i className="fas fa-lock"></i>  : null  }
                         {  !userDept && !isLoggedIn && !isLoggedInGuest ?  <i className="fas fa-lock"></i>  : null  }
                     </Col>
                 </Row>
@@ -84,69 +84,61 @@ const SearchResults = ({userDept,thesis, thisId}) => {
             
         ))}
 
-        {/* Subscription Modal */}
-        <div className="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog modal-lg">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
+          {/* Subscription Modal */}
+          <div className="modal fade" id="subscriptionModal" aria-hidden="true" data-backdrop="false">
+                                <div className="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+                                    <div className="modal-content subscription">
+                                        {/* <div className="modal-header">
                                             <h5 className="modal-title">OATS Thesis Archive Subscription</h5>
                                             
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            
+                                        </div> */}
+                                        <button type="button" class="close text-right" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+                                        </button>
+                                        <div className="sub-card-pdf" id="subscriptionModal" aria-hidden="true">
+                                            <h5>Subscribe for full access of the text! <br/>Check out the plans available below.</h5>
+                                            <br/>
+                                            <Card className= "sub-card-pdf text-start">
+                                                <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
 
-                                        <div className="modal-body text-start">
-                                            <CardGroup>
-                                                <Card>
-                                                    <Card.Body>
-                                                        <div className='cardTitle'>
-                                                            <h1 className='d-inline'>₱50</h1><h3 className='d-inline'>/mo.</h3>
-                                                        </div>
-                                                        <br/>
-                                                        <Card.Text>
-                                                            Avail the subscription to access all of the thesis available in OATS.
-                                                        </Card.Text>
-                                                    </Card.Body>
+                                                <Card.Body>
+                                                    <Row>
+                                                        <Col>
+                                                            <p>Access all of the thesis titles available for 1 day.</p>
+                                                        </Col>
 
-                                                    <Card.Footer className='cardTitle'>
-                                                        <Button type='submit'  data-backdrop="false" ><Link data-backdrop="" to="/user/payment" >Subscribe</Link></Button>
-                                                    </Card.Footer>
-                                                </Card>
+                                                        <Col>
+                                                            <ul >
+                                                                <li><i class="fas fa-check"></i> View Full Text</li>
+                                                                <li><i class="fas fa-check"></i> Download Full PDF</li>
+                                                            </ul>
+                                                        </Col>
+                                                    </Row>
+                                                    <Link to='#'><Button>Subscribe</Button></Link>
+                                                </Card.Body>
+                                            </Card>
 
-                                                <Card>
-                                                    <Card.Body>
-                                                        <div className='cardTitle'>
-                                                            <h1 className='d-inline'>₱140</h1><h3 className='d-inline'>/qtr.</h3>
-                                                        </div>
-                                                        <br/>
-                                                        <Card.Text>
-                                                            For 4 months, you can have access to the theses that has been archived in OATS.
-                                                        </Card.Text>
-                                                    </Card.Body>
-
-                                                    <Card.Footer className='cardTitle'>
-                                                        <Button>Subscribe</Button>
-                                                    </Card.Footer>
-                                                </Card>
-
-                                                <Card>
-                                                    <Card.Body>
-                                                        <div className='cardTitle'>
-                                                            <h1 className='d-inline'>₱550</h1><h3 className='d-inline'>/yr.</h3>
-                                                        </div>
-                                                        <br/>
-                                                        <Card.Text>
-                                                            Open access to ALL archived research in OATS for a whole year!
-                                                        </Card.Text>
-                                                    </Card.Body>
-
-                                                    <Card.Footer className='cardTitle'>
-                                                        <Button>Subscribe</Button>
-                                                    </Card.Footer>
-                                                </Card>
-                                            </CardGroup>
-                                        </div>
+                                            <Card className= "sub-card-pdf text-start">
+                                                <Card.Header><h1 className="text-start">₱325/week</h1></Card.Header>
+                                                <Card.Body>
+                                                    <Row>
+                                                        <Col>
+                                                        <p>
+                                                        Open access to ALL archived research in OATS for 7 days
+                                                        </p>
+                                                        </Col>
+                                                        <Col>
+                                                        <ul >
+                                                        <li><i class="fas fa-check"></i> View Full Text</li>
+                                                        <li><i class="fas fa-check"></i> Download Full PDF</li>
+                                                        </ul>
+                                                        </Col>
+                                                        <Link to='#'><Button>Subscribe</Button></Link>
+                                                    </Row>
+                                                </Card.Body>
+                                            </Card>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
