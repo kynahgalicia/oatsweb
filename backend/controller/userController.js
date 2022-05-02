@@ -244,12 +244,21 @@ const userController = {
         }
     },
 
-    updateAdmin: async (req,res) => {
+    updateProfile: async (req,res) => {
+
+        const {user_contact, user_fname, user_lname} = req.body
         let user = await Users.findById(req.params.id);
 
         if(!user)
         return res.status(400).json({msg: "User not found"})
 
+        if(user_contact.length < 11)
+                return res.status(400).json({msg: "contact must be at least 11 numbers."})
+        
+        
+        if(!user_fname || !user_lname || !user_contact )
+        return res.status(400).json({msg: "Please fill in all fields."})
+        
         try {
 
             user = await Users.findByIdAndUpdate(req.params.id,req.body,{

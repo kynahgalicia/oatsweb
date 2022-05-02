@@ -25,7 +25,7 @@ router.get('/inforAdmin/:id',authAdmin,authAdminRole, guestController.getGuestIn
 
 router.put('/deactivate/:id',authAdmin,authAdminRole, guestController.deactivate)
 
-router.put('/edit/:id',authAdmin,authAdminRole, guestController.updateAdmin)
+router.put('/edit/:id', guestController.updateProfile)
 
 router.delete('/delete/:id',authAdmin,authAdminRole,  guestController.delete)
 

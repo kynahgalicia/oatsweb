@@ -70,14 +70,13 @@ export const getGuestDetails = (id,adminToken) => async (dispatch) => {
     }
 }
 //Guest Edit
-export const updateGuest = (id, guestData,adminToken) => async (dispatch) => {
+export const updateGuest = (id, guestData) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_GUEST_REQUEST })
 
         const config = {
             headers: {
-                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -91,7 +90,7 @@ export const updateGuest = (id, guestData,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_GUEST_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
         })
     }
 }

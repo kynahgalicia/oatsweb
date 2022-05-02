@@ -92,7 +92,7 @@ export const userReducer = (state = {}, action) => {
         case DELETE_USER_FAIL:
             return {
                 ...state,
-                error: action.payload
+                error: action.payload.msg
             }
 
         case DELETE_USER_RESET:

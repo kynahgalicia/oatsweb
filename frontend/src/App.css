@@ -1185,3 +1185,13 @@ input[type="file"]{
   font-size: 72px;
   color: var(--darkRed);
 }
+
+.edit-profile{
+  float: left;
+  padding: 3% 10%;
+  text-align: left;
+}
+
+.edit-profile label{
+  font-size: 2vh;
+}

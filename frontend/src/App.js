@@ -78,11 +78,13 @@ import UserSubscription from './components/user/Account/subsciption/UserSubscrip
 import UserPayment from './components/user/Account/subsciption/UserPayment';
 import UserThesisList from './components/user/Account/Thesis/UserThesisList';
 import UserCreateThesis from './components/user/Account/Thesis/UserCreateThesis';
+import EditUserProfile from './components/user/Account/EditUserProfile';
 //Guest Account
 import GuestProfile from './components/guest/Account/GuestProfile';
 import GuestBookmark from './components/guest/Account/GuestBookmark';
 import GuestSubscription from './components/guest/Account/subscription/GuestSubscription';
 import GuestPayment from './components/guest/Account/subscription/GuestPayment';
+import EditGuestProfile from './components/guest/Account/EditGuestProfile';
 
 import NotFound from './components/img/404.png'
 
@@ -158,6 +160,7 @@ function App() {
         <Route path="/guest/reset/:token" component={ResetPasswordGuest} exact/>
 
         <Route path="/user/profile" component={UserProfile} exact/>
+        <Route path="/user/profile/edit" component={EditUserProfile} exact/>
         <Route path="/user/borrow" component={UserBorrow} exact/>
         <Route path="/user/bookmark" component={UserBookmark} exact/>
         <Route path="/user/subscription" component={UserSubscription} exact/>
@@ -166,6 +169,7 @@ function App() {
         <Route path="/user/thesis/new" component={UserCreateThesis} exact/>
 
         <Route path="/guest/profile" component={GuestProfile} exact/>
+        <Route path="/guest/profile/edit" component={EditGuestProfile} exact/>
         <Route path="/guest/bookmark" component={GuestBookmark} exact/>
         <Route path="/guest/subscription" component={GuestSubscription} exact/>
         <Route path="/guest/payment/:sub" component={GuestPayment} exact/>

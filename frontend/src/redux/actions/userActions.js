@@ -70,14 +70,13 @@ export const getUserDetails = (id,adminToken) => async (dispatch) => {
     }
 }
 //User Edit
-export const updateUser = (id, userData,adminToken) => async (dispatch) => {
+export const updateUser = (id, userData) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_USER_REQUEST })
 
         const config = {
             headers: {
-                'Authorization': adminToken,
                 'Content-Type': 'application/json'
             }
         }
@@ -91,7 +90,7 @@ export const updateUser = (id, userData,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data
         })
     }
 }

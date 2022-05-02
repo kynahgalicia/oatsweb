@@ -211,7 +211,16 @@ const guestController = {
         }
     },
 
-    updateAdmin: async (req,res) => {
+    updateProfile: async (req,res) => {
+
+        const {guest_fname, guest_lname, guest_contact, guest_profession, guest_company,  guest_company_address } = req.body
+
+        if(!guest_fname || !guest_lname ||  !guest_contact ||  !guest_profession || !guest_company || !guest_company_address )
+            return res.status(400).json({msg: "Please fill in all fields."})
+
+        if(guest_contact.length < 11)
+        return res.status(400).json({msg: "contact must be at least 11 numbers."})
+        
         let guest = await Guests.findById(req.params.id);
 
         if(!guest)

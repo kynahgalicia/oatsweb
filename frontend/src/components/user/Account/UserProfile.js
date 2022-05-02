@@ -17,9 +17,6 @@ const UserProfile = () => {
     useEffect(() => {
 
     if(user){    
-        const formData = new FormData();
-        formData.set("user", user._id)
-
         dispatch(fetchStudentCount(user._id))
 
         console.log(user._id)
@@ -53,10 +50,10 @@ const UserProfile = () => {
                                         <h4>{user.user_fname} {user.user_lname}</h4>
                                         <label><i>{user.user_tupmail}</i></label>
                                         <br />
-                                        <label> {user.user_contact}</label> <br />
+                                        <label> +63{user.user_contact}</label> <br />
                                         <label> {user.user_department.deptname}</label><br />
                                         <label> {user.user_course.coursecode}</label><br />
-                                        <Button className="btn-user">Edit Profile</Button>
+                                        <Link to='/user/profile/edit' ><Button className="btn-user">Edit Profile</Button></Link>
                                     </Col>
                                 </Row>
                             </div>
