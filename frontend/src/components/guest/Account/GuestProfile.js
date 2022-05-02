@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useHistory } from 'react-router-dom' 
+import { Link, useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Card} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import GuestSidebar from '../../layout/GuestSidebar'
@@ -71,7 +71,7 @@ const GuestProfile = () => {
                                 <div className="icon">
                                 <i className="fas fa-bookmark"></i>
                                 </div>
-                                <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+                                <Link to="/guest/bookmark"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                             </div>
                         </Col>
                         <Col >

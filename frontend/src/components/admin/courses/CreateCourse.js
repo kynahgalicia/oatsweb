@@ -60,61 +60,59 @@ const CreateCourse = () => {
 
     return (
         <Fragment>
-        <Row>
-        <Col sm= {2} className="admin-sidebar">
-            <AdminSidebar/>
-        </Col>
-            <Col sm={10}>
-                <div className="form-admin-wrapper">
-                    <div className="wrapper my-5">
-                        <form onSubmit={submitHandler} encType='multipart/form-data'>
-                            <h1 className="mb-4">New Course</h1>
+            <Row>
+                <Col sm= {2} className="admin-sidebar">
+                    <AdminSidebar/>
+                </Col>
 
-                            <div className="form-group">
-                                <label htmlFor="coursename_field">Course Name</label>
-                                <input
-                                    type="text"
-                                    id="coursename_field"
-                                    className="form-control"
-                                    value={coursename}
-                                    onChange={(e) => setCoursename(e.target.value)}
-                                />
-                            </div>
+                <Col sm={10}>
+                    <div className="form-admin-wrapper">
+                        <div className="wrapper my-5">
+                            <form onSubmit={submitHandler} encType='multipart/form-data'>
+                                <h1 className="mb-4">New Course</h1>
 
-                            <div className="form-group">
-                                <label htmlFor="coursecode_field">Course Code</label>
-                                <input
-                                    type="text"
-                                    id="coursecode_field"
-                                    className="form-control"
-                                    value={coursecode}
-                                    onChange={(e) => setCoursecode(e.target.value)}
-                                />
-                            </div>
+                                <div className="form-group">
+                                    <label htmlFor="coursename_field">Course Name</label>
+                                    <input
+                                        type="text"
+                                        id="coursename_field"
+                                        className="form-control"
+                                        value={coursename}
+                                        onChange={(e) => setCoursename(e.target.value)}
+                                    />
+                                </div>
 
-                            <Form.Group className="mb-3">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Select id="department_field" placeholder="" value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} >
-                                <option> -- SELECT DEPARTMENT --</option>
+                                <div className="form-group">
+                                    <label htmlFor="coursecode_field">Course Code</label>
+                                    <input
+                                        type="text"
+                                        id="coursecode_field"
+                                        className="form-control"
+                                        value={coursecode}
+                                        onChange={(e) => setCoursecode(e.target.value)}
+                                    />
+                                </div>
 
-                                    { department && department.map((departments) => (
-                                                
-                                            <option value={departments._id}>{departments.deptname}</option>
-                                                
-                                        ))}
-                                </Form.Select>
-                            </Form.Group>
-                            <div className='d-flex justify-content-end'>
-                            <Button id="login_button" type="submit" variant="success" disabled={loading ? true : false}>
-                                Save
-                            </Button>
-                            </div>
-                            
-                        </form>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Department</Form.Label>
+                                    <Form.Select id="department_field" placeholder="" value={thisDepartment} onChange={(e) => setDepartment(e.target.value)} >
+                                        <option> -- SELECT DEPARTMENT --</option>
+                                            { department && department.map((departments) => (
+                                                <option value={departments._id}>{departments.deptname}</option>
+                                            ))}
+                                    </Form.Select>
+                                </Form.Group>
+
+                                <div className='d-flex justify-content-end'>
+                                    <Button id="login_button" type="submit" variant="success" disabled={loading ? true : false}>
+                                        Save
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </Col>
-        </Row>
+                </Col>
+            </Row>
         </Fragment>
     )
 }

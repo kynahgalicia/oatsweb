@@ -3,13 +3,13 @@ import back from '../../img/back-red.png';
 import { FaSearch } from 'react-icons/fa';
 import Cards from './home-components/Cards';
 import Department from './home-components/Department';
-import { useHistory } from 'react-router-dom'
-import {Row, Col} from 'react-bootstrap'
+import admin from '../../img/admin.png'
+import { Link, useHistory } from 'react-router-dom'
+import {Row, Col, Button} from 'react-bootstrap'
 import { getThesisCount } from '../../../redux/actions/thesisActions';
 import { searchLog, fetchHomeCount, fetchFeaturedCount} from '../../../redux/actions/loggingActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../../components/utils/Loader'
-
 
 const Home = () => {
     const history = useHistory();
@@ -106,9 +106,24 @@ const Home = () => {
         </div> 
         : null}
         {adminToken ? 
-        <div className='wrapper'>
-        Welcome Admin !
-        </div> : null}
+            <div className='wrapper'>
+                <Row>
+                    <Col className='admin-landing'>
+                        <h1 className='admin-welcome'>WELCOME</h1>
+                        <br/>
+                        <h3 className='admin-subtitle'>Administrator</h3>
+                        <br/>
+                        <p className='text-start admin-content'>In this section, you will have access to the utilities of the website. Explore your way!</p>
+                        <br/>
+                        <Link to="/admin/dashboard"><Button className='admin-landing-btn' variant="outline-primary">Go to dashboard<i class="fas fa-long-arrow-alt-right admin-landing-arrow"/></Button></Link>
+                    </Col>
+
+                    <Col className='admin-landing'>
+                        <img src={admin} alt="admin-logo" className='img-admin'/>
+                    </Col>
+                </Row>
+            </div> 
+        : null}
         </Fragment>
     );
 }

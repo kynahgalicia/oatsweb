@@ -94,9 +94,26 @@ const CourseList = () => {
                         </Button>
                     </Link>
 
-                    <Button variant="danger" onClick={() => deleteCourseHandler(course._id)}>
+                    <Button variant="danger" data-toggle="modal" data-target={"#deleteModal" + course._id}>
                         <FaTrash/>
                     </Button>
+
+                    <div className="modal fade" id={"deleteModal"  + course._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-body">
+                                    <i class="fas fa-exclamation-triangle alert"/>
+                                    <br/>
+                                    This course may contain data from other lists. Are you sure you want to delete this course? This action cannot be undone.
+                                </div>
+                                
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => deleteCourseHandler(course._id)}>Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Fragment>
             })
         })

@@ -65,47 +65,49 @@ const Updatedepartment = ({ match, history }) => {
 
     return (
         <Fragment>
-        <Row>
-        <Col sm= {2} className="admin-sidebar">
-            <AdminSidebar/>
-        </Col>
-            <Col sm={10}>
-                <div className="admin-wrapper">
-            <div className="wrapper my-5">
-                <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                    <h1 className="mb-4">Update Department</h1>
+            <Row>
+                <Col sm= {2} className="admin-sidebar">
+                    <AdminSidebar/>
+                </Col>
 
-                    <div className="form-group">
-                        <label htmlFor="deptname_field">Department Name</label>
-                        <input
-                            type="text"
-                            id="deptname_field"
-                            className="form-control"
-                            value={deptname}
-                            onChange={(e) => setDepartmentname(e.target.value)}
-                        />
+                <Col sm={10}>
+                    <div className="form-admin-wrapper">
+                        <div className="wrapper my-5">
+                            <form onSubmit={submitHandler} encType='multipart/form-data'>
+                                <h1 className="mb-4">Update Department</h1>
+
+                                <div className="form-group">
+                                    <label htmlFor="deptname_field">Department Name</label>
+                                    <input
+                                        type="text"
+                                        id="deptname_field"
+                                        className="form-control"
+                                        value={deptname}
+                                        onChange={(e) => setDepartmentname(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="deptcode_field">Department Code</label>
+                                    <input
+                                        type="text"
+                                        id="deptcode_field"
+                                        className="form-control"
+                                        value={deptcode}
+                                        onChange={(e) => setDepartmentcode(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className='d-flex justify-content-end'>
+                                    <Button id="login_button" variant="success" type="submit" disabled={loading ? true : false}>
+                                        Update
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <div className="form-group">
-                        <label htmlFor="deptcode_field">Department Code</label>
-                        <input
-                            type="text"
-                            id="deptcode_field"
-                            className="form-control"
-                            value={deptcode}
-                            onChange={(e) => setDepartmentcode(e.target.value)}
-                        />
-                    </div>
-
-                    <Button id="login_button" type="submit" disabled={loading ? true : false}>
-                        Update
-                    </Button>
-
-                </form>
-            </div>
-            </div>
-            </Col>
-        </Row>
+                </Col>
+            </Row>
         </Fragment>
     )
 }

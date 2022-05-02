@@ -50,12 +50,13 @@ const CreateDepartment = ({history}) => {
 
     return (
         <Fragment>
-        <Row>
-        <Col sm= {2} className="admin-sidebar">
-            <AdminSidebar/>
-        </Col>
-            <Col sm={10}>
-                <div className="form-admin-wrapper">
+            <Row>
+                <Col sm= {2} className="admin-sidebar">
+                    <AdminSidebar/>
+                </Col>
+
+                <Col sm={10}>
+                    <div className="form-admin-wrapper">
                         <div className="wrapper my-5">
                             <form onSubmit={submitHandler} encType='multipart/form-data'>
                                 <h1 className="mb-4">New Department</h1>
@@ -83,15 +84,15 @@ const CreateDepartment = ({history}) => {
                                 </div>
 
                                 <div className='d-flex justify-content-end'>
-                                <Button id="login_button" variant="success" type="submit" disabled={loading ? true : false}>
-                                    Save
-                                </Button>
+                                    <Button id="login_button" variant="success" type="submit" disabled={loading ? true : false}>
+                                        Save
+                                    </Button>
                                 </div>
-
                             </form>
-                        </div> </div>
-            </Col>
-        </Row>
+                        </div> 
+                    </div>
+                </Col>
+            </Row>
         </Fragment>
     )
 }

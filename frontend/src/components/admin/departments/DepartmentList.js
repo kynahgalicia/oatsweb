@@ -86,9 +86,26 @@ const DepartmentList = () => {
                         </Button>
                     </Link>
 
-                    <Button variant="danger" onClick={() => deleteDepartmentHandler(department._id)}>
+                    <Button className="m-1" variant="danger" data-toggle="modal" data-target={"#deleteModal" + department._id}>
                         <FaTrash/>
                     </Button>
+
+                    <div className="modal fade" id={"deleteModal"  + department._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-body">
+                                    <i class="fas fa-exclamation-triangle alert"/>
+                                    <br/>
+                                    This department may contain data from other lists. Are you sure you want to delete this department? This action cannot be undone.
+                                </div>
+                                
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => deleteDepartmentHandler(department._id)}>Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Fragment>
             })
         })

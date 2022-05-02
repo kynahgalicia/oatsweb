@@ -25,7 +25,7 @@ const AdminSidebar = () => {
             <hr/>
             
             <Nav.Item>
-                <Link to="/admin/users">Users</Link>
+                <Link to="/admin/users">Students</Link>
             </Nav.Item>
             <hr/>
 

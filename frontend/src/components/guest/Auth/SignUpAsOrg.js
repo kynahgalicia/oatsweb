@@ -116,11 +116,11 @@ const SignUpAsOrg = () => {
                             <Form.Control type="text" placeholder="" value={guest_profession} onChange={(e) => setProfession(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-2">
-                        <Form.Label>Company</Form.Label>
+                        <Form.Label>Company/University</Form.Label>
                             <Form.Control type="text" placeholder="" value={guest_company} onChange={(e) => setCompany(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-2">
-                        <Form.Label>Company Address</Form.Label>
+                        <Form.Label>Company/University Address</Form.Label>
                             <Form.Control type="text" placeholder="" value={guest_company_address} onChange={(e) => setCompanyAddress(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-2">

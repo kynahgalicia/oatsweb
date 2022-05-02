@@ -70,60 +70,63 @@ const Updatecourse = ({ match, history }) => {
 
     return (
         <Fragment>
-        <Row>
-        <Col sm= {2} className="admin-sidebar">
-            <AdminSidebar/>
-        </Col>
-            <Col sm={10}>
-                <div className="admin-wrapper">
-            <div className="wrapper my-5">
-                <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                    <h1 className="mb-4">Update Course</h1>
+            <Row>
+                <Col sm= {2} className="admin-sidebar">
+                    <AdminSidebar/>
+                </Col>
 
-                    <div className="form-group">
-                        <label htmlFor="coursename_field">Course Name</label>
-                        <input
-                            type="text"
-                            id="coursename_field"
-                            className="form-control"
-                            value={coursename}
-                            onChange={(e) => setCoursename(e.target.value)}
-                        />
+                <Col sm={10}>
+                    <div className="form-admin-wrapper">
+                        <div className="wrapper my-5">
+                            <form onSubmit={submitHandler} encType='multipart/form-data'>
+                                <h1 className="mb-4">Update Course</h1>
+
+                                <div className="form-group">
+                                    <label htmlFor="coursename_field">Course Name</label>
+                                    <input
+                                        type="text"
+                                        id="coursename_field"
+                                        className="form-control"
+                                        value={coursename}
+                                        onChange={(e) => setCoursename(e.target.value)}
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="coursecode_field">Course Code</label>
+                                    <input
+                                        type="text"
+                                        id="coursecode_field"
+                                        className="form-control"
+                                        value={coursecode}
+                                        onChange={(e) => setCoursecode(e.target.value)}
+                                    />
+                                </div>
+
+                                {/* <div className="form-group">
+                                    <label htmlFor="coursecode_field">Code</label>
+                                    <textarea className="form-control" id="coursecode_field" rows="8" value={coursecode} onChange={(e) => setCoursecode(e.target.value)}></textarea>
+                                </div> */}
+
+                                {/* <button
+                                    id="login_button"
+                                    type="submit"
+                                    className="btn btn-block py-3"
+                                >
+                                    UPDATE
+                            </button> */}
+
+                                <div className='d-flex justify-content-end'>
+                                    <Button id="login_button" type="submit" variant='success' disabled={loading ? true : false}>
+                                        Update
+                                    </Button>
+                                </div>
+
+                            </form>
+                        </div> 
                     </div>
-                    
-                    <div className="form-group">
-                        <label htmlFor="coursecode_field">Course Code</label>
-                        <input
-                            type="text"
-                            id="coursecode_field"
-                            className="form-control"
-                            value={coursecode}
-                            onChange={(e) => setCoursecode(e.target.value)}
-                        />
-                    </div>
-
-                    {/* <div className="form-group">
-                        <label htmlFor="coursecode_field">Code</label>
-                        <textarea className="form-control" id="coursecode_field" rows="8" value={coursecode} onChange={(e) => setCoursecode(e.target.value)}></textarea>
-                    </div> */}
-
-                    {/* <button
-                        id="login_button"
-                        type="submit"
-                        className="btn btn-block py-3"
-                    >
-                        UPDATE
-                </button> */}
-
-                    <Button id="login_button" type="submit" disabled={loading ? true : false}>
-                        Update
-                    </Button>
-
-                </form>
-            </div> 
-            </div>
-            </Col>
-        </Row>
+                </Col>
+            </Row>
         </Fragment>
     )
 }

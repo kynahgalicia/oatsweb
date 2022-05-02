@@ -135,16 +135,18 @@ const GuestList = () => {
                     <div className="modal fade" id={"deleteModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
-                            <div className="modal-body">
-                                Delete Guest Permanently?
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deleteGuestHandler(guests._id)}>Yes</button>
-                            </div>
+                                <div className="modal-body">
+                                    Delete Guest Permanently?
+                                </div>
+                                
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deleteGuestHandler(guests._id)}>Yes</button>
+                                </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
+
                     <div className="modal fade" id={"deactivateModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
