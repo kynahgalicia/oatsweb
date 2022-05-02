@@ -198,7 +198,7 @@ const userController = {
 
             const user_id = req.user.id
             const user = await Users.findById(req.user.id).select('-user_password')
-            const subType = await Subscriptions.findOne({user_id})
+            const subType = await Subscriptions.findOne({'user.user_id' :user_id})
 
             res.json({user: user,
                     msg: "Success User",

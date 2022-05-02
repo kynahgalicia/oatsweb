@@ -169,7 +169,7 @@ const guestController = {
         try {
             const user_id = req.guest.id
             const guest = await Guests.findById(req.guest.id).select('-guest_password')
-            const subType = await Subscriptions.findOne({user_id})
+            const subType = await Subscriptions.findOne({'user.user_id' :user_id})
 
             res.json({
                 guest: guest,
