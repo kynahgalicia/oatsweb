@@ -49,7 +49,7 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
     } catch(error) {
         dispatch({
             type: ALL_THESIS_FAIL,
-            payload: error
+            payload: error.response.data.msg
         })
     }
 }
@@ -69,7 +69,7 @@ export const getStudentThesis = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ALL_STUDENT_THESIS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
         })
     }
 
@@ -138,7 +138,7 @@ export const newThesis = (thesisData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_THESIS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
         })
     }
 }

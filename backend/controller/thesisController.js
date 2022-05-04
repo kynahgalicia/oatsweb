@@ -10,11 +10,17 @@ const Admins = require('../models/adminModel')
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
+    try {
+        const {title, publishedAt, abstract, departments, courses, upload, role, uploadedId, thisKey, thisAuthors} = req.body
+    
+    if(!title || !publishedAt || !abstract || !departments || !courses || !upload || !role || !uploadedId || !thisKey || !thisAuthors )
+    return res.status(400).json({msg: "Please fill in all fields."})
+    
+    const titleData = await Thesis.findOne({title})
+    if(titleData) return res.status(400).json({msg: "Thesis title already exists"})
+
     const uDept = await Department.findById(req.body.departments);
     const uCourse = await Course.findById(req.body.courses);
-
-    const role = req.body.role
-    const uploadedId = req.body.uploadedId
 
     const uploadedBy ={
         role: role,
@@ -63,6 +69,10 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         success: true,
         thesis
     })
+    } catch (error) {
+        return res.status(500).json({msg: error.message}) 
+    }
+    
 })
 
 

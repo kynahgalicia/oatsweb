@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import {Form, FloatingLabel, Row, Col, Container, Button} from 'react-bootstrap'
-
+import { showErrMsg} from '../../../utils/Notification';
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Tesseract from 'tesseract.js';
@@ -36,6 +36,7 @@ const UserCreateThesis = () => {
     const [publishedAt, setPublishedAt] = useState('')
     const [abstract, setAbstract] = useState('')
     const [thisDepartment, setDepartment] = useState('')
+    const [nameDepartment, setNameDepartment] = useState('')
     const [thisCourse, setCourse] = useState('')
 
     //UPLOAD PDF
@@ -51,11 +52,6 @@ const UserCreateThesis = () => {
 
     useEffect(() => {
 
-        if (error) {
-            alert.error(error);
-            dispatch(clearErrors())
-        }
-
         
         if (success) {
             history.push('/user/thesis');
@@ -63,21 +59,19 @@ const UserCreateThesis = () => {
             dispatch({ type: NEW_THESIS_RESET })
         }
 
+        if(user){
+            setDepartment(user.user_department.departments)
+            setNameDepartment(user.user_department.deptname)
+        }
 
         dispatch(getDepartment())
 
         if(thisDepartment){
             dispatch(getCourse(thisDepartment))
-            console.log(thisDepartment)
+            
         }
 
-        // const fetchData = async () => {
-        //     const result = await getThesisDetails();
-        //     console.log('fetch data;m', result)
-        //     setUploadFiles(result)
-        // }
-        //     fetchData()
-        
+
         }, [dispatch, alert, error, success, history, thisDepartment])
 
     // Scan to text convert
@@ -183,14 +177,16 @@ const UserCreateThesis = () => {
                         <UserSidebar/>
                     </Col>  
 
-                <Col sm={10}>
+                <Col sm={10}> 
                     <Container>
-                    <div className="admin-wrapper">
+                    <div className="admin-wrapper ">
                         <div className="form-admin-wrapper-two text-start">
                             <div className="wrapper my-5">
                                 <Row>
                                     <h1>Create Thesis</h1>
-                                    <Col sm={6}>
+                                    <Col sm={6} className='pr-5'>
+
+                                        
                                         <Form action="" onSubmit={handleFormSubmit}>
 
                                             {/* Title Input */}
@@ -267,7 +263,7 @@ const UserCreateThesis = () => {
                                             </Form.Group>
 
                                             {/* Department Input */}
-                                            <Form.Group className="mb-3">
+                                            {/* <Form.Group className="mb-3">
                                                 <Form.Label>Department</Form.Label><br/>
                                                 <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2"  value={thisDepartment} onChange={(e) => setDepartment(e.target.value)}>
                                                 <option> -- SELECT Department --</option>
@@ -278,6 +274,21 @@ const UserCreateThesis = () => {
                                                                 
                                                         ))}
                                                 </Form.Select>
+                                            </Form.Group> */}
+
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Department</Form.Label>
+                                                <Form.Control
+                                                    className='w-75 my-1'
+                                                    type="year"
+                                                    id="inputYear"
+                                                    aria-describedby="year"
+                                                    value={nameDepartment}
+                                                    disabled
+                                                />
+                                                <Form.Text id="year" muted>
+                                                    Only input the year the thesis was published.
+                                                </Form.Text>
                                             </Form.Group>
 
                                             {/* Course Input */}
@@ -349,16 +360,19 @@ const UserCreateThesis = () => {
                                                     />
                                                 </form>
                                             </div>
-
+                                            <br />
+                                            {error && showErrMsg(error)}
+                                       
                                             <Button 
-                                                className='my-3'
+                                                className='my-3 success'
                                                 variant="primary" 
                                                 type="submit"
                                                 onClick={handleFormSubmit}
-                                                // disabled={loading ? true : false}
+                                                disabled={loading ? true : false}
                                             >
                                                 Submit
                                             </Button>
+                                            
                                         </Form>
                                     </Col>
 
@@ -411,7 +425,6 @@ const UserCreateThesis = () => {
                                                 value={text}
                                                 onChange={(e) => setText(e.target.value)}
                                                 as="textarea"
-                                                placeholder="Leave a comment here"
                                                 style={{ height: '200px' }}
                                             />
                                         </FloatingLabel>

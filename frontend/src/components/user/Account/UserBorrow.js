@@ -57,7 +57,7 @@ const UserBorrow = () => {
                     thesis: borrow.thesis.title,
                     dateBorrowed: ( borrow.dateBorrowed === null ? "Pending" : moment(borrow.dateBorrowed).format('MM/DD/YYYY')),
                     dueDate: ( borrow.dateBorrowed === null ? "Pending" :  moment(borrow.dueDate).format('MM/DD/YYYY')),
-                    status: borrow.status
+                    status: <div className={ borrow.status === 'Active' ? 'active' : 'pending'}>{borrow.status}</div>
                     
                 })
             }
@@ -103,7 +103,7 @@ const UserBorrow = () => {
                     dateBorrowed:  moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                     dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
                     dateReturned: moment(borrow.dateReturned).format('MM/DD/YYYY'),
-                    status: borrow.status
+                    status: <div className='active'>{borrow.status}</div>
                     
                 })
             }

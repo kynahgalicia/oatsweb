@@ -74,6 +74,7 @@ export const newThesisReducer = (state = { thesis: {} }, action) => {
         case NEW_THESIS_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 

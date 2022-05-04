@@ -5,16 +5,17 @@ const Users = require('../models/userModel.js')
 const Guests = require('../models/guestModel.js')
 exports.create = catchAsyncErrors(async(req,res,next) => {
 
+    try {
     const {user_id, user_role, sender_name, sender_no, reference_no, sub_type, recieptImage} = req.body
     
     if(!user_id || !user_role || !sender_name || !sender_no || !reference_no || !sub_type || !recieptImage)
         return res.status(400).json({msg: "Please fill in all fields."})
 
-    const subType = await Subscriptions.findOne({user_id})
-    if(subType) await Subscriptions.findOneAndDelete({user_id})
-
     const reference = await Subscriptions.findOne({reference_no})
     if(reference) return res.status(400).json({msg: "Reference number is invalid"})
+
+    const subType = await Subscriptions.findOne({'user.user_id' :user_id})
+    if(subType) await Subscriptions.findOneAndDelete({'user.user_id' :user_id})
 
     let user = {}
 
@@ -68,6 +69,10 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         success: true,
         msg: "Wait for payment verification"
     })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
+    
 
 })
 

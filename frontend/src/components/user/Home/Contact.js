@@ -1,7 +1,7 @@
 import Banner from './home-components/Banner'
 import {Container, Row, Col, Card} from 'react-bootstrap'
-import shek from '../../img/Strawberry-20.png';
-import li from '../../img/leslie.png';
+import shek from '../../img/shekinah.jpg';
+import li from '../../img/leslie.jpg';
 import vince from '../../img/vince.jpg';
 import rods from '../../img/rods.jpg';
 

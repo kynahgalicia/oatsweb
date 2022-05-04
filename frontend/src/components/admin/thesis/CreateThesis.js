@@ -10,7 +10,7 @@ import  {newThesis, clearErrors} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
 import {getCourse} from '../../../redux/actions/courseActions'
 import { NEW_THESIS_RESET } from '../../../redux/constants/thesisConstants'
-
+import { showErrMsg } from '../../utils/Notification'
 import AdminSidebar from '../../layout/AdminSidebar'
 
 const CreateThesis = () => {
@@ -348,7 +348,8 @@ const CreateThesis = () => {
                                                     />
                                                 </form>
                                             </div>
-
+                                            
+                                            {error && showErrMsg(error)}
                                             <Button 
                                                 className='my-3'
                                                 variant="primary" 

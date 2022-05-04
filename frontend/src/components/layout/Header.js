@@ -169,7 +169,6 @@ const Header = () => {
         return(
             <>
             <Link to="/About" className='white'>About</Link> 
-            <Link to="/Category" className='white'>Category</Link> 
             <Link to="/Contact" className='white'>Contact</Link> 
             </>
         )

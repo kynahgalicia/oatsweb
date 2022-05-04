@@ -22,7 +22,7 @@ const EditUserProfile = () => {
     const [user_contact, setContact] = useState('')
 
     const {isLoggedIn, user} = useSelector(state => state.authUser)
-    const{isUpdated,error} =useSelector(state=>state.user)
+    const{isUpdated,error, loading} =useSelector(state=>state.user)
     useEffect(() => {
         
         if(isLoggedIn){
@@ -90,7 +90,7 @@ const EditUserProfile = () => {
                                     <Form.Control type="text" placeholder="+639" value={user_contact} onChange={(e) => setContact(e.target.value)}/>
                                 </Form.Group>
 
-                                <Button className="w-100 btn-login" type="submit" id="submitButton">
+                                <Button className="w-100 btn-login" type="submit" id="submitButton" disabled={loading ? true : false}>
                                     Save Changes
                                 </Button>
                         </Form>

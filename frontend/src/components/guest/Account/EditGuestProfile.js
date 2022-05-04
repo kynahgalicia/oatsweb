@@ -24,7 +24,7 @@ const EditGuestProfile = () => {
     const [guest_contact, setContact] = useState('')
 
     const {isLoggedInGuest, guest} = useSelector(state => state.authGuest)
-    const{isUpdated,error} =useSelector(state=>state.guest)
+    const{isUpdated,error, loading} =useSelector(state=>state.guest)
     useEffect(() => {
         
         if(isLoggedInGuest){
@@ -106,7 +106,7 @@ const EditGuestProfile = () => {
                             <Form.Control type="text" placeholder="" value={guest_contact} onChange={(e) => setContact(e.target.value)}/>
                         </Form.Group>
 
-                                <Button className="w-100 btn-login" type="submit" id="submitButton">
+                                <Button className="w-100 btn-login" type="submit" id="submitButton" disabled={loading ? true : false}>
                                     Save Changes
                                 </Button>
                         </Form>

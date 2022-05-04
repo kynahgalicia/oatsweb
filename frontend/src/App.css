@@ -6,8 +6,9 @@
   --red: #B12A33;
   --white: #F4F6F6;
   --grey: #414141;
-  --success: #77DD76;
+  --success: #6cc16b;
   --danger: #FF6962;
+  --pending: #bea32d;
 }
 
 .success{
@@ -15,6 +16,19 @@
   color: var(--grey) !important;
   border: 1px solid var(--success) !important;
 }
+
+.active{
+  color: var(--success) !important;
+}
+
+.pending{
+  color: var(--pending) !important;
+}
+
+.denied{
+  color: var(--danger) !important;
+}
+
 .danger{
   background-color: var(--danger) !important;
   color: var(--grey) !important;
@@ -85,7 +99,7 @@
   background-color: #00a65a !important;
 }
 .bg-orange {
-  background-color: #f39c12 !important;
+  background-color: #da992f !important;
 }
 .bg-red {
   background-color: #d9534f !important;
@@ -132,6 +146,20 @@ li, p {
   margin: 0;
 }
 
+
+.wrapper .h5{
+  font-size: 2vh;
+  text-align: left;
+}
+/* .wrapper p{
+  font-size: 1.6vh;
+  text-align: left;
+} */
+
+.wrapper .card-img-top{
+  width: 200px;
+  margin: 0 auto;
+}
 /* -----------------------Admin----------------------------- */
 
 .form-admin-wrapper{
@@ -195,6 +223,7 @@ li, p {
   padding: 20px 15px;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
+
 
 
 .row>* {
@@ -335,6 +364,12 @@ hr{
   margin-top: 5%;
 
 }
+
+@media only screen and (max-width: 1000px) {
+  .img-bg {
+    display: none;
+  }
+}
 .img-banner {
   opacity: 0.8;
   position: absolute;
@@ -342,7 +377,6 @@ hr{
   top: 6;
   width: 100%;
   margin: 0;
-
 }
 
 .banner{
@@ -979,7 +1013,7 @@ table td{
 }
 
 .tags-input:focus-within {
-  border: 1px solid #0052cc;
+  border: 1px solid var(--darkRed) !important;
 }
 
 .tags-input .keywordInput {
@@ -1013,7 +1047,7 @@ table td{
   list-style: none;
   border-radius: 6px;
   margin: 0 8px 8px 0;
-  background: #0052cc;
+  background: var(--darkRed);
 }
 
 .tag .tag-title {
@@ -1108,7 +1142,7 @@ input[type="file"]{
 }
 
 .payment-details{
-  padding:  10%;
+  padding: 4% 10%;
 }
 
 .payment-process img{
@@ -1194,4 +1228,9 @@ input[type="file"]{
 
 .edit-profile label{
   font-size: 2vh;
+}
+
+.btn-success a{
+  text-decoration: none !important;
+  color: var(--white) !important;
 }

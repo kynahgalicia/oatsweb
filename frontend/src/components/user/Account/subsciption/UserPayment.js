@@ -7,7 +7,7 @@ import UserSidebar from "../../../layout/UserSidebar";
 import gcash from '../../../img/gcash.png'
 import fifty from '../../../img/oneDay.jpg'
 import fivefifty from '../../../img/weekly.jpg'
-
+import {showErrMsg} from '../../../utils/Notification'
 import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
 
 const UserPayment = () => {
@@ -89,7 +89,7 @@ const UserPayment = () => {
 
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
-                        { isLoggedIn && subType ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                    
                             <h5 className='my-2'>Your Plan</h5>
                             <Card className= {"mx-4 sub-card text-start " + ( sub_type === 'oneDay' ? null : 'd-none')} >
                                     <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
@@ -135,7 +135,8 @@ const UserPayment = () => {
                         <div className="payment-process text-start">
                             <Row>
                                 <h5>Payment</h5>
-                                <Col className="p-5">
+                                { isLoggedIn && subType ? <div className="notif-bar bg-rose mx-0 my-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                                <Col className="px-5">
                                 <img src={gcash} alt="logo" className="p-3 w-50" />
                                 <img src={fifty} alt="logo" className={"p-3 w-75 " + ( sub_type === 'oneDay' ? null : 'd-none')} />
                                 <img src={fivefifty} alt="logo" className={"p-3 w-75 "+ ( sub_type === 'weekly'? null : 'd-none')} />
@@ -145,6 +146,9 @@ const UserPayment = () => {
 
                                 <Col className='text-start payment-details'>
                                         <h4>Sender Details</h4>
+                                        <div className='my-2'>
+                                        {error && showErrMsg(error)}
+                                        </div>
                                 <Form onSubmit={submitHandler} encType='multipart/form-data'>
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Sender Name</Form.Label>

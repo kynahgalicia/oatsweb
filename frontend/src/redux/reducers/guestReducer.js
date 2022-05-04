@@ -97,6 +97,7 @@ export const guestReducer = (state = {}, action) => {
         case DELETE_GUEST_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 

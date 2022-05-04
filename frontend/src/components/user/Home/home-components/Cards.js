@@ -21,18 +21,22 @@ const Cards = ({ cards, title}) => {
             <Row> 
             {cards && cards.map(card => ( 
                 <Col className="my-2"> 
-                <div className="home-card" key={card.id}>
-                    <Link to="/"><h5>{ card.title }</h5></Link>
+                    <div className="home-card" key={card.id}>
+                        <Link to="/"><h5>{ card.title }</h5></Link>
 
-                    {card.authors.map((author) =>(
-                        <label className='d-inline'>{author.fname.charAt(0)}. {author.lname} ;</label>
+                        {card.authors.map((author) =>(
+                            <label className='d-inline'>{author.fname.charAt(0)}. {author.lname} ;</label>
 
-                    ))}
-                    
-                    {(subType && subType.status === 'Active')  || (subTypeGuest && subTypeGuest.status === 'Active')  ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
-                    {!subType  && !subTypeGuest ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
-                    
-                </div> 
+                        ))}
+                        
+                        
+                        { isLoggedIn ?  <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link>: null}
+                        { isLoggedInGuest &&  !subTypeGuest ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+                        { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Active') ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+                        { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+                        {!isLoggedInGuest && !isLoggedIn  ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+
+                    </div> 
                 </Col> 
                 ))}
             </Row>

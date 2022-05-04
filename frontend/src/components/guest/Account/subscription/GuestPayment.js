@@ -7,7 +7,7 @@ import GuestSidebar from "../../../layout/GuestSidebar";
 import gcash from '../../../img/gcash.png'
 import fifty from '../../../img/oneDay.jpg'
 import fivefifty from '../../../img/weekly.jpg'
-
+import { showErrMsg } from '../../../utils/Notification'
 import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
 
 const GuestPayment = () => {
@@ -149,6 +149,9 @@ const GuestPayment = () => {
 
                                 <Col className='text-start payment-details'>
                                         <h4>Sender Details</h4>
+                                        <div className='my-2'>
+                                        {error && showErrMsg(error)}
+                                        </div>
                                 <Form onSubmit={submitHandler} encType='multipart/form-data'>
                                         <Form.Group className='mb-3'>
                                             <Form.Label>Sender Name</Form.Label>
