@@ -15,15 +15,13 @@ const UserBorrow = () => {
     const alert = useAlert();
 
     const { loading, error, borrow } = useSelector(state => state.borrows)
-    const {user} = useSelector(state => state.authUser)
+    const {user, isLoggedIn} = useSelector(state => state.authUser)
 
     useEffect(() => {
 
-            const formData = new FormData();
-            formData.set("user", user.user_tupid)
-
-            dispatch(getStudentBorrow(formData))
-    }, [dispatch, alert, error])
+        if(isLoggedIn){ 
+            dispatch(getStudentBorrow( user.user_tupid))}
+    }, [dispatch, alert, error, isLoggedIn])
 
     const setData = () => { 
         const data = {

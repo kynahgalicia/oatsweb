@@ -34,12 +34,13 @@ const EditGuestProfile = () => {
             setProfession(guest.guest_profession)
             setCompany(guest.guest_company)
             setCompanyAddress(guest.guest_company_address)
-            setContact(guest.guest_contact)
+            setContact('0' + guest.guest_contact)
 
         }
 
         if (isUpdated) {
             history.push('/guest/profile');
+            window.location.reload()
             alert.success('Profile updated successfully!');
             dispatch({ type: UPDATE_GUEST_RESET })
         }

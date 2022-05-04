@@ -142,6 +142,7 @@ const SignUpAsStudent = () => {
                     <Form.Group className="mb-2">
                         <Form.Label>Course</Form.Label>
                         <Form.Select id="department_field" placeholder="" value={thisCourse} onChange={(e) => setCourse(e.target.value)}>
+                        <option> -- SELECT COURSE --</option>
                         {thisDepartment && course && course.map((courses) => (
                                         
                                         <option value={courses._id}>{courses.coursecode} ({courses.coursename})</option>

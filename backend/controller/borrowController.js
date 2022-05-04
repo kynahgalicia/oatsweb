@@ -41,6 +41,9 @@ exports.create = async(req,res,next) => {
         const borrowed = await Borrow.findOne({user, thesis})
         if(borrowed) return res.status(400).json({msg: "Already Borrowed"})
 
+        const limit = await Borrow.find({user}).countDocuments()
+        if(limit >= 3) return res.status(400).json({msg: "Reached Limit of Borrow"})
+
         const borrow = await Borrow.create(req.body);
 
         res.status(201).json({
@@ -102,8 +105,8 @@ exports.get = async (req, res, next) => {
 
 exports.getStudent = async (req, res, next) => {
 
-    const user_tupid = req.body.user
-    const borrow = await Borrow.find({user_tupid});
+    const user_tupid = req.params.user
+    const borrow = await Borrow.find({'user.tupid': user_tupid});
 
     res.status(200).json({
         success: true,

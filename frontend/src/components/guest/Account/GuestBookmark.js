@@ -16,7 +16,7 @@ const GuestBookmark = () => {
     const [thisId, setThisId] = useState('')
     const { loading, error, bookmarks } = useSelector(state => state.bookmarks)
     const { error: deleteError, isDeleted } = useSelector(state => state.bookmark)
-    const {guest, isLoggedInGuest, subType} = useSelector(state => state.authGuest)
+    const {guest, isLoggedInGuest, subTypeGuest} = useSelector(state => state.authGuest)
 
     useEffect(() => {
         if(isLoggedInGuest){
@@ -45,7 +45,7 @@ const GuestBookmark = () => {
         
 
 
-    }, [dispatch, alert, history, error, isLoggedInGuest, thisId,deleteError, isDeleted])
+    }, [dispatch, alert, history, error, isLoggedInGuest, thisId,deleteError, isDeleted, subTypeGuest])
 
     const deleteHandler = (id) => {
         dispatch(deleteBookmark(id))
@@ -69,7 +69,7 @@ const GuestBookmark = () => {
         <>
         <Card style={{ width: '18rem' }} >
             <Card.Body>
-                <Card.Title className='text-start'><Link to={ subType && subType.status === "Active" ? `/thesis/${bookmark.thesis.id}` : '#'}> {bookmark.thesis.title}</Link></Card.Title>
+                <Card.Title className='text-start'><Link to={ subTypeGuest && subTypeGuest.status === "Active" ? `/thesis/${bookmark.thesis.id}` : '#'}> {bookmark.thesis.title}</Link></Card.Title>
                 <Card.Text className='text-start'>
                     <label><i>{bookmark.thesis.publishedAt}</i></label><br/>   
                     {bookmark.thesis.abstract.substring(0, 100)}...

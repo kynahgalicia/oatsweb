@@ -95,7 +95,7 @@ const UserThesisList = () => {
                     createdAt: moment(theses.createdAt).format('MM/DD/YYYY'),
                     actions: 
                     <Fragment>
-                        <Link to={`/admin/course/edit/`} className="decor-none block">
+                        {/* <Link to={`/admin/course/edit/`} className="decor-none block">
                             <Button variant="info">
                             <FaPencilAlt/>
                             </Button>
@@ -103,7 +103,7 @@ const UserThesisList = () => {
     
                         <Button variant="danger">
                             <FaTrash/>
-                        </Button>
+                        </Button> */}
                     </Fragment>
                 })
             })

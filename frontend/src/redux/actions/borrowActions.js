@@ -53,10 +53,10 @@ export const getStudentBorrow = (userData) => async (dispatch) => {
     try {
         dispatch({ type: ALL_STUDENT_BORROW_REQUEST })
 
-        let link = process.env.REACT_APP_URL + `/api/borrow/request/all`
+        let link = process.env.REACT_APP_URL + `/api/borrow/request/all/${userData}`
 
 
-        const { data } = await axios.get(link, userData)
+        const { data } = await axios.get(link)
         console.log(link)
         dispatch({
             type: ALL_STUDENT_BORROW_SUCCESS,

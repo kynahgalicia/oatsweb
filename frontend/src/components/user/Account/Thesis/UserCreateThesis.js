@@ -226,6 +226,7 @@ const UserCreateThesis = () => {
                                                             <Form.Control
                                                                 name="fname"
                                                                 label="fname"
+                                                                placeholder='First Name'
                                                                 value={inputField.fname}
                                                                 className="d-inline w-25 my-2"
                                                                 onChange={event => handleChangeInput(index, event)}
@@ -233,6 +234,7 @@ const UserCreateThesis = () => {
                                                             <Form.Control
                                                                 name="lname"
                                                                 label="lname"
+                                                                placeholder='Last Name'
                                                                 value={inputField.lname}
                                                                 className="d-inline w-25 m-2"
                                                                 onChange={event => handleChangeInput(index, event)}
