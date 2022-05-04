@@ -288,9 +288,6 @@ const UserCreateThesis = () => {
                                                     value={nameDepartment}
                                                     disabled
                                                 />
-                                                <Form.Text id="year" muted>
-                                                    Only input the year the thesis was published.
-                                                </Form.Text>
                                             </Form.Group>
 
                                             {/* Course Input */}
