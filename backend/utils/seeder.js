@@ -4,6 +4,7 @@ const Department = require('../models/departmentModel')
 const ViewLog = require('../models/viewLogModel')
 const DownloadLog = require('../models/downloadLogModel')
 const SearchLog = require('../models/searchLogModel')
+const Borrow = require('../models/borrowModel');
 require('dotenv').config({ path: '.env' });
 const mongoose = require('mongoose')
 // const connectDatabase = require('../config/database');
@@ -25,6 +26,7 @@ const seedThesis = async () => {
         await ViewLog.deleteMany();
         await DownloadLog.deleteMany();
         await SearchLog.deleteMany();
+        await Borrow.deleteMany();
         // await Course.deleteMany();
         // await Department.deleteMany();
         // console.log('Thesis / Course Are Deleted');
