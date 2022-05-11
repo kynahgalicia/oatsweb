@@ -7,6 +7,7 @@ const authAdminRole = require('../middleware/authAdminRole')
 router.get('/subscription',subscriptionController.findList)
 router.post('/subscription/new', subscriptionController.create)
 router.put('/subscription/expired/:id', subscriptionController.subExpire)
+router.put('/subscription/expiredSub', subscriptionController.subExpireAdmin)
 router.put('/subscription/verify/:id', subscriptionController.verifyRequest)
 router.put('/subscription/decline/:id', subscriptionController.declineRequest)
 

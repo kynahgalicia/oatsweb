@@ -33,7 +33,7 @@ const Cards = ({ cards, title}) => {
                         { isLoggedIn ?  <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link>: null}
                         { isLoggedInGuest &&  !subTypeGuest ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
                         { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Active') ? <Link className='d-block' to={`/thesis/${card._id}`} >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
-                        { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
+                        { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status !== "Active") ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
                         {!isLoggedInGuest && !isLoggedIn  ? <Link className='d-block' to="#" >Read More <BsFillArrowRightCircleFill size={20}/></Link> : null}
 
                     </div> 

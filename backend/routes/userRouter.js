@@ -7,6 +7,8 @@ router.post('/register', userController.register)
 
 router.post('/activation', userController.activateEmail)
 
+router.post('/emailValidation', userController.emailValidation)
+
 router.post('/login', userController.login)
 
 router.get('/logout', userController.logout)

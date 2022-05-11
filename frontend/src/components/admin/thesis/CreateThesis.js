@@ -313,7 +313,7 @@ const CreateThesis = () => {
                                                         className='d-inline w-75 my-1 keywordInput'
                                                         type="text"
                                                         placeholder='Press space to add keywords'
-                                                        onKeyUp={e => e.key == " " ? addTags(e): null}
+                                                        onKeyUp={e => e.key === " " ? addTags(e): null}
                                                         // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
                                                 </div>
@@ -355,7 +355,7 @@ const CreateThesis = () => {
                                                 variant="primary" 
                                                 type="submit"
                                                 onClick={handleFormSubmit}
-                                                // disabled={loading ? true : false}
+                                                disabled={loading ? true : false}
                                             >
                                                 Submit
                                             </Button>
@@ -387,7 +387,7 @@ const CreateThesis = () => {
                                             }
                                             className="form-control mt-5 mb-2"
                                         />
-                                        <img src={image} width="660px"/>
+                                        <img src={image} width="660px" alt='Convert Image'/>
 
                                         <progress className="form-control" value={progress} max="100">
                                             {progress}%{' '}

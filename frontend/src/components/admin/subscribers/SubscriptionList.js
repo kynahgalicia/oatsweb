@@ -1,12 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import moment from 'moment'
-import { FaTrash} from 'react-icons/fa';
-import {Row, Col, Button, Form} from 'react-bootstrap';
+import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSubscribe, clearErrors} from '../../../redux/actions/subscriptionActions';
+import { getSubscribe, expireSubscribeAdmin, clearErrors} from '../../../redux/actions/subscriptionActions';
+import { DELETE_SUBSCRIBES_RESET} from '../../../redux/constants/subscriptionConstants';
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
 
@@ -16,6 +16,7 @@ const SubscriptionList = () => {
     const alert = useAlert();
 
     const { loading, error, subs } = useSelector(state => state.subs)
+    const { isDeleted, msg } = useSelector(state => state.subscribes)
 
     useEffect(() => {
             dispatch(getSubscribe())
@@ -25,10 +26,20 @@ const SubscriptionList = () => {
             dispatch(clearErrors())
         }
 
+        if (isDeleted) {
+            history.push('/admin/subscription/list');
+            alert.success(msg);
+            dispatch({ type: DELETE_SUBSCRIBES_RESET })
+        }
+
         // if (!isLoggedInAdmin) {
         //     history.push('/admin/login');
         // }
-    }, [dispatch, alert, error, history])
+
+        // if(expired){
+        //     console.log(expired)
+        // }
+    }, [dispatch, alert, error, history, isDeleted])
 
     const setData = () => { 
         const data = {
@@ -64,6 +75,11 @@ const SubscriptionList = () => {
                     sort: 'desc'
                 },
                 {
+                    label: 'Activated At',
+                    field: 'activatedAt',
+                    sort: 'desc'
+                },
+                {
                     label: 'Status',
                     field: 'status',
                     sort: 'desc'
@@ -75,6 +91,31 @@ const SubscriptionList = () => {
             ],
             rows: []
         }
+        // let expired = []
+        // subs && subs.forEach(subs => {
+        //     if(subs.status === 'Active'){
+        //         const startDate = moment(subs.activatedAt);
+        //         const timeEnd = moment(Date.now());
+        //         const diff = timeEnd.diff(startDate);
+        //         const diffDuration = moment.duration(diff);
+
+        //         const duration = diffDuration._data.days;
+                
+        //         console.log(duration)
+        //         if(subs.sub_type === 'oneDay' && subs.status === "Active" && duration >= 1 ){
+        //             expired.push(subs._id)
+        //         }
+        //         if(subs.sub_type === 'weekly' && subs.status === "Active" && duration >= 7 ){
+        //             expired.push(subs._id)
+        //         }
+        //     }
+        // })
+        
+        // if(expired !== []){ 
+        //     const formData = new FormData()
+        //     formData.append('expiredSubs', JSON.stringify(expired))
+        //     dispatch(expireSubscribeAdmin(formData))
+        // }
 
         subs && subs.forEach(subs => {
             if(subs.status === 'Active'){
@@ -86,6 +127,7 @@ const SubscriptionList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
+                    activatedAt: moment(subs.activatedAt).format('MM/DD/YYYY'),
                     
                     actions: 
                     <Fragment>
@@ -153,6 +195,11 @@ const SubscriptionList = () => {
                     sort: 'desc'
                 },
                 {
+                    label: 'Activated At',
+                    field: 'activatedAt',
+                    sort: 'desc'
+                },
+                {
                     label: 'Status',
                     field: 'status',
                     sort: 'desc'
@@ -175,7 +222,7 @@ const SubscriptionList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
-                    
+                    activatedAt: moment(subs.activatedAt).format('MM/DD/YYYY'),
                     actions: 
                     <Fragment>
                         <Button className="success">

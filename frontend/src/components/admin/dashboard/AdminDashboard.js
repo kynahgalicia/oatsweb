@@ -1,15 +1,11 @@
 import React, { Fragment, useEffect, useState} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
-import {Container,Row, Col, Button, Card} from 'react-bootstrap'
+import {Row, Col, Button} from 'react-bootstrap'
 import { useSelector, useDispatch} from 'react-redux'
 import profile from '../../img/profile.png'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
-
 import BarGraph from './analytics/BarGraph'
-import DownloadperDept from './analytics/DownloadperDept'
-import DownloadperDay from './analytics/DownloadperDay'
-import Thesis from './analytics/Thesis'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
 // require('./dashboard.css');

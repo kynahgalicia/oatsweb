@@ -733,9 +733,9 @@ font-family: 'Poppins' , sans-serif;
 .details-button button,
 .details-button a{
   background-color: var(--red);
-  color: var(--white);
+  color: var(--white) !important;
   border: none;
-  text-decoration: none;
+  text-decoration: none !important;
   /* margin: 15px; */
 }
 .details-button button:hover,
@@ -943,12 +943,12 @@ font-family: 'Poppins' , sans-serif;
   border: 1px solid  var(--black);
   left: 0 !important;
 }
-/* 
-.table-admin a{
+
+.table-admin button a{
   text-decoration: none;
   color: var(--white);
   font-family: 'Poppins' , sans-serif;
-} */
+}
 .table-list{
   color: var(--black) !important;
 }

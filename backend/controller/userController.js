@@ -27,17 +27,24 @@ const userController = {
             if(!user_fname || !user_lname || !user_tupid || !user_tupmail || !user_contact || !departments || !courses  || !passwords )
                 return res.status(400).json({msg: "Please fill in all fields."})
 
+
             if(!validateEmail(user_tupmail))
-                return res.status(400).json({msg: "Invalid emails."})
+                return res.status(401).json({msg: "Invalid email."})
+
+            if (!(/@tup.edu.ph\s*$/.test(user_tupmail))) 
+                return res.status(402).json({msg: "Invalid Email"})
+
+            if (!(/\bTUPT-\d{2}-\d{4}$/.test(user_tupid))) 
+                return res.status(403).json({msg: "Invalid ID format"})
 
             const user = await Users.findOne({user_tupmail})
-            if(user) return res.status(400).json({msg: "This email already exists."})
+            if(user) return res.status(405).json({msg: "This email already exists."})
 
             if(user_contact.length < 11)
-                return res.status(400).json({msg: "contact must be at least 11 numbers."})
+                return res.status(406).json({msg: "contact must be at least 11 numbers."})
 
             if(passwords.length < 6)
-                return res.status(400).json({msg: "Password must be at least 6 characters."})
+                return res.status(407).json({msg: "Password must be at least 6 characters."})
 
             const user_password = await bcrypt.hash(passwords, 12)
             
@@ -62,19 +69,36 @@ const userController = {
 
             console.log(newUser)
         
-            const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            sendMail(user_tupmail, url, "Verify your email address")
+            // const url = `${FRONTEND_URL}/user/activate/${activation_token}`
+            // sendMail(user_tupmail, url, "Verify your email address")
 
 
             res.json({
             msg: "Register Success! Please activate your email to start.", 
-            activation: activation_token})
+            // activation: activation_token
+        })
             
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
+    // /user/activation
+    emailValidation: async (req, res) => {
+        try {
+            const {email} = req.body
+
+            if (!(/@tup.edu.ph\s*$/.test(email))) {
+                return res.status(400).json({msg: "Invalid Email"})
+            }else{
+                res.json({
+                    msg: "Success"})
+            }
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     // /user/activation
     activateEmail: async (req, res) => {
         try {
@@ -106,26 +130,15 @@ const userController = {
             const user = await Users.findOne({user_tupmail})
             if(!user) return res.status(400).json({msg: "This email does not exist. Please register first."})
 
+            const userStatus = await Users.findOne({'user_tupmail': user_tupmail, 'user_status': 'Deactivated'})
+            if(userStatus) return res.status(400).json({msg: "This account is deactivated"})
+
             const isMatch = await bcrypt.compare(user_password, user.user_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
             
-            console.log(user)   
+            // console.log(user)   
 
             const refresh_token = createRefreshToken({id: user._id})
-
-            // const options = {
-            //     expires: new Date(
-            //         Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000 //7days
-            //     ),
-            //     httpOnly: true
-            // }
-        
-            // res.status(200).cookie('refreshtoken', refresh_token, options).json({
-            //     success: true,
-            //     refresh_token,
-            //     user,
-            //     msg: "Login success!"
-            // })
             
             res.json({
                 msg: "Login success!",
@@ -194,19 +207,53 @@ const userController = {
 
     // /user/infor
     getUserInfor: async (req, res) => {
-        try {
 
-            const user_id = req.user.id
-            const user = await Users.findById(req.user.id).select('-user_password')
-            const subType = await Subscriptions.findOne({'user.user_id' :user_id})
+        const user_id = req.user.id
+    try {
+        const subscription = await Subscriptions.findOne({'user.user_id' : user_id})
+        
+        
+    
+        let expired = ''
+        if(subscription && subscription.status === 'Active'){
+            const date1 = subscription.activatedAt;
+            const date2 = Date.now();
+            const diffTime = Math.abs(date2 - date1);
+            const diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
 
-            res.json({user: user,
-                    msg: "Success User",
-                    subType: subType})
-                    
-        } catch (err) {
-            return res.status(500).json({msg: err.message})
+            console.log(diffHours + 'hours')
+            if(subscription.sub_type === 'oneDay' && diffHours >= 24 ){
+                expired = subscription._id
+            }
+            if(subscription.sub_type === 'weekly' && diffHours >= 168 ){
+                expired = subscription._id
+            }
+
         }
+        console.log(expired)
+        if(expired){
+        await Subscriptions.updateOne({'_id': expired},{'status': 'Expired'},{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })}
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
+    
+    try {
+        const user = await Users.findById(req.user.id).select('-user_password')
+        const subType = await Subscriptions.findOne({'user.user_id' :user_id})
+
+        res.json({
+                user: user,
+                msg: "Success User",
+                subType: subType
+        })
+                
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
     },
 
 

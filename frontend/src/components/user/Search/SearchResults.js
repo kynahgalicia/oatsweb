@@ -46,6 +46,8 @@ const SearchResults = ({userDept,thesis, thisId}) => {
     }
     return ( 
         <Fragment>
+            { isLoggedIn && subType && subType.status === 'Expired' ? <div className="m-1 notif-bar bg-rose text-center"> <p>Your subscription has expired.</p> </div> : null}
+            { isLoggedIn && subType && subType.status === 'Pending' ? <div className="m-1 notif-bar bg-rose text-start"> <p>Please wait for the confirmation of your subscription</p> </div> : null}
             { thesis && thesis.map((theses) => (
                 <div className='thesis-result'>
 
@@ -54,7 +56,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                     { isLoggedIn ?  <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5>: null}
                     { isLoggedInGuest &&  !subTypeGuest ? <h5> <Link to='#' data-target='#subscriptionModal' data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Active') ? <h5> <Link to={`/thesis/${theses._id}`}> {theses.title} </Link> </h5> : null}
-                    { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status === 'Pending') ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
+                    { isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status !== "Active") ? <h5> <Link to='#' data-target={isLoggedInGuest &&  (subTypeGuest && subTypeGuest.status !== "Active") ? '#subscriptionModal' : null} data-toggle="modal"> {theses.title} </Link> </h5> : null}
                     {!isLoggedInGuest && !isLoggedIn  ? <h5> <Link to='/user/login'> {theses.title}</Link></h5>: null}
                     
                     </Col>
@@ -62,8 +64,8 @@ const SearchResults = ({userDept,thesis, thisId}) => {
                     <Col> 
                         { thisId ?<div className="icon-bookmark" onClick={() => bookmarkHandler(theses._id)} data-toggle="tooltip" data-placement="bottom" title="Bookmark">  <i class="fas fa-bookmark"></i>  <i class="far fa-bookmark" ></i></div>  : null}
                         
-                        {  userDept && userDept !== theses.department.deptname  && (!subType || (subType && subType.status === "Pending")) ? <i className="fas fa-lock"></i> :  null  }
-                        {  isLoggedInGuest && (subTypeGuest && subTypeGuest.status === "Pending" )  ?  <i className="fas fa-lock"></i>  : null  }
+                        {  userDept && userDept !== theses.department.deptname  && (!subType || (subType && subType.status !== "Active")) ? <i className="fas fa-lock"></i> :  null  }
+                        {  isLoggedInGuest && (subTypeGuest && subTypeGuest.status !== "Active" )  ?  <i className="fas fa-lock"></i>  : null  }
                         {  isLoggedInGuest && !subTypeGuest ?  <i className="fas fa-lock"></i>  : null  }
                         {  !userDept && !isLoggedIn && !isLoggedInGuest ?  <i className="fas fa-lock"></i>  : null  }
                     </Col>
@@ -85,7 +87,7 @@ const SearchResults = ({userDept,thesis, thisId}) => {
         ))}
 
           {/* Subscription Modal */}
-          <div className="modal fade" id="subscriptionModal" aria-hidden="true" data-backdrop="false">
+        <div className="modal fade" id="subscriptionModal" aria-hidden="true" data-backdrop="false">
                                 <div className="modal-dialog modal-dialog-centered modal-dialog modal-lg">
                                     <div className="modal-content subscription">
                                         {/* <div className="modal-header">

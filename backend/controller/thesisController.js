@@ -78,11 +78,17 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
 exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
 
-    const theses = await Thesis.find();
+    const thesisCount = await Thesis.find().countDocuments();
+    const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    
+    
+    let Thesis_query = await apiFeatures.query;
 
     res.status(200).json({
         success: true,
-        theses
+        thesisCount,
+        thesis:Thesis_query,
+        filteredThesisCount: Thesis_query.length,
     })
 
 })
@@ -102,8 +108,8 @@ exports.getStudentThesis = catchAsyncErrors(async (req, res, next) => {
 // /api/thesis
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
-    const thesisCount = await Thesis.countDocuments();
-    const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    const thesisCount = await Thesis.find({'status':'Active'}).countDocuments();
+    const apiFeatures = new APIFeatures(Thesis.find({'status':'Active'}), req.query).search().filter()
     
     
     let Thesis_query = await apiFeatures.query;
@@ -119,7 +125,7 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
 // /api/thesisCount
 exports.thesisCount = catchAsyncErrors(async (req,res,next) => {
     
-    const thesisCount = await Thesis.countDocuments();
+    const thesisCount = await Thesis.find({'status':'Active'}).countDocuments();
 
     res.status(200).json({
         thesisCount: thesisCount
@@ -154,4 +160,41 @@ exports.delete = catchAsyncErrors(async(req,res,next) =>{
     message: 'Deleted'
     })
 })
+
+exports.deactivate = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        req.body.status = 'Deactivated'
+        const thesis = await Thesis.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            success:true
+        })
+
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+})
+exports.activate = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        req.body.status = 'Active'
+        const thesis = await Thesis.findByIdAndUpdate(req.params.id,req.body,{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.status(200).json({
+            success:true
+        })
+
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+})
+
+
 

@@ -1,28 +1,25 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
-
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { useDispatch, useSelector } from 'react-redux'
-import {getDepartment, deleteDepartment, clearErrors} from '../../../redux/actions/departmentActions'
-import { DELETE_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
+import {getDepartmentDeleted, restoreDepartment, clearErrors} from '../../../redux/actions/departmentActions'
+import { RESTORE_DEPARTMENT_RESET } from '../../../redux/constants/departmentConstants'
 import AdminSidebar from '../../layout/AdminSidebar'
-const DepartmentList = () => {
+const DeletedDepartment = () => {
     const { loading, error, department } = useSelector(state => state.department);
-    const {  error: deleteError, isDeleted } = useSelector(state => state.departments);
+    const {  error: deleteError, isRestored } = useSelector(state => state.departments);
     const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
-
     const history = useHistory();
     const alert = useAlert();
 
     useEffect(() => {
-        dispatch(getDepartment());
+        dispatch(getDepartmentDeleted());
 
         if (error) {
             alert.error(error);
@@ -34,27 +31,22 @@ const DepartmentList = () => {
             dispatch(clearErrors())
         }
 
-        if (isDeleted) {
+        if (isRestored) {
             history.push('/admin/department');
-            alert.success('Department deleted successfully');
-            dispatch({ type: DELETE_DEPARTMENT_RESET })
+            alert.success('restored successfully');
+            dispatch({ type: RESTORE_DEPARTMENT_RESET })
         }
 
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
         
-    },[ dispatch, alert, error, deleteError, isDeleted, history,isLoggedInAdmin,adminToken]);
+    },[ dispatch, alert, error, deleteError, isRestored, history,isLoggedInAdmin,adminToken]);
 
 
     const setData = () => { 
         const data = {
             columns: [
-                // {
-                //     label: 'ID',
-                //     field: 'id',
-                //     sort: 'asc'
-                // },
                 {
                     label: 'Department Name',
                     field: 'deptname',
@@ -80,20 +72,14 @@ const DepartmentList = () => {
 
         department.forEach(department => {
             data.rows.push({
-                // id: department._id,
                 deptname: department.deptname,
                 deptcode: department.deptcode,
-                status: <div className='active'>{department.status}</div> ,
+                status: <div className='denied'>Deleted</div> ,
                 actions: 
                 <Fragment>
-                    <Link to={`/admin/department/edit/${department._id}`} className="decor-none block">
-                        <Button variant="info">
-                        <FaPencilAlt/>
-                        </Button>
-                    </Link>
 
                     <Button className="m-1" variant="danger" data-toggle="modal" data-target={"#deleteModal" + department._id}>
-                        <FaTrash/>
+                    <i class="fas fa-undo"></i>
                     </Button>
 
                     <div className="modal fade" id={"deleteModal"  + department._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -102,12 +88,12 @@ const DepartmentList = () => {
                                 <div className="modal-body">
                                     <i class="fas fa-exclamation-triangle alert"/>
                                     <br/>
-                                    This department may contain data from other lists. Are you sure you want to delete this department? This action cannot be undone.
+                                    This department may contain data from other lists once restored. Are you sure you want to restore this department?
                                 </div>
                                 
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => deleteDepartmentHandler(department._id)}>Yes</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => activateDepartmentHandler(department._id)}>Yes</button>
                                 </div>
                             </div>
                         </div>
@@ -119,8 +105,8 @@ const DepartmentList = () => {
         return data;
     }
 
-    const deleteDepartmentHandler = (id) => {
-        dispatch(deleteDepartment(id,adminToken))
+    const activateDepartmentHandler = (id) => {
+        dispatch(restoreDepartment(id,adminToken))
     }
 
     return(
@@ -135,12 +121,7 @@ const DepartmentList = () => {
                 {loading ? <LoaderAdmin/>  :  
                     <>
                 <div className='d-flex align-items-start m-2'>
-                    <h1>Departments</h1>
-                </div>
-                <div className='d-flex align-items-start mx-5 mt-3'>
-                    <Button variant="success"><Link to="/admin/department/new">+ Add</Link></Button>
-
-                    <Button variant="danger"><Link to="/admin/department/deleted"> <i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                    <h1>Deleted Departments</h1>
                 </div>
                     <MDBDataTableV5 
                     hover 
@@ -162,4 +143,4 @@ const DepartmentList = () => {
     )
 }
 
-export default DepartmentList;
+export default DeletedDepartment;

@@ -93,18 +93,52 @@ exports.find = catchAsyncErrors(async(req,res,next) => {
 })
 
 exports.findList = catchAsyncErrors(async(req,res,next) => {
-    const subscription = await Subscriptions.find();
-    if(!subscription) return res.status(200).json({msg: "No Data"})
+
+    try {
+        const subscription = await Subscriptions.find();
+        if(!subscription) return res.status(200).json({msg: "No Data"})
+        
+        let expired = []
+        for (let i = 0; i < subscription.length; i++) {
+    
+            if(subscription[i].status === 'Active'){
+                // console.log(subscription[i]._id);
+                // const date1 = new Date('5/12/2022');
+                const date1 = subscription[i].activatedAt;
+                const date2 = Date.now();
+                const diffTime = Math.abs(date2 - date1);
+                const diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
+    
+                if(subscription[i].sub_type === 'oneDay' && diffHours >= 24 ){
+                    expired.push(subscription[i]._id)
+                }
+                if(subscription[i].sub_type === 'weekly' && diffHours >= 168 ){
+                    expired.push(subscription[i]._id)
+                }
+            }
+    
+        }
+
+        if(expired){
+            await Subscriptions.updateMany({_id :{ $in:expired } }, { $set: {status: 'Expired' }});
+        }
+
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
     
 
-    console.log(subscription)
-    
-    res.status(200).json({
-        success: true,
-        subscription
 
-    })
+    try {
+        const subs = await Subscriptions.find();
 
+        res.status(200).json({
+            success: true,
+            subscription: subs
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
 })
 
 exports.delete = catchAsyncErrors(async(req,res,next) =>{
@@ -132,7 +166,21 @@ exports.subExpire = catchAsyncErrors(async(req,res,next) =>{
             success: true
         })
     } catch (error) {
-        return res.status(500).json({msg: err.message})
+        return res.status(500).json({msg: error.message})
+    }
+})
+
+exports.subExpireAdmin = catchAsyncErrors(async(req,res,next) =>{
+    try {
+        const {expiredSubs} = req.body
+        
+
+        res.status(200).json({
+            msg: "Subscriptions has expired",
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
     }
 })
 exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{

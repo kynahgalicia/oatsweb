@@ -42,7 +42,7 @@ exports.getAdminCourse = catchAsyncErrors(async (req, res, next) => {
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
     const courseCount = await Course.countDocuments();
-    const apiFeatures = new APIFeatures(Course.find(), req.query).searchCourse().filter()
+    const apiFeatures = new APIFeatures(Course.find({'status': 'Active'}), req.query).searchCourse().filter()
     console.log(req.query)
     
     let Course_query = await apiFeatures.query;

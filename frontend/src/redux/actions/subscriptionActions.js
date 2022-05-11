@@ -9,6 +9,9 @@ import {
     DELETE_SUBSCRIBE_REQUEST,
     DELETE_SUBSCRIBE_SUCCESS,
     DELETE_SUBSCRIBE_FAIL,
+    DELETE_SUBSCRIBES_REQUEST,
+    DELETE_SUBSCRIBES_SUCCESS,
+    DELETE_SUBSCRIBES_FAIL,
     VERIFY_SUBSCRIBE_REQUEST,
     VERIFY_SUBSCRIBE_SUCCESS,
     VERIFY_SUBSCRIBE_FAIL,
@@ -87,6 +90,33 @@ export const expireSubscribe = (id) => async (dispatch) => {
         })
     }
 }
+export const expireSubscribeAdmin = (formData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_SUBSCRIBES_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const {data} = await axios.put( process.env.REACT_APP_URL + '/api/subscription/expiredSub', formData, config )
+
+        dispatch({
+            type: DELETE_SUBSCRIBES_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_SUBSCRIBES_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
 export const verifySubscribe = (id) => async (dispatch) => {
     try {
 

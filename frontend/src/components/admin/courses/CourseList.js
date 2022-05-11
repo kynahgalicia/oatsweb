@@ -73,6 +73,11 @@ const CourseList = () => {
                     sort: 'desc'
                 },
                 {
+                    label: 'Status',
+                    field: 'status',
+                    sort: 'asc'
+                },
+                {
                     label: 'Actions',
                     field: 'actions',
                 },
@@ -86,6 +91,7 @@ const CourseList = () => {
                 coursename: course.coursename,
                 coursecode: course.coursecode,
                 department: course.department.deptname,
+                status: course.status,
                 actions: 
                 <Fragment>
                     <Link to={`/admin/course/edit/${course._id}`} className="decor-none block">

@@ -2,10 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import moment from 'moment'
-import { FaTrash} from 'react-icons/fa';
 import {Row, Col, Button, Form} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
-
+import LoaderAdmin from '../../utils/LoaderAdmin'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBorrow, returnBorrow, deleteBorrow, clearErrors} from '../../../redux/actions/borrowActions';
 import { UPDATE_BORROW_RESET, DELETE_BORROW_RESET } from '../../../redux/constants/borrowConstants';
@@ -153,9 +152,9 @@ const BorrowList = () => {
     }
     
 
-    const deleteBorrowHandler = (id) => {
-        dispatch(deleteBorrow(id))
-    }
+    // const deleteBorrowHandler = (id) => {
+    //     dispatch(deleteBorrow(id))
+    // }
 
     const returnHandler = (id) => {
 
@@ -176,6 +175,9 @@ const BorrowList = () => {
                 <Col sm={10}>
                     <div className="admin-wrapper">
                         <div className="table-admin">
+
+                        { loading ? <LoaderAdmin /> :
+                        <>
                         <div className='d-flex align-items-start m-2'>
                             <h1>Borrow</h1>
                         </div>
@@ -191,6 +193,9 @@ const BorrowList = () => {
                             data={setData()} 
                             className='table px-4'
                             container-sm="true"/>
+                        </>
+                        
+                            }
                         </div>
                     </div>
                 </Col>

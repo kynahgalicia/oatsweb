@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import {useHistory } from 'react-router-dom'
 
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,7 +25,6 @@ const CreateBorrow = () => {
 
     const { loading, error, success } = useSelector(state => state.newBorrow);
     const {isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
-    // const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
 
@@ -50,7 +49,7 @@ const CreateBorrow = () => {
 
         // dispatch(getDepartment())
 
-    }, [dispatch, alert, error, success, history, isLoggedInAdmin])
+    }, [dispatch, alert, error, success, history, isLoggedInAdmin, admin])
 
     const submitHandler = (e) => {
         e.preventDefault();

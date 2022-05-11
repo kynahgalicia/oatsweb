@@ -3,6 +3,9 @@ import {
     ALL_DEPARTMENT_REQUEST,
     ALL_DEPARTMENT_SUCCESS,
     ALL_DEPARTMENT_FAIL,
+    ALL_DELETED_DEPARTMENT_REQUEST,
+    ALL_DELETED_DEPARTMENT_SUCCESS,
+    ALL_DELETED_DEPARTMENT_FAIL,
     NEW_DEPARTMENT_REQUEST,
     NEW_DEPARTMENT_SUCCESS,
     NEW_DEPARTMENT_FAIL,
@@ -15,6 +18,9 @@ import {
     DEPARTMENT_DETAILS_REQUEST,
     DEPARTMENT_DETAILS_SUCCESS,
     DEPARTMENT_DETAILS_FAIL,
+    RESTORE_DEPARTMENT_REQUEST,
+    RESTORE_DEPARTMENT_SUCCESS,
+    RESTORE_DEPARTMENT_FAIL,
     CLEAR_ERRORS
 } from '../constants/departmentConstants'
 
@@ -34,6 +40,27 @@ export const getDepartment = () => async (dispatch) => {
     } catch(error) {
         dispatch({
             type: ALL_DEPARTMENT_FAIL,
+            payload: error
+        })
+    }
+}
+
+export const getDepartmentDeleted = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_DELETED_DEPARTMENT_REQUEST })
+
+        let link = process.env.REACT_APP_URL + `/api/department/deleted`
+        
+        const { data } = await axios.get(link)
+        console.log(link)
+        dispatch({
+            type: ALL_DELETED_DEPARTMENT_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: ALL_DELETED_DEPARTMENT_FAIL,
             payload: error
         })
     }
@@ -123,10 +150,11 @@ export const deleteDepartment = (id,adminToken) => async (dispatch) => {
         const config = {
             headers: {
                 'Authorization': adminToken,
+                'Content-Type': 'application/json'
             }
         }
 
-        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/department/delete/${id}`, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/department/delete/${id}`, config)
 
         dispatch({
             type: DELETE_DEPARTMENT_SUCCESS,
@@ -136,6 +164,32 @@ export const deleteDepartment = (id,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_DEPARTMENT_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const restoreDepartment = (id,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESTORE_DEPARTMENT_REQUEST })
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/department/restore/${id}`, config)
+
+        dispatch({
+            type: RESTORE_DEPARTMENT_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESTORE_DEPARTMENT_FAIL,
             payload: error.response.data.message
         })
     }

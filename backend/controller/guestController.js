@@ -26,16 +26,16 @@ const guestController = {
                 return res.status(400).json({msg: "Please fill in all fields."})
 
             if(!validateEmail(guest_mail))
-                return res.status(400).json({msg: "Invalid emails."})
+                return res.status(401).json({msg: "Invalid emails."})
 
             const guest = await Guests.findOne({guest_mail})
-            if(guest) return res.status(400).json({msg: "This email already exists."})
+            if(guest) return res.status(402).json({msg: "This email already exists."})
 
             if(guest_contact.length < 11)
-                return res.status(400).json({msg: "contact must be at least 11 numbers."})
+                return res.status(403).json({msg: "contact must be at least 11 numbers."})
 
             if(passwords.length < 6)
-                return res.status(400).json({msg: "Password must be at least 6 characters."})
+                return res.status(405).json({msg: "Password must be at least 6 characters."})
 
             const guest_password = await bcrypt.hash(passwords, 12)
             
@@ -91,6 +91,9 @@ const guestController = {
             const {guest_mail, guest_password} = req.body
             const guest = await Guests.findOne({guest_mail})
             if(!guest) return res.status(400).json({msg: "This email does not exist."})
+
+            const guestStatus = await Guests.findOne({'guest_mail': guest_mail, 'guest_status': 'Deactivated'})
+            if(guestStatus) return res.status(400).json({msg: "This account is deactivated"})
 
             const isMatch = await bcrypt.compare(guest_password, guest.guest_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
@@ -166,8 +169,39 @@ const guestController = {
 
     // /guest/infor
     getGuestInfor: async (req, res) => {
+        
+        const user_id = req.guest.id
         try {
-            const user_id = req.guest.id
+            const subscription = await Subscriptions.findOne({'user.user_id' : user_id})
+            
+            let expired = ''
+            if(subscription && subscription.status === 'Active'){
+                const date1 = subscription.activatedAt;
+                const date2 = Date.now();
+                const diffTime = Math.abs(date2 - date1);
+                const diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
+    
+                console.log(diffHours + 'hours')
+                if(subscription.sub_type === 'oneDay' && diffHours >= 24 ){
+                    expired = subscription._id
+                }
+                if(subscription.sub_type === 'weekly' && diffHours >= 168 ){
+                    expired = subscription._id
+                }
+    
+            }
+            console.log(expired)
+            if(expired){
+            await Subscriptions.updateOne({'_id': expired},{'status': 'Expired'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })}
+        } catch (error) {
+            return res.status(500).json({msg: error.message})
+        }
+
+        try {
             const guest = await Guests.findById(req.guest.id).select('-guest_password')
             const subType = await Subscriptions.findOne({'user.user_id' :user_id})
 

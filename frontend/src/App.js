@@ -20,6 +20,7 @@ import CreateThesis from './components/admin/thesis/CreateThesis'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
 import Updatedepartment from './components/admin/departments/EditDepartment'
+import DeletedDepartment from './components/admin/departments/DeletedDepartment'
 
 import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
@@ -181,6 +182,7 @@ function App() {
         <Route path="/admin/department" component={DepartmentList} exact/>
         <Route path="/admin/department/new" component={CreateDepartment} exact/>
         <Route path="/admin/department/edit/:departmentId" component={Updatedepartment} exact/>
+        <Route path="/admin/department/deleted" component={DeletedDepartment} exact/>
         <Route path="/admin/course" component={CourseList} exact/>
         <Route path="/admin/course/new" component={CreateCourse} exact/>
         <Route path="/admin/course/edit/:courseId" component={Updatecourse} exact/>

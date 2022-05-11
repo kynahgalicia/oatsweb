@@ -144,7 +144,7 @@ const GuestPayment = () => {
                                 <img src={fifty} alt="logo" className={"p-3 w-75 " + ( sub_type === 'oneDay' ? null : 'd-none')} />
                                 <img src={fivefifty} alt="logo" className={"p-3 w-75 "+ ( sub_type === 'weekly'? null : 'd-none')} />
                                 <p><strong>Open GCash &gt; Send Money &gt; Send via QR &gt; Confirmation details &gt; Screenshot Reciept</strong></p>
-                                <label>Note: Make sure you have a screenshot of your receipt and take note of the reference number.</label>
+                                <label>Note: Make sure you have a screenshot of your reciept and take note of the reference number.</label>
                                 </Col>
 
                                 <Col className='text-start payment-details'>

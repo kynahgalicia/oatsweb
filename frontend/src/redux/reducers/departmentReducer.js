@@ -2,6 +2,9 @@ import {
     ALL_DEPARTMENT_REQUEST,
     ALL_DEPARTMENT_SUCCESS,
     ALL_DEPARTMENT_FAIL,
+    ALL_DELETED_DEPARTMENT_REQUEST,
+    ALL_DELETED_DEPARTMENT_SUCCESS,
+    ALL_DELETED_DEPARTMENT_FAIL,
     NEW_DEPARTMENT_REQUEST,
     NEW_DEPARTMENT_SUCCESS,
     NEW_DEPARTMENT_RESET,
@@ -17,18 +20,24 @@ import {
     DEPARTMENT_DETAILS_REQUEST,
     DEPARTMENT_DETAILS_SUCCESS,
     DEPARTMENT_DETAILS_FAIL,
+    RESTORE_DEPARTMENT_REQUEST,
+    RESTORE_DEPARTMENT_SUCCESS,
+    RESTORE_DEPARTMENT_FAIL,
+    RESTORE_DEPARTMENT_RESET,
     CLEAR_ERRORS
 } from '../constants/departmentConstants'
 
 export const departmentsReducer = (state = { department: [] }, action) => {
     switch (action.type) {
         case  ALL_DEPARTMENT_REQUEST:
+        case  ALL_DELETED_DEPARTMENT_REQUEST:
             return {
                 loading: true,
                 department: []
             }
 
         case  ALL_DEPARTMENT_SUCCESS:
+        case  ALL_DELETED_DEPARTMENT_SUCCESS:
             return {
                 loading: false,
                 department: action.payload.department,
@@ -38,6 +47,7 @@ export const departmentsReducer = (state = { department: [] }, action) => {
             }
 
         case ALL_DEPARTMENT_FAIL:
+        case ALL_DELETED_DEPARTMENT_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -98,6 +108,7 @@ export const departmentReducer = (state = {}, action) => {
 
         case DELETE_DEPARTMENT_REQUEST:
         case UPDATE_DEPARTMENT_REQUEST:
+        case RESTORE_DEPARTMENT_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -118,9 +129,17 @@ export const departmentReducer = (state = {}, action) => {
                 isUpdated: action.payload
             }
 
+        case RESTORE_DEPARTMENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload
+            }
+
 
         case DELETE_DEPARTMENT_FAIL:
         case UPDATE_DEPARTMENT_FAIL:
+        case RESTORE_DEPARTMENT_FAIL:
             return {
                 ...state,
                 error: action.payload
@@ -136,6 +155,12 @@ export const departmentReducer = (state = {}, action) => {
             return {
                 ...state,
                 isUpdated: false
+            }
+
+        case RESTORE_DEPARTMENT_RESET:
+            return {
+                ...state,
+                isRestored: false
             }
 
         case CLEAR_ERRORS:

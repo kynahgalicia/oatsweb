@@ -189,10 +189,10 @@ const ThesisDetails = () => {
                         
                         { userDept && userDept !== thisDepartment.deptname ? 
                                 <> 
-                                <Link1 to={!subType || (subType && subType.status === "Pending") ? '#' : `/view/${id}`} className='m-1' > 
+                                <Link1 to={!subType || (subType && subType.status !== "Active") ? '#' : `/view/${id}`} className='m-1' > 
                                     <Button  data-placement="bottom" title="Download PDF" data-target={!subType || (subType && subType.status === "Pending") ? '#subscriptionModal' : null} data-toggle="modal" >
                                         <i className="fas fa-file-pdf"></i> PDF
-                                        {!subType || (subType && subType.status === "Pending") ? <i className="fas fa-lock mx-1"></i> : null}
+                                        {!subType || (subType && subType.status !== "Active") ? <i className="fas fa-lock mx-1"></i> : null}
                                     </Button>
                                 </Link1>
                                 </>

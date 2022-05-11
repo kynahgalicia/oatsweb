@@ -9,6 +9,10 @@ import {
     ALL_STUDENT_THESIS_SUCCESS,
     ALL_STUDENT_THESIS_FAIL,
 
+    ALL_ADMIN_THESIS_REQUEST,
+    ALL_ADMIN_THESIS_SUCCESS,
+    ALL_ADMIN_THESIS_FAIL,
+
     THESIS_COUNT_REQUEST,
     THESIS_COUNT_SUCCESS,
     THESIS_COUNT_FAIL,
@@ -20,6 +24,15 @@ import {
     THESIS_DETAILS_REQUEST,
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
+
+    DEACTIVATE_THESIS_REQUEST,
+    DEACTIVATE_THESIS_SUCCESS,
+    DEACTIVATE_THESIS_FAIL,
+
+    ACTIVATE_THESIS_REQUEST,
+    ACTIVATE_THESIS_SUCCESS,
+    ACTIVATE_THESIS_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
@@ -53,6 +66,28 @@ export const getThesis = (keyword='',department, startDate,endDate) => async (di
         })
     }
 }
+
+export const getAdminThesis = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_ADMIN_THESIS_REQUEST })
+
+        let link = process.env.REACT_APP_URL + `/api/thesis/admin`
+        
+        
+        const { data } = await axios.get(link)
+        console.log(link)
+        dispatch({
+            type: ALL_ADMIN_THESIS_SUCCESS,
+            payload: data
+        })
+        
+    } catch(error) {
+        dispatch({
+            type: ALL_ADMIN_THESIS_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
 export const getStudentThesis = (id) => async (dispatch) => {
 
     try {
@@ -74,6 +109,7 @@ export const getStudentThesis = (id) => async (dispatch) => {
     }
 
 };
+
 export const getThesisCount = () => async (dispatch) => {
     try {
         dispatch({ type: THESIS_COUNT_REQUEST })
@@ -142,6 +178,49 @@ export const newThesis = (thesisData) => async (dispatch) => {
         })
     }
 }
+
+export const deactivateThesis = (id) => async (dispatch) => {
+
+    try {
+
+        dispatch({ type: DEACTIVATE_THESIS_REQUEST })
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/deactivate/${id}`)
+
+        dispatch({
+            type: DEACTIVATE_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DEACTIVATE_THESIS_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+
+};
+export const activateThesis = (id) => async (dispatch) => {
+
+    try {
+
+        dispatch({ type: ACTIVATE_THESIS_REQUEST })
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/activate/${id}`)
+
+        dispatch({
+            type: ACTIVATE_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ACTIVATE_THESIS_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+
+};
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

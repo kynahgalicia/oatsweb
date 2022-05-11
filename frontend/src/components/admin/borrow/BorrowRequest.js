@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
-import moment from 'moment'
-import { FaTrash} from 'react-icons/fa';
 import {Row, Col, Button, Form} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import LoaderAdmin from '../../utils/LoaderAdmin'
 import { useDispatch, useSelector } from 'react-redux'
-import { getBorrow,deleteBorrow, verifyBorrow, declineBorrow, clearErrors} from '../../../redux/actions/borrowActions';
+import { getBorrow, verifyBorrow, declineBorrow, clearErrors} from '../../../redux/actions/borrowActions';
 import { UPDATE_BORROW_RESET, DELETE_BORROW_RESET , VERIFY_BORROW_RESET, DECLINE_BORROW_RESET} from '../../../redux/constants/borrowConstants';
 import AdminSidebar from '../../layout/AdminSidebar'
 
@@ -22,13 +20,12 @@ const BorrowRequest = () => {
     const history = useHistory();
     const alert = useAlert();
 
-    const [dateReturned, setDateReturned] = useState('')
     const [dueDate, setDuedate] = useState('');
 
     useEffect(() => {
-        // if(adminToken){
+
             dispatch(getBorrow())
-        // }
+        
 
         if (error) {
             alert.error(error);
@@ -56,11 +53,7 @@ const BorrowRequest = () => {
             alert.success('Borrow Request deleted successfully');
             dispatch({ type: DELETE_BORROW_RESET })
         }
-        if (isDeleted) {
-            history.push('/admin/return');
-            alert.success('Borrow Request deleted successfully');
-            dispatch({ type: DELETE_BORROW_RESET })
-        }
+        
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }

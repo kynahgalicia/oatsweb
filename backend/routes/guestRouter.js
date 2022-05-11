@@ -29,6 +29,7 @@ router.put('/edit/:id', guestController.updateProfile)
 
 router.delete('/delete/:id',authAdmin,authAdminRole,  guestController.delete)
 
+router.get('/informobile', authGuestMobile, guestController.getGuestInfor)
 // router.put('/edit/:id',authAdmin,authAdminRole, guestController.updateAdmin)
 
 

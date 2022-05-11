@@ -5,11 +5,15 @@ import {
     SUBSCRIBE_USER_REQUEST,
     SUBSCRIBE_USER_SUCCESS,
     SUBSCRIBE_USER_FAIL,
-    SUBSCRIBE_USER_RESET,
+    // SUBSCRIBE_USER_RESET,
     DELETE_SUBSCRIBE_REQUEST,
     DELETE_SUBSCRIBE_SUCCESS,
     DELETE_SUBSCRIBE_FAIL,
     DELETE_SUBSCRIBE_RESET,
+    DELETE_SUBSCRIBES_REQUEST,
+    DELETE_SUBSCRIBES_SUCCESS,
+    DELETE_SUBSCRIBES_FAIL,
+    DELETE_SUBSCRIBES_RESET,
     VERIFY_SUBSCRIBE_REQUEST,
     VERIFY_SUBSCRIBE_SUCCESS,
     VERIFY_SUBSCRIBE_FAIL,
@@ -63,12 +67,14 @@ export const subscriptionReducer = (state = { subscribe: [] }, action) => {
 export const subscriptionsReducer = (state = {}, action) => {
     switch (action.type) {
 
+        case DELETE_SUBSCRIBES_REQUEST:
         case DELETE_SUBSCRIBE_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
+        case DELETE_SUBSCRIBES_SUCCESS:
         case DELETE_SUBSCRIBE_SUCCESS:
             return {
                 ...state,
@@ -78,12 +84,14 @@ export const subscriptionsReducer = (state = {}, action) => {
             }
 
 
+        case DELETE_SUBSCRIBES_FAIL:
         case DELETE_SUBSCRIBE_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
+        case DELETE_SUBSCRIBES_RESET:
         case DELETE_SUBSCRIBE_RESET:
             return {
                 ...state,
