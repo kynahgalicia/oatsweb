@@ -40,18 +40,21 @@ const adminSchema = new mongoose.Schema({
     },
     admin_department:{ 
         departments: {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Department',
-            required: true
+            type: String,
+            default: null
         },
         deptname: {
             type: String,
-            required: true
+            default: 'Non-Academic'
         }
     },
     admin_status:{
         type: String,
         default: "Active"
+    },
+    role:{
+        type: String,
+        default: "Moderator"
     },
     avatar: {
         type: String,

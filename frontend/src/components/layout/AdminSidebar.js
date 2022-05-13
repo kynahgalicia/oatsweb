@@ -1,8 +1,15 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import {Nav} from 'react-bootstrap'
 const AdminSidebar = () => {
+    const {isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
+    useEffect(() => {
+
+
+    }, [isLoggedInAdmin, admin])
+    
     return (
         
             <Nav className=" col-md-12 d-none d-md-block bg-light"
@@ -14,10 +21,14 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
+            { isLoggedInAdmin && admin.role === 'Super Admin' ? 
+            <>
             <Nav.Item>
                 <Link to="/admin/admins">Administrators</Link>
             </Nav.Item>
             <hr/>
+            </>
+            : null}
 
             <Nav.Item>
                 <Link to="/admin/thesis">Thesis</Link>
@@ -34,7 +45,8 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
-
+            { isLoggedInAdmin && admin.role === 'Super Admin' ? 
+            <>
             <Nav.Item>  
                 <Link to="/admin/department">Departments</Link>
             </Nav.Item>
@@ -44,6 +56,10 @@ const AdminSidebar = () => {
                 <Link to="/admin/course">Courses</Link>
             </Nav.Item>
             <hr/>
+            </>
+            : null}
+
+            
 
             
             <Nav.Item>

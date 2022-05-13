@@ -9,6 +9,9 @@ const viewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    thesis_department:{
+        type: String
+    },
     viewedAt: {
         type: Date,
         default: Date.now

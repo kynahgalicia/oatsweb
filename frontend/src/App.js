@@ -35,6 +35,8 @@ import EditUser from './components/admin/users/EditUser'
 
 import AdminList from './components/admin/admin/AdminList'
 import EditAdmin from './components/admin/admin/EditAdmin'
+import CreateAdmin from './components/admin/admin/CreateAdmin';
+import ActivationEmailAdmin from './components/admin/admin/ActivationEmailAdmin';
 
 import GuestList from './components/admin/guest/GuestList'
 
@@ -144,6 +146,7 @@ function App() {
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>
         <Route path="/user/activate/:activation_token" component={ActivationEmail} exact/>
+        <Route path="/admin/activate/:activation_token" component={ActivationEmailAdmin} exact/>
         <Route path="/user/forgot" component={ForgotPassword} exact/>
         <Route path="/user/reset/:token" component={ResetPassword} exact/>
         <Route path="/Redirect" component={Redirect} exact/>
@@ -190,6 +193,7 @@ function App() {
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
+        <Route path="/admin/admins/new" component={CreateAdmin} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/subscription/list" component={SubscriptionList} exact/>
         <Route path="/admin/subscription/request" component={SubscriptionRequest} exact/>

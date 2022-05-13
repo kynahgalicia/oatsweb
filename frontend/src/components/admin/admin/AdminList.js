@@ -5,10 +5,12 @@ import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import { useDispatch, useSelector } from 'react-redux'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
-import { getAdmins } from '../../../redux/actions/adminActions';
+import { getAdmins, deactivateAdmin, activateAdmin, superAdmin} from '../../../redux/actions/adminActions';
+import { DEACTIVATE_ADMIN_RESET, ACTIVATE_ADMIN_RESET, SUPER_ADMIN_RESET} from '../../../redux/constants/adminConstants';
 import AdminSidebar from '../../layout/AdminSidebar'
 const UserList = () => {
     const { loading, error, admins } = useSelector(state => state.admins)
+    const { isDeactivated, isActivated, isSuperAdmin} = useSelector(state => state.admin)
     const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
@@ -32,16 +34,26 @@ const UserList = () => {
         //     dispatch(clearErrors())
         // }
 
-        // if (isDeleted) {
-        //     history.push('/admin/course');
-        //     alert.success('Course deleted successfully');
-        //     dispatch({ type: DELETE_COURSE_RESET })
-        // }
+        if (isDeactivated) {
+            history.push('/admin/admins');
+            alert.success('Deactivated');
+            dispatch({ type: DEACTIVATE_ADMIN_RESET })
+        }
+        if (isActivated) {
+            history.push('/admin/admins');
+            alert.success('Deactivated');
+            dispatch({ type: ACTIVATE_ADMIN_RESET })
+        }
+        if (isSuperAdmin) {
+            history.push('/admin/admins');
+            alert.success('super admin has been assigned');
+            dispatch({ type: SUPER_ADMIN_RESET })
+        }
         
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken]);
+    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, isDeactivated, isActivated, isSuperAdmin]);
 
     const setData = () => { 
         const data = {
@@ -74,6 +86,14 @@ const UserList = () => {
                     field: 'department',
                 },
                 {
+                    label: 'Role',
+                    field: 'role',
+                },
+                {
+                    label: 'Status',
+                    field: 'status',
+                },
+                {
                     label: 'Actions',
                     field: 'actions',
                 },
@@ -90,6 +110,8 @@ const UserList = () => {
                 admin_contact: admins.admin_contact,
                 admin_tupmail: admins.admin_tupmail,
                 department: admins.admin_department.deptname,
+                role: admins.role,
+                status: admins.admin_status,
                 actions:
                 <Fragment>
                     {/* <Link to={`/admin/admins/edit/${admins._id}`} className="decor-none block">
@@ -98,11 +120,23 @@ const UserList = () => {
                         </Button>
                     </Link> */}
 
-                    <Button className='m-1' variant="secondary" data-toggle="modal" data-target="#deactivateModal"> 
-                    <i className="fas fa-user-times"></i>
+                    { admins.admin_status === "Deactivated" ? 
+                    <Button variant="success "  className='m-1' data-toggle="modal" data-target={"#activateModal" + admins._id}> 
+                    <i className="fas fa-user-check"></i>
                     </Button>
-
-                    <Button className="m-1" variant="danger" data-toggle="modal" data-target="#deleteModal">
+                    : 
+                    <Button className='m-1' variant="secondary" data-toggle="modal" data-target={"#deactivateModal" + admins._id}> 
+                    <i className="fas fa-user-times"></i>
+                    </Button>}
+                    { admins.role === "Moderator" ? 
+                    <Button  className='m-1' variant="warning" data-toggle="modal" data-target={"#superModal" + admins._id}> 
+                    <i class="fas fa-crown"></i>
+                    </Button>
+                    : 
+                    <Button  className='m-1' variant="info" data-toggle="modal" data-target={"#moderatorModal" + admins._id}> 
+                    <i class="fas fa-cogs"></i>
+                    </Button>}
+                    <Button className="m-1" variant="danger" data-toggle="modal" data-target={"#deleteModal" + admins._id}>
                     <i className="fas fa-trash"></i>
                     </Button>
 
@@ -119,7 +153,7 @@ const UserList = () => {
                             </div>
                         </div>
                         </div>
-                    <div className="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={"deactivateModal" + admins._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                             <div className="modal-body">
@@ -132,14 +166,28 @@ const UserList = () => {
                             </div>
                         </div>
                         </div>
-                    <div className="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={"activateModal" + admins._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                             <div className="modal-body">
+                                Activate Admin?
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => activateAdminHandler(admins._id)}>Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div className="modal fade" id={"superModal" + admins._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                            <div className="modal-body">
+                                Set Moderator as Super Admin?
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => superAdminHandler(admins._id)}>Yes</button>
                             </div>
                             </div>
                         </div>
@@ -153,14 +201,19 @@ const UserList = () => {
     }
 
     const deactivateAdminHandler = (id) => {
-        // const formData = new FormData();
-        // formData.set('user_status', deactivate);
-        // dispatch(deactivateUser(id,formData,adminToken))
+        const formData = new FormData();
+        formData.set('admin_status', 'Deactivated');
+        dispatch(deactivateAdmin(id,formData,adminToken))
     }
     const activateAdminHandler = (id) => {
-        // const formData = new FormData();
-        // formData.set('user_status', activate);
-        // dispatch(deactivateUser(id,formData,adminToken))
+        const formData = new FormData();
+        formData.set('admin_status', 'Active');
+        dispatch(activateAdmin(id,formData,adminToken))
+    }
+    const superAdminHandler = (id) => {
+        const formData = new FormData();
+        formData.set('role', 'Super Admin');
+        dispatch(superAdmin(id,formData,adminToken))
     }
 
     const deleteAdminHandler = (id) => {

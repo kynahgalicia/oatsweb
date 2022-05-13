@@ -71,7 +71,8 @@ exports.studentRequest = async(req,res,next) => {
         
         req.body.thesis = {
             id: cthesis._id,
-            title: cthesis.title
+            title: cthesis.title,
+            department:cthesis.department.deptname
         }
         
         const {user, thesis} = req.body

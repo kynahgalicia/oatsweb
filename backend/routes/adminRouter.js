@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const adminController = require('../controller/adminController')
 const {authAdmin} = require('../middleware/auth')
-const authAdminRole = require('../middleware/authAdminRole')
+const {authAdminRole, authSuperAdminRole} = require('../middleware/authAdminRole')
 
-router.post('/register', adminController.register)
+router.post('/register',authAdmin,authAdminRole, adminController.register)
 
 router.post('/activation', adminController.activateEmail)
 
@@ -23,9 +23,14 @@ router.get('/all_infor', authAdmin, authAdminRole, adminController.getAdminsAllI
 
 router.get('/inforAdmin/:id',authAdmin,authAdminRole, adminController.getAdminInforAdmin)
 
-router.put('/deactivate/:id',authAdmin,authAdminRole, adminController.deactivate)
+router.put('/deactivate/:id',authAdmin,authSuperAdminRole, adminController.deactivate)
+router.put('/activate/:id',authAdmin,authSuperAdminRole, adminController.activate)
 
-router.put('/edit/:id',authAdmin,authAdminRole, adminController.updateAdmin)
+router.put('/edit/:id' ,authAdmin,authAdminRole, adminController.updateAdmin)
+
+router.get('/super/:id',authAdmin,authSuperAdminRole,adminController.superAdmin)
+
+router.put('/moderator/:id' ,authAdmin,authAdminRole, adminController.moderatorAdmin)
 
 router.delete('/delete/:id',authAdmin,authAdminRole,  adminController.delete)
 

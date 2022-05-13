@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const subscriptionController = require('../controller/subscriptionController')
 const {authAdmin} = require('../middleware/auth')
-const authAdminRole = require('../middleware/authAdminRole')
+const {authAdminRole} = require('../middleware/authAdminRole')
 
 // router.get('/department',departmentController.get)
 router.get('/subscription',subscriptionController.findList)

@@ -5,13 +5,13 @@ import{
     LOGIN_ADMIN_SUCCESS,
     LOGIN_ADMIN_FAIL,
 
-    // REGISTER_ADMIN_REQUEST,
-    // REGISTER_ADMIN_SUCCESS,
-    // REGISTER_ADMIN_FAIL,
+    REGISTER_ADMIN_REQUEST,
+    REGISTER_ADMIN_SUCCESS,
+    REGISTER_ADMIN_FAIL,
 
-    // ACTIVATE_ADMIN_REQUEST,
-    // ACTIVATE_ADMIN_SUCCESS,
-    // ACTIVATE_ADMIN_FAIL,
+    ACTIVATE_ADMIN_REQUEST,
+    ACTIVATE_ADMIN_SUCCESS,
+    ACTIVATE_ADMIN_FAIL,
 
     LOAD_ADMIN_REQUEST,
     LOAD_ADMIN_SUCCESS,
@@ -35,31 +35,32 @@ import{
     CLEAR_ERRORS,
 } from '../constants/authAdminConstants'
 
-// export const register = (adminData) => async (dispatch) => {
-//     try {
+export const register = (adminData, adminToken) => async (dispatch) => {
+    try {
 
-//         dispatch({ type: REGISTER_ADMIN_REQUEST })
+        dispatch({ type: REGISTER_ADMIN_REQUEST })
 
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': adminToken
+            }
+        }
 
-//         const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/register', adminData, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/register', adminData, config)
 
-//         dispatch({
-//             type: REGISTER_ADMIN_SUCCESS,
-//             payload: data
-//         })
+        dispatch({
+            type: REGISTER_ADMIN_SUCCESS,
+            payload: data
+        })
 
-//     } catch (error) {
-//         dispatch({
-//             type: REGISTER_ADMIN_FAIL,
-//             payload: error.response.data.msg
-//         })
-//     }
-// }
+    } catch (error) {
+        dispatch({
+            type: REGISTER_ADMIN_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
 
 export const login = (admin_tupmail, admin_password) => async (dispatch) => {
     try {
@@ -88,31 +89,31 @@ export const login = (admin_tupmail, admin_password) => async (dispatch) => {
     }
 }
 
-// export const activateEmail = (activation_token) => async (dispatch) => {
-//     try {
+export const activateEmail = (activation_token) => async (dispatch) => {
+    try {
 
-//         dispatch({ type: ACTIVATE_ADMIN_REQUEST })
+        dispatch({ type: ACTIVATE_ADMIN_REQUEST })
 
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
-//         const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/activation' , {activation_token}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/activation' , {activation_token}, config)
 
-//         dispatch({
-//             type: ACTIVATE_ADMIN_SUCCESS,
-//             payload: data.msg
-//         })
+        dispatch({
+            type: ACTIVATE_ADMIN_SUCCESS,
+            payload: data.msg
+        })
 
-//     } catch (error) {
-//         dispatch({
-//             type: ACTIVATE_ADMIN_FAIL,
-//             payload: error.response.data.msg
-//         })
-//     }
-// }
+    } catch (error) {
+        dispatch({
+            type: ACTIVATE_ADMIN_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
 
 // // Load admin
 export const loadAdmin = (adminToken) => async (dispatch) => {

@@ -6,6 +6,7 @@ import profile from '../../img/profile.png'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
 import BarGraph from './analytics/BarGraph'
+import PieChart from './analytics/PieChart'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
 // require('./dashboard.css');
@@ -19,14 +20,20 @@ const AdminDashboard = () => {
     const [thisDepartment, setThisDepartment] = useState('')
     const { loading,isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {dataCount} = useSelector(state => state.dataCount)
-    const { viewsLog, searchLog, downloadLog} = useSelector(state => state.logs)
+    const { viewsLog, searchLog, downloadLog, subscription, thesisDept, borrowTop ,beng ,civil, basd,mech,elec,bengB ,civilB, basdB,mechB,elecB,bengD ,civilD, basdD,mechD,elecD} = useSelector(state => state.logs)
 
     const[thesisCount,setThisThesis] = useState('')
     const[userCount,setThisUser] = useState('')
     const[adminCount,setThisAdmin] = useState('')
     const[guestCount,setThisGuest] = useState('')
+    const[subCountP,setThisSubP] = useState('')
+    const[subCountEx,setThisSubEx] = useState('')
+    const[subCountAct,setThisSubAct] = useState('')
     const[subCount,setThisSub] = useState('')
     const[borrowCount,setThisBorrow] = useState('')
+    const[borrowCountP,setThisBorrowP] = useState('')
+    const[borrowCountR,setThisBorrowR] = useState('')
+    const[borrowCountOD,setThisBorrowOD] = useState('')
 
     useEffect(() => {
         if(admin){
@@ -44,7 +51,13 @@ const AdminDashboard = () => {
             setThisAdmin(dataCount.adminCount)
             setThisGuest(dataCount.guestCount)
             setThisSub(dataCount.subCount)
+            setThisSubP(dataCount.subCountP)
+            setThisSubEx(dataCount.subCountEx)
+            setThisSubAct(dataCount.subCountAct)
             setThisBorrow(dataCount.borrowCount)
+            setThisBorrowP(dataCount.borrowCountP)
+            setThisBorrowR(dataCount.borrowCountR)
+            setThisBorrowOD(dataCount.borrowCountOD)
         }
 
         dispatch(fetchLog())
@@ -113,7 +126,11 @@ const AdminDashboard = () => {
                                             </div>
                                         </Col>
 
-                                        <Col className="mx-1">
+                                        
+                                    </Row>
+
+                                    <Row className="mx-5 mb-5">
+                                    <Col className="mx-1">
                                             <div className="card-box bg-pink">
                                                 <div className="inner">
                                                     <h3> {adminCount} </h3>
@@ -125,9 +142,6 @@ const AdminDashboard = () => {
                                                 <Link to="/admin/admins"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
-                                    </Row>
-
-                                    <Row className="mx-5">
                                         <Col className="mx-1">
                                             <div className="card-box bg-rose">
                                                 <div className="inner">
@@ -141,99 +155,268 @@ const AdminDashboard = () => {
                                             </div>
                                         </Col>
 
+                                    </Row>
+  {/* ------------------------------ BORROWS ------------------------------------ */}
+                                    <Row className="mx-5">
+                                        <h3>Borrow</h3>
+                                        <hr />
                                         <Col className="mx-1">
-                                            <div className="card-box bg-maroon">
+                                            <div className="card-box bg-peach">
                                                 <div className="inner">
-                                                    <h3> {subCount} </h3>
-                                                    <p> Subscriptions </p>
+                                                    <h3> {borrowCountP} </h3>
+                                                    <p> Pending </p>
                                                 </div>
                                                 <div className="icon">
-                                                    <i class="fas fa-credit-card"></i>
+                                                <i className="fas fa-spinner"></i>
                                                 </div>
-                                                <Link to="/admin/payment"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                                                <Link to="/admin/borrow/request"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
 
                                         <Col className="mx-1">
-                                            <div className="card-box bg-darkMaroon">
+                                            <div className="card-box bg-peach2">
                                                 <div className="inner">
                                                     <h3> {borrowCount} </h3>
-                                                    <p> Borrowed </p>
+                                                    <p> Active </p>
                                                 </div>
                                                 <div className="icon">
-                                                    <i className="fa fa-book" />
+                                                <i className="fas fa-check-circle"></i>
                                                 </div>
                                                 <Link to="/admin/borrow"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
                                     </Row>
-                                    {/* <Row className="mx-5">
-                                            <Col className="mx-1">
-                                            <div className="card-box bg-red">
-                                            <div className="inner">
-                                            <h3> 7 </h3>
-                                            <p> Borrow Request </p>
-                                            </div>
-                                            <div className="icon">
-                                            <i className="fa fa-plus" />
-                                            </div>
-                                            <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
-                                        </div>
-                                            </Col>
 
-                                            <Col className="mx-1">
-                                            <div className="card-box bg-red">
-                                            <div className="inner">
-                                            <h3> 3 </h3>
-                                            <p> Borrowed </p>
-                                            </div>
-                                            <div className="icon">
-                                            <i className="fas fa-books"></i>
-                                            </div>
-                                            <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
-                                        </div>
-                                            </Col>
-
-                                            <Col className="mx-1">
-                                            <div className="card-box bg-red">
-                                            <div className="inner">
-                                            <h3> 8 </h3>
-                                            <p> Returned </p>
-                                            </div>
-                                            <div className="icon">
-                                            <i className="fa fa-sync" />
-                                            </div>
-                                            <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
-                                        </div>
-                                            </Col>
-                                    </Row> */}
-
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={viewsLog} title={"Most Viewed Thesis"} legend={"Views"} color={'#ff6464'}/>
+                                    <Row className="mx-5 mb-5">
+                                        <Col className="mx-1">
+                                            <div className="card-box bg-pink">
+                                                <div className="inner">
+                                                    <h3> {borrowCountR} </h3>
+                                                    <p> Returned </p>
+                                                </div>
+                                                <div className="icon">
+                                                <i className="fas fa-exchange-alt"></i>
+                                                </div>
+                                                <Link to="/admin/return"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
 
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={searchLog} title={"Top Searched"} legend={"Keywords"} color={'#ce4559'}/>
+                                        <Col className="mx-1">
+                                            <div className="card-box bg-rose">
+                                                <div className="inner">
+                                                    <h3> {borrowCountOD} </h3>
+                                                    <p> Overdue </p>
+                                                </div>
+                                                <div className="icon">
+                                                <i className="fas fa-exclamation-circle"></i>
+                                                </div>
+                                                <Link to="/admin/borrow"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                                            </div>
+                                        </Col>
+                                    </Row>
+{/* ------------------------------ SUBSCRIPTIONS ------------------------------------ */}
+                                    <Row className="mx-5 mb-5">
+                                        <h3>Subscriptions</h3>
+                                        <hr />
+                                        <Col className="mx-1">
+                                            <div className="card-box bg-peach">
+                                                <div className="inner">
+                                                    <h3> {subCountP} </h3>
+                                                    <p> Pending </p>
+                                                </div>
+                                                <div className="icon">
+                                                <i className="fas fa-spinner"></i>
+                                                </div>
+                                                <Link to="/admin/subscription/request"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                                            </div>
+                                        </Col>
+
+                                        <Col className="mx-1">
+                                            <div className="card-box bg-peach2">
+                                                <div className="inner">
+                                                    <h3> {subCountAct} </h3>
+                                                    <p> Active </p>
+                                                </div>
+                                                <div className="icon">
+                                                <i className="fas fa-check-circle"></i>
+                                                </div>
+                                                <Link to="/admin/subscription/list"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                                            </div>
+                                        </Col>
+
+                                        <Col className="mx-1">
+                                            <div className="card-box bg-pink">
+                                                <div className="inner">
+                                                    <h3> {subCountEx} </h3>
+                                                    <p> Expired </p>
+                                                </div>
+                                                <div className="icon">
+                                                <i class="fas fa-times"></i>
+                                                </div>
+                                                <Link to="/admin/subscription/list"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
                                     </Row>
 
+{/* --------------------------------------TOP VIEWS ------------------------------------------ */}
+                                <Row className='px-5'>
+                                        <br />
+                                        <h2>Top Views</h2>
+                                        <hr />
                                     <Row className='px-5'>
                                         <Col className="p-2">
                                             <div className="card-box bg-cream">
-                                                <BarGraph dataLog={downloadLog} title={"Most Downloaded Thesis"} legend={"Downloads"} color={'#9d2a4a'}/>
+                                                <BarGraph dataLog={viewsLog} title={"Top Viewed Thesis"} legend={"Views"} color={'#ff6464'}/>
+                                            </div>
+                                        </Col>
+
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={basd} title={"Top Viewed Thesis (BASD)"} legend={"Views"}  color={'#e7545f'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={beng} title={"Top Viewed Thesis (BEng)"} legend={"Views"} color={'#ce4559'}/>
                                             </div>
                                         </Col>
                                         <Col className="p-2">
-                                        {/* <div className="card-box bg-cream">
-                                        <BarGraph dataLog={searchLog} title={"Top Searched"} legend={"Keywords"} />
-                                        </div> */}
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={civil} title={"Top Viewed Thesis (Civil)"} legend={"Views"} color={'#b63752'}/>
+                                            </div>
                                         </Col>
                                     </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={elec} title={"Top Viewed Thesis ( Electrical)"} legend={"Views"} color={'#9d2a4a'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#851d41'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Row>
+{/* -----------------------------------------TOP SEARCHED ------------------------------------- */}
+                                <Row className='px-5'>
+                                    <hr />
+                                    <Row className='px-5'>
+                                        {/* <Col className="p-2"> */}
+                                            <div className="card-box bg-cream">
+                                                
+                                                <BarGraph dataLog={searchLog} title={"Top Searched Keywords"} legend={"Keywords"} color={'#ff6464'}/>
+                                            </div>
+                                        {/* </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#b63752'}/>
+                                            </div>
+                                        </Col> */}
+                                    </Row>
+                                </Row>
+{/* --------------------------------------------------TOP DOWNLOADS------------------------------------------ */}
+                                <Row className='px-5'>
+                                    <br />
+                                    <h2> Top Downloads</h2>
+                                    <hr />
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={downloadLog} title={"Top Downloaded Thesis"} legend={"Downloads"} color={'#ff6464'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={basdD} title={"Top Downloaded Thesis (BASD)"} legend={"Downloads"}  color={'#e7545f'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={bengD} title={"Top Downloaded Thesis (BEng)"} legend={"Downloads"} color={'#ce4559'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={civilD} title={"Top Downloaded Thesis (Civil)"} legend={"Downloads"} color={'#b63752'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={elecD} title={"Top Downloaded Thesis ( Electrical)"} legend={"Downloads"} color={'#9d2a4a'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={mechD} title={"Top Downloaded Thesis (Mechanical)"} legend={"Downloads"} color={'#851d41'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Row>
+{/* -----------------------------------------------TOP BORROWS ----------------------------------------------------- */}
+                                <Row className='px-5'>
+                                    <br />
+                                    <h2> Top Borrows</h2>
+                                    <hr />
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={borrowTop} title={"Top Borrowed Thesis"} legend={"Borrows"} color={'#ff6464'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={basdB} title={"Top Borrowed Thesis (BASD)"} legend={"Borrows"}  color={'#e7545f'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={bengB} title={"Top Borrowed Thesis (BEng)"} legend={"Borrows"} color={'#ce4559'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={civilB} title={"Top Borrowed Thesis (Civil)"} legend={"Borrows"} color={'#b63752'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row className='px-5'>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={elecB} title={"Top Borrowed Thesis ( Electrical)"} legend={"Borrows"} color={'#9d2a4a'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-2">
+                                            <div className="card-box bg-cream">
+                                                <BarGraph dataLog={mechB} title={"Top Borrowed Thesis (Mechanical)"} legend={"Borrows"} color={'#851d41'}/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Row>
+{/* --------------------------------------PIE CHARTS---------------------------------------------------------- */}
+                                <Row className='px-5'>
+                                    <Col className="p-2">
+                                        <div className="card-box bg-cream p-5">
+                                            <PieChart dataLog={thesisDept} title={"Thesis per Department"}/>
+                                        </div>
+                                    </Col>
+                                    <Col className="p-2">
+                                    <div className="card-box bg-cream p-5">
+                                            <PieChart dataLog={subscription} title={"Total Subscriptions"}/>
+                                        </div>
+                                    </Col>
+                                </Row>
+
+
                                 </div>
                             </div>
                         </div> 

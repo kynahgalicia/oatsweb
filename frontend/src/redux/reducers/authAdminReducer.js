@@ -3,13 +3,14 @@ import {
     LOGIN_ADMIN_SUCCESS,
     LOGIN_ADMIN_FAIL,
 
-    // REGISTER_ADMIN_REQUEST,
-    // REGISTER_ADMIN_SUCCESS,
-    // REGISTER_ADMIN_FAIL,
+    REGISTER_ADMIN_REQUEST,
+    REGISTER_ADMIN_SUCCESS,
+    REGISTER_ADMIN_FAIL,
+    REGISTER_ADMIN_RESET,
 
-    // ACTIVATE_ADMIN_REQUEST,
-    // ACTIVATE_ADMIN_SUCCESS,
-    // ACTIVATE_ADMIN_FAIL,
+    ACTIVATE_ADMIN_REQUEST,
+    ACTIVATE_ADMIN_SUCCESS,
+    ACTIVATE_ADMIN_FAIL,
 
     LOAD_ADMIN_REQUEST,
     LOAD_ADMIN_SUCCESS,
@@ -99,41 +100,48 @@ export const authAdminReducer = ( state = {admin: {}}, action) => {
             return state
     }
 }
-// export const authUserRegisterReducer = ( state = {admin: {}}, action) => {
-//     switch(action.type){
-//         case REGISTER_ADMIN_REQUEST:  
-//         case ACTIVATE_ADMIN_REQUEST:  
-//             return {
-//                 loading: true,
-//                 isLogged: false,
-//             }
+export const authAdminRegisterReducer = ( state = {admin: {}}, action) => {
+    switch(action.type){
+        case REGISTER_ADMIN_REQUEST:  
+        case ACTIVATE_ADMIN_REQUEST:  
+            return {
+                loading: true,
+                isLogged: false,
+            }
 
-//         case REGISTER_ADMIN_SUCCESS:
-//         case ACTIVATE_ADMIN_SUCCESS:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 msg: action.payload.msg,
-//                 success: action.payload
-//             }
+        case REGISTER_ADMIN_SUCCESS:
+        case ACTIVATE_ADMIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                msg: action.payload.msg,
+                success: action.payload
+            }
 
-//         case REGISTER_ADMIN_FAIL:
-//         case ACTIVATE_ADMIN_FAIL:
-//             return {
-//                 ...state,
-//                 error: action.payload
-//             }
+        case REGISTER_ADMIN_FAIL:
+        case ACTIVATE_ADMIN_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        
+        case REGISTER_ADMIN_RESET:
+            return {
+                ...state,
+                success: false
+            }
 
-//         case CLEAR_ERRORS:
-//             return {
-//                 ...state,
-//                 error: null
-//             }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
             
-//         default:
-//             return state
-//     }
-// }
+        default:
+            return state
+    }
+}
 export const authAdminTokenReducer = (state = {adminToken: {}}, action) => {
     switch(action.type){
         case GET_ADMIN_TOKEN_REQUEST:

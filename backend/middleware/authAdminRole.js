@@ -1,6 +1,6 @@
 const Admins = require('../models/adminModel')
 
-const authAdminRole = async (req, res, next) => {
+exports.authAdminRole = async (req, res, next) => {
     try {
         const admin = await Admins.findOne({_id: req.admin.id})
         
@@ -13,4 +13,15 @@ const authAdminRole = async (req, res, next) => {
     }
 }
 
-module.exports = authAdminRole
+exports.authSuperAdminRole = async (req, res, next) => {
+    try {
+        const admin = await Admins.findOne({_id: req.admin.id, role: 'Super Admin'})
+        
+        if(!admin.admin_tupid) 
+            return res.status(500).json({msg: "Super Admin resources access denied."})
+
+        next()
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+}

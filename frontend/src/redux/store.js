@@ -13,7 +13,7 @@ import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPass
 
 import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer, authGuestForgotPassReducer} from './reducers/authGuestReducer'
 
-import { authAdminReducer,authAdminTokenReducer } from "./reducers/authAdminReducer"
+import { authAdminReducer,authAdminTokenReducer, authAdminRegisterReducer } from "./reducers/authAdminReducer"
 
 import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
 
@@ -74,6 +74,7 @@ const reducer = combineReducers({
     authForgot:authForgotPassReducer,
     //Authentication Admin
     authAdmin:authAdminReducer,
+    authAdminRegister:authAdminRegisterReducer,
     authAdminToken: authAdminTokenReducer,
     //Authentication Guest
     authGuest: authGuestReducer,

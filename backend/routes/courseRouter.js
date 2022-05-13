@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const courseController = require('../controller/courseController')
 const {authAdmin} = require('../middleware/auth')
-const authAdminRole = require('../middleware/authAdminRole')
+const {authAdminRole} = require('../middleware/authAdminRole')
 
 router.get('/course',courseController.get)
 router.get('/course/:id',courseController.find)

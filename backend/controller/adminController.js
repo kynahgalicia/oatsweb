@@ -25,16 +25,19 @@ const adminController = {
                 return res.status(400).json({msg: "Please fill in all fields."})
 
             if(!validateEmail(admin_tupmail))
-                return res.status(400).json({msg: "Invalid emails."})
+                return res.status(401).json({msg: "Invalid emails."})
+
+            const adminID = await Admins.findOne({admin_tupid})
+            if(adminID)return res.status(402).json({msg: "This ID already exists."})
 
             const admin = await Admins.findOne({admin_tupmail})
-            if(admin) return res.status(400).json({msg: "This email already exists."})
+            if(admin) return res.status(403).json({msg: "This email already exists."})
 
             if(admin_contact.length < 11)
-                return res.status(400).json({msg: "contact must be at least 11 numbers."})
+                return res.status(404).json({msg: "contact must be at least 11 numbers."})
 
             if(passwords.length < 6)
-                return res.status(400).json({msg: "Password must be at least 6 characters."})
+                return res.status(405).json({msg: "Password must be at least 6 characters."})
 
             const admin_password = await bcrypt.hash(passwords, 12)
             
@@ -54,7 +57,7 @@ const adminController = {
             console.log(newAdmin)
         
             const url = `${FRONTEND_URL}/admin/activate/${activation_token}`
-            // sendMail(admin_tupmail, url, "Verify your email address")
+            sendMail(admin_tupmail, url, "Verify your email address")
 
 
             res.json({
@@ -98,6 +101,9 @@ const adminController = {
             const admin = await Admins.findOne({admin_tupmail})
             if(!admin) return res.status(400).json({msg: "This email does not exist."})
 
+            const adminStatus = await Admins.findOne({'admin_tupmail': admin_tupmail,"role": 'Moderator', 'admin_status': 'Deactivated'})
+            if(adminStatus) return res.status(400).json({msg: "This account is deactivated"})
+
             const isMatch = await bcrypt.compare(admin_password, admin.admin_password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
             
@@ -115,14 +121,6 @@ const adminController = {
     },
     // /admin/cookie 
     getAccessToken: (req, res) => {
-        // try{
-        // const rf_token = req.cookies.token
-        // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-        // res.json({msg: "Cookie Found",
-        //         token: rf_token})
-        // } catch (err) {
-        //     return res.status(500).json({msg: err.message})
-        // }
 
         try {
             const {rf_token} = req.body 
@@ -185,6 +183,7 @@ const adminController = {
             if(!admin)
             return res.status(400).json({msg: "Admin not found"})
             
+            
             res.status(200).json({
                 success: true,
                 admin:admin
@@ -228,6 +227,72 @@ const adminController = {
             return res.status(500).json({msg: err.message})
         }
     },
+    //super/:id
+    superAdmin: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        if(admin.role === 'Super Admin')
+        return res.status(401).json({msg: "Already Super Admin"})
+
+        const superNo = await Admins.find({role: 'Super Admin'}).count()
+        if(superNo.count >= 2) return res.status(401).json({msg: "Reached the Limit of Super Admin"})
+
+
+        const admin_department = {
+            departments: null,
+            deptname: 'None-Academic'
+        }
+
+        const role = 'Super Admin'
+
+        req.body.role = role
+        req.body.admin_department = admin_department
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                superNo
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //moderator/:id
+    moderatorAdmin: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        if(admin.role === 'Super Admin')
+        return res.status(401).json({msg: "Already Moderator"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,{'role': 'Moderator'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     //admin/deactivate
     deactivate: async (req,res) => {
         let admin = await Admins.findById(req.params.id);
@@ -236,7 +301,29 @@ const adminController = {
 
         try {
 
-            admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{
+            admin = await Admins.findByIdAndUpdate(req.params.id,{'admin_status': 'Deactivated'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //admin/activate
+    activate: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,{'admin_status': 'Active'},{
                 new: true,
                 runValidators:true,
                 useFindandModify:false

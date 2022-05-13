@@ -12,9 +12,17 @@ import {
     UPDATE_ADMIN_SUCCESS,
     UPDATE_ADMIN_FAIL,
 
+    SUPER_ADMIN_REQUEST,
+    SUPER_ADMIN_SUCCESS,
+    SUPER_ADMIN_FAIL,
+
     DEACTIVATE_ADMIN_REQUEST,
     DEACTIVATE_ADMIN_SUCCESS,
     DEACTIVATE_ADMIN_FAIL,
+
+    ACTIVATE_ADMIN_REQUEST,
+    ACTIVATE_ADMIN_SUCCESS,
+    ACTIVATE_ADMIN_FAIL,
     
     DELETE_ADMIN_REQUEST,
     DELETE_ADMIN_SUCCESS,
@@ -95,7 +103,36 @@ export const updateAdmin = (id, adminData,adminToken) => async (dispatch) => {
     }
 }
 //Admin Edit
-export const deactivateAdmin = (id, adminData,adminToken) => async (dispatch) => {
+export const superAdmin = (id,adminData, adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: SUPER_ADMIN_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/super/${id}`, adminData, config)
+
+
+
+        dispatch({
+            type: SUPER_ADMIN_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: SUPER_ADMIN_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+//Admin Edit
+export const deactivateAdmin = (id,adminData, adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DEACTIVATE_ADMIN_REQUEST })
@@ -106,7 +143,10 @@ export const deactivateAdmin = (id, adminData,adminToken) => async (dispatch) =>
                 'Content-Type': 'application/json'
             }
         }
+
         const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/deactivate/${id}`, adminData, config)
+
+
 
         dispatch({
             type: DEACTIVATE_ADMIN_SUCCESS,
@@ -116,6 +156,35 @@ export const deactivateAdmin = (id, adminData,adminToken) => async (dispatch) =>
     } catch (error) {
         dispatch({
             type: DEACTIVATE_ADMIN_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const activateAdmin = (id,adminData, adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: ACTIVATE_ADMIN_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/activate/${id}`, adminData, config)
+
+
+
+        dispatch({
+            type: ACTIVATE_ADMIN_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ACTIVATE_ADMIN_FAIL,
             payload: error.response.data.message
         })
     }

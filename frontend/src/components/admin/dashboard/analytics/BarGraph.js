@@ -54,13 +54,12 @@ const BarGraph = ({dataLog, title , legend, color}) => {
 
         }
         
-            dataLog && dataLog.forEach(views => {
+        dataLog && dataLog.forEach(views => {
             dataContent.push(views.count)
 
             let arr = views._id.split(' ')
             customLabels.push(arr)
         })
-        console.log(legend)
             return barData;
 
 }

@@ -87,6 +87,25 @@ export const logsReducer = (state = { view: [] }, action) => {
                 viewsLog: action.payload.view,
                 searchLog: action.payload.search,
                 downloadLog: action.payload.download,
+                subscription: action.payload.subscription,
+                thesisDept: action.payload.thesisDept,
+                borrowTop: action.payload.borrowTop,
+                beng: action.payload.beng,
+                civil:action.payload. civil,
+                basd: action.payload.basd,
+                mech: action.payload.mech,
+                elec: action.payload.elec,
+                bengD: action.payload.bengD,
+                basdD: action.payload.basdD,
+                civilD:action.payload.civilD,
+                mechD: action.payload.mechD,
+                elecD: action.payload.elecD,
+                bengB: action.payload.bengB,
+                basdB: action.payload.basdB,
+                civilB:action.payload.civilB,
+                mechB: action.payload.mechB,
+                elecB: action.payload.elecB,
+
             }
 
         case FETCH_LOGS_FAIL:
