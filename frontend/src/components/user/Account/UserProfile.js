@@ -12,7 +12,7 @@ const UserProfile = () => {
     const dispatch = useDispatch()
 
     const { isLoggedIn, user} = useSelector(state => state.authUser)
-    const { borrowCount, bookmarksCount, thesisCount, loading} = useSelector(state => state.studentCount)
+    const { borrowCount, bookmarksCount, thesisCount, overdueCount, loading} = useSelector(state => state.studentCount)
 
     useEffect(() => {
 
@@ -87,20 +87,35 @@ const UserProfile = () => {
                                     <Link to="/user/thesis"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                 </div>
                             </Col>
+                        </Row>        
+                        <Row>
                             <Col className="mx-1">
-
                                 <div className="card-box bg-pink">
                                     <div className="inner">
                                     <h3> {borrowCount} </h3>
-                                    <p> Unreturned Books </p>
+                                    <p> Current borrowed Books </p>
                                     </div>
                                     <div className="icon">
                                     <i className="fas fa-book"></i>
                                 </div>
                                 <Link to="/user/borrow"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
-                            </div>
+                                </div>
+                            </Col>
+                            <Col className="mx-1">
+                                <div className="card-box bg-rose">
+                                    <div className="inner">
+                                    <h3> {overdueCount} </h3>
+                                    <p> Overdue Books </p>
+                                    </div>
+                                    <div className="icon">
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </div>
+                                <Link to="/user/borrow"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                                </div>
                             </Col>
                         </Row>
+                            
+                        
                     </div>
                 }
                 </Col>

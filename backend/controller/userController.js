@@ -2,6 +2,7 @@ const Users = require('../models/userModel')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
 const Subscriptions = require('../models/subscriptionModel')
+const Borrow = require('../models/borrowModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
@@ -244,11 +245,15 @@ const userController = {
     try {
         const user = await Users.findById(req.user.id).select('-user_password')
         const subType = await Subscriptions.findOne({'user.user_id' :user_id})
+        const borrow = await Borrow.find({'user.id': user_id, 'status' : 'Overdue'}).count();
+        
+        
 
         res.json({
                 user: user,
                 msg: "Success User",
-                subType: subType
+                subType: subType,
+                overdueCount: borrow
         })
                 
     } catch (err) {

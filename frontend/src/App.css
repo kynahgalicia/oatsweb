@@ -299,17 +299,17 @@ hr{
 }
 
 /* ----------------------------User---------------------- */
-.header{
+.default-header{
   background-color: var(--darkRed);
   font-family: 'Montserrat', sans-serif;
 }
-.header a{
+.default-header a{
   text-decoration:none;
   padding:15px 15px;
   font-size: 2vh;
 }
 
-.header a:hover{
+.default-header a:hover{
   color: var(--red);
 }
 
@@ -519,12 +519,12 @@ box-shadow: 0 0 10px #211E1E;
   margin: 15px;
 }
 
-.header .btn-primary{
+.default-header .btn-primary{
   color: var(--white) !important;
   background-color: transparent !important ;
   border-color: transparent !important;
 }
-.header .btn-primary:focus{
+.default-header .btn-primary:focus{
   box-shadow:0 0 0 0.25rem rgba(255, 255, 255, 0.61) !important;
 }
 
@@ -1233,4 +1233,18 @@ input[type="file"]{
 .btn-success a{
   text-decoration: none !important;
   color: var(--white) !important;
+}
+
+
+.notifications .icon .image{
+  width: 20px !important;
+  height: 20px !important;
+  fill: var(--white) !important;
+
+}
+
+
+.user-link{
+  border-right: 2px solid #d6d6d677;
+  margin: 3% 0;
 }

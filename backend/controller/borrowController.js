@@ -97,9 +97,29 @@ exports.get = async (req, res, next) => {
 
     const borrow = await Borrow.find();
 
+    let overdue = []
+    for (let x = 0; x < borrow.length; x++) {
+
+        if (borrow[x].status === 'Active') {
+            const date1 = borrow[x].dueDate;
+            const date2 = Date.now();
+            
+            if(date1 < date2){
+                overdue.push(borrow[x]._id)
+            }
+        }
+        
+    }
+
+    if(overdue){
+        await Borrow.updateMany({_id :{ $in:overdue } }, { $set: {status: 'Overdue' }});
+    }
+
+    const borrow2 = await Borrow.find();
+
     res.status(200).json({
         success: true,
-        borrow
+        borrow: borrow2
     })
 
 }
@@ -109,9 +129,28 @@ exports.getStudent = async (req, res, next) => {
     const user_tupid = req.params.user
     const borrow = await Borrow.find({'user.tupid': user_tupid});
 
+    let overdue = []
+    for (let x = 0; x < borrow.length; x++) {
+
+        if (borrow[x].status === 'Active') {
+            const date1 = borrow[x].dueDate;
+            const date2 = Date.now();
+            
+            if(date1 < date2){
+                overdue.push(borrow[x]._id)
+            }
+        }
+        
+    }
+
+    if(overdue){
+        await Borrow.updateMany({_id :{ $in:overdue } }, { $set: {status: 'Overdue' }});
+    }
+
+    const borrow2 = await Borrow.find({'user.tupid': user_tupid});
     res.status(200).json({
         success: true,
-        borrow: borrow
+        borrow: borrow2
     })
 
 }

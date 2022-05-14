@@ -340,11 +340,13 @@ exports.studentDataCount = catchAsyncErrors(async(req,res,next) => {
     console.log(user_id)
     const bookmarks = await Bookmarks.find({user_id}).count()
     const borrowCount = await Borrow.find({ 'user.id' : user_id ,status: "Active", dateReturned: null}).count()
+    const overdueCount = await Borrow.find({ 'user.id' : user_id ,status: "Overdue", dateReturned: null}).count()
     const thesisCount = await Thesis.find({ 'uploadedBy.id' : user_id}).count()
     
     res.status(200).json({
         bookmarksCount: bookmarks,
         borrowCount: borrowCount,
+        overdueCount: overdueCount,
         thesisCount: thesisCount
 
     })

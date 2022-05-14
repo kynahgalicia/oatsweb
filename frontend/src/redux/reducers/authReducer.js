@@ -55,6 +55,7 @@ export const authUserReducer = ( state = {user: {}}, action) => {
                 loading: false,
                 isLoggedIn: true,
                 subType: action.payload.subType,
+                overdueCount: action.payload.overdueCount,
                 isUser: true,
                 msg: action.payload.msg,
                 user: action.payload.user
