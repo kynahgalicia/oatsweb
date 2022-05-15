@@ -71,7 +71,7 @@ const userController = {
             console.log(newUser)
         
             const url = `${FRONTEND_URL}/user/activate/${activation_token}`
-            sendMail(user_tupmail, url, "Verify your email address")
+            //sendMail(user_tupmail, url, "Verify your email address")
 
 
             res.json({
@@ -180,7 +180,7 @@ const userController = {
             const access_token = createAccessToken({id: user._id})
             const url = `${FRONTEND_URL}/user/reset/${access_token}`
 
-            sendMailPassword(user_tupmail, url, "Reset your password")
+            //sendMailPassword(user_tupmail, url, "Reset your password")
             res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})

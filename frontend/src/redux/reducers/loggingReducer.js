@@ -105,6 +105,11 @@ export const logsReducer = (state = { view: [] }, action) => {
                 civilB:action.payload.civilB,
                 mechB: action.payload.mechB,
                 elecB: action.payload.elecB,
+                subspday: action.payload.subspday,
+                subspdayX: action.payload.subspdayX,
+                borrowspday: action.payload.borrowspday,
+                returnedpday: action.payload.returnedpday,
+                overduepday: action.payload.overduepday,
 
             }
 

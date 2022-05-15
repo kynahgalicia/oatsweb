@@ -3,7 +3,7 @@ const subscriptionController = require('../controller/subscriptionController')
 const {authAdmin} = require('../middleware/auth')
 const {authAdminRole} = require('../middleware/authAdminRole')
 
-// router.get('/department',departmentController.get)
+router.get('/subscription/:id', subscriptionController.find)
 router.get('/subscription',subscriptionController.findList)
 router.post('/subscription/new', subscriptionController.create)
 router.put('/subscription/expired/:id', subscriptionController.subExpire)

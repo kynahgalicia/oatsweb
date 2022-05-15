@@ -246,7 +246,10 @@ const UserList = () => {
                         pagesAmount={4}
                         data={setData()} 
                         className='table px-4'
-                        container-sm="true"/>
+                        container-sm="true"
+                        searchTop
+                        searchBottom={false}
+                        />
                     </>
                     }
                 </div>

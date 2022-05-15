@@ -77,10 +77,11 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 })
 
 exports.find = catchAsyncErrors(async(req,res,next) => {
-    const user_id = req.params.id
-    const subscription = await Subscriptions.find({user_id});
+    
 
-    if(!subscription) return res.status(200).json({msg: "No Subscriptions"})
+    const subscription = await Subscriptions.findOne({ "user.user_id": req.params.id});
+
+    if(!subscription) return res.status(200).json({msg: "No Subscriptions", success: false})
 
 
     

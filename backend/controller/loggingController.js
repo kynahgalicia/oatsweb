@@ -61,11 +61,6 @@ exports.logCount = catchAsyncErrors(async(req,res,next) => {
         { $match: {} }, 
         { $sortByCount: "$thesis_title" } 
     ]).limit(5)
-    //Download per day
-    const downloadpday = await DownloadLogs.aggregate([ 
-        { $match: {} }, 
-        { $sortByCount: { $dateToString: { format: "%Y-%m-%d", date: "$downloadAt"} }} 
-    ]).limit(5)
     //Top Searched
     const search = await SearchLogs.aggregate([ 
         { $match: {} }, 
@@ -161,8 +156,47 @@ exports.logCount = catchAsyncErrors(async(req,res,next) => {
         { $match: {'thesis_department' : 'Bachelor of Engineering'} }, 
         { $sortByCount: '$thesis_title' } 
     ]).limit(5)
+    //Download per day
+    const downloadpday = await DownloadLogs.aggregate([ 
+        { $match: {} }, 
+        { $sortByCount: { $dateToString: { format: "%Y-%m-%d", date: "$downloadAt"} }} 
+    ]).limit(5)
+    //Subscriptions Paid per day
+    const subspday = await Subscriptions.aggregate([ 
+            { $group:  { "_id": { $dateToString: { format: "%Y-%m-%d", date: "$paidAt"} }, "count": { "$sum": 1 } } },
+            { $sort : { paidAt : 1, _id: 1 } }
+    ])
+    //Subscriptions Paid per day
+    const subspdayX = await Subscriptions.aggregate([ 
+            {$match: {status: { $eq: 'Expired' }} },
+            { $group:  { "_id": { $dateToString: { format: "%Y-%m-%d", date: "$paidAt"} }, "count": { "$sum": 1 } } },
+            { $sort : { paidAt : 1, _id: 1 } }
+    ])
+    //Borrow Paid per day
+    const borrowspday = await Borrow.aggregate([ 
+            {$match: {status: { $not: { $eq: 'Pending' } },}},
+            { $group:  { "_id": { $dateToString: { format: "%Y-%m-%d", date: "$dateBorrowed"} }, "count": { "$sum": 1 } } },
+            { $sort : { dateBorrowed : 1, _id: 1 } }
+    ])
+    //Borrow Paid per day
+    const returnedpday = await Borrow.aggregate([ 
+            {$match: {status: 'Returned'}},
+            { $group:  { "_id": { $dateToString: { format: "%Y-%m-%d", date: "$dateReturned"} }, "count": { "$sum": 1 } } },
+            { $sort : { dateReturned : 1, _id: 1 } }
+    ])
+    //Overdue Books per day
+    const overduepday = await Borrow.aggregate([ 
+            {$match: {status: 'Overdue'}},
+            { $group:  { "_id": { $dateToString: { format: "%Y-%m-%d", date: "$dateBorrowed"} }, "count": { "$sum": 1 } } },
+            { $sort : { dateBorrowed : 1, _id: 1 } }
+    ])
 
     res.status(200).json({
+        overduepday: overduepday,
+        returnedpday: returnedpday,
+        borrowspday: borrowspday,
+        subspdayX: subspdayX,
+        subspday: subspday,
         bengD: bengD,
         basdD: basdD,
         civilD:civilD,

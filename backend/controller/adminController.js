@@ -57,7 +57,7 @@ const adminController = {
             console.log(newAdmin)
         
             const url = `${FRONTEND_URL}/admin/activate/${activation_token}`
-            sendMail(admin_tupmail, url, "Verify your email address")
+            //sendMail(admin_tupmail, url, "Verify your email address")
 
 
             res.json({

@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect, useState} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
-import {Row, Col, Button} from 'react-bootstrap'
+import {Row, Col, Button, Form} from 'react-bootstrap'
 import { useSelector, useDispatch} from 'react-redux'
 import profile from '../../img/profile.png'
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
 import BarGraph from './analytics/BarGraph'
 import PieChart from './analytics/PieChart'
+import TimeSeries from './analytics/TimeSeries'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
 // require('./dashboard.css');
@@ -20,7 +21,10 @@ const AdminDashboard = () => {
     const [thisDepartment, setThisDepartment] = useState('')
     const { loading,isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {dataCount} = useSelector(state => state.dataCount)
-    const { viewsLog, searchLog, downloadLog, subscription, thesisDept, borrowTop ,beng ,civil, basd,mech,elec,bengB ,civilB, basdB,mechB,elecB,bengD ,civilD, basdD,mechD,elecD} = useSelector(state => state.logs)
+    const { viewsLog, searchLog, downloadLog, subscription, thesisDept, borrowTop ,
+            beng ,civil, basd,mech,elec,bengB ,civilB, basdB,mechB,elecB,
+            bengD ,civilD, basdD,mechD,elecD,
+            subspday,subspdayX, borrowspday, returnedpday,overduepday} = useSelector(state => state.logs)
 
     const[thesisCount,setThisThesis] = useState('')
     const[userCount,setThisUser] = useState('')
@@ -34,6 +38,12 @@ const AdminDashboard = () => {
     const[borrowCountP,setThisBorrowP] = useState('')
     const[borrowCountR,setThisBorrowR] = useState('')
     const[borrowCountOD,setThisBorrowOD] = useState('')
+
+    const[timeSeries,setTimeSeries] = useState('day')
+    const[timeSeriesX,setTimeSeriesX] = useState('day')
+    const[timeSeriesBorrow,setTimeSeriesBorrow] = useState('day')
+    const[timeSeriesReturned,setTimeSeriesReturned] = useState('day')
+    const[timeSeriesOverdue,setTimeSeriesOverdue] = useState('day')
 
     useEffect(() => {
         if(admin){
@@ -63,6 +73,107 @@ const AdminDashboard = () => {
         dispatch(fetchLog())
 
     },[dispatch,history, isLoggedInAdmin,thisDepartment, admin, dataCount]);
+
+    const handleChangeBorrow = (e) => {
+
+        switch(e.target.value){
+            case('All Time'):
+            setTimeSeriesBorrow('day')
+                break;
+            case('Week'):
+            setTimeSeriesBorrow('week')
+                break;
+            case('Month'):
+            setTimeSeriesBorrow('month')
+                break;
+            case('Year'):
+            setTimeSeriesBorrow('year')
+                break;
+            default:
+                return null
+                break;
+        }
+    }   
+    const handleChangeOverdue = (e) => {
+
+        switch(e.target.value){
+            case('All Time'):
+            setTimeSeriesOverdue('day')
+                break;
+            case('Week'):
+            setTimeSeriesOverdue('week')
+                break;
+            case('Month'):
+            setTimeSeriesOverdue('month')
+                break;
+            case('Year'):
+            setTimeSeriesOverdue('year')
+                break;
+            default:
+                return null
+                break;
+        }
+    }   
+    const handleChangeReturned = (e) => {
+
+        switch(e.target.value){
+            case('All Time'):
+            setTimeSeriesReturned('day')
+                break;
+            case('Week'):
+            setTimeSeriesReturned('week')
+                break;
+            case('Month'):
+            setTimeSeriesReturned('month')
+                break;
+            case('Year'):
+            setTimeSeriesReturned('year')
+                break;
+            default:
+                return null
+                break;
+        }
+    }   
+    const handleChange = (e) => {
+
+        switch(e.target.value){
+            case('All Time'):
+                setTimeSeries('day')
+                break;
+            case('Week'):
+                setTimeSeries('week')
+                break;
+            case('Month'):
+                setTimeSeries('month')
+                break;
+            case('Year'):
+                setTimeSeries('year')
+                break;
+            default:
+                return null
+                break;
+        }
+    }   
+    const handleChangeX = (e) => {
+
+        switch(e.target.value){
+            case('All Time'):
+                setTimeSeriesX('day')
+                break;
+            case('Week'):
+                setTimeSeriesX('week')
+                break;
+            case('Month'):
+                setTimeSeriesX('month')
+                break;
+            case('Year'):
+                setTimeSeriesX('year')
+                break;
+            default:
+                return null
+                break;
+        }
+    }   
     return (
         <Fragment>
             <Row>
@@ -96,6 +207,8 @@ const AdminDashboard = () => {
                                     </div>
                                 </div>
                             </>: null}
+
+
 
                             <div>
                                 <div className="container" >
@@ -402,6 +515,110 @@ const AdminDashboard = () => {
                                         </Col>
                                     </Row>
                                 </Row>
+
+{/* --------------------------------------TIMELINES---------------------------------------------------------- */}
+                            <Row className='px-5'>
+                                    <Row className='px-5 mb-5'>
+                                        <br />
+                                        <h2> Timeline</h2>
+                                        <hr />
+
+                                        <br />
+                                        <h4> Subscriptions</h4>
+                                        <Col className="bg-cream p-4 m-1">
+                                        <Form.Group className="mb-2 w-50">
+                                            <Form.Select id="format_field" onChange={handleChange}>
+                                                <option> All Time </option>
+                                                <option> Week</option>
+                                                <option> Month</option>
+                                                <option> Year</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <div className="card-box">
+                                        
+                                                <TimeSeries dataLog={subspday} time={timeSeries} title={'Subscriptions'} legend={'Subscriptions'} color={'#ff6464'} />
+                                            </div>
+                                        </Col>
+
+                                        <Col className="bg-cream p-4 m-1">
+                                        <Form.Group className="mb-2 w-50">
+                                            <Form.Select id="format_field" onChange={handleChangeX}>
+                                                <option> All Time </option>
+                                                <option> Week</option>
+                                                <option> Month</option>
+                                                <option> Year</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <div className="card-box ">
+                                                <TimeSeries dataLog={subspdayX} time={timeSeriesX} title={'Expired Subscriptions'} legend={'Subscriptions'} color={'#e7545f'}/>
+                                            </div>
+                                        </Col>
+                                        
+                                </Row>
+                            
+                                <Row className='px-5'>          
+                                        <br />
+                                        <h4> Books</h4>
+                                    <Col className="bg-cream p-4 m-1">
+                                    <Form.Group className="mb-2 w-50">
+                                        <Form.Select id="format_field" onChange={handleChangeBorrow}>
+                                            <option> All Time </option>
+                                            <option> Week</option>
+                                            <option> Month</option>
+                                            <option> Year</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <div className="card-box ">
+                                            <TimeSeries dataLog={borrowspday} time={timeSeriesBorrow} title={'Borrowed Books'} legend={'Books'} color={'#ff6464'}/>
+                                        </div>
+                                    </Col>
+                                    
+
+                                    <Col className="bg-cream p-4 m-1">
+                                    <Form.Group className="mb-2 w-50">
+                                        <Form.Select id="format_field" onChange={handleChangeReturned}>
+                                            <option> All Time </option>
+                                            <option> Week</option>
+                                            <option> Month</option>
+                                            <option> Year</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <div className="card-box ">
+                                            <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
+                                        </div>
+                                    </Col>
+                                    
+                                </Row>
+                                <Row className='px-5'>       
+                                    <Col  className="bg-cream p-4 m-1">
+                                    <Form.Group className="mb-2 w-50">
+                                        <Form.Select id="format_field" onChange={handleChangeOverdue}>
+                                            <option> All Time </option>
+                                            <option> Week</option>
+                                            <option> Month</option>
+                                            <option> Year</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <div className="card-box ">
+                                            <TimeSeries dataLog={overduepday} time={timeSeriesOverdue} title={'Overdue Books'} legend={'Books'} color={'#ce4559'}/>
+                                        </div>
+                                    </Col>
+                                    <Col className="p-4 m-1"> 
+                                    {/* <Form.Group className="mb-2 w-50">
+                                        <Form.Select id="format_field" onChange={handleChangeReturned}>
+                                            <option> All Time </option>
+                                            <option> Week</option>
+                                            <option> Month</option>
+                                            <option> Year</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <div className="card-box ">
+                                            <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
+                                        </div> */}
+                                    </Col>
+                                    
+                                </Row>
+                            </Row>
 {/* --------------------------------------PIE CHARTS---------------------------------------------------------- */}
                                 <Row className='px-5'>
                                     <Col className="p-2">
@@ -415,6 +632,8 @@ const AdminDashboard = () => {
                                         </div>
                                     </Col>
                                 </Row>
+
+                                    
 
 
                                 </div>

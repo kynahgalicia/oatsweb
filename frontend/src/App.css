@@ -40,6 +40,9 @@
   border: 1px solid var(--grey) !important;
 }
 
+.card{
+  padding: 0 !important;
+}
 .card-box {
   position: relative;
   color: #fff;

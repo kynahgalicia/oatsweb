@@ -49,7 +49,7 @@ const guestController = {
             console.log(newGuest)
         
             const url = `${FRONTEND_URL}/guest/activate/${activation_token}`
-            sendMail(guest_mail, url, "Verify your email address")
+            //sendMail(guest_mail, url, "Verify your email address")
 
 
             res.json({
@@ -141,7 +141,7 @@ const guestController = {
             const access_token = createAccessToken({id: guest._id})
             const url = `${FRONTEND_URL}/guest/reset/${access_token}`
 
-            sendMailPassword(guest_mail, url, "Reset your password")
+            //sendMailPassword(guest_mail, url, "Reset your password")
             res.json({msg: "Reset request sent! Please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})

@@ -209,7 +209,7 @@ const Header = () => {
         <div className="default-header">
         <Navbar collapseOnSelect expand="lg">
         <Container>
-        {isLoggedInAdmin? <Navbar.Brand ><Link to="/admin/dashboard" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>}
+        {isLoggedInAdmin? <Navbar.Brand ><Link to="/" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>  : <Navbar.Brand ><Link to="/" className="title white"><img src={logo} alt="logo" className="img-logo" /></Link></Navbar.Brand>}
         
     
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

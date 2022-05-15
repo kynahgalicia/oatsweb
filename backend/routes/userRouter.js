@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const userController = require('../controller/userController')
-const {authUser, authAdmin} = require('../middleware/auth')
+const {authUser, authAdmin, authUserMobile} = require('../middleware/auth')
 const {authAdminRole} = require('../middleware/authAdminRole')
 
 router.post('/register', userController.register)
@@ -31,6 +31,7 @@ router.put('/edit/:id', userController.updateProfile)
 
 router.delete('/delete/:id',authAdmin,authAdminRole,  userController.delete)
 
+router.get('/inforMobile', authUserMobile, userController.getUserInfor)
 
 // router.get('/logout', userController.logout)
 
