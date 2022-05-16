@@ -33,6 +33,17 @@ import {
     ACTIVATE_THESIS_SUCCESS,
     ACTIVATE_THESIS_FAIL,
     ACTIVATE_THESIS_RESET,
+
+    DELETE_THESIS_REQUEST,
+    DELETE_THESIS_SUCCESS,
+    DELETE_THESIS_FAIL,
+    DELETE_THESIS_RESET,
+
+    RESTORE_THESIS_REQUEST,
+    RESTORE_THESIS_SUCCESS,
+    RESTORE_THESIS_FAIL,
+    RESTORE_THESIS_RESET,
+
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
@@ -186,7 +197,8 @@ export const studentThesisReducer = (state = { theses: {} }, action) => {
 export const removeThesisReducer = (state = {}, action) => {
     switch (action.type) {
 
-        // case DELETE_THESIS_REQUEST:
+        case DELETE_THESIS_REQUEST:
+        case RESTORE_THESIS_REQUEST:
         // case UPDATE_THESIS_REQUEST:
         case DEACTIVATE_THESIS_REQUEST:
         case ACTIVATE_THESIS_REQUEST:
@@ -195,13 +207,18 @@ export const removeThesisReducer = (state = {}, action) => {
                 loading: true
             }
 
-        // case DELETE_THESIS_SUCCESS:
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         isDeleted: action.payload.success, 
-        //         msg: action.payload.msg
-        //     }
+        case DELETE_THESIS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload.success
+            }
+        case RESTORE_THESIS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload.success
+            }
 
         case DEACTIVATE_THESIS_SUCCESS:
             return {
@@ -230,18 +247,23 @@ export const removeThesisReducer = (state = {}, action) => {
         case DEACTIVATE_THESIS_FAIL:
         case ACTIVATE_THESIS_FAIL:
         // case UPDATE_THESIS_FAIL:
-        // case DELETE_THESIS_FAIL:
+        case DELETE_THESIS_FAIL:
             return {
                 ...state,
                 loading: false,
                 error: action.payload.msg
             }
 
-        // case DELETE_THESIS_RESET:
-        //     return {
-        //         ...state,
-        //         isDeleted: false
-        //     }
+        case DELETE_THESIS_RESET:
+            return {
+                ...state,
+                isDeleted: false
+            }
+        case RESTORE_THESIS_RESET:
+            return {
+                ...state,
+                isRestored: false
+            }
 
         case DEACTIVATE_THESIS_RESET:
             return {

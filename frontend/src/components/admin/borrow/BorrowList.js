@@ -112,8 +112,8 @@ const BorrowList = () => {
                     thesis: borrow.thesis.title,
                     admin: ( borrow.admin ? borrow.admin.fname + " " + borrow.admin.lname: null),
                     admin_tupid: ( borrow.admin? borrow.admin.tupid : null), 
-                    dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
-                    dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
+                    dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY hh:mm A'),
+                    dueDate: moment(borrow.dueDate).format("MM/DD/YYYY hh:mm A"),
                     actions: 
                     <Fragment>
                         <Button variant="info" data-toggle="modal" data-target={'#returnModal' + borrow._id}>
@@ -129,7 +129,7 @@ const BorrowList = () => {
                                                 <Form.Label>Date Returned</Form.Label>
                                                 <Form.Control
                                                     className='w-75 my-1 flex-center'
-                                                    type="date"
+                                                    type="datetime-local"
                                                     onChange={(e) => setDateReturned(e.target.value)}
                                                 />
                                             </Form.Group>
@@ -175,15 +175,12 @@ const BorrowList = () => {
                 <Col sm={10}>
                     <div className="admin-wrapper">
                         <div className="table-admin">
+                        <div className='d-flex align-items-start m-2'>
+                            <h1>Borrowed Books</h1>
+                        </div>
 
                         { loading ? <LoaderAdmin /> :
                         <>
-                        <div className='d-flex align-items-start m-2'>
-                            <h1>Borrow</h1>
-                        </div>
-                        <div className='d-flex align-items-start mx-5 mt-3'>
-                            <Button variant="success"><Link to="/admin/borrow/new">+ Add</Link></Button>
-                        </div>
 
                             <MDBDataTableV5 
                             hover 
@@ -192,7 +189,10 @@ const BorrowList = () => {
                             pagesAmount={4}
                             data={setData()} 
                             className='table px-4'
-                            container-sm="true"/>
+                            container-sm="true"
+                            searchTop
+                            searchBottom={false}
+                            />
                         </>
                         
                             }

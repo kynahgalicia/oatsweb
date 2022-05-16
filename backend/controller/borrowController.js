@@ -101,9 +101,9 @@ exports.get = async (req, res, next) => {
     for (let x = 0; x < borrow.length; x++) {
 
         if (borrow[x].status === 'Active') {
-            const date1 = borrow[x].dueDate;
+            const date1 = borrow[x].dueDate
             const date2 = Date.now();
-            
+            console.log(date1 +'-'+ date2)
             if(date1 < date2){
                 overdue.push(borrow[x]._id)
             }

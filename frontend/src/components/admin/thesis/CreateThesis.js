@@ -184,6 +184,9 @@ const CreateThesis = () => {
 
                 <Col sm={10}>
                     <Container>
+                    <div className='back-button text-start px-5 py-2'>
+                        <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     <div className="admin-wrapper">
                         <div className="form-admin-wrapper-two text-start">
                             <div className="wrapper my-5">

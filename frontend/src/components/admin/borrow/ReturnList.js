@@ -126,7 +126,7 @@ const ReturnList = () => {
                         admin_tupid: borrow.admin.tupid,
                         dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
                         dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                        dateReturned:moment(borrow.dateReturned).format('MM/DD/YYYY'),
+                        dateReturned:moment(borrow.dateReturned).format(" YYYY-MM-DD HH:mm:ss"),
                         status: borrow.status,
                         actions: 
                             <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id} onClick={() => deleteBorrowHandler(borrow._id)}>
@@ -154,11 +154,11 @@ const ReturnList = () => {
                 <Col sm={10}>
                 <div className="admin-wrapper">
                         <div className="table-admin">
+                        <div className='d-flex align-items-start m-2'>
+                            <h1>Returned Books</h1>
+                        </div>
                             {loading ? <LoaderAdmin /> :
                         <>
-                        <div className='d-flex align-items-start m-2'>
-                            <h1>Return</h1>
-                        </div>
                         
                             <MDBDataTableV5 
                                 hover 
@@ -167,7 +167,10 @@ const ReturnList = () => {
                                 pagesAmount={4}
                                 data={setData()} 
                                 className='table px-4'
-                                container-sm="true"/>
+                                container-sm="true"
+                                searchTop
+                                searchBottom={false}
+                        />
                         </>
                             }
 

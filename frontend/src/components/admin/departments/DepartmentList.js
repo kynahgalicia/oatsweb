@@ -131,17 +131,17 @@ const DepartmentList = () => {
         </Col>
             <Col sm={10}>
                 <div className="admin-wrapper">
-                    <div className="table-admin">
+                    <div className="table-admin align-items-end">
                 {loading ? <LoaderAdmin/>  :  
                     <>
-                <div className='d-flex align-items-start m-2'>
-                    <h1>Departments</h1>
-                </div>
-                <div className='d-flex align-items-start mx-5 mt-3'>
-                    <Button variant="success"><Link to="/admin/department/new">+ Add</Link></Button>
+                        <div className='d-flex align-items-start m-2'>
+                            <h1>Departments</h1>
+                        </div>
+                        <div className='d-flex align-items-start mx-5 mt-3'>
+                            <Button variant="success" className='success mx-1'><Link to="/admin/department/new">+ Add</Link></Button>
 
-                    <Button variant="danger"><Link to="/admin/department/deleted"> <i class="fas fa-trash"></i> Trash Bin</Link></Button>
-                </div>
+                            <Button variant="danger" className='danger mx-1'><Link to="/admin/department/deleted"> <i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                        </div>
                     <MDBDataTableV5 
                     hover 
                     entriesOptions={[5, 10, 15, 25]} 
@@ -149,7 +149,10 @@ const DepartmentList = () => {
                     pagesAmount={4}
                     data={setData()} 
                     className='table px-4'
-                    container-sm="true"/>
+                    container-sm="true"
+                    searchTop
+                    searchBottom={false}
+                        />
 
                 </>
                 }    

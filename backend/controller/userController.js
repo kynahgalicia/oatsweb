@@ -41,8 +41,14 @@ const userController = {
             const user = await Users.findOne({user_tupmail})
             if(user) return res.status(405).json({msg: "This email already exists."})
 
-            if(user_contact.length < 11)
-                return res.status(406).json({msg: "contact must be at least 11 numbers."})
+            if(user_contact.length < 11 || user_contact.length > 11)
+                return res.status(406).json({msg: "contact must be 11 numbers."})
+
+            if (/[a-zA-Z]$/.test(user_contact)) 
+            return res.status(406).json({msg: "Invalid Contact Number"})
+
+            if (/\b09\d{9}$/.test(user_contact)) 
+            return res.status(406).json({msg: "Invalid Contact Number Format"})
 
             if(passwords.length < 6)
                 return res.status(407).json({msg: "Password must be at least 6 characters."})

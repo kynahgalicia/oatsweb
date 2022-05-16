@@ -53,8 +53,8 @@ const UserBorrow = () => {
             if(borrow.dateReturned === null){
                 data.rows.push({
                     thesis: borrow.thesis.title,
-                    dateBorrowed: ( borrow.dateBorrowed === null ? "Pending" : moment(borrow.dateBorrowed).format('MM/DD/YYYY')),
-                    dueDate: ( borrow.dateBorrowed === null ? "Pending" :  moment(borrow.dueDate).format('MM/DD/YYYY')),
+                    dateBorrowed: ( borrow.dateBorrowed === null ? "Pending" : moment(borrow.dateBorrowed).format('MM/DD/YYYY hh:mm A')),
+                    dueDate: ( borrow.dateBorrowed === null ? "Pending" :  moment(borrow.dueDate).format('MM/DD/YYYY hh:mm A')),
                     status: <div className={ borrow.status === 'Active' ? 'active' : 'pending'}>{borrow.status}</div>
                     
                 })
@@ -98,9 +98,9 @@ const UserBorrow = () => {
             if(borrow.dateReturned !== null && borrow.status === 'Returned'){
                 data.rows.push({
                     thesis: borrow.thesis.title,
-                    dateBorrowed:  moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
-                    dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                    dateReturned: moment(borrow.dateReturned).format('MM/DD/YYYY'),
+                    dateBorrowed:  moment(borrow.dateBorrowed).format('MM/DD/YYYY hh:mm A'),
+                    dueDate: moment(borrow.dueDate).format('MM/DD/YYYY hh:mm A'),
+                    dateReturned: moment(borrow.dateReturned).format('MM/DD/YYYY hh:mm A'),
                     status: <div className='active'>{borrow.status}</div>
                     
                 })

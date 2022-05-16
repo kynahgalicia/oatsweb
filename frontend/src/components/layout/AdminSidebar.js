@@ -40,13 +40,14 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
+            { isLoggedInAdmin && admin.role === 'Super Admin' ? 
+            <>
+
             <Nav.Item>
                 <Link to="/admin/guests">Guests</Link>
             </Nav.Item>
             <hr/>
 
-            { isLoggedInAdmin && admin.role === 'Super Admin' ? 
-            <>
             <Nav.Item>  
                 <Link to="/admin/department">Departments</Link>
             </Nav.Item>
@@ -101,7 +102,10 @@ const AdminSidebar = () => {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="list-group">
+                                    { isLoggedInAdmin && admin.role === 'Super Admin' ? 
+                                    <>
                                     <Link to="/admin/subscription/request" className="list-group-item list-group-item-action">Request</Link>
+                                    </> : null }
                                     <Link to="/admin/subscription/list" className="list-group-item list-group-item-action">Subscriptions</Link>
                                 </div>
                             </div>

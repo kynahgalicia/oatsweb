@@ -26,15 +26,24 @@ const adminController = {
 
             if(!validateEmail(admin_tupmail))
                 return res.status(401).json({msg: "Invalid emails."})
+            
+            if (!(/@tup.edu.ph\s*$/.test(admin_tupmail))) 
+                return res.status(402).json({msg: "Invalid Email"})
+                
+                const adminID = await Admins.findOne({admin_tupid})
+                if(adminID)return res.status(402).json({msg: "This ID already exists."})
+                
+                const admin = await Admins.findOne({admin_tupmail})
+                if(admin) return res.status(403).json({msg: "This email already exists."})
+                
+                if(admin_contact.length < 11 || admin_contact.length > 11)
+                return res.status(406).json({msg: "contact must be 11 numbers."})
 
-            const adminID = await Admins.findOne({admin_tupid})
-            if(adminID)return res.status(402).json({msg: "This ID already exists."})
+            if (/[a-zA-Z]$/.test(admin_contact)) 
+            return res.status(406).json({msg: "Invalid Contact Number"})
 
-            const admin = await Admins.findOne({admin_tupmail})
-            if(admin) return res.status(403).json({msg: "This email already exists."})
-
-            if(admin_contact.length < 11)
-                return res.status(404).json({msg: "contact must be at least 11 numbers."})
+            if (!(/\b09\d{9}$/.test(admin_contact))) 
+            return res.status(406).json({msg: "Invalid Contact Number Format"})
 
             if(passwords.length < 6)
                 return res.status(405).json({msg: "Password must be at least 6 characters."})
@@ -238,12 +247,12 @@ const adminController = {
         return res.status(401).json({msg: "Already Super Admin"})
 
         const superNo = await Admins.find({role: 'Super Admin'}).count()
-        if(superNo.count >= 2) return res.status(401).json({msg: "Reached the Limit of Super Admin"})
+        if(superNo >= 2) {return res.status(401).json({msg: "Reached the Limit Number of Super Admin"})}
 
 
         const admin_department = {
             departments: null,
-            deptname: 'None-Academic'
+            deptname: 'Non-Academic'
         }
 
         const role = 'Super Admin'
@@ -260,7 +269,8 @@ const adminController = {
             })
 
             res.status(200).json({
-                superNo
+                superNo,
+                success: true
             })
 
         } catch (err) {
@@ -274,12 +284,26 @@ const adminController = {
         if(!admin)
         return res.status(400).json({msg: "Admin not found"})
 
-        if(admin.role === 'Super Admin')
+        if(admin.role === 'Moderator')
         return res.status(401).json({msg: "Already Moderator"})
+
+        const superNo = await Admins.find({role: 'Super Admin'}).count()
+        if(superNo === 1) {return res.status(401).json({msg: "One Super Admin Must Remain"})}
+
+        const cdept = await Department.findById(req.body.departments);
+
+        const role = 'Moderator'
+        const admin_department = {
+            departments: cdept._id,
+            deptname: cdept.deptname
+        }
+
+        req.body.role = role
+        req.body.admin_department = admin_department
 
         try {
 
-            admin = await Admins.findByIdAndUpdate(req.params.id,{'role': 'Moderator'},{
+            admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{
                 new: true,
                 runValidators:true,
                 useFindandModify:false
@@ -299,6 +323,9 @@ const adminController = {
         if(!admin)
         return res.status(400).json({msg: "Admin not found"})
 
+        let adminSuperAdmin = await Admins.findById(req.params.id)
+        if(adminSuperAdmin.role === 'Super Admin')
+        return res.status(400).json({msg: "Super Admin can't be deactivated"})
         try {
 
             admin = await Admins.findByIdAndUpdate(req.params.id,{'admin_status': 'Deactivated'},{
@@ -317,6 +344,54 @@ const adminController = {
     },
     //admin/activate
     activate: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,{'admin_status': 'Active'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //admin/delete/:id
+    softDelete: async (req,res) => {
+        let admin = await Admins.findById(req.params.id);
+        if(!admin)
+        return res.status(400).json({msg: "Admin not found"})
+
+        let adminSuperAdmin = await Admins.findById(req.params.id)
+        if(adminSuperAdmin.role === 'Super Admin')
+        return res.status(400).json({msg: "Super Admin can't be deleted"})
+
+        try {
+
+            admin = await Admins.findByIdAndUpdate(req.params.id,{'admin_status': 'Deleted'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    //admin/restore/:id
+    restoreDelete: async (req,res) => {
         let admin = await Admins.findById(req.params.id);
         if(!admin)
         return res.status(400).json({msg: "Admin not found"})

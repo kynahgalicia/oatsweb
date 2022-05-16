@@ -184,7 +184,7 @@ const AdminDashboard = () => {
                 <Col sm={10}>
                     { loading ? <LoaderAdmin/>  :  
                         <>
-                        <div className="user-wrapper">
+                    <div className="user-wrapper">
                             { admin ? 
                             <>
                                 <div className="user-card">
@@ -210,9 +210,171 @@ const AdminDashboard = () => {
 
 
 
-                            <div>
-                                <div className="container" >
-                                    <Row className="mx-5">
+            <div>
+                <div className="container" >
+                    {isLoggedInAdmin && admin.role === 'Moderator' ? 
+                    <>
+                    
+                    <Row>
+                        <Col sm={2}>
+                        </Col>
+                        <Col sm={8}>
+                            <div className="card-box bg-rose">
+                                <div className="inner">
+                                    <h3> {thesisCount} </h3>
+                                    <p> Thesis </p>
+                                </div>
+                                <div className="icon">
+                                    <i class="fas fa-scroll"></i>
+                                </div>
+                                <Link to="/admin/thesis"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
+                            </div>
+                        </Col>
+                        <Col sm={2}>
+                        </Col>
+                    </Row>
+
+{/* --------------------------------------MODERATOR ------------------------------------------ */}
+                    <Row className='px-5'>
+                        
+
+                        { thisDepartment === 'Basic Arts and Science' ?
+                        <>
+                        <Row className='px-5'>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={basd} title={"Top Viewed Thesis (BASD)"} legend={"Views"}  color={'#ff6464'}/>
+                                </div>
+                            </Col>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={basdD} title={"Top Downloaded Thesis (BASD)"} legend={"Downloads"}  color={'#e7545f'}/>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={basdB} title={"Top Borrowed Thesis (BASD)"} legend={"Borrows"}  color={'#ce4559'}/>
+                                </div>
+                            </Col>
+                            <Col>
+                            </Col>
+                        </Row>
+                        </> : null
+                        }
+                        { thisDepartment === 'Bachelor of Engineering' ?
+                        <>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={beng} title={"Top Viewed Thesis (BEng)"} legend={"Views"} color={'#ff6464'}/>
+                                </div>
+                            </Col>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={beng} title={"Top Viewed Thesis (BEng)"} legend={"Views"} color={'#e7545f'}/>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={bengB} title={"Top Borrowed Thesis (BEng)"} legend={"Borrows"} color={'#ce4559'}/>
+                                </div>
+                            </Col>
+                            <Col>
+                            </Col>
+
+                        </Row>
+                        </>
+                        : null }
+                        { thisDepartment === 'Civil and Allied' ?
+                        <>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={civil} title={"Top Viewed Thesis (Civil)"} legend={"Views"} color={'#ff6464'}/>
+                                </div>
+                            </Col>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={civilD} title={"Top Downloaded Thesis (Civil)"} legend={"Downloads"} color={'#e7545f'}/>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={civilD} title={"Top Downloaded Thesis (Civil)"} legend={"Downloads"} color={'#ce4559'}/>
+                                </div>
+                            </Col>
+                            <Col>
+                            </Col>
+                        </Row>
+                        </>
+                        : null }
+                        { thisDepartment === 'Electrical and Allied' ?
+                        <>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={elec} title={"Top Viewed Thesis ( Electrical)"} legend={"Views"} color={'#ff6464'}/>
+                                </div>
+                            </Col>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={elecD} title={"Top Downloaded Thesis ( Electrical)"} legend={"Downloads"} color={'#e7545f'}/>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={elecB} title={"Top Borrowed Thesis ( Electrical)"} legend={"Borrows"} color={'#ce4559'}/>
+                                </div>
+                            </Col>
+                            <Col>
+                            </Col>
+                        </Row>
+
+                        </>  
+                        : null }
+                        { thisDepartment === 'Mechanical and Allied' ?
+                        <>
+                        <Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#ff6464'}/>
+                                </div>
+                            </Col>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={mechD} title={"Top Downloaded Thesis (Mechanical)"} legend={"Downloads"} color={'#e7545f'}/>
+                                </div>
+                            </Col>
+                        </Row>
+                            <Col className="p-2">
+                                <div className="card-box bg-cream">
+                                    <BarGraph dataLog={mechB} title={"Top Borrowed Thesis (Mechanical)"} legend={"Borrows"} color={'#ce4559'}/>
+                                </div>
+                            </Col>
+                        <Row>
+                            <Col>
+                            </Col>
+                        </Row>
+                        </>  
+                        : null}
+                    </Row>
+
+                    </>
+                    
+                    : null}
+{/* ---------------------------- SUPER ADMIN -------------------------- */}
+                    {isLoggedInAdmin && admin.role === 'Moderator' ? null : 
+                        <>
+                        
+                        <Row className="mx-5">
                                         <Col className="mx-1">
                                             <div className="card-box bg-peach">
                                                 <div className="inner">
@@ -238,12 +400,10 @@ const AdminDashboard = () => {
                                                 <Link to="/admin/guests"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
-
-                                        
                                     </Row>
 
                                     <Row className="mx-5 mb-5">
-                                    <Col className="mx-1">
+                                        <Col className="mx-1">
                                             <div className="card-box bg-pink">
                                                 <div className="inner">
                                                     <h3> {adminCount} </h3>
@@ -267,7 +427,6 @@ const AdminDashboard = () => {
                                                 <Link to="/admin/thesis"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
-
                                     </Row>
   {/* ------------------------------ BORROWS ------------------------------------ */}
                                     <Row className="mx-5">
@@ -285,7 +444,6 @@ const AdminDashboard = () => {
                                                 <Link to="/admin/borrow/request"><a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a></Link>
                                             </div>
                                         </Col>
-
                                         <Col className="mx-1">
                                             <div className="card-box bg-peach2">
                                                 <div className="inner">
@@ -372,177 +530,196 @@ const AdminDashboard = () => {
                                     </Row>
 
 {/* --------------------------------------TOP VIEWS ------------------------------------------ */}
-                                <Row className='px-5'>
-                                        <br />
-                                        <h2>Top Views</h2>
-                                        <hr />
                                     <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={viewsLog} title={"Top Viewed Thesis"} legend={"Views"} color={'#ff6464'}/>
-                                            </div>
-                                        </Col>
+                                            <br />
+                                            <h2>Top Views</h2>
+                                            <hr />
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={viewsLog} title={"Top Viewed Thesis"} legend={"Views"} color={'#ff6464'}/>
+                                                </div>
+                                            </Col>
 
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={basd} title={"Top Viewed Thesis (BASD)"} legend={"Views"}  color={'#e7545f'}/>
-                                            </div>
-                                        </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={basd} title={"Top Viewed Thesis (BASD)"} legend={"Views"}  color={'#e7545f'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={beng} title={"Top Viewed Thesis (BEng)"} legend={"Views"} color={'#ce4559'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={civil} title={"Top Viewed Thesis (Civil)"} legend={"Views"} color={'#b63752'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={elec} title={"Top Viewed Thesis ( Electrical)"} legend={"Views"} color={'#9d2a4a'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#851d41'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={beng} title={"Top Viewed Thesis (BEng)"} legend={"Views"} color={'#ce4559'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={civil} title={"Top Viewed Thesis (Civil)"} legend={"Views"} color={'#b63752'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={elec} title={"Top Viewed Thesis ( Electrical)"} legend={"Views"} color={'#9d2a4a'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#851d41'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </Row>
 {/* -----------------------------------------TOP SEARCHED ------------------------------------- */}
-                                <Row className='px-5'>
-                                    <hr />
                                     <Row className='px-5'>
-                                        {/* <Col className="p-2"> */}
-                                            <div className="card-box bg-cream">
-                                                
-                                                <BarGraph dataLog={searchLog} title={"Top Searched Keywords"} legend={"Keywords"} color={'#ff6464'}/>
-                                            </div>
-                                        {/* </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#b63752'}/>
-                                            </div>
-                                        </Col> */}
+                                        <hr />
+                                        <Row className='px-5'>
+                                            {/* <Col className="p-2"> */}
+                                                <div className="card-box bg-cream">
+                                                    
+                                                    <BarGraph dataLog={searchLog} title={"Top Searched Keywords"} legend={"Keywords"} color={'#ff6464'}/>
+                                                </div>
+                                            {/* </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#b63752'}/>
+                                                </div>
+                                            </Col> */}
+                                        </Row>
                                     </Row>
-                                </Row>
 {/* --------------------------------------------------TOP DOWNLOADS------------------------------------------ */}
-                                <Row className='px-5'>
-                                    <br />
-                                    <h2> Top Downloads</h2>
-                                    <hr />
                                     <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={downloadLog} title={"Top Downloaded Thesis"} legend={"Downloads"} color={'#ff6464'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={basdD} title={"Top Downloaded Thesis (BASD)"} legend={"Downloads"}  color={'#e7545f'}/>
-                                            </div>
-                                        </Col>
+                                        <br />
+                                        <h2> Top Downloads</h2>
+                                        <hr />
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={downloadLog} title={"Top Downloaded Thesis"} legend={"Downloads"} color={'#ff6464'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={basdD} title={"Top Downloaded Thesis (BASD)"} legend={"Downloads"}  color={'#e7545f'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={bengD} title={"Top Downloaded Thesis (BEng)"} legend={"Downloads"} color={'#ce4559'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={civilD} title={"Top Downloaded Thesis (Civil)"} legend={"Downloads"} color={'#b63752'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={elecD} title={"Top Downloaded Thesis ( Electrical)"} legend={"Downloads"} color={'#9d2a4a'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={mechD} title={"Top Downloaded Thesis (Mechanical)"} legend={"Downloads"} color={'#851d41'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={bengD} title={"Top Downloaded Thesis (BEng)"} legend={"Downloads"} color={'#ce4559'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={civilD} title={"Top Downloaded Thesis (Civil)"} legend={"Downloads"} color={'#b63752'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={elecD} title={"Top Downloaded Thesis ( Electrical)"} legend={"Downloads"} color={'#9d2a4a'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={mechD} title={"Top Downloaded Thesis (Mechanical)"} legend={"Downloads"} color={'#851d41'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </Row>
 {/* -----------------------------------------------TOP BORROWS ----------------------------------------------------- */}
-                                <Row className='px-5'>
-                                    <br />
-                                    <h2> Top Borrows</h2>
-                                    <hr />
                                     <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={borrowTop} title={"Top Borrowed Thesis"} legend={"Borrows"} color={'#ff6464'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={basdB} title={"Top Borrowed Thesis (BASD)"} legend={"Borrows"}  color={'#e7545f'}/>
-                                            </div>
-                                        </Col>
+                                        <br />
+                                        <h2> Top Borrows</h2>
+                                        <hr />
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={borrowTop} title={"Top Borrowed Thesis"} legend={"Borrows"} color={'#ff6464'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={basdB} title={"Top Borrowed Thesis (BASD)"} legend={"Borrows"}  color={'#e7545f'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={bengB} title={"Top Borrowed Thesis (BEng)"} legend={"Borrows"} color={'#ce4559'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={civilB} title={"Top Borrowed Thesis (Civil)"} legend={"Borrows"} color={'#b63752'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        <Row className='px-5'>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={elecB} title={"Top Borrowed Thesis ( Electrical)"} legend={"Borrows"} color={'#9d2a4a'}/>
+                                                </div>
+                                            </Col>
+                                            <Col className="p-2">
+                                                <div className="card-box bg-cream">
+                                                    <BarGraph dataLog={mechB} title={"Top Borrowed Thesis (Mechanical)"} legend={"Borrows"} color={'#851d41'}/>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={bengB} title={"Top Borrowed Thesis (BEng)"} legend={"Borrows"} color={'#ce4559'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={civilB} title={"Top Borrowed Thesis (Civil)"} legend={"Borrows"} color={'#b63752'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className='px-5'>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={elecB} title={"Top Borrowed Thesis ( Electrical)"} legend={"Borrows"} color={'#9d2a4a'}/>
-                                            </div>
-                                        </Col>
-                                        <Col className="p-2">
-                                            <div className="card-box bg-cream">
-                                                <BarGraph dataLog={mechB} title={"Top Borrowed Thesis (Mechanical)"} legend={"Borrows"} color={'#851d41'}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </Row>
 
 {/* --------------------------------------TIMELINES---------------------------------------------------------- */}
-                            <Row className='px-5'>
-                                    <Row className='px-5 mb-5'>
-                                        <br />
-                                        <h2> Timeline</h2>
-                                        <hr />
+                                <Row className='px-5'>
+                                        <Row className='px-5 mb-5'>
+                                            <br />
+                                            <h2> Timeline</h2>
+                                            <hr />
 
-                                        <br />
-                                        <h4> Subscriptions</h4>
+                                            <br />
+                                            <h4> Subscriptions</h4>
+                                            <Col className="bg-cream p-4 m-1">
+                                            <Form.Group className="mb-2 w-50">
+                                                <Form.Select id="format_field" onChange={handleChange}>
+                                                    <option> All Time </option>
+                                                    <option> Week</option>
+                                                    <option> Month</option>
+                                                    <option> Year</option>
+                                                </Form.Select>
+                                            </Form.Group>
+                                            <div className="card-box">
+                                            
+                                                    <TimeSeries dataLog={subspday} time={timeSeries} title={'Subscriptions'} legend={'Subscriptions'} color={'#ff6464'} />
+                                                </div>
+                                            </Col>
+
+                                            <Col className="bg-cream p-4 m-1">
+                                            <Form.Group className="mb-2 w-50">
+                                                <Form.Select id="format_field" onChange={handleChangeX}>
+                                                    <option> All Time </option>
+                                                    <option> Week</option>
+                                                    <option> Month</option>
+                                                    <option> Year</option>
+                                                </Form.Select>
+                                            </Form.Group>
+                                            <div className="card-box ">
+                                                    <TimeSeries dataLog={subspdayX} time={timeSeriesX} title={'Expired Subscriptions'} legend={'Subscriptions'} color={'#e7545f'}/>
+                                                </div>
+                                            </Col>
+                                            
+                                    </Row>
+                                
+                                    <Row className='px-5'>          
+                                            <br />
+                                            <h4> Books</h4>
                                         <Col className="bg-cream p-4 m-1">
                                         <Form.Group className="mb-2 w-50">
-                                            <Form.Select id="format_field" onChange={handleChange}>
-                                                <option> All Time </option>
-                                                <option> Week</option>
-                                                <option> Month</option>
-                                                <option> Year</option>
-                                            </Form.Select>
-                                        </Form.Group>
-                                        <div className="card-box">
-                                        
-                                                <TimeSeries dataLog={subspday} time={timeSeries} title={'Subscriptions'} legend={'Subscriptions'} color={'#ff6464'} />
-                                            </div>
-                                        </Col>
-
-                                        <Col className="bg-cream p-4 m-1">
-                                        <Form.Group className="mb-2 w-50">
-                                            <Form.Select id="format_field" onChange={handleChangeX}>
+                                            <Form.Select id="format_field" onChange={handleChangeBorrow}>
                                                 <option> All Time </option>
                                                 <option> Week</option>
                                                 <option> Month</option>
@@ -550,75 +727,56 @@ const AdminDashboard = () => {
                                             </Form.Select>
                                         </Form.Group>
                                         <div className="card-box ">
-                                                <TimeSeries dataLog={subspdayX} time={timeSeriesX} title={'Expired Subscriptions'} legend={'Subscriptions'} color={'#e7545f'}/>
+                                                <TimeSeries dataLog={borrowspday} time={timeSeriesBorrow} title={'Borrowed Books'} legend={'Books'} color={'#ff6464'}/>
                                             </div>
                                         </Col>
                                         
-                                </Row>
-                            
-                                <Row className='px-5'>          
-                                        <br />
-                                        <h4> Books</h4>
-                                    <Col className="bg-cream p-4 m-1">
-                                    <Form.Group className="mb-2 w-50">
-                                        <Form.Select id="format_field" onChange={handleChangeBorrow}>
-                                            <option> All Time </option>
-                                            <option> Week</option>
-                                            <option> Month</option>
-                                            <option> Year</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <div className="card-box ">
-                                            <TimeSeries dataLog={borrowspday} time={timeSeriesBorrow} title={'Borrowed Books'} legend={'Books'} color={'#ff6464'}/>
-                                        </div>
-                                    </Col>
-                                    
 
-                                    <Col className="bg-cream p-4 m-1">
-                                    <Form.Group className="mb-2 w-50">
-                                        <Form.Select id="format_field" onChange={handleChangeReturned}>
-                                            <option> All Time </option>
-                                            <option> Week</option>
-                                            <option> Month</option>
-                                            <option> Year</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <div className="card-box ">
-                                            <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
-                                        </div>
-                                    </Col>
-                                    
+                                        <Col className="bg-cream p-4 m-1">
+                                        <Form.Group className="mb-2 w-50">
+                                            <Form.Select id="format_field" onChange={handleChangeReturned}>
+                                                <option> All Time </option>
+                                                <option> Week</option>
+                                                <option> Month</option>
+                                                <option> Year</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <div className="card-box ">
+                                                <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
+                                            </div>
+                                        </Col>
+                                        
+                                    </Row>
+                                    <Row className='px-5'>       
+                                        <Col  className="bg-cream p-4 m-1">
+                                        <Form.Group className="mb-2 w-50">
+                                            <Form.Select id="format_field" onChange={handleChangeOverdue}>
+                                                <option> All Time </option>
+                                                <option> Week</option>
+                                                <option> Month</option>
+                                                <option> Year</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <div className="card-box ">
+                                                <TimeSeries dataLog={overduepday} time={timeSeriesOverdue} title={'Overdue Books'} legend={'Books'} color={'#ce4559'}/>
+                                            </div>
+                                        </Col>
+                                        <Col className="p-4 m-1"> 
+                                        {/* <Form.Group className="mb-2 w-50">
+                                            <Form.Select id="format_field" onChange={handleChangeReturned}>
+                                                <option> All Time </option>
+                                                <option> Week</option>
+                                                <option> Month</option>
+                                                <option> Year</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <div className="card-box ">
+                                                <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
+                                            </div> */}
+                                        </Col>
+                                        
+                                    </Row>
                                 </Row>
-                                <Row className='px-5'>       
-                                    <Col  className="bg-cream p-4 m-1">
-                                    <Form.Group className="mb-2 w-50">
-                                        <Form.Select id="format_field" onChange={handleChangeOverdue}>
-                                            <option> All Time </option>
-                                            <option> Week</option>
-                                            <option> Month</option>
-                                            <option> Year</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <div className="card-box ">
-                                            <TimeSeries dataLog={overduepday} time={timeSeriesOverdue} title={'Overdue Books'} legend={'Books'} color={'#ce4559'}/>
-                                        </div>
-                                    </Col>
-                                    <Col className="p-4 m-1"> 
-                                    {/* <Form.Group className="mb-2 w-50">
-                                        <Form.Select id="format_field" onChange={handleChangeReturned}>
-                                            <option> All Time </option>
-                                            <option> Week</option>
-                                            <option> Month</option>
-                                            <option> Year</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <div className="card-box ">
-                                            <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
-                                        </div> */}
-                                    </Col>
-                                    
-                                </Row>
-                            </Row>
 {/* --------------------------------------PIE CHARTS---------------------------------------------------------- */}
                                 <Row className='px-5'>
                                     <Col className="p-2">
@@ -632,15 +790,14 @@ const AdminDashboard = () => {
                                         </div>
                                     </Col>
                                 </Row>
-
-                                    
-
-
-                                </div>
-                            </div>
-                        </div> 
+                            
                         </>
                     }
+                        </div>
+                    </div>
+                </div> 
+            </>
+            }
                 </Col>
             </Row>
         </Fragment>

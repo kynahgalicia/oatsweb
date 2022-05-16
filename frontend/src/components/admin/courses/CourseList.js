@@ -141,14 +141,15 @@ const CourseList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
                 <div className="table-admin">
+                    <div className='d-flex align-items-start m-2'>
+                        <h1>Courses</h1>
+                    </div>
                 
                 {loading ? <LoaderAdmin/>  :  
                     <>
-                    <div className='d-flex align-items-start m-2'>
-                    <h1>Courses</h1>
-                </div>
                 <div className='d-flex align-items-start mx-5 mt-3'>
-                    <Button variant="success"><Link to="/admin/course/new">+ Add</Link></Button>
+                    <Button variant="success" className='success mx-1'><Link to="/admin/course/new">+ Add</Link></Button>
+                    <Button variant="success" className='danger'><Link to="/admin/course/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                 </div>
                     <MDBDataTableV5 
                         hover 
@@ -157,7 +158,10 @@ const CourseList = () => {
                         pagesAmount={4}
                         data={setData()} 
                         className='table px-4'
-                        container-sm="true"/>
+                        container-sm="true"
+                        searchTop
+                        searchBottom={false}
+                        />
                         </>
                     }
                     </div>

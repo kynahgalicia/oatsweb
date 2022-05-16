@@ -131,11 +131,8 @@ const SubscriptionList = () => {
                     
                     actions: 
                     <Fragment>
-                        <Button className="success">
-                            Accept
-                        </Button> 
                         <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + subs._id}>
-                            Decline
+                            Revoke
                         </Button> 
     
     
@@ -143,7 +140,7 @@ const SubscriptionList = () => {
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                 <div className="modal-body">
-                                    Do you really want to decline the request?
+                                    Do you really want to revoke the subscription?
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
@@ -204,10 +201,10 @@ const SubscriptionList = () => {
                     field: 'status',
                     sort: 'desc'
                 },
-                {
-                    label: 'Actions',
-                    field: 'actions',
-                },
+                // {
+                //     label: 'Actions',
+                //     field: 'actions',
+                // },
             ],
             rows: []
         }
@@ -223,31 +220,31 @@ const SubscriptionList = () => {
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
                     activatedAt: moment(subs.activatedAt).format('MM/DD/YYYY'),
-                    actions: 
-                    <Fragment>
-                        <Button className="success">
-                            Accept
-                        </Button> 
-                        <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + subs._id}>
-                            Decline
-                        </Button> 
+                    // actions: 
+                    // <Fragment>
+                    //     <Button className="success">
+                    //         Accept
+                    //     </Button> 
+                    //     <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + subs._id}>
+                    //         Decline
+                    //     </Button> 
     
     
-                        <div className="modal fade" id={'deleteModal' +  subs._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                <div className="modal-body">
-                                    Do you really want to decline the request?
-                                </div>
-                                <div className="modal-footer">
-                                    <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal">Submit</Button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+                    //     <div className="modal fade" id={'deleteModal' +  subs._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    //         <div className="modal-dialog" role="document">
+                    //             <div className="modal-content">
+                    //             <div className="modal-body">
+                    //                 Do you really want to decline the request?
+                    //             </div>
+                    //             <div className="modal-footer">
+                    //                 <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                    //                 <Button  className="btn btn-danger" data-dismiss="modal">Submit</Button>
+                    //             </div>
+                    //             </div>
+                    //         </div>
+                    //     </div>
     
-                    </Fragment>
+                    // </Fragment>
                     
                 })
             }
@@ -266,12 +263,13 @@ const SubscriptionList = () => {
 
                 <Col sm={10}>
                     <div className="admin-wrapper">
-                        { loading ? <LoaderAdmin /> :
                         <div className="table-admin">
                         <div className='d-flex align-items-start mx-2 mb-4'>
                             <h1>Subscriptions</h1>
                         </div>
-                        <div className='d-flex align-items-start mx-4'>
+                        { loading ? <LoaderAdmin /> :
+                        <>
+                        <div className='d-flex align-items-start mx-5'>
                             <h3>Active</h3>
                         </div>
                             <MDBDataTableV5 
@@ -281,9 +279,11 @@ const SubscriptionList = () => {
                             pagesAmount={4}
                             data={setData()} 
                             className='table px-4'
-                            container-sm="true"/>
+                            container-sm="true"
+                            searchTop
+                        searchBottom={false}/>
 
-                        <div className='d-flex align-items-start mx-4'>
+                        <div className='d-flex align-items-start mx-5'>
                             <h3>Expired</h3>
                         </div>
                             <MDBDataTableV5 
@@ -293,9 +293,13 @@ const SubscriptionList = () => {
                             pagesAmount={4}
                             data={setDataExpired()} 
                             className='table px-4'
-                            container-sm="true"/>
-                        </div>
-                        }
+                            container-sm="true"
+                            searchTop
+                            searchBottom={false}
+                        />
+                        </>
+                    }
+                    </div>
                     </div>
                 </Col>
             </Row>

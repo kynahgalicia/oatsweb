@@ -33,6 +33,14 @@ import {
     ACTIVATE_THESIS_SUCCESS,
     ACTIVATE_THESIS_FAIL,
 
+    DELETE_THESIS_REQUEST,
+    DELETE_THESIS_SUCCESS,
+    DELETE_THESIS_FAIL,
+
+    RESTORE_THESIS_REQUEST,
+    RESTORE_THESIS_SUCCESS,
+    RESTORE_THESIS_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
@@ -179,13 +187,20 @@ export const newThesis = (thesisData) => async (dispatch) => {
     }
 }
 
-export const deactivateThesis = (id) => async (dispatch) => {
+export const deactivateThesis = (id, thesisData, adminToken) => async (dispatch) => {
 
     try {
 
         dispatch({ type: DEACTIVATE_THESIS_REQUEST })
 
-        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/deactivate/${id}`)
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/deactivate/${id}`, thesisData, config)
 
         dispatch({
             type: DEACTIVATE_THESIS_SUCCESS,
@@ -200,13 +215,20 @@ export const deactivateThesis = (id) => async (dispatch) => {
     }
 
 };
-export const activateThesis = (id) => async (dispatch) => {
+export const activateThesis = (id, thesisData, adminToken) => async (dispatch) => {
 
     try {
 
         dispatch({ type: ACTIVATE_THESIS_REQUEST })
 
-        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/activate/${id}`)
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/activate/${id}`, thesisData, config)
 
         dispatch({
             type: ACTIVATE_THESIS_SUCCESS,
@@ -216,6 +238,62 @@ export const activateThesis = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ACTIVATE_THESIS_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+
+};
+export const deleteThesis = (id,thesisData, adminToken) => async (dispatch) => {
+
+    try {
+
+        dispatch({ type: DELETE_THESIS_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/delete/${id}`, thesisData, config)
+
+        dispatch({
+            type: DELETE_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_THESIS_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+
+};
+export const restoreThesis = (id,thesisData, adminToken) => async (dispatch) => {
+
+    try {
+
+        dispatch({ type: RESTORE_THESIS_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const {data}= await axios.put( process.env.REACT_APP_URL + `/api/thesis/restore/${id}`, thesisData, config)
+
+        dispatch({
+            type: RESTORE_THESIS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESTORE_THESIS_FAIL,
             payload: error.response.data.msg
         })
     }

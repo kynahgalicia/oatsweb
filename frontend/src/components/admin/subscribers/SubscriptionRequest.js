@@ -276,9 +276,13 @@ const BorrowList = () => {
 
                 <Col sm={10}>
                     <div className="admin-wrapper">
-                        { loading ? <LoaderAdmin /> :
                         <div className="table-admin">
-                        <div className='d-flex align-items-start m-2'>
+                        <div className='d-flex align-items-start mx-2 mb-4'>
+                            <h1>Subscriptions</h1>
+                        </div>
+                        { loading ? <LoaderAdmin /> :
+                        <>
+                        <div className='d-flex align-items-start mx-5'>
                             <h1>Request</h1>
                         </div> 
                             <MDBDataTableV5 
@@ -289,7 +293,7 @@ const BorrowList = () => {
                             data={setData()} 
                             className='table px-4'
                             container-sm="true"/>
-                        <div className='d-flex align-items-start m-2'>
+                        <div className='d-flex align-items-start mx-5'>
                             <h1>Denied</h1>
                         </div> 
                             <MDBDataTableV5 
@@ -300,8 +304,9 @@ const BorrowList = () => {
                             data={setDataDeny()} 
                             className='table px-4'
                             container-sm="true"/>
+                            </>
+                        }
                         </div>
-                    }
                     </div>
                 </Col>
             </Row>

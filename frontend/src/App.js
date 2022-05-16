@@ -15,6 +15,7 @@ import LoginasAdmin from './components/admin/auth/LoginasAdmin'
 import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 
 import ThesisList from './components/admin/thesis/ThesisList'
+import DeletedThesisList from './components/admin/thesis/DeletedThesisList'
 
 import CreateThesis from './components/admin/thesis/CreateThesis'
 import DepartmentList from './components/admin/departments/DepartmentList'
@@ -37,6 +38,7 @@ import AdminList from './components/admin/admin/AdminList'
 import EditAdmin from './components/admin/admin/EditAdmin'
 import CreateAdmin from './components/admin/admin/CreateAdmin';
 import ActivationEmailAdmin from './components/admin/admin/ActivationEmailAdmin';
+import DeletedAdminList from './components/admin/admin/DeletedAdminList';
 
 import GuestList from './components/admin/guest/GuestList'
 
@@ -181,6 +183,7 @@ function App() {
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
         <Route path="/admin/thesis" component={ThesisList} exact/>
+        <Route path="/admin/thesis/deleted" component={DeletedThesisList} exact/>
         <Route path="/admin/thesis/new" component={CreateThesis} exact/>
         <Route path="/admin/department" component={DepartmentList} exact/>
         <Route path="/admin/department/new" component={CreateDepartment} exact/>
@@ -194,6 +197,7 @@ function App() {
         <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/admins/new" component={CreateAdmin} exact/>
+        <Route path="/admin/admins/deleted" component={DeletedAdminList} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
         <Route path="/admin/subscription/list" component={SubscriptionList} exact/>
         <Route path="/admin/subscription/request" component={SubscriptionRequest} exact/>

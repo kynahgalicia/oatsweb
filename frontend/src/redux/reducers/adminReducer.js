@@ -17,6 +17,11 @@ import {
     SUPER_ADMIN_FAIL,
     SUPER_ADMIN_RESET,
 
+    MODERATOR_REQUEST,
+    MODERATOR_SUCCESS,
+    MODERATOR_FAIL,
+    MODERATOR_RESET,
+
     DEACTIVATE_ADMIN_REQUEST,
     DEACTIVATE_ADMIN_SUCCESS,
     DEACTIVATE_ADMIN_FAIL,
@@ -31,6 +36,11 @@ import {
     DELETE_ADMIN_SUCCESS,
     DELETE_ADMIN_FAIL,
     DELETE_ADMIN_RESET,
+
+    RESTORE_ADMIN_REQUEST,
+    RESTORE_ADMIN_SUCCESS,
+    RESTORE_ADMIN_FAIL,
+    RESTORE_ADMIN_RESET,
 
     CLEAR_ERRORS
 } from '../constants/adminConstants'
@@ -72,8 +82,10 @@ export const adminReducer = (state = {}, action) => {
     switch (action.type) {
 
         case DELETE_ADMIN_REQUEST:
+        case RESTORE_ADMIN_REQUEST:
         case UPDATE_ADMIN_REQUEST:
         case SUPER_ADMIN_REQUEST:
+        case MODERATOR_REQUEST:
         case DEACTIVATE_ADMIN_REQUEST:
         case ACTIVATE_ADMIN_REQUEST:
             return {
@@ -85,8 +97,13 @@ export const adminReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                isDeleted: action.payload.success, 
-                msg: action.payload.msg
+                isDeleted: action.payload.success
+            }
+        case RESTORE_ADMIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload.success
             }
 
         case DEACTIVATE_ADMIN_SUCCESS:
@@ -116,13 +133,21 @@ export const adminReducer = (state = {}, action) => {
                 loading: false,
                 isSuperAdmin: action.payload.success
             }
+        case MODERATOR_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isModerator: action.payload.success
+            }
 
 
         case DEACTIVATE_ADMIN_FAIL:
         case ACTIVATE_ADMIN_FAIL:
         case UPDATE_ADMIN_FAIL:
         case SUPER_ADMIN_FAIL:
+        case MODERATOR_FAIL:
         case DELETE_ADMIN_FAIL:
+        case RESTORE_ADMIN_FAIL:
             return {
                 ...state,
                 error: action.payload
@@ -132,6 +157,11 @@ export const adminReducer = (state = {}, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+        case RESTORE_ADMIN_RESET:
+            return {
+                ...state,
+                isRestored: false
             }
 
         case DEACTIVATE_ADMIN_RESET:
@@ -154,6 +184,11 @@ export const adminReducer = (state = {}, action) => {
             return {
                 ...state,
                 isSuperAdmin: false
+            }
+        case MODERATOR_RESET:
+            return {
+                ...state,
+                isModerator: false
             }
 
         case CLEAR_ERRORS:

@@ -130,7 +130,7 @@ const BorrowRequest = () => {
                                             <Form.Label> Please input due date:</Form.Label>
                                             <Form.Control
                                                 className=' my-1'
-                                                type="date"
+                                                type="datetime-local"
                                                 id="borrowdue"
                                                 onChange={(e) => setDuedate(e.target.value)}
                                             />
@@ -261,14 +261,14 @@ const BorrowRequest = () => {
 
                 <Col sm={10}>
                     <div className="admin-wrapper">
-                            {loading ? <LoaderAdmin /> : 
                                 <div className="table-admin">
 
-                                    <div className='d-flex align-items-start m-2'>
-                                    <h1>Borrow</h1>
+                                    <div className='d-flex align-items-start m-2 mb-5'>
+                                    <h1>Borrow Requests</h1>
                                     </div>
-
-                                    <div className='d-flex align-items-start m-2'>
+                            {loading ? <LoaderAdmin /> : 
+                                <>
+                                    <div className='d-flex align-items-start mx-5'>
                                     <h3>Requests</h3>
                                     </div>
         
@@ -281,7 +281,7 @@ const BorrowRequest = () => {
                                     className='table px-4'
                                     container-sm="true"/>
                                     
-                                    <div className='d-flex align-items-start m-2'>
+                                    <div className='d-flex align-items-start mx-5'>
                                     <h3>Denied</h3>
                                     </div>
         
@@ -293,9 +293,9 @@ const BorrowRequest = () => {
                                     data={setDataDenied()} 
                                     className='table px-4'
                                     container-sm="true"/>
-
+                                </>
+                                }
                                 </div>
-                            }
                         
                     </div>
                 </Col>

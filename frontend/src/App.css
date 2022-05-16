@@ -35,9 +35,21 @@
   border: 1px solid var(--danger) !important;
 }
 
+.superAdmin{
+  color:  #e4b312 !important;
+}
+.moderator{
+  color:  #263e97 !important;
+}
+
 .grey{
   background-color: var(--grey) !important;
   border: 1px solid var(--grey) !important;
+}
+
+.back-button{
+  font-size:3.5vh;
+  color: var(--grey)
 }
 
 .card{

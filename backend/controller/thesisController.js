@@ -135,7 +135,7 @@ exports.thesisCount = catchAsyncErrors(async (req,res,next) => {
 
 // /api/thesis/:id
 exports.find = catchAsyncErrors(async(req,res,next) => {
-    const thesis = await Thesis.findById(req.params.id);
+    const thesis = await Thesis.findById(req.params.id, {'status':'Active'});
 
     if(!thesis) {
         return next(new ErrorHandler('Not Found',404));
@@ -194,6 +194,47 @@ exports.activate = catchAsyncErrors(async(req,res,next) =>{
     } catch (err) {
         return res.status(500).json({msg: err.message})
     }
+})
+exports.softDelete = catchAsyncErrors(async(req,res,next) =>{
+    let thesis = await Thesis.findById(req.params.id);
+        if(!thesis)
+        return res.status(400).json({msg: "Thesis not found"})
+
+        try {
+
+            thesis = await Thesis.findByIdAndUpdate(req.params.id,{'status': 'Deleted'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+})
+exports.restoreDelete = catchAsyncErrors(async(req,res,next) =>{
+    let thesis = await Thesis.findById(req.params.id);
+        if(!thesis)
+        return res.status(400).json({msg: "Thesis not found"})
+
+        try {
+            thesis = await Thesis.findByIdAndUpdate(req.params.id,{'status': 'Active'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
 })
 
 

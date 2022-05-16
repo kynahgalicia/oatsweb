@@ -3,7 +3,7 @@ const adminController = require('../controller/adminController')
 const {authAdmin} = require('../middleware/auth')
 const {authAdminRole, authSuperAdminRole} = require('../middleware/authAdminRole')
 
-router.post('/register',authAdmin,authAdminRole, adminController.register)
+router.post('/register',authAdmin,authSuperAdminRole, adminController.register)
 
 router.post('/activation', adminController.activateEmail)
 
@@ -24,15 +24,20 @@ router.get('/all_infor', authAdmin, authAdminRole, adminController.getAdminsAllI
 router.get('/inforAdmin/:id',authAdmin,authAdminRole, adminController.getAdminInforAdmin)
 
 router.put('/deactivate/:id',authAdmin,authSuperAdminRole, adminController.deactivate)
+
 router.put('/activate/:id',authAdmin,authSuperAdminRole, adminController.activate)
+
+router.put('/delete/:id',authAdmin,authSuperAdminRole, adminController.softDelete)
+
+router.put('/restore/:id',authAdmin,authSuperAdminRole, adminController.restoreDelete)
 
 router.put('/edit/:id' ,authAdmin,authAdminRole, adminController.updateAdmin)
 
-router.get('/super/:id',authAdmin,authSuperAdminRole,adminController.superAdmin)
+router.put('/super/:id',authAdmin,authSuperAdminRole,adminController.superAdmin)
 
 router.put('/moderator/:id' ,authAdmin,authAdminRole, adminController.moderatorAdmin)
 
-router.delete('/delete/:id',authAdmin,authAdminRole,  adminController.delete)
+// router.delete('/delete/:id',authAdmin,authAdminRole,  adminController.delete)
 
 // router.get('/logout', adminController.logout)
 

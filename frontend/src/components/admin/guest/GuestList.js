@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import {useHistory } from 'react-router-dom'
+import {Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
@@ -206,10 +206,13 @@ const GuestList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
                 <div className="table-admin">
-                    {loading ? <LoaderAdmin/>  :  
-                    <>
                     <div className='d-flex align-items-start m-2'>
                         <h1>Guests</h1>
+                    </div>
+                    {loading ? <LoaderAdmin/>  :  
+                    <>
+                    <div className='d-flex align-items-start mx-5 mt-3'>
+                        <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/users/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                     </div>
                         <MDBDataTableV5 
                             hover 
@@ -218,7 +221,10 @@ const GuestList = () => {
                             pagesAmount={4}
                             data={setData()} 
                             className='table px-4'
-                            container-sm="true"/>
+                            container-sm="true"
+                            searchTop
+                            searchBottom={false}
+                            />
                     </>
                     }
                 

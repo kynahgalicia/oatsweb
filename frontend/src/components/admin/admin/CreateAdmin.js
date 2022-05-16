@@ -38,6 +38,15 @@ const CreateAdmin = () => {
             dispatch({ type: REGISTER_ADMIN_RESET })
         }
 
+        
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+        
+        if(admin.role === 'Moderator'){
+            history.push('/');
+            alert.error('Restricted');
+        }
         dispatch(getDepartment())
 
     }, [dispatch, alert, history, error, success, isLoggedInAdmin, admin])
@@ -66,6 +75,9 @@ const CreateAdmin = () => {
 
                 <Col sm={10}>
                     <Container>
+                        <div className='back-button text-start px-5 py-2'>
+                        <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                         <div className='form-admin-wrapper'>
                             <div className='wrapper my-5'>
                                 <Row>
@@ -111,9 +123,10 @@ const CreateAdmin = () => {
                                             <Form.Label>Contact No.</Form.Label>
                                             <Form.Control
                                                 className=' my-1'
-                                                type="text"
+                                                type="number"
                                                 id="contact"
                                                 onChange={(e) => setContact(e.target.value)}
+                                                placeholder='09XXXXXXXX'
                                             />
                                         </Form.Group>
 
@@ -134,6 +147,7 @@ const CreateAdmin = () => {
                                                 type="email"
                                                 id="borrowdue"
                                                 onChange={(e) => setEmail(e.target.value)}
+                                                placeholder='sampleEmailAddress@tup.edu.ph'
                                             />
                                         </Form.Group>
 

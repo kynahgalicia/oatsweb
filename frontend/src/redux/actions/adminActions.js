@@ -16,6 +16,10 @@ import {
     SUPER_ADMIN_SUCCESS,
     SUPER_ADMIN_FAIL,
 
+    MODERATOR_REQUEST,
+    MODERATOR_SUCCESS,
+    MODERATOR_FAIL,
+
     DEACTIVATE_ADMIN_REQUEST,
     DEACTIVATE_ADMIN_SUCCESS,
     DEACTIVATE_ADMIN_FAIL,
@@ -27,6 +31,10 @@ import {
     DELETE_ADMIN_REQUEST,
     DELETE_ADMIN_SUCCESS,
     DELETE_ADMIN_FAIL,
+
+    RESTORE_ADMIN_REQUEST,
+    RESTORE_ADMIN_SUCCESS,
+    RESTORE_ADMIN_FAIL,
     CLEAR_ERRORS
 } from '../constants/adminConstants';
 
@@ -127,7 +135,36 @@ export const superAdmin = (id,adminData, adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUPER_ADMIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
+        })
+    }
+}
+//Admin Edit
+export const moderatorAdmin = (id,adminData, adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: MODERATOR_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/moderator/${id}`, adminData, config)
+
+
+
+        dispatch({
+            type: MODERATOR_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: MODERATOR_FAIL,
+            payload: error.response.data.msg
         })
     }
 }
@@ -191,7 +228,7 @@ export const activateAdmin = (id,adminData, adminToken) => async (dispatch) => {
 }
 
 //Admin Delete Admin
-export const deleteAdmin = (id,adminToken) => async (dispatch) => {
+export const deleteAdmin = (id,adminData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_ADMIN_REQUEST })
@@ -199,9 +236,10 @@ export const deleteAdmin = (id,adminToken) => async (dispatch) => {
         const config = {
             headers: {
                 'Authorization': adminToken,
+                'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.delete(process.env.REACT_APP_URL + `/admin/delete/${id}`, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/delete/${id}`, adminData, config)
 
         dispatch({
             type: DELETE_ADMIN_SUCCESS,
@@ -211,7 +249,34 @@ export const deleteAdmin = (id,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_ADMIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
+        })
+    }
+}
+
+//Admin Restore Deleted
+export const restoreDelete = (id,adminData,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESTORE_ADMIN_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/admin/restore/${id}`, adminData, config)
+
+        dispatch({
+            type: RESTORE_ADMIN_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESTORE_ADMIN_FAIL,
+            payload: error.response.data.msg
         })
     }
 }
