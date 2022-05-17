@@ -144,7 +144,7 @@ const ThesisList = () => {
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal">Yes</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => deleteHandler(thesis._id)}>Yes</Button>
                                 </div>
                                 </div>
                             </div>

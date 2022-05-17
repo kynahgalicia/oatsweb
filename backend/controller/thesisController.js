@@ -135,7 +135,7 @@ exports.thesisCount = catchAsyncErrors(async (req,res,next) => {
 
 // /api/thesis/:id
 exports.find = catchAsyncErrors(async(req,res,next) => {
-    const thesis = await Thesis.findById(req.params.id, {'status':'Active'});
+    const thesis = await Thesis.findById(req.params.id);
 
     if(!thesis) {
         return next(new ErrorHandler('Not Found',404));
