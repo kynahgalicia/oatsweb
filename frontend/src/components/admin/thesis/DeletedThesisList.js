@@ -98,7 +98,7 @@ const DeletedThesisList = () => {
         <>  
         {
             thesis && thesis.forEach(thesis => {
-                if(thesis.department.deptname === thisDepartment && thesis.status != 'Deleted'){
+                if(thesis.department.deptname === thisDepartment && thesis.status === 'Deleted'){
                     data.rows.push({
                     title: <Link className='table-list' to={`/thesis/${thesis._id}`}> {thesis.title}</Link>,
                     publishedAt: thesis.publishedAt,
