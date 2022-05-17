@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import moment from 'moment'
@@ -17,6 +17,7 @@ const SubscriptionList = () => {
 
     const { loading, error, subs } = useSelector(state => state.subs)
     const { isDeleted, msg } = useSelector(state => state.subscribes)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
     useEffect(() => {
             dispatch(getSubscribe())
@@ -32,14 +33,19 @@ const SubscriptionList = () => {
             dispatch({ type: DELETE_SUBSCRIBES_RESET })
         }
 
-        // if (!isLoggedInAdmin) {
-        //     history.push('/admin/login');
-        // }
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
 
         // if(expired){
         //     console.log(expired)
         // }
-    }, [dispatch, alert, error, history, isDeleted])
+    }, [dispatch, alert, error, history, isDeleted, admin, isLoggedInAdmin])
 
     const setData = () => { 
         const data = {

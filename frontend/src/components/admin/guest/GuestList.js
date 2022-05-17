@@ -11,7 +11,7 @@ import AdminSidebar from '../../layout/AdminSidebar'
 import { DEACTIVATE_GUEST_RESET, DELETE_GUEST_RESET } from '../../../redux/constants/guestConstants'
 const GuestList = () => {
     const { loading, error, guests } = useSelector(state => state.guests)
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
     const{isDeactivated, isDeleted, msg} = useSelector(state=>state.guest)
     const dispatch = useDispatch();
@@ -51,9 +51,13 @@ const GuestList = () => {
         
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
-
         }
-    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, isDeactivated, isDeleted, msg]);
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, isDeactivated, isDeleted, msg, admin]);
 
     const setData = () => { 
         const data = {

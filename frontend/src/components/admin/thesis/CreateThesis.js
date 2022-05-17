@@ -19,7 +19,7 @@ const CreateThesis = () => {
     const history = useHistory();
 
     const { loading, error, success } = useSelector(state => state.newThesis);
-    const { admin } = useSelector(state => state.authAdmin);
+    const { isLoggedInAdmin, admin } = useSelector(state => state.authAdmin);
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -40,6 +40,7 @@ const CreateThesis = () => {
 
     //UPLOAD PDF
     const [upload, setUploadFile] = useState('')
+    const [showPercent, setShowPercent] = useState(false)
 
     //multiple input fields
     const [authors, setAuthors] = useState([
@@ -70,17 +71,15 @@ const CreateThesis = () => {
             console.log(thisDepartment)
         }
 
-        // const fetchData = async () => {
-        //     const result = await getThesisDetails();
-        //     console.log('fetch data;m', result)
-        //     setUploadFiles(result)
-        // }
-        //     fetchData()
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
         
-        }, [dispatch, alert, error, success, history, thisDepartment])
+        }, [dispatch, alert, error, success, history, thisDepartment, isLoggedInAdmin, admin])
 
     // Scan to text convert
     const handleSubmit = () => {
+        setShowPercent(true)
         Tesseract.recognize(image, 'eng', {
             logger: (m) => {
                 console.log(m);
@@ -346,6 +345,7 @@ const CreateThesis = () => {
                                                     <form action="" onSubmit={handleFormSubmit}> 
                                                     <FileBase64
                                                         type="file"
+                                                        accept="application/pdf,application/vnd.ms-excel"
                                                         multiple={false}
                                                         onDone={({ base64 }) => setUploadFile(base64)}
                                                     />
@@ -388,20 +388,22 @@ const CreateThesis = () => {
                                             onChange={(e) =>
                                             setImage(URL.createObjectURL(e.target.files[0]))
                                             }
+                                            accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
                                             className="form-control mt-5 mb-2"
                                         />
-                                        <img src={image} width="660px" alt='Convert Image'/>
+                                        { image ? <img src={image} width="400px" alt='Convert Image'/> : null}
 
+                                        <div className={showPercent ? null : 'd-none'}>
                                         <progress className="form-control" value={progress} max="100">
                                             {progress}%{' '}
                                         </progress>{' '}
 
                                         <p className="text-center py-0 my-0">Converting:- {progress} %</p>
-
+                                        </div>
                                         <input
                                             type="button"
                                             onClick={handleSubmit}
-                                            className="btn btn-primary mt-5"
+                                            className="btn btn-primary mt-5 d-block"
                                             value="Convert"
                                         />
                                         <hr/>

@@ -20,7 +20,7 @@ const Updatecourse = ({ match, history }) => {
     const { loading, error, course } = useSelector(state => state.courseDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.course);
     // const { departments, loading } = useSelector(state => state.departments)
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const {courseId} = useParams();
@@ -54,7 +54,12 @@ const Updatecourse = ({ match, history }) => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId,isLoggedInAdmin,adminToken])
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+    }, [dispatch, alert, error, isUpdated, history, updateError, course, courseId,isLoggedInAdmin,adminToken, admin])
 
 
     const submitHandler = (e) => {

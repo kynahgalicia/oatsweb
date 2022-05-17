@@ -27,7 +27,7 @@ const EditUser = () => {
     const {adminToken} = useSelector(state => state.authAdminToken)
     const {department} = useSelector(state => state.department)
     const {course} = useSelector(state => state.courses)
-
+    const { isLoggedInAdmin,admin} = useSelector(state => state.authAdmin)
     const {userId} = useParams();
 
     useEffect(() => {
@@ -55,9 +55,11 @@ const EditUser = () => {
         dispatch(getDepartment())
         dispatch(getCourse(thisDepartment))
 
-        
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
 
-    }, [dispatch, alert, history, isUpdated, thisDepartment, adminToken, userId, error, user])
+    }, [dispatch, alert, history, isUpdated, thisDepartment, adminToken, userId, error, user, isLoggedInAdmin,admin ])
 
     const submitHandler = (e) => {
 

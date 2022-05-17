@@ -425,7 +425,7 @@ const adminController = {
     // /admin/all_infor
     getAdminsAllInfor: async (req, res) => {
         try {
-            const admins = await Admins.find().select('-admin_password')
+            const admins = await Admins.find().sort({createdAt: -1}).select('-admin_password')
 
             res.json({admins:admins})
         } catch (err) {

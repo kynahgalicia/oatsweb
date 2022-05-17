@@ -11,7 +11,7 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const DeletedDepartment = () => {
     const { loading, error, department } = useSelector(state => state.department);
     const {  error: deleteError, isRestored } = useSelector(state => state.departments);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
@@ -41,7 +41,11 @@ const DeletedDepartment = () => {
             history.push('/admin/login');
         }
         
-    },[ dispatch, alert, error, deleteError, isRestored, history,isLoggedInAdmin,adminToken]);
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+    },[ dispatch, alert, error, deleteError, isRestored, history,isLoggedInAdmin,adminToken, admin]);
 
 
     const setData = () => { 

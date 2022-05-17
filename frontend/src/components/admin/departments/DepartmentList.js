@@ -13,7 +13,7 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const DepartmentList = () => {
     const { loading, error, department } = useSelector(state => state.department);
     const {  error: deleteError, isDeleted } = useSelector(state => state.departments);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const dispatch = useDispatch();
@@ -43,8 +43,13 @@ const DepartmentList = () => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
         
-    },[ dispatch, alert, error, deleteError, isDeleted, history,isLoggedInAdmin,adminToken]);
+    },[ dispatch, alert, error, deleteError, isDeleted, history,isLoggedInAdmin,adminToken, admin]);
 
 
     const setData = () => { 

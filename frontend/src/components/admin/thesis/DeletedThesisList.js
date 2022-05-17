@@ -39,6 +39,10 @@ const DeletedThesisList = () => {
                 alert.success('Restored');
                 dispatch({ type: RESTORE_THESIS_RESET })
             }
+
+            if (!isLoggedInAdmin) {
+                history.push('/admin/login');
+            }
             
     
     },[ dispatch, alert, restoreError, history, isLoggedInAdmin,admin,adminToken,isRestored, thisDepartment]);

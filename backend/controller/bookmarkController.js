@@ -33,7 +33,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
 exports.find = catchAsyncErrors(async(req,res,next) => {
     const user_id = req.params.id
-    const bookmarks = await Bookmarks.find({user_id});
+    const bookmarks = await Bookmarks.find({user_id}).sort({createdAt: -1});
 
     if(!bookmarks) return res.status(200).json({msg: "No Bookmarks"})
     

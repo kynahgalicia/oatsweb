@@ -82,8 +82,9 @@ exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
     const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
     
     
-    let Thesis_query = await apiFeatures.query;
+    let Thesis_query = await apiFeatures.query.sort({createdAt: -1});
 
+    
     res.status(200).json({
         success: true,
         thesisCount,

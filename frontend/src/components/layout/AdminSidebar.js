@@ -79,6 +79,7 @@ const AdminSidebar = () => {
                                 <div className="list-group">
                                     <Link to="/admin/borrow/request" className="list-group-item list-group-item-action">Request</Link>
                                     <Link to="/admin/borrow" className="list-group-item list-group-item-action">Borrow</Link>
+                                    <Link to="/admin/borrow/overdue" className="list-group-item list-group-item-action">Overdue</Link>
                                     <Link to="/admin/return" className="list-group-item list-group-item-action">Return</Link>
                                 </div>
                             </div>
@@ -88,6 +89,8 @@ const AdminSidebar = () => {
             </Nav.Item>
             <hr/>
 
+            { isLoggedInAdmin && admin.role === 'Super Admin' ? 
+                                    <>
             <Nav.Item>
                 <div className=" admin-accordion accordion" id="accordionExample">
                     <div className="card">
@@ -102,10 +105,7 @@ const AdminSidebar = () => {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="list-group">
-                                    { isLoggedInAdmin && admin.role === 'Super Admin' ? 
-                                    <>
                                     <Link to="/admin/subscription/request" className="list-group-item list-group-item-action">Request</Link>
-                                    </> : null }
                                     <Link to="/admin/subscription/list" className="list-group-item list-group-item-action">Subscriptions</Link>
                                 </div>
                             </div>
@@ -114,6 +114,7 @@ const AdminSidebar = () => {
                 </div>
             </Nav.Item>
             <hr/>
+            </> : null }
     </Nav>
     
     )

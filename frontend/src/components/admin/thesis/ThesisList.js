@@ -26,7 +26,7 @@ const ThesisList = () => {
 
             dispatch(getAdminThesis())
         
-            if(admin){
+            if(admin.role === 'Moderator'){
                 setThisDepartment(admin.admin_department.deptname)
             }
             
@@ -49,6 +49,10 @@ const ThesisList = () => {
                 history.push('/admin/thesis');
                 alert.success('Activated');
                 dispatch({ type: ACTIVATE_THESIS_RESET })
+            }
+
+            if (!isLoggedInAdmin) {
+                history.push('/admin/login');
             }
     
     },[ dispatch, alert, deleteError, history, isDeactivated, isActivated, isLoggedInAdmin,admin,adminToken,isDeleted, thisDepartment]);

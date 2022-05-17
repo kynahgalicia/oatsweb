@@ -45,6 +45,7 @@ import GuestList from './components/admin/guest/GuestList'
 import DeletedGuestList from './components/admin/guest/DeletedGuestList'
 
 import BorrowList from './components/admin/borrow/BorrowList'
+import OverdueBorrowList from './components/admin/borrow/OverdueBorrowList'
 import BorrowRequest from './components/admin/borrow/BorrowRequest'
 import CreateBorrow from './components/admin/borrow/CreateBorrow'
 import ReturnList from './components/admin/borrow/ReturnList'
@@ -206,6 +207,7 @@ function App() {
         <Route path="/admin/subscription/list" component={SubscriptionList} exact/>
         <Route path="/admin/subscription/request" component={SubscriptionRequest} exact/>
         <Route path="/admin/borrow" component={BorrowList} exact/>
+        <Route path="/admin/borrow/overdue" component={OverdueBorrowList} exact/>
         <Route path="/admin/borrow/new" component={CreateBorrow} exact/>
         <Route path="/admin/borrow/request" component={BorrowRequest} exact/>
         <Route path="/admin/return" component={ReturnList} exact/>

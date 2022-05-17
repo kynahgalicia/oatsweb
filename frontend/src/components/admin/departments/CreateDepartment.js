@@ -15,7 +15,7 @@ const CreateDepartment = ({history}) => {
     const dispatch = useDispatch();
 
     const { loading, error, success } = useSelector(state => state.newDepartment);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
@@ -34,7 +34,12 @@ const CreateDepartment = ({history}) => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    }, [dispatch, alert, error, success, history,isLoggedInAdmin, adminToken])
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+    }, [dispatch, alert, error, success, history,isLoggedInAdmin, adminToken, admin])
 
     const submitHandler = (e) => {
         e.preventDefault();

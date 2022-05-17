@@ -29,8 +29,7 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 // /api/admin/course
 exports.getAdminCourse = catchAsyncErrors(async (req, res, next) => {
 
-    const course = await Course.find();
-
+    const course = await Course.find()
     res.status(200).json({
         success: true,
         course

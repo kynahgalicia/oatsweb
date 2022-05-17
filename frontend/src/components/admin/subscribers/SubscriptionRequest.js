@@ -17,6 +17,7 @@ const BorrowList = () => {
 
     const { loading, error, subs } = useSelector(state => state.subs)
     const { loadingButton, msg, isVerified, isDeclined } = useSelector(state => state.verifiedSub)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
     useEffect(() => {
             dispatch(getSubscribe())
@@ -36,7 +37,16 @@ const BorrowList = () => {
             alert.success(msg);
             dispatch({ type: DECLINE_SUBSCRIBE_RESET })
         }
-    }, [dispatch, alert, error, history, isVerified, isDeclined, msg])
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+
+        if (!isLoggedInAdmin) {
+            history.push('/admin/login');
+        }
+    }, [dispatch, alert, error, history, isVerified, isDeclined, msg, isLoggedInAdmin,admin])
 
     const openImage = (url) => {
         window.open(url);

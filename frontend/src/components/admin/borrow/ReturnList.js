@@ -1,4 +1,4 @@
-import React, { Fragment,useEffect } from 'react'
+import React, { Fragment,useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 
@@ -16,16 +16,22 @@ import LoaderAdmin from '../../utils/LoaderAdmin'
 const ReturnList = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
     const {  error: deleteError, isDeleted } = useSelector(state => state.borrow)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
     const dispatch = useDispatch();
     const history = useHistory();
-
     const alert = useAlert();
+
+    const [thisDepartment, setThisDepartment] = useState('')
 
     useEffect(() => {
         // if(adminToken){
             dispatch(getBorrow())
         // }
+
+        if(admin.role === 'Moderator'){
+            setThisDepartment(admin.admin_department.deptname)
+        }
 
         if (error) {
             alert.error(error);
@@ -56,7 +62,7 @@ const ReturnList = () => {
         // if (!isLoggedInAdmin) {
         //     history.push('/admin/login');
         // }
-    }, [dispatch, alert, history, error, deleteError, isDeleted])
+    }, [dispatch, alert, history, error, deleteError, admin, isDeleted])
 
 
     const setData = () => { 
@@ -107,10 +113,10 @@ const ReturnList = () => {
                     field: 'status',
                     sort: 'desc'
                 },
-                {
-                    label: 'Actions',
-                    field: 'actions',
-                },
+                // {
+                //     label: 'Actions',
+                //     field: 'actions',
+                // },
             ],
             rows: []
         }
@@ -124,14 +130,14 @@ const ReturnList = () => {
                         thesis: borrow.thesis.title,
                         admin: borrow.admin.fname + " " + borrow.admin.lname,
                         admin_tupid: borrow.admin.tupid,
-                        dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY'),
-                        dueDate: moment(borrow.dueDate).format('MM/DD/YYYY'),
-                        dateReturned:moment(borrow.dateReturned).format(" YYYY-MM-DD HH:mm:ss"),
+                        dateBorrowed: moment(borrow.dateBorrowed).format('MM/DD/YYYY HH:mm:ss'),
+                        dueDate: moment(borrow.dueDate).format('MM/DD/YYYY HH:mm:ss'),
+                        dateReturned:moment(borrow.dateReturned).format(" MM/DD/YYYY HH:mm:ss"),
                         status: borrow.status,
-                        actions: 
-                            <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id} onClick={() => deleteBorrowHandler(borrow._id)}>
-                                <FaTrash/>
-                            </Button> 
+                        // actions: 
+                        //     <Button variant="danger" data-toggle="modal" data-target={'#returnModal' + borrow._id} onClick={() => deleteBorrowHandler(borrow._id)}>
+                        //         <FaTrash/>
+                        //     </Button> 
                     })
                 }
             })

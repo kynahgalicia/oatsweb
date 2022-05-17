@@ -12,8 +12,7 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const BorrowRequest = () => {
     const { loading, error, borrow } = useSelector(state => state.borrows)
     const {  error: updateError, isUpdated, deleteError, isDeleted } = useSelector(state => state.borrow);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
-    const {admin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {isVerified, loadingButton, msg, isDeclined} = useSelector(state => state.verifyBorrow)
 
     const dispatch = useDispatch();
@@ -21,11 +20,16 @@ const BorrowRequest = () => {
     const alert = useAlert();
 
     const [dueDate, setDuedate] = useState('');
+    const [thisDepartment, setThisDepartment] = useState('')
 
     useEffect(() => {
 
-            dispatch(getBorrow())
-        
+        dispatch(getBorrow())
+
+        if(admin.role === 'Moderator'){
+            setThisDepartment(admin.admin_department.deptname)
+        }
+    
 
         if (error) {
             alert.error(error);
@@ -71,7 +75,7 @@ const BorrowRequest = () => {
 
         
         
-    }, [dispatch, alert, error, history,isUpdated, updateError, deleteError, isDeleted,isLoggedInAdmin, isVerified, msg, isDeclined])
+    }, [dispatch, alert, error, history,isUpdated, updateError, deleteError, isDeleted,isLoggedInAdmin, isVerified, msg, isDeclined, admin])
 
     const setData = () => { 
         const data = {
@@ -84,6 +88,11 @@ const BorrowRequest = () => {
                 {
                     label: 'TUPT ID',
                     field: 'user_tupid',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
                     sort: 'desc'
                 },
                 {
@@ -104,11 +113,77 @@ const BorrowRequest = () => {
             rows: []
         }
 
-        borrow && borrow.forEach(borrow => {
+        {
+            admin.role ===  'Moderator' ?
+
+            <> 
+            {borrow && borrow.forEach(borrow => {
+                if(borrow.status === 'Pending' && borrow.thesis.department === thisDepartment){
+                    data.rows.push({
+                        thesis: borrow.thesis.title,
+                        user_tupid: borrow.user.tupid,
+                        department:  borrow.thesis.department ,
+                        user: borrow.user.fname + " " + borrow.user.lname,
+                        status: borrow.status,
+                        actions: 
+                        <Fragment>
+                            <Button className="success" data-toggle="modal" data-target={'#verifyModal' + borrow._id}>
+                                Accept
+                            </Button> 
+                            <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + borrow._id}>
+                                Decline
+                            </Button> 
+        
+        
+                            <div className="modal fade" id={'verifyModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                    <div className="modal-body">
+
+                                        <Form.Group className='mb-3'>
+                                                <Form.Label> Please input due date:</Form.Label>
+                                                <Form.Control
+                                                    className=' my-1'
+                                                    type="datetime-local"
+                                                    id="borrowdue"
+                                                    onChange={(e) => setDuedate(e.target.value)}
+                                                />
+                                            </Form.Group>                                </div>
+                                    <div className="modal-footer">
+                                        <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                        <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => verifyHandler(borrow._id)}>Submit</Button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="modal fade" id={'deleteModal' +  borrow._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                    <div className="modal-body">
+                                        Do you really want to decline the request?
+                                    </div>
+                                    <div className="modal-footer">
+                                        <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
+                                        <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => declineHandler(borrow._id)}>Submit</Button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </Fragment>
+                        
+                    })
+                }
+            })}
+
+            </> : <> 
+            {borrow && borrow.forEach(borrow => {
             if(borrow.status === 'Pending'){
                 data.rows.push({
                     thesis: borrow.thesis.title,
                     user_tupid: borrow.user.tupid,
+                    department:  borrow.thesis.department ,
                     user: borrow.user.fname + " " + borrow.user.lname,
                     status: borrow.status,
                     actions: 
@@ -161,7 +236,10 @@ const BorrowRequest = () => {
                     
                 })
             }
-        })
+            })}
+            </>
+
+        }
 
         return data;
     }
@@ -176,6 +254,11 @@ const BorrowRequest = () => {
                 {
                     label: 'TUPT ID',
                     field: 'user_tupid',
+                    sort: 'desc'
+                },
+                {
+                    label: 'Department',
+                    field: 'department',
                     sort: 'desc'
                 },
                 {
@@ -201,6 +284,7 @@ const BorrowRequest = () => {
                 data.rows.push({
                     thesis: borrow.thesis.title,
                     user_tupid: borrow.user.tupid,
+                    department:  borrow.thesis.department ,
                     user: borrow.user.fname + " " + borrow.user.lname,
                     status: borrow.status,
                     actions: 

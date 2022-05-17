@@ -21,7 +21,7 @@ const CreateCourse = () => {
 
     const {department} = useSelector(state => state.department)
     const { loading, error, success } = useSelector(state => state.newCourse);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     useEffect(() => {
@@ -41,9 +41,14 @@ const CreateCourse = () => {
             history.push('/admin/login');
         }
 
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+
         dispatch(getDepartment())
 
-    }, [dispatch, alert, error, success, history,isLoggedInAdmin,adminToken])
+    }, [dispatch, alert, error, success, history,isLoggedInAdmin,adminToken, admin])
 
     const submitHandler = (e) => {
         e.preventDefault();

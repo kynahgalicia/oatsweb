@@ -47,7 +47,7 @@ const DeletedGuestList = () => {
             history.push('/')
             alert.error('Restricted');
         }
-    },[ dispatch, alert, error, history, isLoggedInAdmin,adminToken, deleteError, isRestored]);
+    },[ dispatch, alert, error, history, isLoggedInAdmin, admin, adminToken, deleteError, isRestored]);
 
     const setData = () => { 
         const data = {

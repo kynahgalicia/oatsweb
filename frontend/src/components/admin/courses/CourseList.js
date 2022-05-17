@@ -15,7 +15,7 @@ import AdminSidebar from '../../layout/AdminSidebar'
 const CourseList = () => {
     const { loading, error, course } = useSelector(state => state.courses)
     const {  error: deleteError, isDeleted } = useSelector(state => state.course)
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
 
@@ -43,10 +43,15 @@ const CourseList = () => {
             dispatch({ type: DELETE_COURSE_RESET })
         }
         
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    },[ dispatch, alert, error, deleteError, isDeleted, history, isLoggedInAdmin,adminToken]);
+    },[ dispatch, alert, error, deleteError, isDeleted, history, isLoggedInAdmin,adminToken, admin]);
 
 
     const setData = () => { 

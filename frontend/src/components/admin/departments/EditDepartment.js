@@ -17,7 +17,7 @@ const Updatedepartment = ({ match, history }) => {
 
     const { loading, error, department } = useSelector(state => state.departmentDetails)
     const {  error: updateError, isUpdated } = useSelector(state => state.departments);
-    const { isLoggedInAdmin} = useSelector(state => state.authAdmin)
+    const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
     const {departmentId} = useParams();
@@ -50,7 +50,12 @@ const Updatedepartment = ({ match, history }) => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken, departmentId])
+
+        if (admin.role === 'Moderator') {
+            history.push('/')
+            alert.error('Restricted')
+        }
+    }, [dispatch, alert, error, isUpdated, history, updateError, department,isLoggedInAdmin,adminToken, departmentId, admin])
 
 
     const submitHandler = (e) => {
