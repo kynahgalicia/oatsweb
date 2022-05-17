@@ -305,14 +305,58 @@ const guestController = {
         }
     },
 
-    delete: async (req,res) => {
+    //guest/delete/:id
+    softDelete: async (req,res) => {
+        let guest = await Guests.findById(req.params.id);
+        if(!guest)
+        return res.status(400).json({msg: "User not found"})
+
         try {
-            await Guests.findByIdAndDelete(req.params.id)
-            res.json({msg: "Guest has been Deleted!", success: true})
-        } catch (error) {
+
+            guest = await Guests.findByIdAndUpdate(req.params.id,{'guest_status' : 'Deleted'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
+    //guest/delete/:id
+    restoreDelete: async (req,res) => {
+        let guest = await Guests.findById(req.params.id);
+        if(!guest)
+        return res.status(400).json({msg: "User not found"})
+
+        try {
+
+            guest = await Guests.findByIdAndUpdate(req.params.id,{'guest_status' : 'Active'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    // delete: async (req,res) => {
+    //     try {
+    //         await Guests.findByIdAndDelete(req.params.id)
+    //         res.json({msg: "Guest has been Deleted!", success: true})
+    //     } catch (error) {
+    //         return res.status(500).json({msg: err.message})
+    //     }
+    // },
 
 
     // updateProfile : async (req,res) => {

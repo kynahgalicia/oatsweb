@@ -20,6 +20,10 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     
+    RESTORE_USER_REQUEST,
+    RESTORE_USER_SUCCESS,
+    RESTORE_USER_FAIL,
+    
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -122,7 +126,7 @@ export const deactivateUser = (id, userData,adminToken) => async (dispatch) => {
 }
 
 //User Delete Admin
-export const deleteUser = (id,adminToken) => async (dispatch) => {
+export const deleteUser = (id,userData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_USER_REQUEST })
@@ -130,9 +134,10 @@ export const deleteUser = (id,adminToken) => async (dispatch) => {
         const config = {
             headers: {
                 'Authorization': adminToken,
+                'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.delete(process.env.REACT_APP_URL + `/user/delete/${id}`, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/user/delete/${id}`, userData,config)
 
         dispatch({
             type: DELETE_USER_SUCCESS,
@@ -142,6 +147,33 @@ export const deleteUser = (id,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+//User Restore Deleted Admin
+export const restoreUser = (id,userData,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESTORE_USER_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/user/restore/${id}`, userData,config)
+
+        dispatch({
+            type: RESTORE_USER_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESTORE_USER_FAIL,
             payload: error.response.data.message
         })
     }

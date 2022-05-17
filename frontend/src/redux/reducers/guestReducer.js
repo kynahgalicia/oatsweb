@@ -21,6 +21,11 @@ import {
     DELETE_GUEST_SUCCESS,
     DELETE_GUEST_FAIL,
     DELETE_GUEST_RESET,
+
+    RESTORE_GUEST_REQUEST,
+    RESTORE_GUEST_SUCCESS,
+    RESTORE_GUEST_FAIL,
+    RESTORE_GUEST_RESET,
     
     CLEAR_ERRORS
 } from '../constants/guestConstants'
@@ -61,6 +66,7 @@ export const guestReducer = (state = {}, action) => {
     switch (action.type) {
 
         case DELETE_GUEST_REQUEST:
+        case RESTORE_GUEST_REQUEST:
         case UPDATE_GUEST_REQUEST:
         case DEACTIVATE_GUEST_REQUEST:
             return {
@@ -74,6 +80,13 @@ export const guestReducer = (state = {}, action) => {
                 loading: false,
                 isDeleted: action.payload.success, 
                 msg: action.payload.msg
+            }
+
+        case RESTORE_GUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload.success
             }
 
         case DEACTIVATE_GUEST_SUCCESS:
@@ -95,6 +108,7 @@ export const guestReducer = (state = {}, action) => {
         case DEACTIVATE_GUEST_FAIL:
         case UPDATE_GUEST_FAIL:
         case DELETE_GUEST_FAIL:
+        case RESTORE_GUEST_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -105,6 +119,12 @@ export const guestReducer = (state = {}, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+
+        case RESTORE_GUEST_RESET:
+            return {
+                ...state,
+                isRestored: false
             }
 
         case DEACTIVATE_GUEST_RESET:

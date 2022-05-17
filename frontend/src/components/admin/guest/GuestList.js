@@ -39,7 +39,7 @@ const GuestList = () => {
 
         if (isDeleted) {
             history.push('/admin/guests');
-            alert.success(msg);
+            alert.success('Deleted');
             dispatch({ type: DELETE_GUEST_RESET })
         }
 
@@ -102,80 +102,81 @@ const GuestList = () => {
         }
 
         guests.forEach(guests => {
-            data.rows.push({
-                guest_fname: guests.guest_fname,
-                guest_lname: guests.guest_lname,
-                guest_contact: guests.guest_contact,
-                guest_mail: guests.guest_mail,
-                guest_profession: guests.guest_profession,
-                guest_company: guests.guest_company,
-                guest_company_address: guests.guest_company_address,
-                guest_status: guests.guest_status,
-                actions: 
-                <Fragment>
-                    {/* <Link to={`/admin/guests/edit/${guests._id}`} className="decor-none block m-1">
-                        <Button variant="primary" data-toggle="tooltip" data-placement="bottom" title="Edit">
-                        <i className="fas fa-pencil-alt"></i>
+            if(guests.guest_status !== 'Deleted'){
+                data.rows.push({
+                    guest_fname: guests.guest_fname,
+                    guest_lname: guests.guest_lname,
+                    guest_contact: guests.guest_contact,
+                    guest_mail: guests.guest_mail,
+                    guest_profession: guests.guest_profession,
+                    guest_company: guests.guest_company,
+                    guest_company_address: guests.guest_company_address,
+                    guest_status: guests.guest_status,
+                    actions: 
+                    <Fragment>
+                        {/* <Link to={`/admin/guests/edit/${guests._id}`} className="decor-none block m-1">
+                            <Button variant="primary" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                            <i className="fas fa-pencil-alt"></i>
+                            </Button>
+                        </Link> */}
+    
+                        { guests.guest_status === "Deactivated" ? 
+                        <Button variant="success" data-toggle="modal" data-target={"#activateModal" + guests._id}> 
+                        <i className="fas fa-user-check"></i>
                         </Button>
-                    </Link> */}
-
-                    { guests.guest_status === "Deactivated" ? 
-                    <Button variant="success" data-toggle="modal" data-target={"#activateModal" + guests._id}> 
-                    <i className="fas fa-user-check"></i>
-                    </Button>
-                    : 
-                    <Button className='m-1' variant="secondary" data-toggle="modal" data-target={"#deactivateModal" + guests._id}> 
-                    <i className="fas fa-user-times"></i>
-                    </Button>}
-
-                    <Button className="m-1" variant="danger" data-toggle="modal" data-target={"#deleteModal" + guests._id}>
-                    <i className="fas fa-trash"></i>
-                    </Button>
-
-                    <div className="modal fade" id={"deleteModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-body">
-                                    Delete Guest Permanently?
+                        : 
+                        <Button className='m-1' variant="secondary" data-toggle="modal" data-target={"#deactivateModal" + guests._id}> 
+                        <i className="fas fa-user-times"></i>
+                        </Button>}
+    
+                        <Button className="m-1 danger" variant="danger" data-toggle="modal" data-target={"#deleteModal" + guests._id}>
+                        <i className="fas fa-trash"></i>
+                        </Button>
+    
+                        <div className="modal fade" id={"deleteModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                    <div className="modal-body">
+                                        Delete Guest?
+                                    </div>
+                                    
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deleteGuestHandler(guests._id)}>Yes</button>
+                                    </div>
                                 </div>
-                                
+                            </div>
+                        </div>
+    
+                        <div className="modal fade" id={"deactivateModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                <div className="modal-body">
+                                    Deactivate Guest?
+                                </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deleteGuestHandler(guests._id)}>Yes</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deactivateGuestHandler(guests._id)}>Yes</button>
+                                </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div className="modal fade" id={"deactivateModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-body">
-                                Deactivate Guest?
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => deactivateGuestHandler(guests._id)}>Yes</button>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    <div className="modal fade" id={"activateModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-body">
-                                Activate Guest?
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => activateGuestHandler(guests._id)}>Yes</button>
+                        <div className="modal fade" id={"activateModal" + guests._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                <div className="modal-body">
+                                    Activate Guest?
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => activateGuestHandler(guests._id)}>Yes</button>
+                                </div>
+                                </div>
                             </div>
                             </div>
-                        </div>
-                        </div>
-                </Fragment>
-            })
-            console.log('test')
+                    </Fragment>
+                })
+            }
         })
 
         return data;
@@ -193,8 +194,9 @@ const GuestList = () => {
     }
 
     const deleteGuestHandler = (id) => {
-        dispatch(deleteGuest(id,adminToken))
-        console.log('deleted' , id)
+        const formData = new FormData();
+        formData.set('guest_status', 'Deleted');
+        dispatch(deleteGuest(id,formData,adminToken))
     }
 
     return(
@@ -212,7 +214,7 @@ const GuestList = () => {
                     {loading ? <LoaderAdmin/>  :  
                     <>
                     <div className='d-flex align-items-start mx-5 mt-3'>
-                        <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/users/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                        <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/guests/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                     </div>
                         <MDBDataTableV5 
                             hover 

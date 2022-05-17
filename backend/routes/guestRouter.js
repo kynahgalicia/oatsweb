@@ -27,7 +27,9 @@ router.put('/deactivate/:id',authAdmin,authAdminRole, guestController.deactivate
 
 router.put('/edit/:id', guestController.updateProfile)
 
-router.delete('/delete/:id',authAdmin,authAdminRole,  guestController.delete)
+router.put('/delete/:id',authAdmin,authAdminRole,  guestController.softDelete)
+
+router.put('/restore/:id',authAdmin,authAdminRole,  guestController.restoreDelete)
 
 router.get('/informobile', authGuestMobile, guestController.getGuestInfor)
 // router.put('/edit/:id',authAdmin,authAdminRole, guestController.updateAdmin)

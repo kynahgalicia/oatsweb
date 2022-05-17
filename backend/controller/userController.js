@@ -38,7 +38,7 @@ const userController = {
             if (!(/\bTUPT-\d{2}-\d{4}$/.test(user_tupid))) 
                 return res.status(403).json({msg: "Invalid ID format"})
 
-            const user = await Users.findOne({user_tupmail})
+            const user = await Users.findOne({user_tupmail,'user_status': 'Active'})
             if(user) return res.status(405).json({msg: "This email already exists."})
 
             if(user_contact.length < 11 || user_contact.length > 11)
@@ -355,15 +355,59 @@ const userController = {
             return res.status(500).json({msg: err.message})
         }
     },
+    //user/delete/:id
+    softDelete: async (req,res) => {
+        let user = await Users.findById(req.params.id);
+        if(!user)
+        return res.status(400).json({msg: "User not found"})
 
-    delete: async (req,res) => {
         try {
-            await Users.findByIdAndDelete(req.params.id)
-            res.json({msg: "User has been Deleted!", success: true})
-        } catch (error) {
+
+            user = await Users.findByIdAndUpdate(req.params.id,{'user_status' : 'Deleted'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
+    //user/delete/:id
+    restoreDelete: async (req,res) => {
+        let user = await Users.findById(req.params.id);
+        if(!user)
+        return res.status(400).json({msg: "User not found"})
+
+        try {
+
+            user = await Users.findByIdAndUpdate(req.params.id,{'user_status' : 'Active'},{
+                new: true,
+                runValidators:true,
+                useFindandModify:false
+            })
+
+            res.status(200).json({
+                success:true
+            })
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    // delete: async (req,res) => {
+    //     try {
+    //         await Users.findByIdAndDelete(req.params.id)
+    //         res.json({msg: "User has been Deleted!", success: true})
+    //     } catch (error) {
+    //         return res.status(500).json({msg: err.message})
+    //     }
+    // },
 
     // updateProfile : async (req,res) => {
 

@@ -29,7 +29,9 @@ router.put('/deactivate/:id',authAdmin,authAdminRole, userController.deactivate)
 
 router.put('/edit/:id', userController.updateProfile)
 
-router.delete('/delete/:id',authAdmin,authAdminRole,  userController.delete)
+router.put('/delete/:id',authAdmin,authAdminRole,  userController.softDelete)
+
+router.put('/restore/:id',authAdmin,authAdminRole,  userController.restoreDelete)
 
 router.get('/inforMobile', authUserMobile, userController.getUserInfor)
 

@@ -33,7 +33,6 @@ const UserList = () => {
 
         if (error) {
             alert.error(error);
-            // dispatch(clearErrors())
         }
 
         if (deleteError) {
@@ -43,7 +42,7 @@ const UserList = () => {
 
         if (isDeleted) {
             history.push('/admin/users');
-            alert.success(msg);
+            alert.success('Deleted');
             dispatch({ type: DELETE_USER_RESET })
         }
 
@@ -113,7 +112,7 @@ const UserList = () => {
         let x = 0
         { admin.role === 'Moderator' ?
             users.forEach(users => {
-            if(users.user_department.deptname === thisDepartment){
+            if(users.user_department.deptname === thisDepartment && users.user_status != 'Deleted'){
                 data.rows.push({
                     user_tupid: users.user_tupid,
                     user_fname: users.user_fname,
@@ -148,7 +147,7 @@ const UserList = () => {
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                 <div className="modal-body">
-                                    Delete User Permanently?
+                                    Delete User?
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
@@ -190,6 +189,7 @@ const UserList = () => {
             }
         }):
         users.forEach(users => {
+            if(users.user_status != 'Deleted'){
                 data.rows.push({
                     user_tupid: users.user_tupid,
                     user_fname: users.user_fname,
@@ -216,7 +216,7 @@ const UserList = () => {
                         <i className="fas fa-user-times"></i>
                         </Button>}
     
-                        <Button className="m-1" variant="danger" data-toggle="modal" data-target={'#deleteModal' + users._id}>
+                        <Button className="m-1 danger" variant="danger" data-toggle="modal" data-target={'#deleteModal' + users._id}>
                         <i className="fas fa-trash"></i>
                         </Button>
     
@@ -224,11 +224,11 @@ const UserList = () => {
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                 <div className="modal-body">
-                                    Delete User Permanently?
+                                    Delete User?
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => deleteUserHandler(users._id, x)}>Yes</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => deleteUserHandler(users._id)}>Yes</Button>
                                 </div>
                                 </div>
                             </div>
@@ -263,6 +263,8 @@ const UserList = () => {
                     </Fragment>
     
                 })
+
+            }
             })
     
     }
@@ -282,8 +284,9 @@ const UserList = () => {
     }
 
     const deleteUserHandler = (id) => {
-        dispatch(deleteUser(id,adminToken))
-        console.log(id)
+        const formData = new FormData();
+        formData.set('user_status', 'Deleted');
+        dispatch(deleteUser(id,formData,adminToken))
     }
 
     return(

@@ -32,6 +32,7 @@ import SubscriptionList from './components/admin/subscribers/SubscriptionList'
 import SubscriptionRequest from './components/admin/subscribers/SubscriptionRequest'
 
 import UserList from './components/admin/users/UserList'
+import DeletedUserList from './components/admin/users/DeletedUserList'
 import EditUser from './components/admin/users/EditUser'
 
 import AdminList from './components/admin/admin/AdminList'
@@ -41,6 +42,7 @@ import ActivationEmailAdmin from './components/admin/admin/ActivationEmailAdmin'
 import DeletedAdminList from './components/admin/admin/DeletedAdminList';
 
 import GuestList from './components/admin/guest/GuestList'
+import DeletedGuestList from './components/admin/guest/DeletedGuestList'
 
 import BorrowList from './components/admin/borrow/BorrowList'
 import BorrowRequest from './components/admin/borrow/BorrowRequest'
@@ -193,12 +195,14 @@ function App() {
         <Route path="/admin/course/new" component={CreateCourse} exact/>
         <Route path="/admin/course/edit/:courseId" component={Updatecourse} exact/>
         <Route path="/admin/users" component={UserList} exact/>
+        <Route path="/admin/users/deleted" component={DeletedUserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>
         <Route path="/admin/admins" component={AdminList} exact/>
         <Route path="/admin/admins/edit/:adminId" component={EditAdmin} exact/>
         <Route path="/admin/admins/new" component={CreateAdmin} exact/>
         <Route path="/admin/admins/deleted" component={DeletedAdminList} exact/>
         <Route path="/admin/guests" component={GuestList} exact/>
+        <Route path="/admin/guests/deleted" component={DeletedGuestList} exact/>
         <Route path="/admin/subscription/list" component={SubscriptionList} exact/>
         <Route path="/admin/subscription/request" component={SubscriptionRequest} exact/>
         <Route path="/admin/borrow" component={BorrowList} exact/>

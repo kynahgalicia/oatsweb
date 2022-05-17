@@ -2,21 +2,31 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
+
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
     UPDATE_USER_RESET,
+
     DEACTIVATE_USER_REQUEST,
     DEACTIVATE_USER_SUCCESS,
     DEACTIVATE_USER_FAIL,
     DEACTIVATE_USER_RESET,
+
     DELETE_USER_REQUEST,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_RESET,
+
+    RESTORE_USER_REQUEST,
+    RESTORE_USER_SUCCESS,
+    RESTORE_USER_FAIL,
+    RESTORE_USER_RESET,
+    
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
@@ -56,6 +66,7 @@ export const userReducer = (state = {}, action) => {
     switch (action.type) {
 
         case DELETE_USER_REQUEST:
+        case RESTORE_USER_REQUEST:
         case UPDATE_USER_REQUEST:
         case DEACTIVATE_USER_REQUEST:
             return {
@@ -67,8 +78,14 @@ export const userReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                isDeleted: action.payload.success, 
-                msg: action.payload.msg
+                isDeleted: action.payload.success
+            }
+
+        case RESTORE_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload.success
             }
 
         case DEACTIVATE_USER_SUCCESS:
@@ -90,6 +107,7 @@ export const userReducer = (state = {}, action) => {
         case DEACTIVATE_USER_FAIL:
         case UPDATE_USER_FAIL:
         case DELETE_USER_FAIL:
+        case RESTORE_USER_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -100,6 +118,12 @@ export const userReducer = (state = {}, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+
+        case RESTORE_USER_RESET:
+            return {
+                ...state,
+                isRestored : false
             }
 
         case DEACTIVATE_USER_RESET:

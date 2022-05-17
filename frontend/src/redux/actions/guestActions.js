@@ -19,6 +19,10 @@ import {
     DELETE_GUEST_REQUEST,
     DELETE_GUEST_SUCCESS,
     DELETE_GUEST_FAIL,
+
+    RESTORE_GUEST_REQUEST,
+    RESTORE_GUEST_SUCCESS,
+    RESTORE_GUEST_FAIL,
     
     CLEAR_ERRORS
 } from '../constants/guestConstants';
@@ -122,7 +126,7 @@ export const deactivateGuest = (id, guestData,adminToken) => async (dispatch) =>
 }
 
 //Guest Delete Admin
-export const deleteGuest = (id,adminToken) => async (dispatch) => {
+export const deleteGuest = (id,userData,adminToken) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_GUEST_REQUEST })
@@ -130,9 +134,10 @@ export const deleteGuest = (id,adminToken) => async (dispatch) => {
         const config = {
             headers: {
                 'Authorization': adminToken,
+                'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.delete(process.env.REACT_APP_URL + `/guest/delete/${id}`, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/guest/delete/${id}`, userData,config)
 
         dispatch({
             type: DELETE_GUEST_SUCCESS,
@@ -146,6 +151,34 @@ export const deleteGuest = (id,adminToken) => async (dispatch) => {
         })
     }
 }
+
+//Guest Restore Deleted Admin
+export const restoreGuest = (id,userData,adminToken) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESTORE_GUEST_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/guest/restore/${id}`, userData,config)
+
+        dispatch({
+            type: RESTORE_GUEST_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESTORE_GUEST_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
