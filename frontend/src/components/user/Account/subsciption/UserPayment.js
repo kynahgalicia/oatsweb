@@ -9,6 +9,7 @@ import fifty from '../../../img/oneDay.jpg'
 import fivefifty from '../../../img/weekly.jpg'
 import {showErrMsg} from '../../../utils/Notification'
 import { userSubscribe } from '../../../../redux/actions/subscriptionActions';
+import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core'
 
 const UserPayment = () => {
     
@@ -42,7 +43,11 @@ const UserPayment = () => {
             window.location.reload()
         }
 
-    }, [dispatch, alert, error, success,history, msg, subType, isLoggedIn, sub, user]);
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
+
+    }, [dispatch, alert, error, success,history, msg, subType, isLoggedIn, sub, user, isLoggedIn]);
 
     const onChange = e => {
 
@@ -86,7 +91,9 @@ const UserPayment = () => {
                     <UserSidebar/>
                 </Col>
                 <Col sm={10}>
-
+                        <div className='back-button text-start px-3 py-2'>
+                            <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
                     
@@ -135,7 +142,7 @@ const UserPayment = () => {
                         <div className="payment-process text-start">
                             <Row>
                                 <h5>Payment</h5>
-                                { isLoggedIn && subType ? <div className="notif-bar bg-rose mx-0 my-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                                { isLoggedIn && subType.status !== 'Expired' ? <div className="notif-bar bg-rose mx-0 my-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
                                 <Col className="px-5">
                                 <img src={gcash} alt="logo" className="p-3 w-50" />
                                 <img src={fifty} alt="logo" className={"p-3 w-75 " + ( sub_type === 'oneDay' ? null : 'd-none')} />

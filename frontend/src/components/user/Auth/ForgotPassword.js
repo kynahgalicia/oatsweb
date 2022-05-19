@@ -18,7 +18,6 @@ const ForgotPassword = () => {
     const {error, message, loading} = useSelector(state => state.authForgot);
     
     useEffect(() => {
-        
     }, [dispatch, error, message])
     
     const submitHandler = async e => {

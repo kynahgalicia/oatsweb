@@ -5,8 +5,10 @@ const APIFeatures = require('../utils/apiFeatures')
 const Department = require('../models/departmentModel')
 const Course = require('../models/courseModel')
 const Thesis = require('../models/thesisModel')
+const Borrow = require('../models/borrowModel');
 const Users = require('../models/userModel')
-const Admins = require('../models/adminModel')
+const Admins = require('../models/adminModel');
+const { firebaserules } = require('googleapis/build/src/apis/firebaserules');
 
 exports.create = catchAsyncErrors(async(req,res,next) => {
     
@@ -137,13 +139,24 @@ exports.thesisCount = catchAsyncErrors(async (req,res,next) => {
 // /api/thesis/:id
 exports.find = catchAsyncErrors(async(req,res,next) => {
     const thesis = await Thesis.findById(req.params.id);
-
     if(!thesis) {
         return next(new ErrorHandler('Not Found',404));
     }
+
+    var availBook
+    const borrowedR = await Borrow.find({'thesis.id': req.params.id,    $nor: [ { status: 'Returned'}, { status: 'Declined' } ]  }  )
+    if(borrowedR.length > 0){
+        availBook = false
+    }
+    if(borrowedR.length === 0){
+        availBook = true
+    }
+    
     
     res.status(200).json({
-        thesis
+        availBook: availBook,
+        borrowedR,
+        thesis:thesis
     })
 })
 

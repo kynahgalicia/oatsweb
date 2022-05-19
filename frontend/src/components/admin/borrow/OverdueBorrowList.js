@@ -285,7 +285,7 @@ const OverdueBorrowList = () => {
                 <Col sm={10}>
                     <div className="admin-wrapper">
                         <div className="table-admin">
-                        <div className='d-flex align-items-start m-2'>
+                        <div className='d-flex align-items-start m-2 px-5'>
                             <h1>Overdue Books</h1>
                         </div>
 
@@ -298,7 +298,7 @@ const OverdueBorrowList = () => {
                             entries={10} 
                             pagesAmount={4}
                             data={setData()} 
-                            className='table px-4'
+                            className='table px-5'
                             container-sm="true"
                             searchTop
                             searchBottom={false}

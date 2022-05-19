@@ -15,6 +15,8 @@ const LoginasAdmin = () => {
     const [admin_password, setPassword] = useState('');
 
     const {error, msg, isLoggedInAdmin} = useSelector(state => state.authAdmin);
+    const {isLoggedIn} = useSelector(state => state.authUser);
+    const { isLoggedInGuest}= useSelector(state => state.authGuest)
 
     const redirect = window.location.search ? window.location.search.split('=')[1] : '/'
 
@@ -29,7 +31,12 @@ const LoginasAdmin = () => {
             }
         }
 
-    }, [dispatch, alert, isLoggedInAdmin, error, history, redirect,msg])
+        if(isLoggedIn || isLoggedInGuest){
+            history.push('/')
+            window.location.reload()
+        }
+
+    }, [dispatch, alert, isLoggedInAdmin, error, history, redirect,msg, isLoggedIn,isLoggedInGuest])
 
     const submitHandler = async e => {
         e.preventDefault()

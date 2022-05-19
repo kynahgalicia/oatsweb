@@ -9,6 +9,7 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 // Create Borrower 
 exports.create = async(req,res,next) => {
     try{
+
         const user_tupid = req.body.user
         const cusers = await Users.findOne({user_tupid})
 
@@ -38,15 +39,12 @@ exports.create = async(req,res,next) => {
 
         const {user, thesis, admin, dateBorrowed,dueDate} = req.body
 
-        const borrowed = await Borrow.findOne({user, thesis})
-        if(borrowed) return res.status(400).json({msg: "Already Borrowed"})
-
-        const limit = await Borrow.find({user}).countDocuments()
-        if(limit >= 3) return res.status(400).json({msg: "Reached Limit of Borrow"})
+       
 
         const borrow = await Borrow.create(req.body);
 
         res.status(201).json({
+            borrowed,
             success: true
         })
     }catch (err) {
@@ -67,19 +65,32 @@ exports.studentRequest = async(req,res,next) => {
         }
         
         const title = req.body.theses
-        const cthesis = await Thesis.findOne({title})
+        const cthesis = await Thesis.findById({'_id': title})
+        if(!cthesis) return res.status(400).json({msg: "Thesis not found"})
         
         req.body.thesis = {
             id: cthesis._id,
             title: cthesis.title,
             department:cthesis.department.deptname
         }
+
+        console.log(cthesis)
+        console.log(cusers)
         
         const {user, thesis} = req.body
         
         
-        const borrowed = await Borrow.findOne({user, thesis})
-        if(borrowed) return res.status(400).json({msg: "Already Borrowed"})
+        const borrowed = await Borrow.findOne({user, thesis, 'status': 'Pending'})
+        if(borrowed) return res.status(400).json({msg: "Already Requested"})
+        
+        const borrowedB = await Borrow.findOne({user, thesis, 'status': 'Active'})
+        if(borrowedB) return res.status(400).json({msg: "Already Borrowed"})
+
+        // const borrowUnreturned = await Borrow.find({ "thesis.title": req.body.theses , 'status': { $not:/Returned/}})
+        // if(borrowUnreturned.length > 0) return res.status(400).json({msg: "Book is Unavailable"})
+        
+        const limit = await Borrow.find({'user.tupid': user_tupid, 'status': { $not:/Returned/}}).countDocuments()
+        if(limit >= 3) return res.status(400).json({msg: "Reached Limit of Borrow"})
         
         const borrow = await Borrow.create(req.body);
 
@@ -194,13 +205,17 @@ exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{
         req.body.dateBorrowed = Date.now()
 
         const cadmins = await Admins.findById(req.body.admins)
-
+        
         req.body.admin={
             id: cadmins._id,
             tupid:cadmins.admin_tupid,
             fname:cadmins.admin_fname,
             lname:cadmins.admin_lname
         }
+
+        const borrowUnreturned = await Borrow.find({ "thesis.title": req.body.title , 'status': { $not:/Returned/}})
+        if(borrowUnreturned.length > 0) return res.status(400).json({msg: "Book is Unavailable"})
+
 
         const accept = await Borrow.findByIdAndUpdate(req.body.id,req.body,{
             new: true,

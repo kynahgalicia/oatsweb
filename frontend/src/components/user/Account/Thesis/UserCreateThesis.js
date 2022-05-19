@@ -19,7 +19,7 @@ const UserCreateThesis = () => {
     const history = useHistory();
 
     const { loading, error, success } = useSelector(state => state.newThesis);
-    const { user } = useSelector(state => state.authUser);
+    const { user, isLoggedIn} = useSelector(state => state.authUser);
 
     //Dropdown Data
     const {department} = useSelector(state => state.department)
@@ -71,8 +71,11 @@ const UserCreateThesis = () => {
             
         }
 
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
 
-        }, [dispatch, alert, error, success, history, thisDepartment])
+        }, [dispatch, alert, error, success, history, thisDepartment, isLoggedIn])
 
     // Scan to text convert
     const handleSubmit = () => {
@@ -178,6 +181,9 @@ const UserCreateThesis = () => {
                     </Col>  
 
                 <Col sm={10}> 
+                <div className='back-button text-start px-3 py-2'>
+                    <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                </div>
                     <Container>
                     <div className="admin-wrapper ">
                         <div className="form-admin-wrapper-two text-start">

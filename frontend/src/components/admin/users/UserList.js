@@ -111,7 +111,7 @@ const UserList = () => {
         }
         let x = 0
         { admin.role === 'Moderator' ?
-            users.forEach(users => {
+            users && users.forEach(users => {
             if(users.user_department.deptname === thisDepartment && users.user_status != 'Deleted'){
                 data.rows.push({
                     user_tupid: users.user_tupid,
@@ -298,13 +298,13 @@ const UserList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
                 <div className="table-admin">
-                    <div className='d-flex align-items-start m-2'>
+                    <div className='d-flex align-items-start m-2 px-5'>
                         <h1>Students</h1>
                     </div>
                     {loading ? <LoaderAdmin/>  :  
                     <>
                     <div className='d-flex align-items-start mx-5 mt-3'>
-                        <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/users/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                        <Button variant="danger" className="danger mx-2"><Link className='link-admin' to="/admin/users/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                     </div>
                     <MDBDataTableV5 
                         hover 
@@ -312,7 +312,7 @@ const UserList = () => {
                         entries={10} 
                         pagesAmount={4}
                         data={setData()} 
-                        className='table px-4'
+                        className='table px-5'
                         container-sm="true"
                         searchTop
                         searchBottom={false}

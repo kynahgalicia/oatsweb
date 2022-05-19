@@ -10,6 +10,22 @@ class APIFeatures {
             title: {
                 $regex: this.queryStr.keyword,
                 $options: 'i'
+            },
+        } : {}
+        const keyword2 = this.queryStr.keyword ? {
+            'keywords.keyword': {
+                $regex: this.queryStr.keyword,
+                $options: 'i'
+            },
+        } : {}
+        this.query = this.query.find({ ...keyword, ...keyword2 });
+        return this;
+    }
+    searchKey() {
+        const keyword = this.queryStr.keyword2 ? {
+            'keywords.keyword': {
+                $regex: this.queryStr.keyword,
+                $options: 'i'
             }
         } : {}
         this.query = this.query.find({ ...keyword });

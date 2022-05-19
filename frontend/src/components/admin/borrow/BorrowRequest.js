@@ -309,7 +309,7 @@ const BorrowRequest = () => {
                                         </Form.Group>                                </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => verifyHandler(borrow._id)}>Submit</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => verifyHandler(borrow._id, borrow.thesis.id)}>Submit</Button>
                                 </div>
                                 </div>
                             </div>
@@ -325,11 +325,12 @@ const BorrowRequest = () => {
     }
 
 
-    const verifyHandler = (id) => {
+    const verifyHandler = (id, title) => {
         const formData = new FormData();
         formData.set('admins', admin._id);
         formData.set('id', id);
         formData.set('dueDate', dueDate);
+        formData.set('title', title)
         dispatch(verifyBorrow(formData))
     }
     const declineHandler = (id) => {
@@ -347,7 +348,7 @@ const BorrowRequest = () => {
                     <div className="admin-wrapper">
                                 <div className="table-admin">
 
-                                    <div className='d-flex align-items-start m-2 mb-5'>
+                                    <div className='d-flex align-items-start m-2 mb-5 px-5'>
                                     <h1>Borrow Requests</h1>
                                     </div>
                             {loading ? <LoaderAdmin /> : 
@@ -362,7 +363,7 @@ const BorrowRequest = () => {
                                     entries={5} 
                                     pagesAmount={4}
                                     data={setData()} 
-                                    className='table px-4'
+                                    className='table px-5'
                                     container-sm="true"/>
                                     
                                     <div className='d-flex align-items-start mx-5'>
@@ -375,7 +376,7 @@ const BorrowRequest = () => {
                                     entries={5} 
                                     pagesAmount={4}
                                     data={setDataDenied()} 
-                                    className='table px-4'
+                                    className='table px-5'
                                     container-sm="true"/>
                                 </>
                                 }

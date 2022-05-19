@@ -105,7 +105,7 @@ const GuestList = () => {
             rows: []
         }
 
-        guests.forEach(guests => {
+        guests && guests.forEach(guests => {
             if(guests.guest_status !== 'Deleted'){
                 data.rows.push({
                     guest_fname: guests.guest_fname,
@@ -212,13 +212,13 @@ const GuestList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
                 <div className="table-admin">
-                    <div className='d-flex align-items-start m-2'>
+                    <div className='d-flex align-items-start m-2 px-5'>
                         <h1>Guests</h1>
                     </div>
                     {loading ? <LoaderAdmin/>  :  
                     <>
                     <div className='d-flex align-items-start mx-5 mt-3'>
-                        <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/guests/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                        <Button variant="danger" className="danger mx-1"><Link className='link-admin' to="/admin/guests/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                     </div>
                         <MDBDataTableV5 
                             hover 
@@ -226,7 +226,7 @@ const GuestList = () => {
                             entries={10} 
                             pagesAmount={4}
                             data={setData()} 
-                            className='table px-4'
+                            className='table px-5'
                             container-sm="true"
                             searchTop
                             searchBottom={false}

@@ -38,6 +38,11 @@ const EditUserProfile = () => {
             alert.success('Profile updated successfully!');
             dispatch({ type: UPDATE_USER_RESET })
         }
+
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
+        
     }, [dispatch, history, alert, error, isLoggedIn,isUpdated])
     
     const submitHandler = (e) => {
@@ -57,7 +62,9 @@ const EditUserProfile = () => {
                 </Col> 
                 
                 <Col sm={10}>
-
+                        <div className='back-button text-start px-3 py-2'>
+                            <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     <div className="table-admin">
                         <div className='d-flex align-items-start m-2'>
                                 <h1>Edit Profile</h1>

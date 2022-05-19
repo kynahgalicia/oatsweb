@@ -129,7 +129,7 @@ const UserList = () => {
             rows: []
         }
 
-        admins.forEach(admins => {
+        admins && admins.forEach(admins => {
             
         if(admins.admin_status != 'Deleted'){ 
                 data.rows.push({
@@ -295,12 +295,12 @@ const UserList = () => {
                 <div className="admin-wrapper">
                 <div className="table-admin">
                 
-                <div className='d-flex align-items-start m-2'>
+                <div className='d-flex align-items-start m-2 px-5'>
                     <h1>Administrators</h1>
                 </div>
                 {loading ? <LoaderAdmin/>  :  
                     <>
-                <div className='d-flex align-items-start mx-5 mt-3'>
+                <div className='d-flex align-items-start mx-5 mt-3 '>
                     <Button variant="success" className='success mx-1'><Link to="/admin/admins/new">+ Add</Link></Button>
                     <Button variant="success" className='danger'><Link to="/admin/admins/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                 </div>
@@ -310,7 +310,7 @@ const UserList = () => {
                         entries={10} 
                         pagesAmount={4}
                         data={setData()} 
-                        className='table px-4'
+                        className='table px-5'
                         container-sm="true"
                         searchTop
                         searchBottom={false}

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
+import Terms from './components/layout/Terms'
 
 //Admin
 import LoginasAdmin from './components/admin/auth/LoginasAdmin'
@@ -147,6 +148,7 @@ function App() {
         <Route path="/About" component={About} exact/>
         <Route path="/Category" component={Category} exact/>
         <Route path="/Contact" component={Contact} exact/>
+        <Route path="/Terms" component={Terms} exact/>
         <Route path="/user/login" component={LoginasUser} exact/>
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>

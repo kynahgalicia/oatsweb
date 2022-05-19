@@ -139,7 +139,8 @@ export const thesisDetailsReducer = (state = { thesis: {} }, action) => {
         case THESIS_DETAILS_SUCCESS:
             return {
                 loading: false,
-                thesis: action.payload.thesis
+                thesis: action.payload.thesis,
+                availBook: action.payload.availBook
             }
 
         case THESIS_DETAILS_FAIL:

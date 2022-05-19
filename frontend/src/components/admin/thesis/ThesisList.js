@@ -295,14 +295,14 @@ const ThesisList = () => {
             <Col sm={10}>
                 <div className="admin-wrapper">
                 <div className="table-admin">
-                    <div className='d-flex align-items-start m-2'>
+                    <div className='d-flex align-items-start m-2 px-5'>
                         <h1>Thesis</h1>
                     </div>
                 
 
                 { loading ? <LoaderAdmin /> :
                 <>
-                    <div className='d-flex align-items-start mx-5 mt-3'>
+                    <div className='d-flex align-items-start mx-5 mt-3 '>
                         <Button variant="success" className="success mx-1"><Link className='link-admin' to="/admin/thesis/new">+ Add</Link></Button>
                         <Button variant="danger" className="danger"><Link className='link-admin' to="/admin/thesis/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
                     </div>
@@ -312,7 +312,7 @@ const ThesisList = () => {
                         entries={10} 
                         pagesAmount={4}
                         data={setData()} 
-                        className='table'
+                        className='table px-5'
                         container-sm="true"
                         searchTop
                         searchBottom={false}/>

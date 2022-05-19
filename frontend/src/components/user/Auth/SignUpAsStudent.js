@@ -167,9 +167,11 @@ const SignUpAsStudent = () => {
             
             </Col>      
             <Row>
-            <Form.Group className="mb-2 px-3" id="formGridCheckbox">
-            <Form.Check type="checkbox" label="By creating an account you agree to our Terms of Service and Privacy Policy" 
+            <Form.Group className="mb-2 px-5" id="formGridCheckbox">
+            <Form.Check type="checkbox" id='checked'
             onClick={(e) => setAgree(e.target.checked)} />
+            <label htmlFor="checked">By creating an account you agree to our <Link to="/Terms">Terms and Conditons</Link> </label>
+            
             </Form.Group>
 
             <Button className="w-100 btn-login" type="submit" id="submitButton">

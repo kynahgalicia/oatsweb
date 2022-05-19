@@ -1,10 +1,12 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSelector} from 'react-redux'
-import { Link} from 'react-router-dom'
+import { Link, useHistory} from 'react-router-dom'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import UserSidebar from "../../../layout/UserSidebar";
 
 const UserSubscription = () => {
+
+    const history = useHistory()
 
     const {subType, isLoggedIn} = useSelector(state => state.authUser)
 
@@ -25,7 +27,11 @@ const UserSubscription = () => {
             }
         }
 
-    }, [isLoggedIn, day ,weekly, subType])
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
+
+    }, [isLoggedIn, history, day ,weekly, subType])
     
 
     return (
@@ -64,7 +70,7 @@ const UserSubscription = () => {
                                         </ul>
                                         </Col>
                                     </Row>
-                                    <Link to={`/user/payment/${oneDaySub}`}><Button className={( day ? 'd-none' : '')}>Select</Button></Link>
+                                    <Link to={`/user/payment/${oneDaySub}`}><Button className={( day && subType.status !== 'Expired' ? 'd-none' : '')}>Select</Button></Link>
                                 </Card.Body>
                         </Card>
 
@@ -88,7 +94,7 @@ const UserSubscription = () => {
                                     </ul>
                                     </Col>
                                 </Row>
-                                <Link to={`/user/payment/${weeklySub}`}><Button className={( weekly ? 'd-none' : '')}>Select</Button></Link>
+                                <Link to={`/user/payment/${weeklySub}`}><Button className={( weekly && subType.status !== 'Expired' ? 'd-none' : '')}>Select</Button></Link>
                             </Card.Body>
                         </Card>
                         </div>  

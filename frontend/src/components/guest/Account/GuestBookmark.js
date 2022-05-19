@@ -22,6 +22,9 @@ const GuestBookmark = () => {
         if(isLoggedInGuest){
             setThisId(guest._id)
         }
+        if(!isLoggedInGuest){
+            history.push('/guest/login')
+        }
 
         if(thisId){
             dispatch(getUserBookmarks(thisId))
@@ -65,7 +68,8 @@ const GuestBookmark = () => {
 <div className='bookmark-result'>
     { loading ? <LoaderAdmin/>:
     
-    bookmarks && bookmarks.map((bookmark) => (
+    bookmarks. length > 0 ? 
+    bookmarks.map((bookmark) => (
         <>
         <Card style={{ width: '18rem' }} >
             <Card.Body>
@@ -89,6 +93,8 @@ const GuestBookmark = () => {
             </Card>   
         </>
     ))
+    :
+    <div><h3>No Data</h3></div>
     }
 
 </div>

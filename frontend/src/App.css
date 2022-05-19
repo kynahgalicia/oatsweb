@@ -45,6 +45,7 @@
 .grey{
   background-color: var(--grey) !important;
   border: 1px solid var(--grey) !important;
+  color: var(--white);
 }
 
 .back-button{
@@ -52,8 +53,27 @@
   color: var(--grey)
 }
 
+.terms{
+  margin: 1% 10%;
+  padding: 2%;
+}
+
+.terms h2{
+  font-family: 'Montserrat', sans-serif;
+  color: #6B2025;
+}
+.terms h4, .terms h5{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: #6B2025;
+}
+.terms p{
+  font-family: 'Poppins', sans-serif;
+}
 .card{
   padding: 0 !important;
+  background-color: var(--white) !important;
+  font-size: 2vh !important;
 }
 .card-box {
   position: relative;

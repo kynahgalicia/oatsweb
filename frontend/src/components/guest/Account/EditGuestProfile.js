@@ -38,6 +38,10 @@ const EditGuestProfile = () => {
 
         }
 
+        if(!isLoggedInGuest){
+            history.push('/guest/login')
+        }
+
         if (isUpdated) {
             history.push('/guest/profile');
             window.location.reload()
@@ -67,9 +71,11 @@ const EditGuestProfile = () => {
                 </Col> 
                 
                 <Col sm={10}>
-
+                <div className='back-button text-start px-3 py-2 '>
+                            <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     <div className="table-admin">
-                        <div className='d-flex align-items-start m-2'>
+                        <div className='d-flex align-items-start m-2 px-5'>
                                 <h1>Edit Profile</h1>
                             </div>
 

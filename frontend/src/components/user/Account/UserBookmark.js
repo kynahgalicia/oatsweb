@@ -44,6 +44,10 @@ const UserBookmark = () => {
             alert.success('Deleted bookmark');
             dispatch({ type: DELETE_BOOKMARK_RESET })
         }
+
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
         
 
 
@@ -67,31 +71,40 @@ const UserBookmark = () => {
                         <div className='bookmark-result'>
                             { loading ? <LoaderAdmin/>:
                             
-                            bookmarks && bookmarks.map((bookmark) => (
+                                bookmarks.length > 0 ?
+                                
+                                    bookmarks.map((bookmark) => (
+                                    <>
+                                    <Card style={{ width: '18rem' }} >
+                                        <Card.Body>
+                                            <Card.Title className='text-start'><Link to={`/thesis/${bookmark.thesis.id}`}> {bookmark.thesis.title}</Link></Card.Title>
+                                            <Card.Text className='text-start'>
+                                                <label><i>{bookmark.thesis.publishedAt}</i></label><br/>   
+                                                {bookmark.thesis.abstract.substring(0, 100)}...
+                                            </Card.Text>
+                                        </Card.Body>
+                        
+                                        <Card.Footer className="text-muted">
+                                                <Col>
+                                                </Col>
+                                                <Col className="text-end">
+                                                <Button variant="danger " onClick={() => deleteHandler(bookmark._id)} >
+                                                <FaTrash/>
+                                            </Button>
+                                                </Col>
+                                            </Card.Footer>
+                                            
+                                        </Card>   
+                                    </>
+                                ))
+                                :
                                 <>
-                                <Card style={{ width: '18rem' }} >
-                                    <Card.Body>
-                                        <Card.Title className='text-start'><Link to={`/thesis/${bookmark.thesis.id}`}> {bookmark.thesis.title}</Link></Card.Title>
-                                        <Card.Text className='text-start'>
-                                            <label><i>{bookmark.thesis.publishedAt}</i></label><br/>   
-                                            {bookmark.thesis.abstract.substring(0, 100)}...
-                                        </Card.Text>
-                                    </Card.Body>
-                    
-                                    <Card.Footer className="text-muted">
-                                            <Col>
-                                            </Col>
-                                            <Col className="text-end">
-                                            <Button variant="danger " onClick={() => deleteHandler(bookmark._id)} >
-                                            <FaTrash/>
-                                        </Button>
-                                            </Col>
-                                        </Card.Footer>
-                                        
-                                    </Card>   
+                                <div className='m-5'>
+                                    <h3>No Data</h3>
+                                </div>
                                 </>
-                            ))
-                            }
+                        }
+                            
         
         </div>
                     </Col>

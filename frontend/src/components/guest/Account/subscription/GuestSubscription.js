@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSelector} from 'react-redux'
-import { Link} from 'react-router-dom'
+import { Link, useHistory} from 'react-router-dom'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import GuestSidebar from "../../../layout/GuestSidebar";
 
@@ -12,7 +12,7 @@ const GuestSubscription = () => {
 
     const oneDaySub = 'oneDay'
     const weeklySub = 'weekly'
-
+    const history = useHistory()
     useEffect(() => {
 
         if(isLoggedInGuest){
@@ -24,7 +24,11 @@ const GuestSubscription = () => {
             }
         }
 
-    }, [isLoggedInGuest, day ,weekly])
+        if(!isLoggedInGuest){
+            history.push('/guest/login')
+        }
+
+    }, [isLoggedInGuest, history, day ,weekly])
     
 
     return (
@@ -41,11 +45,12 @@ const GuestSubscription = () => {
                     </div>
 
                     { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? <div className="notif-bar bg-rose text-start"> <p>Please wait for the confirmation of your subscription</p> </div> : null}
+                    { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Expired' ? <div className="notif-bar bg-rose text-start"> <p>Your subscription has expired.</p> </div> : null}
                     < div className="sub-cards">
                         
                         <Card className= {"sub-card text-start " + ( day ? 'border-current' : null)}>
                             <div className={( day ? 'sub-current' : 'd-none')}>
-                                <Card.Header >Current  { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}</Card.Header> 
+                                <Card.Header >Current  { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}{ isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Expired' ? '(Expired)': null}</Card.Header> 
                             </div>
                                 <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
                                 <Card.Body>
@@ -62,13 +67,13 @@ const GuestSubscription = () => {
                                         </ul>
                                         </Col>
                                     </Row>
-                                    <Link to={`/guest/payment/${oneDaySub}`}><Button className={( day ? 'd-none' : '')}>Select</Button></Link>
+                                    <Link to={`/guest/payment/${oneDaySub}`}><Button className={( day && subTypeGuest.status !=='Expired' ? 'd-none' : '')}>Select</Button></Link>
                                 </Card.Body>
                         </Card>
 
                         <Card className= {"sub-card text-start " + ( weekly ? 'border-current' : null)}>
                             <div className={( weekly ? 'sub-current' : 'd-none')}>
-                                <Card.Header >Current { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}</Card.Header>
+                                <Card.Header >Current { isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Pending' ? '(Pending)': null}{ isLoggedInGuest && subTypeGuest && subTypeGuest.status === 'Expired' ? '(Expired)': null}</Card.Header>
                             </div>
                             <Card.Header><h1 className="text-start">₱325/week</h1></Card.Header>
                             <Card.Body>
@@ -86,7 +91,7 @@ const GuestSubscription = () => {
                                     </ul>
                                     </Col>
                                 </Row>
-                                <Link to={`/guest/payment/${weeklySub}`}><Button className={( weekly ? 'd-none' : '')}>Select</Button></Link>
+                                <Link to={`/guest/payment/${weeklySub}`}><Button className={( weekly && subTypeGuest.status !=='Expired' ? 'd-none' : '')}>Select</Button></Link>
                             </Card.Body>
                         </Card>
                         </div>  

@@ -31,6 +31,10 @@ const UserThesisList = () => {
         }
 
         console.log(thisId)
+
+        if(!isLoggedIn){
+            history.push('/user/login')
+        }
         
     },[dispatch, alert,error, history, thisId, isLoggedIn]);
 
@@ -76,10 +80,10 @@ const UserThesisList = () => {
                     label: 'Created At',
                     field: 'createdAt',
                 },
-                {
-                    label: 'Actions',
-                    field: 'actions',
-                }
+                // {
+                //     label: 'Actions',
+                //     field: 'actions',
+                // }
             ],
             rows: []
         }
@@ -93,18 +97,18 @@ const UserThesisList = () => {
                     course: theses.course.coursecode,
                     status: theses.status,
                     createdAt: moment(theses.createdAt).format('MM/DD/YYYY'),
-                    actions: 
-                    <Fragment>
-                        {/* <Link to={`/admin/course/edit/`} className="decor-none block">
-                            <Button variant="info">
-                            <FaPencilAlt/>
-                            </Button>
-                        </Link>
+                    // actions: 
+                    // <Fragment>
+                    //     <Link to={`/admin/course/edit/`} className="decor-none block">
+                    //         <Button variant="info">
+                    //         <FaPencilAlt/>
+                    //         </Button>
+                    //     </Link>
     
-                        <Button variant="danger">
-                            <FaTrash/>
-                        </Button> */}
-                    </Fragment>
+                    //     <Button variant="danger">
+                    //         <FaTrash/>
+                    //     </Button>
+                    // </Fragment>
                 })
             })
         
@@ -124,11 +128,11 @@ const UserThesisList = () => {
 
                 { loading? <Loader /> :
                 <>
-                <div className='d-flex align-items-start m-2'>
+                <div className='d-flex align-items-start m-2 px-5'>
                         <h1>Thesis</h1>
                     </div>
                     <div className='d-flex align-items-start mx-5 mt-3'>
-                        <Button variant="success"><Link to="/user/thesis/new">+ Add</Link></Button>
+                        <Button variant="success" className='success mx-1'><Link to="/user/thesis/new">+ Add</Link></Button>
                     </div>
 
                     <MDBDataTableV5 
@@ -137,7 +141,7 @@ const UserThesisList = () => {
                     entries={10} 
                     pagesAmount={4}
                     data={setData()} 
-                    className='table'
+                    className='table px-5'
                     container-sm="true"/>
                 </>
                     

@@ -43,8 +43,9 @@ const GuestPayment = () => {
             window.location.reload()
         }
 
-        console.log(sub)
-
+        if(!isLoggedInGuest){
+            history.push('/guest/login')
+        }
     }, [dispatch, alert, error, success,history, msg, subTypeGuest, isLoggedInGuest, sub_type]);
 
     const onChange = e => {
@@ -89,11 +90,13 @@ const GuestPayment = () => {
                     <GuestSidebar/>
                 </Col>
                 <Col sm={10}>
-
+                <div className='back-button text-start px-3 py-2'>
+                            <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
                 
-                        { isLoggedInGuest && subTypeGuest ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                        { isLoggedInGuest && subTypeGuest.status !=='Expired' ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
                             <h5 className='my-2'>Your Plan</h5>
                             <Card className= {"mx-4 sub-card text-start " + ( sub_type === 'oneDay' ? null : 'd-none')} >
                                     <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>

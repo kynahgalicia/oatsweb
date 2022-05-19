@@ -24,11 +24,12 @@ const ThesisDetails = () => {
     const [authors, setAuthor] = useState('')
     const [thisDepartment,setThisDepartment] = useState('')
     const [thisCourse,setThisCourse] = useState('')
+    const [thesisID,setThesisID] = useState('')
 
     const {subType, user, isLoggedIn} = useSelector(state => state.authUser)
     const {subTypeGuest, isLoggedInGuest} = useSelector(state => state.authGuest)
     const {isLoggedInAdmin} = useSelector(state => state.authAdmin)
-    const {loading, thesis } = useSelector(state => state.thesisDetails);
+    const {loading, thesis, availBook } = useSelector(state => state.thesisDetails);
     const [format, setFormat] = useState('')
     const [copyFormat, setCopyFormat] = useState('')
 
@@ -67,7 +68,7 @@ const ThesisDetails = () => {
             alert.success('Your request has been sent!');
             dispatch({ type: STUDENT_BORROW_RESET })
         }
-    }, [dispatch, alert, error ,thesisId, thesis, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn, isLoggedInGuest, isLoggedInAdmin]);
+    }, [dispatch, alert, error ,thesisId, thesis, availBook, format, copyFormat,subType, subTypeGuest, success, msg, isLoggedIn, isLoggedInGuest, isLoggedInAdmin]);
 
     const handleChange = (e) => {
         var authString = ''
@@ -165,7 +166,7 @@ const ThesisDetails = () => {
         
         const formData = new FormData();
         formData.set('user', user.user_tupid);
-        formData.set('theses', title);
+        formData.set('theses', id);
 
         dispatch(studentBorrow(formData))
     }
@@ -177,6 +178,9 @@ const ThesisDetails = () => {
             {loading ? <Loader /> : (
             <Row>
                 <Col sm={9}>
+                <div className='back-button text-start px-3 py-2'>
+                            <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                     {/* Header */}
                     <div className="details-title text-start mx-5">
                         <h5 className="m-3">{title}</h5>
@@ -237,8 +241,9 @@ const ThesisDetails = () => {
                                 <Link1 data-toggle="modal"  data-target={"#citationModal"}><i class="fas fa-pen-nib"></i> Citation Tool  </Link1>
                             </Button>
 
-                            { isLoggedIn ? <Button data-toggle="tooltip" data-placement="bottom" title="Request to borrow the physical book" className='m-1' onClick={() => borrowRequest()}>
-                                <i class="fas fa-book"></i> Borrow Book
+                            { isLoggedIn ? <Button data-toggle="tooltip" data-placement="bottom" title={ availBook? "Request to borrow the physical book" : "Book is Unavailable" } disabled={ availBook ? false : true}
+                                className={ availBook ? 'm-1' : 'm-1 grey'} onClick={() => borrowRequest()}> 
+                                <i class="fas fa-book"></i> { availBook ? 'Borrow Book' : 'Unavailable'}
                             </Button> : null}
                         </div>
                     </div>
