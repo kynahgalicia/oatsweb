@@ -56,6 +56,7 @@ import Home from './components/user/Home/Home'
 import About from './components/user/Home/About'
 import Category from './components/user/Home/Category'
 import Contact from './components/user/Home/Contact'
+import ScanToText from './components/utils/ScanToText';
 
 //Auth User
 import LoginasUser from './components/user/Auth/LoginasUser'
@@ -149,6 +150,9 @@ function App() {
         <Route path="/Category" component={Category} exact/>
         <Route path="/Contact" component={Contact} exact/>
         <Route path="/Terms" component={Terms} exact/>
+        <Route path="/scan-to-text" component={ScanToText} exact/>
+
+
         <Route path="/user/login" component={LoginasUser} exact/>
         <Route path="/SignUp" component={SignUp} exact/>
         <Route path="/user/student" component={SignUpAsStudent} exact/>

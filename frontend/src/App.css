@@ -53,6 +53,41 @@
   color: var(--grey)
 }
 
+.scan-to-text {
+  margin: 2% 20%;
+}
+.scan-to-text button{
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 2.5vh;
+}
+.scan-to-text h2{
+  font-family: 'Montserrat', sans-serif;
+  color: var(--grey);
+}
+
+.scan-wrapper p{
+  text-align: left;
+  padding: 0 12%;
+}
+
+.form-imageUP{
+  padding: 0 5%;
+}
+
+.preview img{
+  max-width: 400px;
+  min-width: 400px;
+  
+}
+
+.progress-bar{
+  min-height: 30px;
+  background-color: var(--white) !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5vh;
+  color: var(--white);
+}
+
 .terms{
   margin: 1% 10%;
   padding: 2%;
@@ -1041,10 +1076,10 @@ table td{
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
   padding: 0 8px;
   border: 1px solid #d6d8da;
   border-radius: 6px;
+  width: 75% !important;
 }
 
 .tags-input:focus-within {
@@ -1057,6 +1092,7 @@ table td{
   height: 46px;
   font-size: 14px;
   padding: 4px 0 0 0;
+
 }
 
 .tags-input .keywordInput:focus {

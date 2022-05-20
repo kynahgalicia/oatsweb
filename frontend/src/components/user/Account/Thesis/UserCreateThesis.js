@@ -1,10 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import {Form, FloatingLabel, Row, Col, Container, Button} from 'react-bootstrap'
+import { Link,useHistory } from 'react-router-dom'
+import {Form, Row, Col, Button} from 'react-bootstrap'
 import { showErrMsg} from '../../../utils/Notification';
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import Tesseract from 'tesseract.js';
 import FileBase64 from 'react-file-base64';
 import  {newThesis, clearErrors} from '../../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../../redux/actions/departmentActions'
@@ -25,10 +24,6 @@ const UserCreateThesis = () => {
     const {department} = useSelector(state => state.department)
     const {course} = useSelector(state => state.courses)
 
-    //Scan to text declaration
-    const [image, setImage] = useState('');
-    const [text, setText] = useState('');
-    const [progress, setProgress] = useState(0);
 
     
     // Thesis Details
@@ -75,26 +70,8 @@ const UserCreateThesis = () => {
             history.push('/user/login')
         }
 
-        }, [dispatch, alert, error, success, history, thisDepartment, isLoggedIn])
+        }, [dispatch, alert, error, success, history, thisDepartment,nameDepartment, isLoggedIn])
 
-    // Scan to text convert
-    const handleSubmit = () => {
-        Tesseract.recognize(image, 'eng', {
-            logger: (m) => {
-                console.log(m);
-                if (m.status === 'recognizing text') {
-                    setProgress(parseInt(m.progress * 100));
-                }
-            },
-        })
-            .catch((err) => {
-                console.error(err);
-            })
-            .then((result) => {
-                console.log(result.data.text);
-                setText(result.data.text);
-            });
-    };
 
     // Author Textbox
     const handleChangeInput = (index, event) => {
@@ -128,19 +105,6 @@ const UserCreateThesis = () => {
         formData.append('thisAuthors', JSON.stringify(authors))
 
         dispatch(newThesis(formData))
-
-        // console.log(thisKeyword)
-        // console.log(thisAuthors)
-        // console.log(authors)
-        // console.log(tags)
-        // console.log("title:", title)
-        // console.log("publishedAt:", publishedAt)
-        // console.log("abstract:", abstract)
-        // console.log("departments:", thisDepartment)
-        // console.log("courses:", thisCourse)
-        // console.log("authors", thisAuthors) 
-        // console.log("Keywords", tags)
-        // console.log("PDF", upload)
     }
 
     // Add Author
@@ -184,13 +148,10 @@ const UserCreateThesis = () => {
                 <div className='back-button text-start px-3 py-2'>
                     <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
                 </div>
-                    <Container>
-                    <div className="admin-wrapper ">
+                    <div className="admin-wrapper px-5">
                         <div className="form-admin-wrapper-two text-start">
-                            <div className="wrapper my-5">
-                                <Row>
+                            <div className="wrapper my-2">
                                     <h1>Create Thesis</h1>
-                                    <Col sm={6} className='pr-5'>
 
                                         
                                         <Form action="" onSubmit={handleFormSubmit}>
@@ -211,7 +172,7 @@ const UserCreateThesis = () => {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Year Published</Form.Label>
                                                 <Form.Control
-                                                    className='w-75 my-1'
+                                                    className='w-25 my-1'
                                                     type="year"
                                                     id="inputYear"
                                                     aria-describedby="year"
@@ -270,20 +231,6 @@ const UserCreateThesis = () => {
                                                 </Form.Text>
                                             </Form.Group>
 
-                                            {/* Department Input */}
-                                            {/* <Form.Group className="mb-3">
-                                                <Form.Label>Department</Form.Label><br/>
-                                                <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2"  value={thisDepartment} onChange={(e) => setDepartment(e.target.value)}>
-                                                <option> -- SELECT Department --</option>
-                                                
-                                                    { department && department.map((departments) => (
-                                                                
-                                                            <option value={departments._id}>{departments.deptname}</option>
-                                                                
-                                                        ))}
-                                                </Form.Select>
-                                            </Form.Group> */}
-
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Department</Form.Label>
                                                 <Form.Control
@@ -327,18 +274,20 @@ const UserCreateThesis = () => {
                                                     </ul>
                                                     
                                                     <Form.Control
-                                                        className='d-inline w-75 my-1 keywordInput'
+                                                        className='d-inline my-1 keywordInput'
                                                         type="text"
                                                         placeholder='Press space to add keywords'
                                                         onKeyUp={e => e.key == " " ? addTags(e): null}
-                                                        // onChange={event => handleChangeInputKeywords(index, event)}
                                                     />
                                                 </div>
                                             </Form.Group>
 
                                             {/* Abstract Input */}
                                             <Form.Group className="mb-3">
-                                                <Form.Label>Abstract</Form.Label>
+                                                <Form.Label className=''>Abstract</Form.Label>
+
+                                                <Link to='/scan-to-text' className='d-block'>Scan-To-Text</Link>
+                                                <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link>
                                                 <Form.Control
                                                     className='w-75 my-1'
                                                     as="textarea"
@@ -367,7 +316,7 @@ const UserCreateThesis = () => {
                                             </div>
                                             <br />
                                             {error && showErrMsg(error)}
-                                       
+                                    
                                             <Button 
                                                 className='my-3 success'
                                                 variant="primary" 
@@ -379,67 +328,10 @@ const UserCreateThesis = () => {
                                             </Button>
                                             
                                         </Form>
-                                    </Col>
-
-                                    <Col sm={6}>
-                                        <h3>Scan to text</h3>
-                                        
-                                        <p>
-                                            Notes:
-                                            <ul>
-                                                <li>You are only allowed to upload image formats:</li>
-                                                    <ul>
-                                                        <li>.jpeg</li>
-                                                        <li>.jpg</li>
-                                                        <li>.gif</li>
-                                                        <li>.webp</li>
-                                                        <li>.png</li>
-                                                    </ul>
-                                                <li>Special characters are not recognized by the system.</li>
-                                            </ul>
-                                        </p>
-
-                                        <input
-                                            type="file"
-                                            onChange={(e) =>
-                                            setImage(URL.createObjectURL(e.target.files[0]))
-                                            }
-                                            className="form-control mt-5 mb-2"
-                                        />
-                                        <img src={image} width="660px"/>
-
-                                        <progress className="form-control" value={progress} max="100">
-                                            {progress}%{' '}
-                                        </progress>{' '}
-
-                                        <p className="text-center py-0 my-0">Converting:- {progress} %</p>
-
-                                        <input
-                                            type="button"
-                                            onClick={handleSubmit}
-                                            className="btn btn-primary mt-5"
-                                            value="Convert"
-                                        />
-                                        <hr/>
-
-                                        {/* Text Box */}
-                                        <FloatingLabel controlId="floatingTextarea2" label="Result">
-                                            <Form.Control
-                                                id="teks" 
-                                                name="teks" 
-                                                value={text}
-                                                onChange={(e) => setText(e.target.value)}
-                                                as="textarea"
-                                                style={{ height: '200px' }}
-                                            />
-                                        </FloatingLabel>
-                                    </Col>
-                                </Row>
                             </div>
                         </div>
                     </div>
                         
-                    </Container>
                 </Col>
             </Row>
         </Fragment>

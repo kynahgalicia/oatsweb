@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import {Form, FloatingLabel, Row, Col, Container, Button} from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
+import {Form, Row, Col, Button} from 'react-bootstrap'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import Tesseract from 'tesseract.js';
+
 import FileBase64 from 'react-file-base64';
 import  {newThesis, clearErrors} from '../../../redux/actions/thesisActions'
 import {getDepartment} from '../../../redux/actions/departmentActions'
@@ -25,22 +25,16 @@ const CreateThesis = () => {
     const {department} = useSelector(state => state.department)
     const {course} = useSelector(state => state.courses)
 
-    //Scan to text declaration
-    const [image, setImage] = useState('');
-    const [text, setText] = useState('');
-    const [progress, setProgress] = useState(0);
-
-    
     // Thesis Details
     const [title, setTitle] = useState('')
     const [publishedAt, setPublishedAt] = useState('')
     const [abstract, setAbstract] = useState('')
     const [thisDepartment, setDepartment] = useState('')
+    const [nameDepartment, setNameDepartment] = useState('')
     const [thisCourse, setCourse] = useState('')
 
     //UPLOAD PDF
     const [upload, setUploadFile] = useState('')
-    const [showPercent, setShowPercent] = useState(false)
 
     //multiple input fields
     const [authors, setAuthors] = useState([
@@ -66,6 +60,11 @@ const CreateThesis = () => {
 
         dispatch(getDepartment())
 
+        if(admin.role === 'Moderator'){
+            setDepartment(admin.admin_department.departments)
+            setNameDepartment(admin.admin_department.deptname)
+        }
+
         if(thisDepartment){
             dispatch(getCourse(thisDepartment))
             console.log(thisDepartment)
@@ -75,27 +74,7 @@ const CreateThesis = () => {
             history.push('/admin/login');
         }
         
-        }, [dispatch, alert, error, success, history, thisDepartment, isLoggedInAdmin, admin])
-
-    // Scan to text convert
-    const handleSubmit = () => {
-        setShowPercent(true)
-        Tesseract.recognize(image, 'eng', {
-            logger: (m) => {
-                console.log(m);
-                if (m.status === 'recognizing text') {
-                    setProgress(parseInt(m.progress * 100));
-                }
-            },
-        })
-            .catch((err) => {
-                console.error(err);
-            })
-            .then((result) => {
-                console.log(result.data.text);
-                setText(result.data.text);
-            });
-    };
+        }, [dispatch, alert, error, success, history, thisDepartment,nameDepartment, isLoggedInAdmin, admin])
 
     // Author Textbox
     const handleChangeInput = (index, event) => {
@@ -182,16 +161,13 @@ const CreateThesis = () => {
                 </Col>
 
                 <Col sm={10}>
-                    <Container>
                     <div className='back-button text-start px-3 py-2'>
                         <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
                         </div>
-                    <div className="admin-wrapper">
+                    <div className="admin-wrapper px-5">
                         <div className="form-admin-wrapper-two text-start">
-                            <div className="wrapper my-5">
-                                <Row>
+                            <div className="wrapper my-2">
                                     <h1>Create Thesis</h1>
-                                    <Col sm={6}>
                                         <Form action="" onSubmit={handleFormSubmit}>
 
                                             {/* Title Input */}
@@ -233,6 +209,7 @@ const CreateThesis = () => {
                                                                 label="fname"
                                                                 value={inputField.fname}
                                                                 className="d-inline w-25 my-2"
+                                                                placeholder='First Name'
                                                                 onChange={event => handleChangeInput(index, event)}
                                                             />
                                                             <Form.Control
@@ -240,6 +217,7 @@ const CreateThesis = () => {
                                                                 label="lname"
                                                                 value={inputField.lname}
                                                                 className="d-inline w-25 m-2"
+                                                                placeholder='Last Name'
                                                                 onChange={event => handleChangeInput(index, event)}
                                                             />
 
@@ -268,7 +246,7 @@ const CreateThesis = () => {
                                             </Form.Group>
 
                                             {/* Department Input */}
-                                            <Form.Group className="mb-3">
+                                            { admin.role === 'Super Admin'? <Form.Group className="mb-3">
                                                 <Form.Label>Department</Form.Label><br/>
                                                 <Form.Select id="department_field" placeholder="" className="d-inline w-75 my-2"  value={thisDepartment} onChange={(e) => setDepartment(e.target.value)}>
                                                 <option> -- SELECT Department --</option>
@@ -280,6 +258,19 @@ const CreateThesis = () => {
                                                         ))}
                                                 </Form.Select>
                                             </Form.Group>
+                                            :
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Department</Form.Label>
+                                                    <Form.Control
+                                                        className='w-75 my-1'
+                                                        type="year"
+                                                        id="inputYear"
+                                                        aria-describedby="year"
+                                                        value={nameDepartment}
+                                                        disabled
+                                                    />
+                                                </Form.Group>
+                                            }
 
                                             {/* Course Input */}
                                             <Form.Group className="mb-3">
@@ -324,6 +315,8 @@ const CreateThesis = () => {
                                             {/* Abstract Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Abstract</Form.Label>
+                                                <Link to='/scan-to-text' className='d-block'>Scan-To-Text</Link>
+                                                <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link>
                                                 <Form.Control
                                                     className='w-75 my-1'
                                                     as="textarea"
@@ -354,7 +347,7 @@ const CreateThesis = () => {
                                             
                                             {error && showErrMsg(error)}
                                             <Button 
-                                                className='my-3'
+                                                className='my-3 success'
                                                 variant="primary" 
                                                 type="submit"
                                                 onClick={handleFormSubmit}
@@ -363,70 +356,11 @@ const CreateThesis = () => {
                                                 Submit
                                             </Button>
                                         </Form>
-                                    </Col>
-
-                                    <Col sm={6}>
-                                        <h3>Scan to text</h3>
-                                        
-                                        <p>
-                                            Notes:
-                                            <ul>
-                                                <li>You are only allowed to upload image formats:</li>
-                                                    <ul>
-                                                        <li>.jpeg</li>
-                                                        <li>.jpg</li>
-                                                        <li>.gif</li>
-                                                        <li>.webp</li>
-                                                        <li>.png</li>
-                                                    </ul>
-                                                <li>Special characters are not recognized by the system.</li>
-                                            </ul>
-                                        </p>
-
-                                        <input
-                                            type="file"
-                                            onChange={(e) =>
-                                            setImage(URL.createObjectURL(e.target.files[0]))
-                                            }
-                                            accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
-                                            className="form-control mt-5 mb-2"
-                                        />
-                                        { image ? <img src={image} width="400px" alt='Convert Image'/> : null}
-
-                                        <div className={showPercent ? null : 'd-none'}>
-                                        <progress className="form-control" value={progress} max="100">
-                                            {progress}%{' '}
-                                        </progress>{' '}
-
-                                        <p className="text-center py-0 my-0">Converting:- {progress} %</p>
-                                        </div>
-                                        <input
-                                            type="button"
-                                            onClick={handleSubmit}
-                                            className="btn btn-primary mt-5 d-block"
-                                            value="Convert"
-                                        />
-                                        <hr/>
-
-                                        {/* Text Box */}
-                                        <FloatingLabel controlId="floatingTextarea2" label="Result">
-                                            <Form.Control
-                                                id="teks" 
-                                                name="teks" 
-                                                value={text}
-                                                onChange={(e) => setText(e.target.value)}
-                                                as="textarea"
-                                                placeholder="Leave a comment here"
-                                                style={{ height: '200px' }}
-                                            />
-                                        </FloatingLabel>
-                                    </Col>
-                                </Row>
+                                    
                             </div>
                         </div>
                     </div>
                         
-                    </Container>
                 </Col>
             </Row>
         </Fragment>
