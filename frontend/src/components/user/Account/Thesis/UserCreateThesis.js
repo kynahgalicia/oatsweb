@@ -106,6 +106,10 @@ const UserCreateThesis = () => {
 
         dispatch(newThesis(formData))
     }
+    
+    const openScanToText = (url) => {
+        window.open(url);
+    }
 
     // Add Author
     const handleAddFields = () => {
@@ -286,8 +290,8 @@ const UserCreateThesis = () => {
                                             <Form.Group className="mb-3">
                                                 <Form.Label className=''>Abstract</Form.Label>
 
-                                                <Link to='/scan-to-text' className='d-block'>Scan-To-Text</Link>
-                                                <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link>
+                                                <Link onClick={() => openScanToText(window.location.origin + '/scan-to-text')} className='d-block'>Scan-To-Text</Link>
+                                                {/* <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link> */}
                                                 <Form.Control
                                                     className='w-75 my-1'
                                                     as="textarea"

@@ -76,6 +76,10 @@ const CreateThesis = () => {
         
         }, [dispatch, alert, error, success, history, thisDepartment,nameDepartment, isLoggedInAdmin, admin])
 
+    const openScanToText = (url) => {
+        window.open(url);
+    }
+
     // Author Textbox
     const handleChangeInput = (index, event) => {
         const values = [...authors]
@@ -315,8 +319,8 @@ const CreateThesis = () => {
                                             {/* Abstract Input */}
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Abstract</Form.Label>
-                                                <Link to='/scan-to-text' className='d-block'>Scan-To-Text</Link>
-                                                <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link>
+                                                <Link onClick={() => openScanToText(window.location.origin + '/scan-to-text')} className='d-block'>Scan-To-Text</Link>
+                                                {/* <Link to='/plagiarism' className='d-block'>Plagiarism Checker</Link> */}
                                                 <Form.Control
                                                     className='w-75 my-1'
                                                     as="textarea"
@@ -355,6 +359,7 @@ const CreateThesis = () => {
                                             >
                                                 Submit
                                             </Button>
+                                            
                                         </Form>
                                     
                             </div>

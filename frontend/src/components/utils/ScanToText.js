@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import {Form, FloatingLabel, Button, ProgressBar} from 'react-bootstrap'
 import Tesseract from 'tesseract.js';
+import LoaderImage from './LoaderImage'
 const ScanToText = () => {
     const history = useHistory();
 
@@ -9,19 +10,20 @@ const ScanToText = () => {
     const [image, setImage] = useState('');
     const [text, setText] = useState('');
     const [progress, setProgress] = useState(0);
+    const [status, setStatus] = useState('');
     const [showPercent, setShowPercent] = useState(false)
 
     useEffect(() => {
 
 
-    }, [history, image, text, progress, showPercent])
+    }, [history, image, text, progress, showPercent, status])
 
     // Scan to text convert
     const handleSubmit = () => {
         setShowPercent(true)
         Tesseract.recognize(image, 'eng', {
             logger: (m) => {
-                console.log(m);
+                // console.log(m);
                 if (m.status === 'recognizing text') {
                     setProgress(parseInt(m.progress * 100));
                 }
@@ -84,8 +86,14 @@ const ScanToText = () => {
 
                                         
                                         
-                                        <div className={showPercent ? 'mt-3' : 'd-none'}>
-
+                                        <div className={showPercent ? 'mt-5' : 'd-none'}>
+                                        {/* <div className='mt-3'> */}
+                                            { progress === 100 ? false : 
+                                            <>
+                                                        <h5> Recognizing Text...</h5>
+                                            
+                                            </>
+                                            }
                                             <ProgressBar striped animated={progress === 100 ? false : true} className="progress-bar" variant="success" now={progress} label={`${progress}%`} />
 
                                         </div>
