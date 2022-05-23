@@ -27,6 +27,7 @@ import DeletedDepartment from './components/admin/departments/DeletedDepartment'
 import CourseList from './components/admin/courses/CourseList'
 import CreateCourse from './components/admin/courses/CreateCourse'
 import Updatecourse from './components/admin/courses/EditCourse'
+import DeletedCourseList from './components/admin/courses/DeletedCourseList'
 
 
 import SubscriptionList from './components/admin/subscribers/SubscriptionList'
@@ -201,6 +202,7 @@ function App() {
         <Route path="/admin/course" component={CourseList} exact/>
         <Route path="/admin/course/new" component={CreateCourse} exact/>
         <Route path="/admin/course/edit/:courseId" component={Updatecourse} exact/>
+        <Route path="/admin/course/deleted" component={DeletedCourseList} exact/>
         <Route path="/admin/users" component={UserList} exact/>
         <Route path="/admin/users/deleted" component={DeletedUserList} exact/>
         <Route path="/admin/users/edit/:userId" component={EditUser} exact/>

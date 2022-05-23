@@ -30,10 +30,10 @@ const adminController = {
             if (!(/@tup.edu.ph\s*$/.test(admin_tupmail))) 
                 return res.status(402).json({msg: "Invalid Email"})
                 
-                const adminID = await Admins.findOne({admin_tupid})
+                const adminID = await Admins.findOne({admin_tupid, 'admin_status': { $not:/Deleted/}})
                 if(adminID)return res.status(402).json({msg: "This ID already exists."})
                 
-                const admin = await Admins.findOne({admin_tupmail})
+                const admin = await Admins.findOne({admin_tupmail, 'admin_status': { $not:/Deleted/}})
                 if(admin) return res.status(403).json({msg: "This email already exists."})
                 
                 if(admin_contact.length < 11 || admin_contact.length > 11)

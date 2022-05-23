@@ -125,6 +125,7 @@ const DepartmentList = () => {
     }
 
     const deleteDepartmentHandler = (id) => {
+        
         dispatch(deleteDepartment(id,adminToken))
     }
 

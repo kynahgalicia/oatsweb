@@ -112,7 +112,7 @@ const DeletedThesisList = () => {
                     department: thesis.department.deptname,
                     course: thesis.course.coursecode,
                     createdAt: moment(thesis.createdAt).format('MM/DD/YYYY'),
-                    status: thesis.status,
+                    status: <div className="denied">{thesis.status}</div>,
                     actions: 
                     <Fragment>
                         <Button className="m-1" variant="danger" data-toggle="modal" data-target={'#restoreModal' + thesis._id}>
@@ -152,7 +152,7 @@ const DeletedThesisList = () => {
                 department: thesis.department.deptname,
                 course: thesis.course.coursecode,
                 createdAt: moment(thesis.createdAt).format('MM/DD/YYYY'),
-                status: thesis.status,
+                status:  <div className="denied">{thesis.status}</div>,
                 actions: 
                 <Fragment>
                     <Button className="m-1" variant="danger" data-toggle="modal" data-target={'#restoreModal' + thesis._id}>

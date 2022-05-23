@@ -20,6 +20,13 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     
     const titleData = await Thesis.findOne({title})
     if(titleData) return res.status(400).json({msg: "Thesis title already exists"})
+    
+    const today = new Date()
+    if(publishedAt < 1999 || publishedAt > today.getFullYear())
+        return res.status(405).json({msg: "Invalid Year"})
+    
+    if(!(/\d{4,4}$/.test(publishedAt)))
+        return res.status(405).json({msg: "Invalid Year"})
 
     const uDept = await Department.findById(req.body.departments);
     const uCourse = await Course.findById(req.body.courses);
@@ -28,16 +35,6 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
         role: role,
         id: uploadedId
     }
-    // let uploadedBy = ''
-
-    // if(role === 'admin'){
-    //     uploadedBy = await Users.findById({uploadedId});
-
-    // }
-
-    // if(role === 'student'){
-    //     uploadedBy = await Admins.findById({uploadedId});
-    // }
 
     const department ={ 
         departments: uDept._id,

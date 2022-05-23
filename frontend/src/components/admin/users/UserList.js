@@ -121,7 +121,7 @@ const UserList = () => {
                     user_tupmail: users.user_tupmail,
                     department: users.user_department.deptname,
                     course: users.user_course.coursecode,
-                    user_status: users.user_status,
+                    user_status: <div className="active">{users.user_status}</div>,
                     actions: 
                     <Fragment>
                         {/* <Link to={`/admin/users/edit/${users._id}`} className="decor-none block m-1">
@@ -198,7 +198,7 @@ const UserList = () => {
                     user_tupmail: users.user_tupmail,
                     department: users.user_department.deptname,
                     course: users.user_course.coursecode,
-                    user_status: users.user_status,
+                    user_status: <div className="active">{users.user_status}</div>,
                     actions: 
                     <Fragment>
                         {/* <Link to={`/admin/users/edit/${users._id}`} className="decor-none block m-1">

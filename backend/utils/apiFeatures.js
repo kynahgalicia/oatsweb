@@ -12,13 +12,7 @@ class APIFeatures {
                 $options: 'i'
             },
         } : {}
-        const keyword2 = this.queryStr.keyword ? {
-            'keywords.keyword': {
-                $regex: this.queryStr.keyword,
-                $options: 'i'
-            },
-        } : {}
-        this.query = this.query.find({ ...keyword, ...keyword2 });
+        this.query = this.query.find({ ...keyword});
         return this;
     }
     searchKey() {

@@ -12,8 +12,8 @@ import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
 import AdminSidebar from '../../layout/AdminSidebar'
 
-const CourseList = () => {
-    const { loading, error, course } = useSelector(state => state.courses)
+const DeletedCourseList = () => {
+    const { loading, error, course, dept } = useSelector(state => state.courses)
     const {  error: deleteError, isDeleted } = useSelector(state => state.course)
     const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
@@ -90,24 +90,19 @@ const CourseList = () => {
             rows: []
         }
 
-        course.forEach(course => {
-            if(course.status === 'Active'){
+        course && course.forEach(course => {
+            if(course.status !== 'Active'){
                 data.rows.push({
                     // id: course._id,
                     coursename: course.coursename,
                     coursecode: course.coursecode,
                     department: course.department.deptname,
-                    status: <div className="active">{course.status}</div>,
-                    actions: 
+                    status: <div className='denied'>{course.status}</div>,
+                    actions:  
                     <Fragment>
-                        <Link to={`/admin/course/edit/${course._id}`} className="decor-none block">
-                            <Button variant="info">
-                            <FaPencilAlt/>
-                            </Button>
-                        </Link>
     
-                        <Button variant="danger" data-toggle="modal" data-target={"#deleteModal" + course._id} className='m-1 danger'>
-                            <FaTrash/>
+                        <Button variant="danger" clasName='danger' data-toggle="modal" data-target={"#deleteModal" + course._id} disabled={course.department.status !== 'Active' ? true : false}>
+                        <i className="fas fa-undo"></i>
                         </Button>
     
                         <div className="modal fade" id={"deleteModal"  + course._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -118,7 +113,6 @@ const CourseList = () => {
                                         <br/>
                                         This course may contain data from other lists. Are you sure you want to delete this course? This action cannot be undone.
                                     </div>
-                                    
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => deleteCourseHandler(course._id)}>Yes</button>
@@ -137,7 +131,7 @@ const CourseList = () => {
     const deleteCourseHandler = (id) => {
         const formData = new FormData();
         formData.set('status', 'Deleted');
-        dispatch(deleteCourse(id,adminToken, formData))
+        // dispatch(deleteCourse(id,adminToken, formData))
     }
 
     return(
@@ -149,17 +143,17 @@ const CourseList = () => {
 
             <Col sm={10}>
                 <div className="admin-wrapper">
+                <div className='back-button text-start px-3 py-2'>
+                        <i className="fas fa-arrow-left"  data-toggle="tooltip" data-placement="bottom" title="Back" onClick={() => history.goBack()}></i>
+                        </div>
                 <div className="table-admin">
                     <div className='d-flex align-items-start m-2 px-5'>
-                        <h1>Courses</h1>
+                        <h1>Deleted Courses</h1>
                     </div>
                 
                 {loading ? <LoaderAdmin/>  :  
                     <>
-                <div className='d-flex align-items-start mx-5 mt-3'>
-                    <Button variant="success" className='success mx-1'><Link to="/admin/course/new">+ Add</Link></Button>
-                    <Button variant="success" className='danger'><Link to="/admin/course/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
-                </div>
+                
                     <MDBDataTableV5 
                         hover 
                         entriesOptions={[5, 10, 15, 25]} 
@@ -181,4 +175,4 @@ const CourseList = () => {
     )
 }
 
-export default CourseList;
+export default DeletedCourseList;

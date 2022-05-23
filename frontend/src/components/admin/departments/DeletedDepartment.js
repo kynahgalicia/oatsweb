@@ -83,7 +83,7 @@ const DeletedDepartment = () => {
                 <Fragment>
 
                     <Button className="m-1" variant="danger" data-toggle="modal" data-target={"#deleteModal" + department._id}>
-                    <i class="fas fa-undo"></i>
+                    <i className="fas fa-undo"></i>
                     </Button>
 
                     <div className="modal fade" id={"deleteModal"  + department._id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -38,7 +38,7 @@ const userController = {
             if (!(/\bTUPT-\d{2}-\d{4}$/.test(user_tupid))) 
                 return res.status(403).json({msg: "Invalid ID format"})
 
-            const user = await Users.findOne({user_tupmail,'user_status': 'Active'})
+            const user = await Users.findOne({user_tupmail,'user_status': { $not:/Deleted/}})
             if(user) return res.status(405).json({msg: "This email already exists."})
 
             if(user_contact.length < 11 || user_contact.length > 11)
@@ -47,7 +47,7 @@ const userController = {
             if (/[a-zA-Z]$/.test(user_contact)) 
             return res.status(406).json({msg: "Invalid Contact Number"})
 
-            if (/\b09\d{9}$/.test(user_contact)) 
+            if (!(/\b09\d{9}$/.test(user_contact))) 
             return res.status(406).json({msg: "Invalid Contact Number Format"})
 
             if(passwords.length < 6)

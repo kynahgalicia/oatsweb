@@ -48,8 +48,8 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
 // /api/department/deleted
 exports.getDeleted = catchAsyncErrors(async (req,res,next) => {
     
-    const departmentCount = await Department.countDocuments({'status':'isDeleted'});
-    const apiFeatures = new APIFeatures(Department.find({'status':'isDeleted'}), req.query).search().filter()
+    const departmentCount = await Department.countDocuments({'status':'Deleted'});
+    const apiFeatures = new APIFeatures(Department.find({'status':'Deleted'}), req.query).search().filter()
     
     let Department_query = await apiFeatures.query;
 
@@ -128,13 +128,13 @@ exports.delete = catchAsyncErrors(async(req,res,next) =>{
 // /api/department/delete/:id 
 exports.softdelete = catchAsyncErrors(async(req,res,next) =>{
     try {
-        const dept = await Department.findByIdAndUpdate(req.params.id,{'status': 'isDeleted'},{
+        const dept = await Department.findByIdAndUpdate(req.params.id,{'status': 'Deleted'},{
             new: true,
             runValidators:true,
             useFindandModify:false
         })
 
-        const deptCourse = await Course.updateMany({'department.id' : req.params.id}, { $set: {status: 'isDeleted' }});
+        const deptCourse = await Course.updateMany({'department.id' : req.params.id}, { $set: {status: 'Deleted', 'department.status': 'Deleted' }});
 
         res.json({msg: "Department (and Courses under it) has been Deleted!", success: true})
     } catch (error) {
@@ -150,7 +150,7 @@ exports.restoredelete = catchAsyncErrors(async(req,res,next) =>{
             useFindandModify:false
         })
 
-        const deptCourse = await Course.updateMany({'department.id' : req.params.id}, { $set: {status: 'Active' }});
+        const deptCourse = await Course.updateMany({'department.id' : req.params.id}, { $set: {status: 'Active', 'department.status': 'Active' }});
 
         res.json({msg: "Department (and Courses under it) has been restored!", success: true})
     } catch (error) {

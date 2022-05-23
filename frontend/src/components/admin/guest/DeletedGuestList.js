@@ -105,7 +105,7 @@ const DeletedGuestList = () => {
                     guest_profession: guests.guest_profession,
                     guest_company: guests.guest_company,
                     guest_company_address: guests.guest_company_address,
-                    guest_status: guests.guest_status,
+                    guest_status: <div className="denied">{guests.guest_status}</div>,
                     actions: 
                     <Fragment>
     

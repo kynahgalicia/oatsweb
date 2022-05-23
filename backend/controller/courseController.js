@@ -36,13 +36,46 @@ exports.getAdminCourse = catchAsyncErrors(async (req, res, next) => {
     })
 
 })
+// /api/admin/course
+// exports.getAdminCourseStatus = catchAsyncErrors(async (req, res, next) => {
 
+//     try {
+        
+//         const course = await Course.find()
+//         const department = await Department.find({'status':'Deleted'})
+
+//         let changeCourse = []
+
+//         course.forEach(course => {
+//                 department.forEach(department => {
+//                 if( department.deptname !== course.department.deptname){
+//                     changeCourse.push(course._id)
+//                 }
+//             });
+            
+//         });
+
+//         await Course.updateMany({_id: { $in: changeCourse}}, { $set: {'department.status': 'Active' }});
+//         res.status(200).json({
+//             success: true
+//         })
+
+//     } catch (error) {
+//         res.json({
+//             msg: error
+//         })
+//     }
+    
+
+// })
 // /api/course
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
     const courseCount = await Course.countDocuments();
     const apiFeatures = new APIFeatures(Course.find({'status': 'Active'}), req.query).searchCourse().filter()
     console.log(req.query)
+
+    
     
     let Course_query = await apiFeatures.query;
 
@@ -93,13 +126,55 @@ exports.editCourse = catchAsyncErrors(async(req,res,next) => {
     }
 })
 
-// /api/course/delete/:id 
-exports.delete = catchAsyncErrors(async(req,res,next) =>{
-    try {
-        await Course.findByIdAndDelete(req.params.id)
-        res.json({msg: "Course has been deleted!", success: true})
-    } catch (error) {
-        return res.status(500).json({msg: err.message})
+// api/admin/course/delete/:id
+exports.softDelete = catchAsyncErrors(async(req,res,next) => {
+    let course = await Course.findById(req.params.id);
+
+    if(!Course) {
+        return next(new ErrorHandler('Course not found',404));
+    }
+
+    try{
+        course = await Course.findByIdAndUpdate(req.params.id,{'status': 'Deleted'},{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.json({msg: "Course has been deleted", success: true})
+    }catch(error){
+        res.status(500).send({msg: error.message});
     }
 })
+// api/admin/course/delete/:id
+exports.restoreDelete = catchAsyncErrors(async(req,res,next) => {
+    let course = await Course.findById(req.params.id);
+    if(!Course) {
+        return next(new ErrorHandler('Course not found',404));
+    }
+
+
+
+    try{
+        course = await Course.findByIdAndUpdate(req.params.id,{'status': 'Deleted'},{
+            new: true,
+            runValidators:true,
+            useFindandModify:false
+        })
+
+        res.json({msg: "Course has been deleted", success: true})
+    }catch(error){
+        res.status(500).send({msg: error.message});
+    }
+})
+
+// /api/course/delete/:id 
+// exports.delete = catchAsyncErrors(async(req,res,next) =>{
+//     try {
+//         await Course.findByIdAndDelete(req.params.id)
+//         res.json({msg: "Course has been deleted!", success: true})
+//     } catch (error) {
+//         return res.status(500).json({msg: err.message})
+//     }
+// })
 

@@ -28,7 +28,7 @@ const guestController = {
             if(!validateEmail(guest_mail))
                 return res.status(401).json({msg: "Invalid emails."})
 
-            const guest = await Guests.findOne({guest_mail})
+            const guest = await Guests.findOne({guest_mail, 'guest_status': { $not:/Deleted/}})
             if(guest) return res.status(402).json({msg: "This email already exists."})
 
             if(guest_contact.length < 11 || guest_contact.length > 11)
@@ -37,7 +37,7 @@ const guestController = {
             if (/[a-zA-Z]$/.test(guest_contact)) 
             return res.status(406).json({msg: "Invalid Contact Number"})
 
-            if (/\b09\d{9}$/.test(guest_contact)) 
+            if (!(/\b09\d{9}$/.test(guest_contact))) 
             return res.status(406).json({msg: "Invalid Contact Number Format"})
 
             if(passwords.length < 6)

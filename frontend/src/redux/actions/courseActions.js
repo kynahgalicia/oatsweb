@@ -3,6 +3,9 @@ import {
     ALL_COURSE_REQUEST,
     ALL_COURSE_SUCCESS,
     ALL_COURSE_FAIL,
+    ADMIN_COURSE_REQUEST,
+    ADMIN_COURSE_SUCCESS,
+    ADMIN_COURSE_FAIL,
     NEW_COURSE_REQUEST,
     NEW_COURSE_SUCCESS,
     NEW_COURSE_FAIL,
@@ -39,6 +42,27 @@ export const getCourse = (department) => async (dispatch) => {
     } catch(error) {
         dispatch({
             type: ALL_COURSE_FAIL,
+            payload: error
+        })
+    }
+}
+
+export const getAdminCourse = () => async (dispatch) => {
+    try {
+        dispatch({ type: ADMIN_COURSE_REQUEST })
+
+        let link = process.env.REACT_APP_URL + `/api/admin/course`
+    
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: ADMIN_COURSE_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: ADMIN_COURSE_FAIL,
             payload: error
         })
     }
@@ -121,7 +145,7 @@ export const updateCourse = (id, courseData,adminToken) => async (dispatch) => {
 }
 
 // Delete course (Admin)
-export const deleteCourse = (id,adminToken) => async (dispatch) => {
+export const deleteCourse = (id,adminToken, formData) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_COURSE_REQUEST })
@@ -129,9 +153,10 @@ export const deleteCourse = (id,adminToken) => async (dispatch) => {
         const config = {
             headers: {
                 'Authorization': adminToken,
+                'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.delete(process.env.REACT_APP_URL + `/api/course/delete/${id}`, config)
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/course/delete/${id}`, formData, config)
 
         dispatch({
             type: DELETE_COURSE_SUCCESS,

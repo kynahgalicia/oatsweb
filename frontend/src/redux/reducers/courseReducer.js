@@ -2,6 +2,9 @@ import {
     ALL_COURSE_REQUEST,
     ALL_COURSE_SUCCESS,
     ALL_COURSE_FAIL,
+    ADMIN_COURSE_REQUEST,
+    ADMIN_COURSE_SUCCESS,
+    ADMIN_COURSE_FAIL,
     NEW_COURSE_REQUEST,
     NEW_COURSE_SUCCESS,
     NEW_COURSE_RESET,
@@ -23,21 +26,25 @@ import {
 export const courseReducer = (state = { course: [] }, action) => {
     switch (action.type) {
         case  ALL_COURSE_REQUEST:
+        case  ADMIN_COURSE_REQUEST:
             return {
                 loading: true,
                 course: []
             }
 
-        case  ALL_COURSE_SUCCESS:
+        case  ALL_COURSE_SUCCESS: 
+        case  ADMIN_COURSE_SUCCESS: 
             return {
                 loading: false,
                 course: action.payload.course,
+                dept: action.payload.dept,
                 courseCount: action.payload.courseCount,
                 resPerPage: action.payload.resPerPage,
                 filteredCourseCount: action.payload.filteredCourseCount
             }
 
         case ALL_COURSE_FAIL:
+        case ADMIN_COURSE_FAIL:
             return {
                 loading: false,
                 error: action.payload

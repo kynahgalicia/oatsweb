@@ -12,7 +12,12 @@ const courseSchema = new mongoose.Schema({
         deptname: {
             type: String,
             required: true
-    }},
+        },
+        status: {
+            type: String,
+            default: 'Active'
+        }
+    },
     status: {
         type: String,
         default: 'Active'
