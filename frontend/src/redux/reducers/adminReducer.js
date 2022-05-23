@@ -150,6 +150,7 @@ export const adminReducer = (state = {}, action) => {
         case RESTORE_ADMIN_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 

@@ -7,13 +7,14 @@ import { departmentsReducer, newDepartmentReducer, departmentReducer, Department
 import { courseReducer, newCourseReducer, courseUpdateReducer, CourseDetailsReducer } from "./reducers/courseReducer"
 
 import { bookmarksReducer, newBookmarkReducer, bookmarkReducer} from "./reducers/bookmarkReducer"
+
 import {borrowsReducer, newBorrowReducer, borrowReducer, verifyBorrowsReducer} from "./reducers/borrowReducer"
 
 import {authUserReducer,authUserRegisterReducer,authTokenReducer, authForgotPassReducer}  from './reducers/authReducer'
 
 import {authGuestReducer, authGuestRegisterReducer, authGuestTokenReducer, authGuestForgotPassReducer} from './reducers/authGuestReducer'
 
-import { authAdminReducer,authAdminTokenReducer, authAdminRegisterReducer } from "./reducers/authAdminReducer"
+import { authAdminReducer,authAdminTokenReducer, authAdminRegisterReducer, authAdminForgotPassReducer } from "./reducers/authAdminReducer"
 
 import { usersReducer , userReducer, userDetailsReducer } from './reducers/userReducer'
 
@@ -76,6 +77,7 @@ const reducer = combineReducers({
     authAdmin:authAdminReducer,
     authAdminRegister:authAdminRegisterReducer,
     authAdminToken: authAdminTokenReducer,
+    authAdminForgot: authAdminForgotPassReducer,
     //Authentication Guest
     authGuest: authGuestReducer,
     authGuestRegister: authGuestRegisterReducer,

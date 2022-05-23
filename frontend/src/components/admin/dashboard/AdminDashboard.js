@@ -201,7 +201,7 @@ const AdminDashboard = () => {
                                                 <br />
                                                 <label> {admin.admin_contact}</label> <br />
                                                 <label> {thisDepartment}</label><br />
-                                                <Button className="btn-user">Edit Profile</Button>
+                                                <Link to='/admin/profile/edit'><Button className="btn-user">Edit Profile</Button></Link>         
                                             </Col>
                                         </Row>
                                     </div>

@@ -3,6 +3,7 @@ const Department = require('../models/departmentModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
+const sendMailPassword = require('./sendMailPassword')
 const sendToken = require('../utils/jwtToken');
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
@@ -38,6 +39,9 @@ const adminController = {
                 
                 if(admin_contact.length < 11 || admin_contact.length > 11)
                 return res.status(406).json({msg: "contact must be 11 numbers."})
+            
+            const contact = await Admins.findOne({admin_contact,'admin_status': { $not:/Deleted/}})
+            if(contact) return res.status(405).json({msg: "This number already exists."})
 
             if (/[a-zA-Z]$/.test(admin_contact)) 
             return res.status(406).json({msg: "Invalid Contact Number"})
@@ -157,7 +161,7 @@ const adminController = {
             const access_token = createAccessToken({id: admin._id})
             const url = `${FRONTEND_URL}/admin/reset/${access_token}`
 
-            // sendMail(admin_tupmail, url, "Reset your password")
+            sendMailPassword(admin_tupmail, url, "Reset your password")
             res.json({msg: "Reset requeset sent! Please check your email.",
                     url: url})
         } catch (err) {
@@ -214,12 +218,24 @@ const adminController = {
         }
     },
 
-    updateAdmin: async (req,res) => {
+    updateProfile: async (req,res) => {
+
+        const {admin_contact, admin_fname, admin_lname} = req.body
         let admin = await Admins.findById(req.params.id);
 
         if(!admin)
         return res.status(400).json({msg: "Admin not found"})
 
+        const contact = await Admins.findOne({admin_contact,'admin_status': { $not:/Deleted/}})
+        if(contact) return res.status(405).json({msg: "This number already exists."})
+
+        if(admin_contact.length < 11 || admin_contact.length > 11)
+        return res.status(400).json({msg: "contact must be 11 numbers."})
+        
+        
+        if(!admin_fname || !admin_lname || !admin_contact )
+        return res.status(400).json({msg: "Please fill in all fields."})
+        
         try {
 
             admin = await Admins.findByIdAndUpdate(req.params.id,req.body,{

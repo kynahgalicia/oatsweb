@@ -41,6 +41,9 @@ const userController = {
             const user = await Users.findOne({user_tupmail,'user_status': { $not:/Deleted/}})
             if(user) return res.status(405).json({msg: "This email already exists."})
 
+            const contact = await Users.findOne({user_contact,'user_status': { $not:/Deleted/}})
+            if(contact) return res.status(405).json({msg: "This number already exists."})
+
             if(user_contact.length < 11 || user_contact.length > 11)
                 return res.status(406).json({msg: "contact must be 11 numbers."})
 
@@ -310,9 +313,19 @@ const userController = {
         if(!user)
         return res.status(400).json({msg: "User not found"})
 
+        const contact = await Users.findOne({user_contact,'user_status': { $not:/Deleted/}})
+        if(contact) return res.status(405).json({msg: "This number already exists."})
+        
         if(user_contact.length < 11)
                 return res.status(400).json({msg: "contact must be at least 11 numbers."})
-        
+
+
+        if (/[a-zA-Z]$/.test(user_contact)) 
+        return res.status(406).json({msg: "Invalid Contact Number"})
+
+        if (!(/\b09\d{9}$/.test(user_contact))) 
+        return res.status(406).json({msg: "Invalid Contact Number Format"})
+    
         
         if(!user_fname || !user_lname || !user_contact )
         return res.status(400).json({msg: "Please fill in all fields."})

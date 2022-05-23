@@ -106,7 +106,7 @@ export const updateAdmin = (id, adminData,adminToken) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_ADMIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
         })
     }
 }

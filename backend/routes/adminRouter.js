@@ -31,7 +31,7 @@ router.put('/delete/:id',authAdmin,authSuperAdminRole, adminController.softDelet
 
 router.put('/restore/:id',authAdmin,authSuperAdminRole, adminController.restoreDelete)
 
-router.put('/edit/:id' ,authAdmin,authAdminRole, adminController.updateAdmin)
+router.put('/edit/:id' ,authAdmin,authAdminRole, adminController.updateProfile)
 
 router.put('/super/:id',authAdmin,authSuperAdminRole,adminController.superAdmin)
 

@@ -20,13 +20,13 @@ import {
     LOGOUT_ADMIN_SUCCESS,
     LOGOUT_ADMIN_FAIL,
 
-    // FORGOT_PASSWORD_REQUEST,
-    // FORGOT_PASSWORD_SUCCESS,
-    // FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_ADMIN_REQUEST,
+    FORGOT_PASSWORD_ADMIN_SUCCESS,
+    FORGOT_PASSWORD_ADMIN_FAIL,
 
-    // RESET_PASSWORD_REQUEST,
-    // RESET_PASSWORD_SUCCESS,
-    // RESET_PASSWORD_FAIL,
+    RESET_PASSWORD_ADMIN_REQUEST,
+    RESET_PASSWORD_ADMIN_SUCCESS,
+    RESET_PASSWORD_ADMIN_FAIL,
 
     GET_ADMIN_TOKEN_REQUEST,
     GET_ADMIN_TOKEN_SUCCESS,
@@ -176,38 +176,38 @@ export const authAdminTokenReducer = (state = {adminToken: {}}, action) => {
             return state
     }
 }
-// export const authForgotPassReducer = (state = {msg: {}}, action) => {
-//     switch(action.type){
-//         case FORGOT_PASSWORD_REQUEST:
-//         case RESET_PASSWORD_REQUEST:
-//             return {
-//                 loading: true,
-//                 message:null
-//             }
+export const authAdminForgotPassReducer = (state = {msg: {}}, action) => {
+    switch(action.type){
+        case FORGOT_PASSWORD_ADMIN_REQUEST:
+        case RESET_PASSWORD_ADMIN_REQUEST:
+            return {
+                loading: true,
+                message:null
+            }
 
-//         case FORGOT_PASSWORD_SUCCESS:
-//         case RESET_PASSWORD_SUCCESS:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 message: action.payload.msg
-//             }
+        case FORGOT_PASSWORD_ADMIN_SUCCESS:
+        case RESET_PASSWORD_ADMIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload.msg
+            }
 
-//         case FORGOT_PASSWORD_FAIL:
-//         case RESET_PASSWORD_FAIL:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 error: action.payload
-//             }
+        case FORGOT_PASSWORD_ADMIN_FAIL:
+        case RESET_PASSWORD_ADMIN_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
 
-//         case CLEAR_ERRORS:
-//             return {
-//                 ...state,
-//                 error: null
-//             }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
             
-//         default:
-//             return state
-//     }
-// }
+        default:
+            return state
+    }
+}

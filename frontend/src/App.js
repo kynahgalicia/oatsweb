@@ -11,9 +11,10 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Terms from './components/layout/Terms'
 
+
 //Admin
-import LoginasAdmin from './components/admin/auth/LoginasAdmin'
 import AdminDashboard from './components/admin/dashboard/AdminDashboard'
+import EditAdminProfile from './components/admin/dashboard/EditAdminProfile'
 
 import ThesisList from './components/admin/thesis/ThesisList'
 import DeletedThesisList from './components/admin/thesis/DeletedThesisList'
@@ -58,6 +59,11 @@ import About from './components/user/Home/About'
 import Category from './components/user/Home/Category'
 import Contact from './components/user/Home/Contact'
 import ScanToText from './components/utils/ScanToText';
+
+//Auth Admin
+import LoginasAdmin from './components/admin/auth/LoginasAdmin'
+import ForgotPasswordAdmin from './components/admin/auth/ForgotPasswordAdmin'
+import ResetPasswordAdmin from './components/admin/auth/ResetPasswordAdmin'
 
 //Auth User
 import LoginasUser from './components/user/Auth/LoginasUser'
@@ -191,7 +197,10 @@ function App() {
         <Route path="/guest/payment/:sub" component={GuestPayment} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
+        <Route path="/admin/profile/edit" component={EditAdminProfile} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
+        <Route path="/admin/forgot" component={ForgotPasswordAdmin} exact/>
+        <Route path="/admin/reset/:token" component={ResetPasswordAdmin} exact/>
         <Route path="/admin/thesis" component={ThesisList} exact/>
         <Route path="/admin/thesis/deleted" component={DeletedThesisList} exact/>
         <Route path="/admin/thesis/new" component={CreateThesis} exact/>

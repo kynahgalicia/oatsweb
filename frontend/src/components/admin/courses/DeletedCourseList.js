@@ -7,14 +7,14 @@ import {MDBDataTableV5 } from 'mdbreact'
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import { useDispatch, useSelector } from 'react-redux'
-import {getAdminCourse, deleteCourse, clearErrors} from '../../../redux/actions/courseActions'
-import { DELETE_COURSE_RESET } from '../../../redux/constants/courseConstants'
+import {getAdminCourse, restoreCourse, clearErrors} from '../../../redux/actions/courseActions'
+import { RESTORE_COURSE_RESET } from '../../../redux/constants/courseConstants'
 
 import AdminSidebar from '../../layout/AdminSidebar'
 
 const DeletedCourseList = () => {
-    const { loading, error, course, dept } = useSelector(state => state.courses)
-    const {  error: deleteError, isDeleted } = useSelector(state => state.course)
+    const { loading, error, course } = useSelector(state => state.courses)
+    const {  error: deleteError, isRestored } = useSelector(state => state.course)
     const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
     const {adminToken} = useSelector(state => state.authAdminToken)
 
@@ -37,10 +37,10 @@ const DeletedCourseList = () => {
             dispatch(clearErrors())
         }
 
-        if (isDeleted) {
-            history.push('/admin/course');
-            alert.success('Course deleted successfully');
-            dispatch({ type: DELETE_COURSE_RESET })
+        if (isRestored) {
+            history.push('/admin/course/deleted');
+            alert.success('Course Restored successfully');
+            dispatch({ type: RESTORE_COURSE_RESET })
         }
         
         if (admin.role === 'Moderator') {
@@ -51,7 +51,7 @@ const DeletedCourseList = () => {
         if (!isLoggedInAdmin) {
             history.push('/admin/login');
         }
-    },[ dispatch, alert, error, deleteError, isDeleted, history, isLoggedInAdmin,adminToken, admin]);
+    },[ dispatch, alert, error, deleteError, isRestored, history, isLoggedInAdmin,adminToken, admin]);
 
 
     const setData = () => { 
@@ -111,11 +111,11 @@ const DeletedCourseList = () => {
                                     <div className="modal-body">
                                         <i class="fas fa-exclamation-triangle alert"/>
                                         <br/>
-                                        This course may contain data from other lists. Are you sure you want to delete this course? This action cannot be undone.
+                                        Are you sure you want to restore this data?
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => deleteCourseHandler(course._id)}>Yes</button>
+                                        <button type="button" className="btn btn-danger" data-dismiss="modal"  onClick={() => restoreCourseHandler(course._id)}>Yes</button>
                                     </div>
                                 </div>
                             </div>
@@ -128,10 +128,10 @@ const DeletedCourseList = () => {
         return data;
     }
 
-    const deleteCourseHandler = (id) => {
+    const restoreCourseHandler = (id) => {
         const formData = new FormData();
-        formData.set('status', 'Deleted');
-        // dispatch(deleteCourse(id,adminToken, formData))
+        formData.set('status', 'Active');
+        dispatch(restoreCourse(id,adminToken, formData))
     }
 
     return(

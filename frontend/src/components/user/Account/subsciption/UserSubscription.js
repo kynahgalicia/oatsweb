@@ -49,11 +49,12 @@ const UserSubscription = () => {
 
                     { isLoggedIn && subType && subType.status === 'Pending' ? <div className="notif-bar bg-rose text-start"> <p>Please wait for the confirmation of your subscription</p> </div> : null}
                     { isLoggedIn && subType && subType.status === 'Expired' ? <div className="notif-bar bg-rose text-start"> <p>Your subscription has expired.</p> </div> : null}
+                    { isLoggedIn && subType && subType.status === 'Denied' ? <div className="notif-bar bg-rose text-start"> <p>Your subscription has been declined. Contact the administrators through our email address for more info </p> </div> : null}
                     < div className="sub-cards">
                         
                         <Card className= {"sub-card text-start " + ( day ? 'border-current' : null)}>
                             <div className={( day ? 'sub-current' : 'd-none')}>
-                                <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null} { isLoggedIn && subType && subType.status === 'Expired' ? '(Expired)': null}</Card.Header> 
+                                <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null} { isLoggedIn && subType && subType.status === 'Denied' ? '(Denied)': null} </Card.Header> 
                             </div>
                                 <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>
                                 <Card.Body>
@@ -76,7 +77,7 @@ const UserSubscription = () => {
 
                         <Card className= {"sub-card text-start " + ( weekly ? 'border-current' : null)}>
                             <div className={( weekly ? 'sub-current' : 'd-none')}>
-                            <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null} { isLoggedIn && subType && subType.status === 'Expired' ? '(Expired)': null}</Card.Header> 
+                            <Card.Header >Current  { isLoggedIn && subType && subType.status === 'Pending' ? '(Pending)': null} { isLoggedIn && subType && subType.status === 'Expired' ? '(Expired)': null} { isLoggedIn && subType && subType.status === 'Denied' ? '(Denied)': null}</Card.Header> 
                             </div>
                             <Card.Header><h1 className="text-start">₱325/week</h1></Card.Header>
                             <Card.Body>

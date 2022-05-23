@@ -15,6 +15,9 @@ import {
     DELETE_COURSE_REQUEST,
     DELETE_COURSE_SUCCESS,
     DELETE_COURSE_FAIL,
+    RESTORE_COURSE_REQUEST,
+    RESTORE_COURSE_SUCCESS,
+    RESTORE_COURSE_FAIL,
     COURSE_DETAILS_REQUEST,
     COURSE_DETAILS_SUCCESS,
     COURSE_DETAILS_FAIL,
@@ -166,7 +169,34 @@ export const deleteCourse = (id,adminToken, formData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_COURSE_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.msg
+        })
+    }
+}
+
+// restore course (Admin)
+export const restoreCourse = (id,adminToken, formData) => async (dispatch) => {
+    try {
+
+        dispatch({ type:RESTORE_COURSE_REQUEST })
+
+        const config = {
+            headers: {
+                'Authorization': adminToken,
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.put(process.env.REACT_APP_URL + `/api/course/restore/${id}`, formData, config)
+
+        dispatch({
+            type:RESTORE_COURSE_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type:RESTORE_COURSE_FAIL,
+            payload: error.response.data.msg
         })
     }
 }

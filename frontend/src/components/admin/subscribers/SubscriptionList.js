@@ -5,8 +5,8 @@ import moment from 'moment'
 import {Row, Col, Button} from 'react-bootstrap';
 import {MDBDataTableV5 } from 'mdbreact'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSubscribe, expireSubscribeAdmin, clearErrors} from '../../../redux/actions/subscriptionActions';
-import { DELETE_SUBSCRIBES_RESET} from '../../../redux/constants/subscriptionConstants';
+import { getSubscribe, declineSubscribe, clearErrors} from '../../../redux/actions/subscriptionActions';
+import { DELETE_SUBSCRIBES_RESET, DECLINE_SUBSCRIBE_RESET } from '../../../redux/constants/subscriptionConstants';
 import LoaderAdmin from '../../../components/utils/LoaderAdmin'
 import AdminSidebar from '../../layout/AdminSidebar'
 
@@ -17,6 +17,7 @@ const SubscriptionList = () => {
 
     const { loading, error, subs } = useSelector(state => state.subs)
     const { isDeleted, msg } = useSelector(state => state.subscribes)
+    const { isDeclined } = useSelector(state => state.verifiedSub)
     const { isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
 
     useEffect(() => {
@@ -33,6 +34,12 @@ const SubscriptionList = () => {
             dispatch({ type: DELETE_SUBSCRIBES_RESET })
         }
 
+        if (isDeclined) {
+            history.push('/admin/subscription/list');
+            alert.success('Subscription has been declined');
+            dispatch({ type: DECLINE_SUBSCRIBE_RESET })
+        }
+
         if (admin.role === 'Moderator') {
             history.push('/')
             alert.error('Restricted')
@@ -45,7 +52,11 @@ const SubscriptionList = () => {
         // if(expired){
         //     console.log(expired)
         // }
-    }, [dispatch, alert, error, history, isDeleted, admin, isLoggedInAdmin])
+    }, [dispatch, alert, error, history, isDeleted, isDeclined, admin, isLoggedInAdmin])
+
+    const declineSub = (id) => {
+        dispatch(declineSubscribe(id))
+    }
 
     const setData = () => { 
         const data = {
@@ -138,7 +149,7 @@ const SubscriptionList = () => {
                     actions: 
                     <Fragment>
                         <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + subs._id}>
-                            Revoke
+                            Cancel
                         </Button> 
     
     
@@ -146,11 +157,11 @@ const SubscriptionList = () => {
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                 <div className="modal-body">
-                                    Do you really want to revoke the subscription?
+                                    Do you really want to cancel the subscription?
                                 </div>
                                 <div className="modal-footer">
                                     <Button  className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                                    <Button  className="btn btn-danger" data-dismiss="modal">Submit</Button>
+                                    <Button  className="btn btn-danger" data-dismiss="modal" onClick={() => declineSub(subs._id)} >Submit</Button>
                                 </div>
                                 </div>
                             </div>

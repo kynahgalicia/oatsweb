@@ -21,13 +21,13 @@ import{
     LOGOUT_ADMIN_SUCCESS,
     LOGOUT_ADMIN_FAIL,
 
-    // FORGOT_PASSWORD_REQUEST,
-    // FORGOT_PASSWORD_SUCCESS,
-    // FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_ADMIN_REQUEST,
+    FORGOT_PASSWORD_ADMIN_SUCCESS,
+    FORGOT_PASSWORD_ADMIN_FAIL,
 
-    // RESET_PASSWORD_REQUEST,
-    // RESET_PASSWORD_SUCCESS,
-    // RESET_PASSWORD_FAIL,
+    RESET_PASSWORD_ADMIN_REQUEST,
+    RESET_PASSWORD_ADMIN_SUCCESS,
+    RESET_PASSWORD_ADMIN_FAIL,
 
     GET_ADMIN_TOKEN_REQUEST,
     GET_ADMIN_TOKEN_SUCCESS,
@@ -187,64 +187,64 @@ export const logoutAdmin = () => async (dispatch) => {
     }
 }
 
-// // Forgot Password
-// export const forgotPassword = (admin_tupmail) => async (dispatch) => {
-//     try {
+// Forgot Password
+export const forgotPassword = (admin_tupmail) => async (dispatch) => {
+    try {
 
-//         dispatch({ type: FORGOT_PASSWORD_REQUEST
-//         })
+        dispatch({ type: FORGOT_PASSWORD_ADMIN_REQUEST
+        })
 
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
-//         const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/forgot' , {admin_tupmail}, config)
-
-
-//         dispatch({
-//             type: FORGOT_PASSWORD_SUCCESS,
-//             payload: data
-//         })
-
-//     } catch (error) {
-//         dispatch({
-//             type: FORGOT_PASSWORD_FAIL,
-//             payload: error.response.data.msg
-//         })
-//     }
-// }
-
-// // Reset Password
-// export const resetPassword = (admin_password,token) => async (dispatch) => {
-//     try {
-
-//         dispatch({ type: RESET_PASSWORD_REQUEST
-//         })
-
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': token
-//             }
-//         }
-
-//         const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/reset' , {admin_password}, config)
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/forgot' , {admin_tupmail}, config)
 
 
-//         dispatch({
-//             type: RESET_PASSWORD_SUCCESS,
-//             payload: data
-//         })
+        dispatch({
+            type: FORGOT_PASSWORD_ADMIN_SUCCESS,
+            payload: data
+        })
 
-//     } catch (error) {
-//         dispatch({
-//             type: RESET_PASSWORD_FAIL,
-//             payload: error.response.data.msg
-//         })
-//     }
-// }
+    } catch (error) {
+        dispatch({
+            type: FORGOT_PASSWORD_ADMIN_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
+// Reset Password
+export const resetPassword = (admin_password,token) => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESET_PASSWORD_ADMIN_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }
+
+        const { data } = await axios.post(process.env.REACT_APP_URL + '/admin/reset' , {admin_password}, config)
+
+
+        dispatch({
+            type: RESET_PASSWORD_ADMIN_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: RESET_PASSWORD_ADMIN_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
 
 
 

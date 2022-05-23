@@ -17,6 +17,10 @@ import {
     UPDATE_COURSE_SUCCESS,
     UPDATE_COURSE_FAIL,
     UPDATE_COURSE_RESET,
+    RESTORE_COURSE_REQUEST,
+    RESTORE_COURSE_SUCCESS,
+    RESTORE_COURSE_FAIL,
+    RESTORE_COURSE_RESET,
     COURSE_DETAILS_REQUEST,
     COURSE_DETAILS_SUCCESS,
     COURSE_DETAILS_FAIL,
@@ -104,6 +108,7 @@ export const courseUpdateReducer = (state = {}, action) => {
     switch (action.type) {
 
         case DELETE_COURSE_REQUEST:
+        case RESTORE_COURSE_REQUEST:
         case UPDATE_COURSE_REQUEST:
             return {
                 ...state,
@@ -118,6 +123,14 @@ export const courseUpdateReducer = (state = {}, action) => {
                 msg: action.payload.msg
             }
 
+        case RESTORE_COURSE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRestored: action.payload.success, 
+                msg: action.payload.msg
+            }
+
         case UPDATE_COURSE_SUCCESS:
             return {
                 ...state,
@@ -127,6 +140,7 @@ export const courseUpdateReducer = (state = {}, action) => {
 
 
         case DELETE_COURSE_FAIL:
+        case RESTORE_COURSE_FAIL:
         case UPDATE_COURSE_FAIL:
             return {
                 ...state,
@@ -137,6 +151,12 @@ export const courseUpdateReducer = (state = {}, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+
+        case RESTORE_COURSE_RESET:
+            return {
+                ...state,
+                isRestored: false
             }
 
         case UPDATE_COURSE_RESET:
