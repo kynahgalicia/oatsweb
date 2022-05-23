@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState} from 'react'
+import React, { Fragment, useEffect, useState, useRef} from 'react'
 import { Link, useHistory } from 'react-router-dom' 
 import {Row, Col, Button, Form} from 'react-bootstrap'
 import { useSelector, useDispatch} from 'react-redux'
@@ -10,6 +10,7 @@ import PieChart from './analytics/PieChart'
 import TimeSeries from './analytics/TimeSeries'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
+import ReactToPrint from "react-to-print";
 // require('./dashboard.css');
 
 
@@ -17,6 +18,7 @@ const AdminDashboard = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
+    let componentRef = useRef();
 
     const [thisDepartment, setThisDepartment] = useState('')
     const { loading,isLoggedInAdmin, admin} = useSelector(state => state.authAdmin)
@@ -212,6 +214,13 @@ const AdminDashboard = () => {
 
             <div>
                 <div className="container" >
+                    
+                <ReactToPrint
+                                        trigger={() => { return <Button className='success'><i className="fas fa-print"></i> Print Current Data</Button>}}
+                                        content={() =>componentRef}
+                                        />
+                <div ref={el =>(componentRef = el) }>
+
                     {isLoggedInAdmin && admin.role === 'Moderator' ? 
                     <>
                     
@@ -531,9 +540,12 @@ const AdminDashboard = () => {
 
 {/* --------------------------------------TOP VIEWS ------------------------------------------ */}
                                     <Row className='px-5'>
+                                   
                                             <br />
                                             <h2>Top Views</h2>
                                             <hr />
+
+                                        <Row>
                                         <Row className='px-5'>
                                             <Col className="p-2">
                                                 <div className="card-box bg-cream">
@@ -571,10 +583,12 @@ const AdminDashboard = () => {
                                                 </div>
                                             </Col>
                                         </Row>
+                                        </Row>
                                     </Row>
 {/* -----------------------------------------TOP SEARCHED ------------------------------------- */}
                                     <Row className='px-5'>
                                         <hr />
+
                                         <Row className='px-5'>
                                             {/* <Col className="p-2"> */}
                                                 <div className="card-box bg-cream">
@@ -793,6 +807,7 @@ const AdminDashboard = () => {
                             
                         </>
                     }
+                </div>
                         </div>
                     </div>
                 </div> 

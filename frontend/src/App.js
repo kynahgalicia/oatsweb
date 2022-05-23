@@ -14,6 +14,7 @@ import Terms from './components/layout/Terms'
 
 //Admin
 import AdminDashboard from './components/admin/dashboard/AdminDashboard'
+import ReactToPdf from './components/admin/dashboard/ReactToPdf'
 import EditAdminProfile from './components/admin/dashboard/EditAdminProfile'
 
 import ThesisList from './components/admin/thesis/ThesisList'
@@ -197,6 +198,7 @@ function App() {
         <Route path="/guest/payment/:sub" component={GuestPayment} exact/>
 
         <Route path="/admin/dashboard" component={AdminDashboard} exact/>
+        <Route path="/admin/react-to-pdf" component={ReactToPdf} exact/>
         <Route path="/admin/profile/edit" component={EditAdminProfile} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>
         <Route path="/admin/forgot" component={ForgotPasswordAdmin} exact/>
