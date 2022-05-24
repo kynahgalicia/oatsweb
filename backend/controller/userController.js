@@ -48,13 +48,13 @@ const userController = {
                 return res.status(406).json({msg: "contact must be 11 numbers."})
 
             if (/[a-zA-Z]$/.test(user_contact)) 
-            return res.status(406).json({msg: "Invalid Contact Number"})
+            return res.status(407).json({msg: "Invalid Contact Number"})
 
             if (!(/\b09\d{9}$/.test(user_contact))) 
-            return res.status(406).json({msg: "Invalid Contact Number Format"})
+            return res.status(408).json({msg: "Invalid Contact Number Format"})
 
             if(passwords.length < 6)
-                return res.status(407).json({msg: "Password must be at least 6 characters."})
+                return res.status(409).json({msg: "Password must be at least 6 characters."})
 
             const user_password = await bcrypt.hash(passwords, 12)
             
@@ -141,10 +141,10 @@ const userController = {
             if(!user) return res.status(400).json({msg: "This email does not exist. Please register first."})
 
             const userStatus = await Users.findOne({'user_tupmail': user_tupmail, 'user_status': 'Deactivated'})
-            if(userStatus) return res.status(400).json({msg: "This account is deactivated"})
+            if(userStatus) return res.status(401).json({msg: "This account is deactivated"})
 
             const isMatch = await bcrypt.compare(user_password, user.user_password)
-            if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
+            if(!isMatch) return res.status(402).json({msg: "Password is incorrect."})
             
             // console.log(user)   
 
@@ -334,7 +334,7 @@ const userController = {
 
             user = await Users.findByIdAndUpdate(req.params.id,req.body,{
                 new: true,
-                runValidators:true,
+                // runValidators:true,
                 useFindandModify:false
             })
 

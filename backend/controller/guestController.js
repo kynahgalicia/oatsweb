@@ -32,10 +32,10 @@ const guestController = {
             if(guest) return res.status(402).json({msg: "This email already exists."})
 
             if(guest_contact.length < 11 || guest_contact.length > 11)
-            return res.status(406).json({msg: "contact must be 11 numbers."})
+            return res.status(403).json({msg: "contact must be 11 numbers."})
 
             if (/[a-zA-Z]$/.test(guest_contact)) 
-            return res.status(406).json({msg: "Invalid Contact Number"})
+            return res.status(407).json({msg: "Invalid Contact Number"})
 
             if (!(/\b09\d{9}$/.test(guest_contact))) 
             return res.status(406).json({msg: "Invalid Contact Number Format"})
@@ -99,10 +99,10 @@ const guestController = {
             if(!guest) return res.status(400).json({msg: "This email does not exist."})
 
             const guestStatus = await Guests.findOne({'guest_mail': guest_mail, 'guest_status': 'Deactivated'})
-            if(guestStatus) return res.status(400).json({msg: "This account is deactivated"})
+            if(guestStatus) return res.status(401).json({msg: "This account is deactivated"})
 
             const isMatch = await bcrypt.compare(guest_password, guest.guest_password)
-            if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
+            if(!isMatch) return res.status(402).json({msg: "Password is incorrect."})
             
             console.log(guest)   
 
@@ -270,7 +270,7 @@ const guestController = {
 
             guest = await Guests.findByIdAndUpdate(req.params.id,req.body,{
                 new: true,
-                runValidators:true,
+                // runValidators:true,
                 useFindandModify:false
             })
 
