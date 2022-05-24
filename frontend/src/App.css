@@ -270,9 +270,16 @@ li, p {
   background-color: #211E1E;
   color: #F4F6F6;
   font-family: 'Poppins', sans-serif;
-  min-height: 230px;
+  min-height: 240px;
   font-size: 1.8vh;
   padding: 20px;
+}
+
+.footer a{
+  color: #F4F6F6;
+}
+.footer a:hover{
+  color: var(--red);
 }
 
 .footer .left{
