@@ -204,6 +204,8 @@ exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{
         req.body.status = 'Active'
         req.body.dateBorrowed = Date.now()
 
+        const {dueDate} = req.body
+
         const cadmins = await Admins.findById(req.body.admins)
         
         req.body.admin={
@@ -215,6 +217,9 @@ exports.verifyRequest = catchAsyncErrors(async(req,res,next) =>{
 
         const borrowUnreturned = await Borrow.find({ "thesis.title": req.body.title , 'status': { $not:/Returned/}})
         if(borrowUnreturned.length > 0) return res.status(400).json({msg: "Book is Unavailable"})
+        
+        
+        if(!dueDate) return res.status(400).json({msg: "Please enter due date and time"})
 
 
         const accept = await Borrow.findByIdAndUpdate(req.body.id,req.body,{

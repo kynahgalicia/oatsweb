@@ -98,8 +98,8 @@ const BorrowList = () => {
                     sort: 'desc'
                 },
                 {
-                    label: 'Reciept',
-                    field: 'reciept',
+                    label: 'Receipt',
+                    field: 'receipt',
                     sort: 'desc'
                 },
                 {
@@ -120,7 +120,7 @@ const BorrowList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
-                    reciept:  <Link onClick={() => openImage(subs.reciept[0].url)}> Reciept Image</Link>,
+                    receipt:  <Link onClick={() => openImage(subs.receipt[0].url)}> Receipt Image</Link>,
                     actions: 
                     <Fragment>
                         <Button className="success" data-toggle="modal" data-target={'#acceptModal' + subs._id}  disabled={loadingButton ? true : false}>
@@ -206,8 +206,8 @@ const BorrowList = () => {
                     sort: 'desc'
                 },
                 {
-                    label: 'Reciept',
-                    field: 'reciept',
+                    label: 'Receipt',
+                    field: 'receipt',
                     sort: 'desc'
                 },
                 {
@@ -228,14 +228,11 @@ const BorrowList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
-                    reciept:  <Link onClick={() => openImage(subs.reciept[0].url)}> Reciept Image</Link>,
+                    receipt:  <Link onClick={() => openImage(subs.receipt[0].url)}> Receipt Image</Link>,
                     actions: 
                     <Fragment>
                         <Button className="success" data-toggle="modal" data-target={'#acceptModal' + subs._id}  disabled={loadingButton ? true : false}>
                             Accept
-                        </Button> 
-                        <Button className='mx-1 danger' data-toggle="modal" data-target={'#deleteModal' + subs._id} disabled={loadingButton ? true : false}>
-                            Delete
                         </Button> 
     
     
