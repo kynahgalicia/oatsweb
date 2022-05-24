@@ -84,13 +84,13 @@ exports.studentRequest = async(req,res,next) => {
         if(borrowed) return res.status(400).json({msg: "Already Requested"})
         
         const borrowedB = await Borrow.findOne({user, thesis, 'status': 'Active'})
-        if(borrowedB) return res.status(400).json({msg: "Already Borrowed"})
+        if(borrowedB) return res.status(401).json({msg: "Already Borrowed"})
 
         // const borrowUnreturned = await Borrow.find({ "thesis.title": req.body.theses , 'status': { $not:/Returned/}})
         // if(borrowUnreturned.length > 0) return res.status(400).json({msg: "Book is Unavailable"})
         
         const limit = await Borrow.find({'user.tupid': user_tupid, 'status': { $not:/Returned/}}).countDocuments()
-        if(limit >= 3) return res.status(400).json({msg: "Reached Limit of Borrow"})
+        if(limit >= 3) return res.status(402).json({msg: "Reached Limit of Borrow"})
         
         const borrow = await Borrow.create(req.body);
 
