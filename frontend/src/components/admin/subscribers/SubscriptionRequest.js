@@ -120,7 +120,7 @@ const BorrowList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
-                    receipt:  <Link onClick={() => openImage(subs.receipt[0].url)}> Receipt Image</Link>,
+                    receipt:  <Link onClick={() => openImage(subs.reciept[0].url)}> Receipt Image</Link>,
                     actions: 
                     <Fragment>
                         <Button className="success" data-toggle="modal" data-target={'#acceptModal' + subs._id}  disabled={loadingButton ? true : false}>
@@ -228,7 +228,7 @@ const BorrowList = () => {
                     sub_type: subs.sub_type, 
                     status: subs.status,
                     paidAt: moment(subs.paidAt).format('MM/DD/YYYY'),
-                    receipt:  <Link onClick={() => openImage(subs.receipt[0].url)}> Receipt Image</Link>,
+                    receipt:  <Link onClick={() => openImage(subs.reciept[0].url)}> Receipt Image</Link>,
                     actions: 
                     <Fragment>
                         <Button className="success" data-toggle="modal" data-target={'#acceptModal' + subs._id}  disabled={loadingButton ? true : false}>
