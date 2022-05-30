@@ -96,7 +96,7 @@ const GuestPayment = () => {
                     <div className='payment-wrapper'>
                         <div className="payment-plan">
                 
-                        { isLoggedInGuest && subTypeGuest.status !=='Expired' ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                        { isLoggedInGuest && subTypeGuest && subTypeGuest.status !=='Expired' ? <div className="notif-bar bg-rose mx-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
                             <h5 className='my-2'>Your Plan</h5>
                             <Card className= {"mx-4 sub-card text-start " + ( sub_type === 'oneDay' ? null : 'd-none')} >
                                     <Card.Header> <h1 className="text-start">₱50/day</h1></Card.Header>

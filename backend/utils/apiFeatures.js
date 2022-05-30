@@ -6,23 +6,25 @@ class APIFeatures {
 
 
     search() {
-        const keyword = this.queryStr.keyword ? {
-            title: {
-                $regex: this.queryStr.keyword,
-                $options: 'i'
-            },
+            const test = this.queryStr.keyword.replaceAll(' ', '|')
+        console.log(test)
+        const keyword = test ? {
+            "$or" :[
+                { 'title': {
+                    $regex: test,
+                    $options: 'i'
+                }},
+                { 'keywords.keyword': { 
+                    $regex: test, 
+                }} ,
+                {'abstract': { 
+                    $regex: test,
+                    $options: 'i' 
+                }} 
+            ]
+            
         } : {}
         this.query = this.query.find({ ...keyword});
-        return this;
-    }
-    searchKey() {
-        const keyword = this.queryStr.keyword2 ? {
-            'keywords.keyword': {
-                $regex: this.queryStr.keyword,
-                $options: 'i'
-            }
-        } : {}
-        this.query = this.query.find({ ...keyword });
         return this;
     }
     searchCourse() {

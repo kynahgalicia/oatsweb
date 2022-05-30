@@ -34,10 +34,8 @@ exports.getAdminDepartment = catchAsyncErrors(async (req, res, next) => {
 exports.get = catchAsyncErrors(async (req,res,next) => {
     
     const departmentCount = await Department.countDocuments({'status':'Active'});
-    const apiFeatures = new APIFeatures(Department.find({'status':'Active'}), req.query).search().filter()
+    const Department_query = await Department.find({'status':'Active'})
     
-    let Department_query = await apiFeatures.query;
-
     res.status(200).json({
         success: true,
         departmentCount,

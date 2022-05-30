@@ -142,7 +142,7 @@ const UserPayment = () => {
                         <div className="payment-process text-start">
                             <Row>
                                 <h5>Payment</h5>
-                                { isLoggedIn && subType.status !== 'Expired' ? <div className="notif-bar bg-rose mx-0 my-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
+                                { isLoggedIn && subType && subType.status !== 'Expired' ? <div className="notif-bar bg-rose mx-0 my-0"> <p>You have an existing plan <br/>Are you sure you want to replace your current subscription?</p> </div> : null}
                                 <Col className="px-5">
                                 <img src={gcash} alt="logo" className="p-3 w-50" />
                                 <img src={fifty} alt="logo" className={"p-3 w-75 " + ( sub_type === 'oneDay' ? null : 'd-none')} />

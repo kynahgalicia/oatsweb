@@ -77,18 +77,27 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 
 exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
 
-    const thesisCount = await Thesis.find().countDocuments();
-    const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    const Thesis_query = await Thesis.find().sort({createdAt: -1})
+    // const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
+    // const test = req.query.keyword
+
+    // const testR = test.replaceAll(' ', '|')
+
+    // console.log(testR)
+    // const result = await Thesis.find({
+    //     "$or": [
+    //         { 'title': { '$regex': testR, '$options': 'i' } },
+    //         { 'keywords.keyword': { '$regex': testR, '$options': 'i' } },
+    //         { 'abstract': { '$regex': testR, '$options': 'i' } }
+    //     ]
+    // })
     
-    
-    let Thesis_query = await apiFeatures.query.sort({createdAt: -1});
+    // let Thesis_query = await apiFeatures.query.sort({createdAt: -1});
 
     
     res.status(200).json({
         success: true,
-        thesisCount,
-        thesis:Thesis_query,
-        filteredThesisCount: Thesis_query.length,
+        thesis:Thesis_query
     })
 
 })
@@ -107,9 +116,12 @@ exports.getStudentThesis = catchAsyncErrors(async (req, res, next) => {
 
 // /api/thesis
 exports.get = catchAsyncErrors(async (req,res,next) => {
-    
-    const thesisCount = await Thesis.find({'status':'Active'}).countDocuments();
-    const apiFeatures = new APIFeatures(Thesis.find({'status':'Active'}), req.query).search().filter()
+    // const test = req.query.keyword
+
+    // const testR = test.replaceAll(' ', '|')
+
+    const thesisCount = await Thesis.find().countDocuments();
+    const apiFeatures = new APIFeatures(Thesis.find(), req.query).search().filter()
     
     
     let Thesis_query = await apiFeatures.query;

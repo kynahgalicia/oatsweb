@@ -72,9 +72,14 @@ const ThesisDetails = () => {
 
     const handleChange = (e) => {
         var authString = ''
+        var authFString = ''
 
         authors.map((x) => (
-            authString = authString + x.lname + ', ' + x.fname.charAt(0) + '., '
+            authString = authString + x.lname + ', ' + x.fname.charAt(0) + '. '
+        ))
+
+        authors.map((x) => (
+            authFString = authFString + x.fname.charAt(0) + '. ' + x.lname + ', '
         ))
         
         const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -88,67 +93,55 @@ const ThesisDetails = () => {
             case('IEEE'):
                 console.log(e.target.value)
                 setFormat(
-                    authString 
+                    '[1]     ' + authFString
                     + '"' + title + '," '
-                    + '<em>Online Archiving Thesis System</em>' + ', '
                     + publishedAt + '. [Online]. ' 
                     + 'Available: ' + window.location.origin + '/. '
-                    + '[Accessed: ' + date.getDate() + '-'
-                    + months.substring(0, 3) + '-'
-                    + date.getFullYear() + '].'
                 )
 
                 setCopyFormat(
-                    authString 
+                    '[1]     ' + authFString + ', '
                     + '"' + title + '," '
-                    + 'Online Archiving Thesis System' + ', '
                     + publishedAt + '. [Online]. ' 
                     + 'Available: ' + window.location.origin + '/. '
-                    + '[Accessed: ' + date.getDate() + '-'
-                    + months.substring(0, 3) + '-'
-                    + date.getFullYear() + '].'
                 )
-
-
                 break;
+            
             case('APA'):
                 console.log(e.target.value)
                 setFormat(
                     authString + '(' + publishedAt + '). ' 
-                    + '<em>' + title + '</em>' + '. ' 
-                    + 'Retrieved ' + monthNames[date.getMonth()] 
-                    +  ' ' + date.getDate()
-                    + ', ' + date.getFullYear()
-                    + ' from ' + window.location.origin + '/'
+                    + title + '. ' 
+                    + 'Retrieved from OATS: '
+                    + window.location.origin + '/'
                 )
+
                 setCopyFormat(
                     authString + '(' + publishedAt + '). ' 
                     + title + '. ' 
-                    + 'Retrieved ' + monthNames[date.getMonth()] 
-                    +  ' ' + date.getDate()
-                    + ', ' + date.getFullYear()
-                    + ' from ' + window.location.origin + '/'
+                    + 'Retrieved from OATS: '
+                    + window.location.origin + '/'
                 )
                 break;
+            
             case('MLA'):
-            setFormat(
-                authors[0].lname 
-                + ', ' + authors[0].fname  
-                + ' , et al. ' 
-                + '"'+ title +'." '
-                + '<em> Online Archiving Thesis System </em>' + ', '
-                + date.getFullYear() + ', '
-                + ' from ' + window.location.origin + '/.'
-            )
-            setCopyFormat(
-                authors[0].lname 
-                + ', ' + authors[0].fname  
-                + ' , et al. ' 
-                + '"'+ title +'." '
-                + ' Online Archiving Thesis System ' + ', '
-                + date.getFullYear() + ', '
-                + ' from ' + window.location.origin + '/.'
-            )
+                setFormat(
+                    authors[0].lname 
+                    + ', ' + authors[0].fname  
+                    + ', et al. ' 
+                    + title + '. '
+                    + publishedAt + '. '
+                    + window.location.origin + '/.'
+                )
+
+                setCopyFormat(
+                    authors[0].lname 
+                    + ', ' + authors[0].fname  
+                    + ', et al. ' 
+                    + title + '. '
+                    + publishedAt + '. '
+                    + window.location.origin + '/.'
+                )
                 console.log(e.target.value)
                 break;
             default:

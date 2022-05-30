@@ -13,7 +13,7 @@
 
 .success{
   background-color: var(--success) !important; 
-  color: var(--grey) !important;
+  color: var(--white) !important;
   border: 1px solid var(--success) !important;
 }
 

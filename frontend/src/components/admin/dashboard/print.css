@@ -1,0 +1,43 @@
+@media print {
+    body{
+        padding: 0 10px;
+        align-items: center;
+    }
+
+    .hide-print{
+        visibility: hidden;
+    }
+
+    .print{
+        margin-bottom: -150px;
+        padding: 0 !important;
+    }
+
+    div{
+        break-inside: avoid;
+    }
+
+    .page-break{ 
+        page-break-before: always;
+    }
+
+    h3{
+        text-align: center;
+    }
+
+    .row{
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .table-admin thead th{
+        border: 1px solid #211E1E !important; 
+        left: 0 !important;
+    }
+
+    input, label, select,
+    .mdb-datatable-info,
+    .mdb-dataTables_paginate{
+        visibility: hidden;
+    }
+}

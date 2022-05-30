@@ -17,6 +17,22 @@ import AdminDashboard from './components/admin/dashboard/AdminDashboard'
 import ReactToPdf from './components/admin/dashboard/ReactToPdf'
 import EditAdminProfile from './components/admin/dashboard/EditAdminProfile'
 
+//Print
+import PrintData from './components/admin/print/PrintData'
+import PrintAdminList from './components/admin/print/admin/PrintAdminList';
+import PrintUserList from './components/admin/print/users/PrintUserList';
+import PrintGuestList from './components/admin/print/guest/PrintGuestList';
+import PrintThesisList from './components/admin/print/thesis/PrintThesisList';
+import PrintDepartmentList from './components/admin/print/department/PrintDepartmentList'
+import PrintCourseList from './components/admin/print/course/PrintCourseList';
+import PrintBorrowRequest from './components/admin/print/borrow/PrintBorrowRequest';
+import PrintBorrowList from './components/admin/print/borrow/PrintBorrowList';
+import PrintOverdueBorrowList from './components/admin/print/borrow/PrintOverdueBorrowList';
+import PrintReturnList from './components/admin/print/borrow/PrintReturnList';
+import PrintSubscriptionRequest from './components/admin/print/subscribers/PrintSubscriptionRequest'
+import PrintSubscriptionList from './components/admin/print/subscribers/PrintSubscriptionList';
+
+
 import ThesisList from './components/admin/thesis/ThesisList'
 import DeletedThesisList from './components/admin/thesis/DeletedThesisList'
 
@@ -197,7 +213,23 @@ function App() {
         <Route path="/guest/subscription" component={GuestSubscription} exact/>
         <Route path="/guest/payment/:sub" component={GuestPayment} exact/>
 
-        <Route path="/admin/dashboard" component={AdminDashboard} exact/>
+        <Route path="/admin/dashboard" component={AdminDashboard} exact/>\
+
+        <Route path="/admin/print" component={PrintData} exact/>
+        <Route path="/admin/print/admins" component={PrintAdminList} exact/>
+        <Route path="/admin/print/users" component={PrintUserList} exact/>
+        <Route path="/admin/print/guests" component={PrintGuestList} exact/>
+        <Route path="/admin/print/thesis" component={PrintThesisList} exact/>
+        <Route path="/admin/print/department" component={PrintDepartmentList} exact/>
+        <Route path="/admin/print/course" component={PrintCourseList} exact/>
+        <Route path="/admin/print/borrowrequest" component={PrintBorrowRequest} exact/>
+        <Route path="/admin/print/borrowlist" component={PrintBorrowList} exact/>
+        <Route path="/admin/print/overdue" component={PrintOverdueBorrowList} exact/>
+        <Route path="/admin/print/returned" component={PrintReturnList} exact/>
+        <Route path="/admin/print/subsrequest" component={PrintSubscriptionRequest} exact/>
+        <Route path="/admin/print/subscriptions" component={PrintSubscriptionList} exact/>
+
+
         <Route path="/admin/react-to-pdf" component={ReactToPdf} exact/>
         <Route path="/admin/profile/edit" component={EditAdminProfile} exact/>
         <Route path="/admin/login" component={LoginasAdmin} exact/>

@@ -11,7 +11,7 @@ import TimeSeries from './analytics/TimeSeries'
 import {fetchLog} from '../../../redux/actions/loggingActions'
 import {fetchDataCount} from '../../../redux/actions/loggingActions'
 import ReactToPrint from "react-to-print";
-// require('./dashboard.css');
+require('./print.css');
 
 
 const AdminDashboard = () => {
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                 <div className="container" >
                     
                 <ReactToPrint
-                                        trigger={() => { return <Button className='success'><i className="fas fa-print"></i> Print Current Data</Button>}}
+                                        trigger={() => { return <Button className='success'><i className="fas fa-print"></i> Print Data</Button>}}
                                         content={() =>componentRef}
                                         />
                 <div ref={el =>(componentRef = el) }>
@@ -382,6 +382,7 @@ const AdminDashboard = () => {
 {/* ---------------------------- SUPER ADMIN -------------------------- */}
                     {isLoggedInAdmin && admin.role === 'Moderator' ? null : 
                         <>
+                        {/* <div className="hide-print"> */}
                         
                         <Row className="mx-5">
                                         <Col className="mx-1">
@@ -537,7 +538,7 @@ const AdminDashboard = () => {
                                             </div>
                                         </Col>
                                     </Row>
-
+                        {/* </div> */}
 {/* --------------------------------------TOP VIEWS ------------------------------------------ */}
                                     <Row className='px-5'>
                                    
@@ -590,17 +591,12 @@ const AdminDashboard = () => {
                                         <hr />
 
                                         <Row className='px-5'>
-                                            {/* <Col className="p-2"> */}
+                                            <Col sm={8}>
                                                 <div className="card-box bg-cream">
                                                     
                                                     <BarGraph dataLog={searchLog} title={"Top Searched Keywords"} legend={"Keywords"} color={'#ff6464'}/>
                                                 </div>
-                                            {/* </Col>
-                                            <Col className="p-2">
-                                                <div className="card-box bg-cream">
-                                                    <BarGraph dataLog={mech} title={"Top Viewed Thesis (Mechanical)"} legend={"Views"} color={'#b63752'}/>
-                                                </div>
-                                            </Col> */}
+                                            </Col>
                                         </Row>
                                     </Row>
 {/* --------------------------------------------------TOP DOWNLOADS------------------------------------------ */}
@@ -689,7 +685,8 @@ const AdminDashboard = () => {
                                     </Row>
 
 {/* --------------------------------------TIMELINES---------------------------------------------------------- */}
-                                <Row className='px-5'>
+<div>
+                                <Row className='px-5 page-break'>
                                         <Row className='px-5 mb-5'>
                                             <br />
                                             <h2> Timeline</h2>
@@ -762,7 +759,8 @@ const AdminDashboard = () => {
                                         
                                     </Row>
                                     <Row className='px-5'>       
-                                        <Col  className="bg-cream p-4 m-1">
+                                        <Col  className="bg-cream p-4 m-1" sm={6}>
+                                            <div>
                                         <Form.Group className="mb-2 w-50">
                                             <Form.Select id="format_field" onChange={handleChangeOverdue}>
                                                 <option> All Time </option>
@@ -774,23 +772,12 @@ const AdminDashboard = () => {
                                         <div className="card-box ">
                                                 <TimeSeries dataLog={overduepday} time={timeSeriesOverdue} title={'Overdue Books'} legend={'Books'} color={'#ce4559'}/>
                                             </div>
-                                        </Col>
-                                        <Col className="p-4 m-1"> 
-                                        {/* <Form.Group className="mb-2 w-50">
-                                            <Form.Select id="format_field" onChange={handleChangeReturned}>
-                                                <option> All Time </option>
-                                                <option> Week</option>
-                                                <option> Month</option>
-                                                <option> Year</option>
-                                            </Form.Select>
-                                        </Form.Group>
-                                        <div className="card-box ">
-                                                <TimeSeries dataLog={returnedpday} time={timeSeriesReturned} title={'Returned Books'} legend={'Books'} color={'#e7545f'}/>
-                                            </div> */}
+                                            </div>
                                         </Col>
                                         
                                     </Row>
                                 </Row>
+                                </div>
 {/* --------------------------------------PIE CHARTS---------------------------------------------------------- */}
                                 <Row className='px-5'>
                                     <Col className="p-2">

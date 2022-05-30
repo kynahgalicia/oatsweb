@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert';
 import {Row, Col, Button, Form} from 'react-bootstrap';
@@ -19,6 +19,7 @@ const UserList = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const alert = useAlert();
+    let componentRef = useRef();
 
     const [thisDepartment, setDepartment] = useState('');
 
@@ -123,6 +124,9 @@ const UserList = () => {
                 {
                     label: 'Actions',
                     field: 'actions',
+                    attributes: {
+                        'className': 'hide-print'
+                    },
                 },
 
             ],
@@ -143,6 +147,9 @@ const UserList = () => {
                 status: <div className={admins.admin_status === 'Active'? "active" : "denied"}>{admins.admin_status}</div> ,
                 actions:
                 <Fragment>
+                    <div className='hide-print'> 
+
+                    
                     {/* <Link to={`/admin/admins/edit/${admins._id}`} className="decor-none block">
                     <Button variant="primary" data-toggle="tooltip" data-placement="bottom" title="Edit">
                         <i className="fas fa-pencil-alt"></i>
@@ -250,7 +257,9 @@ const UserList = () => {
                             </div>
                         </div>
                         </div>
+                        </div>
                 </Fragment>
+
             })
         }
         })
@@ -303,6 +312,7 @@ const UserList = () => {
                 <div className='d-flex align-items-start mx-5 mt-3 '>
                     <Button variant="success" className='success mx-1'><Link to="/admin/admins/new">+ Add</Link></Button>
                     <Button variant="success" className='danger'><Link to="/admin/admins/deleted"><i class="fas fa-trash"></i> Trash Bin</Link></Button>
+                    
                 </div>
                     <MDBDataTableV5 
                         hover 
