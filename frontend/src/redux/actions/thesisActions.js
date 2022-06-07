@@ -25,6 +25,10 @@ import {
     THESIS_DETAILS_SUCCESS,
     THESIS_DETAILS_FAIL,
 
+    THESIS_PLAGIARISM_REQUEST,
+    THESIS_PLAGIARISM_SUCCESS,
+    THESIS_PLAGIARISM_FAIL,
+
     DEACTIVATE_THESIS_REQUEST,
     DEACTIVATE_THESIS_SUCCESS,
     DEACTIVATE_THESIS_FAIL,
@@ -96,6 +100,33 @@ export const getAdminThesis = () => async (dispatch) => {
         })
     }
 }
+
+export const getThesisPlagiarism = (thesisData) => async (dispatch) => {
+    try {
+        dispatch({ type: THESIS_PLAGIARISM_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post( process.env.REACT_APP_URL + `/api/thesis/plagiarism`, thesisData, config)
+
+        
+        dispatch({
+            type: THESIS_PLAGIARISM_SUCCESS,
+            payload: data
+        })
+        
+    } catch(error) {
+        dispatch({
+            type: THESIS_PLAGIARISM_FAIL,
+            payload: error.response.data.msg
+        })
+    }
+}
+
 export const getStudentThesis = (id) => async (dispatch) => {
 
     try {

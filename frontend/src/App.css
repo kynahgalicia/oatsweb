@@ -1247,7 +1247,7 @@ input[type="file"]{
 }
 
 .abstract, .pdf{
-    user-select: none;
+    /* user-select: none; */
 }
 
 .close{
@@ -1321,8 +1321,27 @@ input[type="file"]{
 
 }
 
-
 .user-link{
   border-right: 2px solid #d6d6d677;
   margin: 3% 0;
+}
+
+.plagiarism-chart{
+  margin: 0 5vw;
+}
+
+.plagiarism-checker{
+  margin: 2vw;
+}
+
+.plagiarism-text{
+  margin: 0 3vw;
+}
+
+.plagiarism-checker h5{
+  margin: 5vw;
+}
+
+.border-col{
+  border-left: 2px solid var(--grey);
 }

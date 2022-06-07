@@ -4,7 +4,7 @@ const thesisController = require('../controller/thesisController')
 const {authAdmin} = require('../middleware/auth')
 const {authAdminRole} = require('../middleware/authAdminRole')
 
-
+router.post('/thesis/plagiarism',thesisController.getplagiarism)
 router.get('/thesis',thesisController.get)
 router.get('/thesis/admin',thesisController.getAdminThesis)
 router.get('/thesisCount',thesisController.thesisCount)

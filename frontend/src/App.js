@@ -36,6 +36,7 @@ import PrintSubscriptionList from './components/admin/print/subscribers/PrintSub
 import ThesisList from './components/admin/thesis/ThesisList'
 import DeletedThesisList from './components/admin/thesis/DeletedThesisList'
 
+
 import CreateThesis from './components/admin/thesis/CreateThesis'
 import DepartmentList from './components/admin/departments/DepartmentList'
 import CreateDepartment from './components/admin/departments/CreateDepartment'
@@ -76,6 +77,7 @@ import About from './components/user/Home/About'
 import Category from './components/user/Home/Category'
 import Contact from './components/user/Home/Contact'
 import ScanToText from './components/utils/ScanToText';
+import PlagiarismChecker from './components/utils/PlagiarismChecker';
 
 //Auth Admin
 import LoginasAdmin from './components/admin/auth/LoginasAdmin'
@@ -175,6 +177,7 @@ function App() {
         <Route path="/Contact" component={Contact} exact/>
         <Route path="/Terms" component={Terms} exact/>
         <Route path="/scan-to-text" component={ScanToText} exact/>
+        <Route path="/plagiarism-checker" component={PlagiarismChecker} exact/>
 
 
         <Route path="/user/login" component={LoginasUser} exact/>

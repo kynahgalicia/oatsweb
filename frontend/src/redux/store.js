@@ -1,6 +1,6 @@
 import { combineReducers , createStore, applyMiddleware, compose} from "redux";
 
-import { thesisReducer, newThesisReducer, thesisDetailsReducer, studentThesisReducer, removeThesisReducer } from "./reducers/thesisReducer";
+import { thesisReducer, newThesisReducer, thesisDetailsReducer, studentThesisReducer, removeThesisReducer, thesisPlagiarismReducer } from "./reducers/thesisReducer";
 
 import { departmentsReducer, newDepartmentReducer, departmentReducer, DepartmentDetailsReducer } from "./reducers/departmentReducer"
 
@@ -37,6 +37,7 @@ const reducer = combineReducers({
     thesisDetails: thesisDetailsReducer,
     studentThesis: studentThesisReducer,
     thesisAdmin:removeThesisReducer,
+    thesisPlagiarism: thesisPlagiarismReducer,
     // Department
     department: departmentsReducer, 
     newDepartment: newDepartmentReducer,

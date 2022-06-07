@@ -44,6 +44,10 @@ import {
     RESTORE_THESIS_FAIL,
     RESTORE_THESIS_RESET,
 
+    THESIS_PLAGIARISM_REQUEST,
+    THESIS_PLAGIARISM_SUCCESS,
+    THESIS_PLAGIARISM_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/thesisConstants'
 
@@ -71,6 +75,38 @@ export const thesisReducer = (state = { thesis: [] }, action) => {
         case ALL_THESIS_FAIL:
         case ALL_ADMIN_THESIS_FAIL:
         case THESIS_COUNT_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const thesisPlagiarismReducer = (state = { percentage: [] }, action) => {
+    switch (action.type) {
+        case  THESIS_PLAGIARISM_REQUEST:
+            return {
+                loading: true,
+                percentage: []
+            }
+
+        case  THESIS_PLAGIARISM_SUCCESS:
+            return {
+                loading: false,
+                percentage: action.payload.totalPercentage,
+                success: action.payload.success
+            }
+
+        case THESIS_PLAGIARISM_FAIL:
             return {
                 loading: false,
                 error: action.payload

@@ -75,6 +75,56 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 })
 
 
+// /api/thesis/plagiarism/
+exports.getplagiarism = catchAsyncErrors(async (req,res,next) => {
+    
+
+
+    try{
+        const abs = await Thesis.find().select("abstract");
+
+    
+        let datas = abs.map(item => item.abstract);
+
+
+
+    //eto gagamitin kung mag iinput ka ng abstract tapos icocompare mo sa abstract ng lahat ng thesis sa dbase
+
+    const input = req.body;
+    
+        const valueinput = "input";
+        let inputt = input[valueinput];
+
+        if(!inputt || inputt === " ")
+    return res.status(400).json({msg: "Please fill in all fields."})
+    
+    //eto naman kung magseselect ka ng by id 
+    // const abs2 = await Thesis.findById(req.params.id).select("abstract");
+    // const name = "abstract";
+    // let dd = abs2[name];
+
+    const stringSimilarity = require("string-similarity");
+
+    const matches = stringSimilarity.findBestMatch(inputt,datas);
+
+
+    const bestM = "bestMatch"
+    let bstM = matches[bestM];
+
+    const rating = "rating"
+    let percent = bstM[rating];
+
+    const totalPercentage = percent * 100;
+        res.status(200).json({
+            totalPercentage:totalPercentage,
+            success:true
+        })
+    } catch (error) {
+        return res.status(500).json({msg: error.message}) 
+    }
+
+})
+
 exports.getAdminThesis = catchAsyncErrors(async (req, res, next) => {
 
     const Thesis_query = await Thesis.find().sort({createdAt: -1})
