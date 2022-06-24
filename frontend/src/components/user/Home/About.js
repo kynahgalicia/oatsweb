@@ -13,7 +13,7 @@ const About = () => {
                 The Online Archiving Thesis System (OATS) is a website that has a catalog of all the theses of graduated students from the Technological 
                 University of the Philippines Taguig (TUP-Taguig). The website will provide the title and the abstract of the study for guest users. If 
                 guest users want to access the full copy of the research, they will have to register on the website and make a payment for the thesis they 
-                want to access through a GCash API that is integrated in the website. If you are a TUP-Taguig student, you only have to register and you will 
+                want to access. If you are a TUP-Taguig student, you only have to register and you will 
                 be able to access the full text of the research that is created by similar or related courses and you can view it on the website or by 
                 downloading a PDF copy of the research. Only students of similar or related courses can view the full copy. The system will also have a 
                 copy-paste citation feature for users to conveniently use to cite in the study. It will be available in APA, IEEE, and MLA. Additionally, the 
