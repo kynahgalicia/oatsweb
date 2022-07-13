@@ -13,8 +13,10 @@
 
 .success{
   background-color: var(--success) !important; 
-  color: var(--white) !important;
+  /* color: var(--white) !important; */
   border: 1px solid var(--success) !important;
+  font-family: 'Monserrat', sans-serif;
+  font-weight: bold;
 }
 
 .active{

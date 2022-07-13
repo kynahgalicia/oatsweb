@@ -117,12 +117,12 @@ const PlagiarismChecker = () => {
                         {error && showErrMsg(error)}
                         <Button 
                             className='mb-3 mt-1 success w-100'
-                            variant="primary" 
+                            variant="info" 
                             type="submit"
                             onClick={handleSubmit}
                             disabled={loading ? true : false}
                         >
-                            Check
+                            CHECK
                         </Button>
                         </div>
 

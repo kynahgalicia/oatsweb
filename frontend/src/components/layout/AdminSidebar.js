@@ -20,11 +20,15 @@ const AdminSidebar = () => {
                 <Link to="/admin/dashboard">Dashboard</Link>
             </Nav.Item>
             <hr/>
-            
+        
+            { isLoggedInAdmin && admin.role === 'Super Admin' ?
+            <>
             <Nav.Item>
                 <Link to="/admin/print">Print Data Tables</Link>
             </Nav.Item>
             <hr/>
+            </>
+            : null}
 
             { isLoggedInAdmin && admin.role === 'Super Admin' ? 
             <>

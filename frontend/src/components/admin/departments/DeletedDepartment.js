@@ -73,8 +73,8 @@ const DeletedDepartment = () => {
             ],
             rows: []
         }
-
-        department.forEach(department => {
+        
+        department && department.forEach(department => {
             data.rows.push({
                 deptname: department.deptname,
                 deptcode: department.deptcode,

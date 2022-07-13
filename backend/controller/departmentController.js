@@ -47,9 +47,8 @@ exports.get = catchAsyncErrors(async (req,res,next) => {
 exports.getDeleted = catchAsyncErrors(async (req,res,next) => {
     
     const departmentCount = await Department.countDocuments({'status':'Deleted'});
-    const apiFeatures = new APIFeatures(Department.find({'status':'Deleted'}), req.query).search().filter()
+    let Department_query = await Department.find({'status':'Deleted'})
     
-    let Department_query = await apiFeatures.query;
 
     res.status(200).json({
         success: true,
