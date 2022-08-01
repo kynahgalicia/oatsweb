@@ -74,6 +74,22 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
     
 })
 
+// Mobile
+exports.get = catchAsyncErrors(async (req,res,next) => {
+    
+    const thesisCount = await Thesis.find({'status':'Active'}).countDocuments();
+    const apiFeatures = new APIFeatures(Thesis.find({'status':'Active'}), req.query).search().filter()
+    
+    
+    let Thesis_query = await apiFeatures.query;
+
+    res.status(200).json({
+        success: true,
+        thesisCount,
+        thesis:Thesis_query,
+        filteredThesisCount: Thesis_query.length,
+    })
+})
 
 // /api/thesis/plagiarism/
 exports.getplagiarism = catchAsyncErrors(async (req,res,next) => {
