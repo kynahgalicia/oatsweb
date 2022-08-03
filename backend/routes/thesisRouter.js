@@ -16,5 +16,7 @@ router.put('/thesis/deactivate/:id',authAdmin,authAdminRole,  thesisController.d
 router.put('/thesis/activate/:id',authAdmin,authAdminRole,  thesisController.activate)
 router.put('/thesis/delete/:id',authAdmin,authAdminRole,  thesisController.softDelete)
 router.put('/thesis/restore/:id',authAdmin,authAdminRole,  thesisController.restoreDelete)
+router.get('/thesisMobile',thesisController.getMobile)
+
 
 module.exports = router

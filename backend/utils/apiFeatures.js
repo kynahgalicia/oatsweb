@@ -27,6 +27,24 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword});
         return this;
     }
+
+    search1() {
+        const keyword = this.queryStr.keyword ? {
+            title: {
+                $regex: this.queryStr.keyword,
+                $options: 'i'
+            },
+        } : {}
+        const keyword2 = this.queryStr.keyword ? {
+            'keywords.keyword': {
+                $regex: this.queryStr.keyword,
+                $options: 'i'
+            },
+        } : {}
+        this.query = this.query.find({ ...keyword, ...keyword2 });
+        return this;
+    }
+    
     searchCourse() {
         const department = this.queryStr.department ? {
             department: {

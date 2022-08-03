@@ -75,10 +75,10 @@ exports.create = catchAsyncErrors(async(req,res,next) => {
 })
 
 // Mobile
-exports.get = catchAsyncErrors(async (req,res,next) => {
+exports.getMobile = catchAsyncErrors(async (req,res,next) => {
     
     const thesisCount = await Thesis.find({'status':'Active'}).countDocuments();
-    const apiFeatures = new APIFeatures(Thesis.find({'status':'Active'}), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Thesis.find({'status':'Active'}), req.query).search1().filter()
     
     
     let Thesis_query = await apiFeatures.query;
